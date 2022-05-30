@@ -1,7 +1,11 @@
 const F = {
-    light: 'RubikLight',
-    regular: 'RubikRegular',
-    medium: 'RubikMedium',
+    light: 'MulishLight',
+    regular: 'MulishRegular',
+    medium: 'MulishMedium',
+    semiBold: 'MulishSemiBold',
+    bold: 'MulishBold',
+    extraBold: 'MulishExtraBold',
+    extraBlack: 'MulishBlack',
 }
 
 export default F;

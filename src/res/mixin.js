@@ -8,43 +8,87 @@ width: 100%;
 display: flex;
 flex-direction: column;
 background-color: white;
-padding: 0px 4%;
+padding: 0px 20px;
 `;
 
-const HeaderH1 = styled.Text`
-font-size: 23px;
-font-weight: 100;
-font-family: ${F.medium};
-color: ${C.mainBlack};
+// Buttons
+const BlackBtn = styled.TouchableOpacity`
+width: 100%;
+height: 56px;
+background-color:${C.black};
+border-radius: 12px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
 `
-
-const ButtonBlue = styled.TouchableOpacity`
-border-radius: 4px;
+const BlackBtnText = styled.Text`
+font-size: 17px;
+font-family: ${F.medium};
+color: ${C.white};
+line-height: 22px;
+`
+const BorderBtn = styled.TouchableOpacity`
+width: 100%;
+height: 56px;
+background-color:${C.white};
+border-radius: 12px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+border: 1px solid ${C.black};
+`
+const BorderBtnText = styled.Text`
+font-size: 17px;
+font-family: ${F.medium};
+color: ${C.black};
+line-height: 22px;
+`
+const TextBtn = styled.TouchableOpacity`
 display: flex;
 align-items: center;
-justify-content: center;
-padding: 15px 36px;
-background-color: ${C.mainBlue};
-color:white;
+flex-direction: row;
 `
-const ButtonBlueText = styled.Text`
-font-size: 13.5px;
-color: white;
+const TextBtnText = styled.Text`
+font-size: 20px;
 font-family: ${F.medium};
-font-weight: 100;
+color: ${C.black};
+line-height: 25px;
 `
-const ErrorMessage = styled.Text`
-color: red;
-font-size: 13.5px;
-position:absolute;
-bottom:-18px ;
-left:0px ;
-`;
+
+// Text
+const Title28 = styled.Text`
+font-size: 28px;
+font-family: ${F.extraBlack};
+color: ${C.black};
+line-height: 35px;
+`
+const Title20 = styled.Text`
+font-size: 20px;
+font-family: ${F.extraBlack};
+color: ${C.black};
+line-height: 25px;
+`
+const PlainText17 = styled.Text`
+font-size: 19px;
+font-family: ${F.regular};
+color: ${C.black};
+line-height: 22px;
+`
 
 export const M = {
     MainContainer: MainContainer,
-    HeaderH1: HeaderH1,
-    ButtonBlue: ButtonBlue,
-    ButtonBlueText: ButtonBlueText,
-    ErrorMessage: ErrorMessage,
+    // Buttons
+    BlackBtn: BlackBtn,
+    BlackBtnText: BlackBtnText,
+
+    BorderBtn: BorderBtn,
+    BorderBtnText: BorderBtnText,
+    TextBtn: TextBtn,
+    TextBtnText: TextBtnText,
+    // Text
+    Title28: Title28,
+    Title20: Title20,
+    PlainText17: PlainText17,
 }

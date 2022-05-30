@@ -34,7 +34,7 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Allow Dom. Vse v odnom. to access your photos"
+          "photosPermission": "Allow MuzNet to access your photos"
         }
       ]
     ]
