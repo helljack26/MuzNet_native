@@ -36,7 +36,7 @@ margin-bottom: 8px;
 const ButtonText = styled(M.TextBtnText)`
 color: ${props => props.isSkip === true ? C.gray : C.black};
 padding-right: ${props => props.isSkip === true ? 0 + 'px' : 8 + 'px'};
-
+padding-left: 8px;
 `;
 const ContentBlock = styled.View`
 display: flex;

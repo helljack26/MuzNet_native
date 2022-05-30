@@ -1,12 +1,20 @@
-
 import styled from 'styled-components/native';
 import C from '@/res/colors'
 import F from '@/res/fonts'
 import { M } from '@/res/mixin'
 
 const OnboardImage = styled.Image`
+width: 90%;
+max-height: 80%;
+`;
+const OnboardImageBlock = styled.View`
+height: 60%;
 width: 100%;
-max-height: 60%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+background-color: white;
 `;
 const Container = styled.View`
 height: 100%;
@@ -14,7 +22,6 @@ width: 100%;
 display: flex;
 flex-direction: column;
 background-color: white;
-
 `;
 const Content = styled.View`
 height: 40%;
@@ -23,7 +30,6 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 padding: 0px 30px;
-padding-top: 50px;
 padding-bottom: 50px;
 `;
 const ContentTitle = styled(M.Title20)`
@@ -88,6 +94,7 @@ const ButtonStartText = styled(M.BlackBtnText)`
 
 
 export const style = {
+    OnboardImageBlock: OnboardImageBlock,
     OnboardImage: OnboardImage,
     Container: Container,
     Content: Content,

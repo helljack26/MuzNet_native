@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { StatusBar, Dimensions, Platform } from 'react-native';
+import { StatusBar } from 'react-native';
 import {
     useNavigation
     // , useRoute 
@@ -14,6 +14,7 @@ const {
 // Styles
 import { style } from './style'
 const {
+    OnboardImageBlock,
     OnboardImage,
     Container,
     Content,
@@ -85,7 +86,9 @@ const OnBoardingScreen = () => {
             {/* Image */}
 
             <Container >
-                <OnboardImage source={image} resizeMode="cover" />
+                <OnboardImageBlock>
+                    <OnboardImage source={image} resizeMode="contain" />
+                </OnboardImageBlock>
 
                 {/* Content */}
                 <Content style={{ flex: 1, height: '100%', }}>
