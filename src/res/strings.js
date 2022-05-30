@@ -1,8 +1,7 @@
 const S = {
-    dollarSymbol: '$',
-    squareMeterSymbol: 'м²',
-    meterSymbol: 'м',
-    plotValue: 'соток',
+    emailNotValid: 'Invalid email adress',
+    passwordNotValid: 'Password is incorrect',
+
 }
 
 export default S;

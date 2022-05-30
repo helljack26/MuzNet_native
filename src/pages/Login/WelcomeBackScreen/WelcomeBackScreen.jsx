@@ -29,7 +29,7 @@ const {
     ContainerLinkText,
 } = style;
 
-const LoginScreen = () => {
+const WelcomeBackScreen = () => {
     const navigation = useNavigation();
 
     return (
@@ -63,7 +63,11 @@ const LoginScreen = () => {
                             Log In with Facebook
                         </ButtonText>
                     </Button>
-                    <Button>
+                    <Button
+                        onPress={() => {
+                            navigation.navigate('LoginScreen');
+                        }}
+                    >
                         <MailIcon width={20} height={24} />
 
                         <ButtonText>
@@ -83,6 +87,7 @@ const LoginScreen = () => {
                         </ContainerLink>
                     </ContentBlock>
                     <ContainerLink
+                        style={{ marginTop: 20 }}
                         onPress={() => {
                             navigation.navigate('OnBoardingScreen');
                         }}
@@ -99,4 +104,4 @@ const LoginScreen = () => {
     )
 }
 
-export default LoginScreen;
+export default WelcomeBackScreen;

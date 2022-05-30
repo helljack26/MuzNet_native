@@ -119,7 +119,7 @@ const OnBoardingScreen = () => {
                                 <Button
                                     onPress={() => {
                                         navigation.navigate('LoginStack', {
-                                            screen: 'LoginScreen'
+                                            screen: 'WelcomeBackScreen'
                                         });
                                     }} >
                                     <ButtonText isSkip={true}>
@@ -142,7 +142,7 @@ const OnBoardingScreen = () => {
                             <ButtonStart
                                 onPress={() => {
                                     navigation.navigate('LoginStack', {
-                                        screen: 'LoginScreen'
+                                        screen: 'WelcomeBackScreen'
                                     });
 
                                 }} >
