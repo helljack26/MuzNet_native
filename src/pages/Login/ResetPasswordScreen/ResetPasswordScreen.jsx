@@ -32,17 +32,15 @@ const {
     FormInputLabel,
     FormInput,
     ButtonSubmit,
-    ButtonSubmitDisable,
     ShowPasswordIconButton,
     ButtonSubmitText,
-    ButtonSubmitTextDisable,
     ErrorMessage,
 } = style;
 
 const ResetPasswordScreen = () => {
     const navigation = useNavigation();
 
-    const { control, handleSubmit, watch, setError, clearErrors, resetField,
+    const { control, handleSubmit, setError, resetField,
         formState: { dirtyFields, errors } } = useForm({
             defaultValues: { password: '', passwordRepeat: '' }
         });
@@ -71,53 +69,17 @@ const ResetPasswordScreen = () => {
         }
     }, [dirtyFields.password, dirtyFields.passwordRepeat]);
 
-    const [isValidPassword, setIsValidPassword] = useState('');
-    const [isValidPasswordRepeat, setIsValidPasswordRepeat] = useState('');
-
-    const isValid = isValidPassword === isValidPasswordRepeat && isValidPassword >= 8 && isValidPasswordRepeat >= 8
-
-
-    // Password live validation
-    const passwordWatch = watch("password");
-    useEffect(() => {
-        const isEnoughPassword = passwordWatch.length
-
-        if (isEnoughPassword < 8 && isEnoughPassword > 0) {
-            setError('password', { type: 'minLength', message: 'Minimum 8 characters' });
-        }
-        if (isEnoughPassword >= 8) {
-            clearErrors('password');
-            setIsValidPassword(passwordWatch)
-        }
-    }, [passwordWatch]);
-
-    // Password repeat live validation
-    const passwordRepeatWatch = watch("passwordRepeat");
-    useEffect(() => {
-        const isEnoughPasswordRepeat = passwordRepeatWatch.length
-
-        setIsValidPasswordRepeat(passwordRepeatWatch)
-
-        if (isEnoughPasswordRepeat < 8 && isEnoughPasswordRepeat > 0) {
-            setError('passwordRepeat', { type: 'minLength', message: 'Minimum 8 characters' });
-        } else if (passwordWatch !== passwordRepeatWatch) {
-            setError('passwordRepeat', { type: 'value', message: "Passwords don't match" });
-        }
-        if (isEnoughPasswordRepeat >= 8 && passwordWatch === passwordRepeatWatch) {
-            clearErrors('passwordRepeat');
-        }
-
-    }, [passwordRepeatWatch, passwordWatch]);
-
     // Submit
     const onSubmit = (data) => {
-        console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
-        // Clear input value
-        resetField('password');
-        resetField('passwordRepeat');
-        setIsValidPassword('')
-        setIsValidPasswordRepeat('')
-        return
+        if (data.password !== data.passwordRepeat) {
+            setError('passwordRepeat', { type: 'value', message: "Passwords don't match" });
+        } else {
+            console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
+            // Clear input value
+            resetField('password');
+            resetField('passwordRepeat');
+            navigation.navigate('LoginStack', { screen: 'LoginScreen' })
+        }
     };
 
     return (
@@ -148,6 +110,8 @@ const ResetPasswordScreen = () => {
                         control={control}
                         rules={{
                             required: S.passwordNotValid,
+                            minLength: 8,
+
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
                             <FormInputBlock
@@ -184,7 +148,8 @@ const ResetPasswordScreen = () => {
 
                                 <FormInputLabel isError={errors.password} inputLabel={inputPasswordLabel}>Password</FormInputLabel>
 
-                                {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+                                {errors.password && <ErrorMessage>{S.passwordMinimum}</ErrorMessage>}
+
                             </FormInputBlock>
                         )}
                         name="password"
@@ -195,6 +160,7 @@ const ResetPasswordScreen = () => {
                         control={control}
                         rules={{
                             required: S.passwordNotValid,
+                            minLength: 8
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
                             <FormInputBlock>
@@ -226,32 +192,20 @@ const ResetPasswordScreen = () => {
                                 </FormInputContainer>
                                 <FormInputLabel isError={errors.passwordRepeat} inputLabel={inputPasswordRepeatLabel}>Repeat password</FormInputLabel>
 
-                                {errors.passwordRepeat && <ErrorMessage>{errors.passwordRepeat.message}</ErrorMessage>}
+                                {errors.passwordRepeat && errors.passwordRepeat?.type !== 'value' && <ErrorMessage>{S.passwordMinimum}</ErrorMessage>}
+                                {errors.passwordRepeat?.type === 'value' && <ErrorMessage>{errors.passwordRepeat.message}</ErrorMessage>}
                             </FormInputBlock>
                         )}
                         name="passwordRepeat"
                     />
                 </FormBlock>
 
-
-                {isValid === true ?
-                    <ButtonSubmit
-                        isKeyboardOpen={isKeyboardOpen}
-                        onPress={() => {
-                            navigation.navigate('LoginStack', { screen: 'LoginScreen' })
-                            handleSubmit(onSubmit)
-                        }
-                        }>
-                        <ButtonSubmitText>Save New Password</ButtonSubmitText>
-                    </ButtonSubmit>
-                    :
-                    <ButtonSubmitDisable
-                        isKeyboardOpen={isKeyboardOpen}
-                    >
-                        <ButtonSubmitTextDisable>Save New Password</ButtonSubmitTextDisable>
-                    </ButtonSubmitDisable>
-
-                }
+                <ButtonSubmit
+                    isKeyboardOpen={isKeyboardOpen}
+                    onPress={handleSubmit(onSubmit)
+                    }>
+                    <ButtonSubmitText>Save New Password</ButtonSubmitText>
+                </ButtonSubmit>
             </Container>
         </>
 

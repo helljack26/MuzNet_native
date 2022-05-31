@@ -62,33 +62,14 @@ const ForgetPasswordScreen = () => {
         }
     }, [dirtyFields.resetEmail]);
 
-    // Is both valid
-    const [isValidResetEmail, setIsValidResetEmail] = useState(false);
-
-    // Email live validation
-    const emailWatch = watch("resetEmail");
-    const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-    function validateEmail(value) {
-        return EMAIL_REGEXP.test(value);
-    }
-    useEffect(() => {
-        if (validateEmail(emailWatch)) {
-            clearErrors('resetEmail');
-            setIsValidResetEmail(true)
-        } else if (!validateEmail(emailWatch) && emailWatch.length > 0) {
-            setError('resetEmail', { type: `pattern`, message: S.emailNotValid });
-            setIsValidResetEmail(false)
-        }
-    }, [emailWatch]);
-
     const onSubmit = (data) => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
         resetField('resetEmail');
-        setIsValidResetEmail(false)
+        navigation.navigate('LoginStack', { screen: 'ResetPasswordScreen' })
         return
     };
-
+    console.log(errors.resetEmail?.type);
     return (
         <>
             <StatusBar
@@ -124,16 +105,15 @@ const ForgetPasswordScreen = () => {
                         control={control}
                         rules={{
                             required: S.emailNotValid,
+                            pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
                             <FormInputBlock
                                 style={{
-                                    // borderColor: `${errors.resetEmail ? C.red : inputFocus1}`,
                                     marginBottom: errors.resetEmail ? 28 : 13,
                                 }}
                             >
                                 <FormInputContainer>
-
                                     <FormInput
                                         inputLabel={inputEmailLabel}
                                         selectionColor={C.lightGray}
@@ -152,13 +132,17 @@ const ForgetPasswordScreen = () => {
                                             color: errors.resetEmail ? C.red : C.black,
                                         }}
                                     />
-                                    {errors.resetEmail && <ShowPasswordIconButton >
+                                    {errors.resetEmail && <ShowPasswordIconButton>
                                         <ErrorIcon width={20} height={20} />
                                     </ShowPasswordIconButton>
                                     }
+
                                 </FormInputContainer>
 
                                 <FormInputLabel isError={errors.resetEmail} inputLabel={inputEmailLabel}>Your email</FormInputLabel>
+
+                                {errors.resetEmail?.type === 'minLength' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
+                                {errors.resetEmail?.type === 'pattern' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
                                 {errors.resetEmail && <ErrorMessage>{errors.resetEmail.message}</ErrorMessage>}
                             </FormInputBlock>
                         )}
@@ -166,25 +150,14 @@ const ForgetPasswordScreen = () => {
                     />
                 </FormBlock>
 
-                {isValidResetEmail === true ?
-                    <ButtonSubmit
-                        isKeyboardOpen={isKeyboardOpen}
-                        onPress={() => {
-                            navigation.navigate('LoginStack', { screen: 'ResetPasswordScreen' })
-                            handleSubmit(onSubmit)
-                        }}
-                    >
-                        <ButtonSubmitText>Send A Link</ButtonSubmitText>
-                    </ButtonSubmit>
-                    :
-                    <ButtonSubmitDisable
+                <ButtonSubmit
+                    isKeyboardOpen={isKeyboardOpen}
+                    onPress={handleSubmit(onSubmit)}
+                >
+                    <ButtonSubmitText>Send A Link</ButtonSubmitText>
+                </ButtonSubmit>
 
-                        isKeyboardOpen={isKeyboardOpen}
-                    >
-                        <ButtonSubmitTextDisable>Send A Link</ButtonSubmitTextDisable>
-                    </ButtonSubmitDisable>
 
-                }
             </Container>
         </>
 

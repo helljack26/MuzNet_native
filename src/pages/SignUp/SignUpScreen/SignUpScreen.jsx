@@ -33,16 +33,18 @@ const {
     FormInputLabel,
     FormInput,
     ButtonSubmit,
+    ButtonSubmitDisable,
     ButtonSubmitText,
+    ButtonSubmitTextDisable,
     ShowPasswordIconButton,
     Link,
     LinkText,
     ErrorMessage,
 } = style;
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
     const navigation = useNavigation();
-    const { control, handleSubmit, resetField,
+    const { control, handleSubmit, watch, setError, clearErrors, resetField,
         formState: { dirtyFields, errors } } = useForm({
             defaultValues: { userEmail: '', password: '' }
         });
@@ -71,12 +73,50 @@ const LoginScreen = () => {
         }
     }, [dirtyFields.userEmail, dirtyFields.password]);
 
+    // Is both valid
+    const [isValidEmail, setIsValidEmail] = useState(false);
+    const [isValidPassword, setIsValidPassword] = useState(false);
+
+    const isValid = isValidEmail == true && isValidPassword === true
+
+    // Email live validation
+    const emailWatch = watch("userEmail");
+    const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+    function validateEmail(value) {
+        return EMAIL_REGEXP.test(value);
+    }
+    useEffect(() => {
+        if (validateEmail(emailWatch)) {
+            clearErrors('userEmail');
+            setIsValidEmail(true)
+        } else if (!validateEmail(emailWatch) && emailWatch.length > 0) {
+            setError('userEmail', { type: `pattern`, message: S.emailNotValid });
+            setIsValidEmail(false)
+        }
+    }, [emailWatch]);
+
+    // Password live validation
+    const passwordWatch = watch("password");
+    useEffect(() => {
+        const isEnoughPassword = passwordWatch.length
+
+        if (isEnoughPassword <= 7 && isEnoughPassword > 0) {
+            setIsValidPassword(false)
+            setError('password', { type: 'minLength', message: 'Minimum 8 characters' });
+        }
+        if (isEnoughPassword >= 8) {
+            clearErrors('password');
+            setIsValidPassword(true)
+        }
+    }, [passwordWatch]);
+
     const onSubmit = (data) => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
         resetField('userEmail');
         resetField('password');
-
+        setIsValidEmail(false)
+        setIsValidPassword(false)
         return
     };
 
@@ -113,7 +153,6 @@ const LoginScreen = () => {
                         control={control}
                         rules={{
                             required: S.emailNotValid,
-                            pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
                             <FormInputBlock
@@ -148,9 +187,6 @@ const LoginScreen = () => {
                                 </FormInputContainer>
 
                                 <FormInputLabel isError={errors.userEmail} inputLabel={inputEmailLabel}>Your email</FormInputLabel>
-
-                                {errors.userEmail?.type === 'minLength' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
-                                {errors.userEmail?.type === 'pattern' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
                                 {errors.userEmail && <ErrorMessage>{errors.userEmail.message}</ErrorMessage>}
                             </FormInputBlock>
                         )}
@@ -198,7 +234,6 @@ const LoginScreen = () => {
                                 <FormInputLabel isError={errors.password} inputLabel={inputPasswordLabel}>Password</FormInputLabel>
 
                                 {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
-                                {errors.password?.type === 'minLength' && <ErrorMessage>{S.passwordMinimum}</ErrorMessage>}
                             </FormInputBlock>
                         )}
                         name="password"
@@ -215,19 +250,22 @@ const LoginScreen = () => {
                     </Link>
                 </FormBlock>
 
+                {isValid === true ?
+                    <ButtonSubmit
+                        isKeyboardOpen={isKeyboardOpen}
+                        onPress={handleSubmit(onSubmit)}>
+                        <ButtonSubmitText>Log in</ButtonSubmitText>
+                    </ButtonSubmit>
+                    :
+                    <ButtonSubmitDisable isKeyboardOpen={isKeyboardOpen}>
+                        <ButtonSubmitTextDisable>Log in</ButtonSubmitTextDisable>
+                    </ButtonSubmitDisable>
 
-                <ButtonSubmit
-                    isKeyboardOpen={isKeyboardOpen}
-                    onPress={handleSubmit(onSubmit)
-                    }
-                >
-                    <ButtonSubmitText>Log in</ButtonSubmitText>
-                </ButtonSubmit>
-
+                }
             </Container>
         </>
 
     )
 }
 
-export default LoginScreen;
+export default SignUpScreen;
