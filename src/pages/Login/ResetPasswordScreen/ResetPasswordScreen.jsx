@@ -1,8 +1,9 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
+
 import C from '@/res/colors'
 import S from '@/res/strings'
 
@@ -15,7 +16,6 @@ import {
 // Images
 import IMAGES from '@/res/images'
 const {
-    GoBackIcon,
 
     ErrorIcon,
 } = IMAGES;
@@ -23,7 +23,7 @@ const {
 import { style } from '../style'
 const {
     Container,
-    GoBackButton,
+
     ContentTitle,
     Header,
     FormBlock,
@@ -94,9 +94,6 @@ const ResetPasswordScreen = () => {
             <Container>
                 {/* Header */}
                 <Header>
-                    <GoBackButton onPress={() => { navigation.goBack() }}>
-                        <GoBackIcon width={12} height={20} />
-                    </GoBackButton>
                     <ContentTitle>
                         Reset Password
                     </ContentTitle>

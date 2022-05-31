@@ -71,20 +71,7 @@ font-family: ${F.medium};
 color: ${C.black};
 line-height: 25px;
 `
-const GoBackButton = styled.TouchableOpacity`
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
-position: absolute;
-padding-left: 5px;
-padding-right: 10px;
-padding-top: 10px;
-padding-bottom: 10px;
-top: 0px;
-left: -10px;
-bottom: 0px;
-`;
+
 // Text
 const Title28 = styled.Text`
 font-size: 28px;
@@ -181,7 +168,6 @@ export const M = {
     BorderBtnText: BorderBtnText,
     TextBtn: TextBtn,
     TextBtnText: TextBtnText,
-    GoBackButton: GoBackButton,
     // Text
     Title28: Title28,
     Title20: Title20,

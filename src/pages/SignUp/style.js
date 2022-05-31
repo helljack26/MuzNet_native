@@ -23,9 +23,7 @@ align-items: center;
 flex-direction: row;
 margin-bottom: 31px;
 `;
-const GoBackButton = styled(M.GoBackButton)`
 
-`;
 const ContentTitle = styled(M.Title28)`
 
 `;
@@ -80,10 +78,28 @@ const ButtonSubmitTextDisable = styled(M.BlackBtnTextDisable)`
 const ErrorMessage = styled(M.ErrorMessage)`
 
 `;
+const ContentBlock = styled.View`
+display: flex;
+align-items: center;
+flex-direction: row;
+margin-top: 16px;
+`;
+const ContainerText = styled(M.PlainText17)`
+color: ${C.sBlack};
+display: flex;
+align-items: center;
+flex-direction: row;
+padding-right: 5px;
+`;
+const ContainerLink = styled.TouchableOpacity`
 
+`;
+const ContainerLinkText = styled(M.BorderBtnText)`
+    font-family: ${F.bold};
+
+`;
 export const style = {
     Container: Container,
-    GoBackButton: GoBackButton,
     ContentTitle: ContentTitle,
     Header: Header,
     FormText: FormText,
@@ -100,5 +116,8 @@ export const style = {
     Link: Link,
     LinkText: LinkText,
     ErrorMessage: ErrorMessage,
-
+    ContentBlock: ContentBlock,
+    ContainerText: ContainerText,
+    ContainerLink: ContainerLink,
+    ContainerLinkText: ContainerLinkText,
 }

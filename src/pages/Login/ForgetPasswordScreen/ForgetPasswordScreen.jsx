@@ -7,6 +7,8 @@ import C from '@/res/colors'
 import S from '@/res/strings'
 
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+import GoBack from '@/components/Buttons/GoBack/GoBack'
+
 import {
     useNavigation
     // , useRoute
@@ -15,7 +17,6 @@ import {
 // Images
 import IMAGES from '@/res/images'
 const {
-    GoBackIcon,
     ErrorIcon,
 
 } = IMAGES;
@@ -23,7 +24,6 @@ const {
 import { style } from '../style'
 const {
     Container,
-    GoBackButton,
     ContentTitle,
     Header,
     FormInputContainer,
@@ -34,19 +34,16 @@ const {
     FormInput,
     ShowPasswordIconButton,
     ButtonSubmit,
-    ButtonSubmitDisable,
     ButtonSubmitText,
-    ButtonSubmitTextDisable,
     ErrorMessage,
 } = style;
 
 const ForgetPasswordScreen = () => {
     const navigation = useNavigation();
 
-    const { control, handleSubmit, watch, setError, clearErrors, resetField,
-        formState: { dirtyFields, errors } } = useForm({
-            defaultValues: { resetEmail: '' }
-        });
+    const { control, handleSubmit, resetField, formState: { dirtyFields, errors } } = useForm({
+        defaultValues: { resetEmail: '' }
+    });
 
     const isKeyboardOpen = isKeyboardShown()
 
@@ -69,7 +66,6 @@ const ForgetPasswordScreen = () => {
         navigation.navigate('LoginStack', { screen: 'ResetPasswordScreen' })
         return
     };
-    console.log(errors.resetEmail?.type);
     return (
         <>
             <StatusBar
@@ -81,12 +77,7 @@ const ForgetPasswordScreen = () => {
             <Container>
                 {/* Header */}
                 <Header>
-                    <GoBackButton
-                        onPress={() => {
-                            navigation.goBack()
-                        }}>
-                        <GoBackIcon width={12} height={20} />
-                    </GoBackButton>
+                    <GoBack />
 
                     <ContentTitle>
                         Reset Password

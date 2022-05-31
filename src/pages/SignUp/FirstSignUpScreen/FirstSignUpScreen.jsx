@@ -67,9 +67,7 @@ const FirstSignUpScreen = () => {
                     </Button>
 
                     <Button
-                        onPress={() => {
-                            navigation.navigate('LoginScreen');
-                        }}
+                        onPress={() => { navigation.navigate('SignUpScreen'); }}
                     >
                         <MailIcon width={24} height={24} />
 

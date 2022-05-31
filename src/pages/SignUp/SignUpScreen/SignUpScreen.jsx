@@ -6,25 +6,22 @@ import { useForm, Controller } from "react-hook-form";
 import C from '@/res/colors'
 import S from '@/res/strings'
 
+import GoBack from '@/components/Buttons/GoBack/GoBack'
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-import {
-    useNavigation
-    // , useRoute 
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 // Images
 import IMAGES from '@/res/images'
 const {
-    GoBackIcon,
     ShowPassIcon,
     ShowPassActiveIcon,
     ErrorIcon,
 } = IMAGES;
 // Styles
 import { style } from '../style'
+import { signUpStyle } from './signUpStyle'
 const {
     Container,
-    GoBackButton,
     ContentTitle,
     Header,
     FormBlock,
@@ -32,19 +29,23 @@ const {
     FormInputContainer,
     FormInputLabel,
     FormInput,
-    ButtonSubmit,
-    ButtonSubmitDisable,
-    ButtonSubmitText,
-    ButtonSubmitTextDisable,
     ShowPasswordIconButton,
-    Link,
-    LinkText,
     ErrorMessage,
 } = style;
 
-const SignUpScreen = () => {
+const {
+    ButtonSubmit,
+    ButtonSubmitText,
+    ContentBlock,
+    ContentBlockRow,
+    ContainerText,
+    ContainerLink,
+    ContainerLinkText,
+} = signUpStyle;
+
+const LoginScreen = () => {
     const navigation = useNavigation();
-    const { control, handleSubmit, watch, setError, clearErrors, resetField,
+    const { control, handleSubmit, resetField,
         formState: { dirtyFields, errors } } = useForm({
             defaultValues: { userEmail: '', password: '' }
         });
@@ -73,50 +74,11 @@ const SignUpScreen = () => {
         }
     }, [dirtyFields.userEmail, dirtyFields.password]);
 
-    // Is both valid
-    const [isValidEmail, setIsValidEmail] = useState(false);
-    const [isValidPassword, setIsValidPassword] = useState(false);
-
-    const isValid = isValidEmail == true && isValidPassword === true
-
-    // Email live validation
-    const emailWatch = watch("userEmail");
-    const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-    function validateEmail(value) {
-        return EMAIL_REGEXP.test(value);
-    }
-    useEffect(() => {
-        if (validateEmail(emailWatch)) {
-            clearErrors('userEmail');
-            setIsValidEmail(true)
-        } else if (!validateEmail(emailWatch) && emailWatch.length > 0) {
-            setError('userEmail', { type: `pattern`, message: S.emailNotValid });
-            setIsValidEmail(false)
-        }
-    }, [emailWatch]);
-
-    // Password live validation
-    const passwordWatch = watch("password");
-    useEffect(() => {
-        const isEnoughPassword = passwordWatch.length
-
-        if (isEnoughPassword <= 7 && isEnoughPassword > 0) {
-            setIsValidPassword(false)
-            setError('password', { type: 'minLength', message: 'Minimum 8 characters' });
-        }
-        if (isEnoughPassword >= 8) {
-            clearErrors('password');
-            setIsValidPassword(true)
-        }
-    }, [passwordWatch]);
-
     const onSubmit = (data) => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
         resetField('userEmail');
         resetField('password');
-        setIsValidEmail(false)
-        setIsValidPassword(false)
         return
     };
 
@@ -132,16 +94,10 @@ const SignUpScreen = () => {
             <Container>
                 {/* Header */}
                 <Header>
-                    <GoBackButton
+                    <GoBack />
 
-                        onPress={() => {
-                            navigation.goBack()
-                        }}>
-                        <GoBackIcon width={12} height={20} />
-
-                    </GoBackButton>
                     <ContentTitle>
-                        Log in
+                        Sign Up
                     </ContentTitle>
                 </Header>
 
@@ -153,6 +109,7 @@ const SignUpScreen = () => {
                         control={control}
                         rules={{
                             required: S.emailNotValid,
+                            pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
                             <FormInputBlock
@@ -164,7 +121,7 @@ const SignUpScreen = () => {
                                     <FormInput
                                         inputLabel={inputEmailLabel}
                                         selectionColor={C.lightGray}
-                                        placeholder={'Enter your email'}
+                                        placeholder={'Enter your phone'}
                                         cursorColor={C.black}
                                         onFocus={() => { setInputFocus1(C.black) }}
                                         onBlur={() => {
@@ -186,7 +143,10 @@ const SignUpScreen = () => {
 
                                 </FormInputContainer>
 
-                                <FormInputLabel isError={errors.userEmail} inputLabel={inputEmailLabel}>Your email</FormInputLabel>
+                                <FormInputLabel isError={errors.userEmail} inputLabel={inputEmailLabel}>Your phone</FormInputLabel>
+
+                                {errors.userEmail?.type === 'minLength' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
+                                {errors.userEmail?.type === 'pattern' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
                                 {errors.userEmail && <ErrorMessage>{errors.userEmail.message}</ErrorMessage>}
                             </FormInputBlock>
                         )}
@@ -197,7 +157,7 @@ const SignUpScreen = () => {
                     <Controller
                         control={control}
                         rules={{
-                            required: S.passwordNotValid,
+                            required: true,
                             minLength: 8,
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
@@ -233,39 +193,39 @@ const SignUpScreen = () => {
                                 </FormInputContainer>
                                 <FormInputLabel isError={errors.password} inputLabel={inputPasswordLabel}>Password</FormInputLabel>
 
-                                {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+                                {errors.password && <ErrorMessage>{S.passwordMinimum}</ErrorMessage>}
                             </FormInputBlock>
                         )}
                         name="password"
                     />
-                    <Link
-                        onPress={() => navigation.navigate('LoginStack', { screen: 'ForgetPasswordScreen' })}
-                        style={{
-                            marginTop: errors.password === undefined ? -12 : 5,
-                        }}
-                    >
-                        <LinkText>
-                            Forget password?
-                        </LinkText>
-                    </Link>
                 </FormBlock>
 
-                {isValid === true ?
-                    <ButtonSubmit
-                        isKeyboardOpen={isKeyboardOpen}
-                        onPress={handleSubmit(onSubmit)}>
-                        <ButtonSubmitText>Log in</ButtonSubmitText>
+                <ContentBlock isKeyboardOpen={isKeyboardOpen}    >
+                    <ButtonSubmit onPress={handleSubmit(onSubmit)} >
+                        <ButtonSubmitText>Sign Up</ButtonSubmitText>
                     </ButtonSubmit>
-                    :
-                    <ButtonSubmitDisable isKeyboardOpen={isKeyboardOpen}>
-                        <ButtonSubmitTextDisable>Log in</ButtonSubmitTextDisable>
-                    </ButtonSubmitDisable>
 
-                }
+                    <ContentBlockRow>
+
+                        <ContainerText>
+                            Already have an account?
+                        </ContainerText>
+                        <ContainerLink
+                            onPress={() => {
+                                navigation.navigate('LoginStack',
+                                    { screen: 'LoginScreen' }
+                                )
+                            }}
+                        >
+                            <ContainerLinkText>Sign In</ContainerLinkText>
+                        </ContainerLink>
+                    </ContentBlockRow>
+
+                </ContentBlock>
             </Container>
         </>
 
     )
 }
 
-export default SignUpScreen;
+export default LoginScreen;

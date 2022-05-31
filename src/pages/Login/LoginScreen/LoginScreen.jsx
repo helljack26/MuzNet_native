@@ -7,6 +7,8 @@ import C from '@/res/colors'
 import S from '@/res/strings'
 
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+import GoBack from '@/components/Buttons/GoBack/GoBack'
+
 import {
     useNavigation
     // , useRoute 
@@ -15,7 +17,6 @@ import {
 // Images
 import IMAGES from '@/res/images'
 const {
-    GoBackIcon,
     ShowPassIcon,
     ShowPassActiveIcon,
     ErrorIcon,
@@ -24,7 +25,6 @@ const {
 import { style } from '../style'
 const {
     Container,
-    GoBackButton,
     ContentTitle,
     Header,
     FormBlock,
@@ -91,14 +91,8 @@ const LoginScreen = () => {
             <Container>
                 {/* Header */}
                 <Header>
-                    <GoBackButton
+                    <GoBack />
 
-                        onPress={() => {
-                            navigation.goBack()
-                        }}>
-                        <GoBackIcon width={12} height={20} />
-
-                    </GoBackButton>
                     <ContentTitle>
                         Log in
                     </ContentTitle>
