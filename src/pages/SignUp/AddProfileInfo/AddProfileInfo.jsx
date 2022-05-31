@@ -4,6 +4,7 @@ import { StatusBar } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 
 import { useState, useEffect } from 'react';
+import SelectProfileType from './SelectProfileType'
 
 import C from '@/res/colors'
 import S from '@/res/strings'
@@ -15,7 +16,9 @@ import { useNavigation } from '@react-navigation/native';
 import { M } from '@/res/mixin'
 const {
     ErrorMessage,
-    ShowPasswordIconButton
+    ShowPasswordIconButton,
+    DisableBtn,
+    BlackBtnTextDisable,
 } = M;
 
 // Images
@@ -89,6 +92,7 @@ const AddProfileInfo = () => {
 
     // Tab logic
     const [screenNumber, setScreenNumber] = useState(0);
+    const [isDisableButton, setIsDisableButton] = useState(false);
 
     const tabNumber = SignUpContent[screenNumber].tabNumber
     const title = SignUpContent[screenNumber].title
@@ -119,16 +123,21 @@ const AddProfileInfo = () => {
 
     const usersBase = ['Us', 'User1234']
     const isExist = usersBase.find(item => item === watchUserName);
+
     useEffect(() => {
         if (watchUserName.length > 1) {
             if (isExist === undefined) {
                 clearErrors('userName');
                 setIsNameExist(false)
                 setInputFocus1(C.green)
+                setIsDisableButton(false)
+
             }
             if (isExist !== undefined) {
                 setError('userName', { type: 'value', message: S.userNameExistError });
                 setIsNameExist(true)
+                setIsDisableButton(true)
+
             }
         }
         if (watchUserName.length > 0) {
@@ -137,9 +146,28 @@ const AddProfileInfo = () => {
         if (watchUserName.length <= 1 && isListenNameInput) {
             setError('userName', { type: 'value', message: 'Minimum 2 characters' });
             setIsNameExist(true)
+            setIsDisableButton(true)
+
         }
 
     }, [watchUserName, isListenNameInput])
+
+    // Tab 2
+    const [userType, setUserType] = useState(false);
+    useEffect(() => {
+        if (tabNumber === 1) {
+            setIsDisableButton(true)
+            // Active button if return from second tab
+            if (watchUserName.length > 1) {
+                setIsDisableButton(false)
+            }
+        }
+        if (tabNumber === 2) {
+            setIsDisableButton(true)
+        }
+
+    }, [tabNumber])
+
     // Submit
     const onSubmit = (data) => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
@@ -151,12 +179,19 @@ const AddProfileInfo = () => {
     const formCheck = () => {
         switch (tabNumber) {
             case 1:
-                console.log(watchUserName);
                 if (isExist === undefined && watchUserName.length > 1) {
                     setScreenNumber(1)
                     setIsListenNameInput(true)
                 }
+                if (watchUserName.length < 1) {
+                    setError('userName', { type: 'value', message: 'Minimum 2 characters' });
+
+                }
+
                 console.log(isExist);
+                break;
+            case 2:
+
                 break;
 
             default:
@@ -258,13 +293,21 @@ const AddProfileInfo = () => {
                     />
                     }
 
+                    {/* =========== Tab 2 =========== */}
+                    {tabNumber === 2 && <SelectProfileType setUserType={setUserType} />}
+
                 </Content>
 
-                <ContentBlock isKeyboardOpen={isKeyboardOpen}    >
-                    <ButtonSubmit onPress={formCheck}>
-                        <ButtonSubmitText>Next Step</ButtonSubmitText>
-                    </ButtonSubmit>
-
+                <ContentBlock isKeyboardOpen={isKeyboardOpen}>
+                    {isDisableButton === false ?
+                        <ButtonSubmit onPress={formCheck}>
+                            <ButtonSubmitText>Next Step</ButtonSubmitText>
+                        </ButtonSubmit>
+                        :
+                        <DisableBtn >
+                            <BlackBtnTextDisable>Next Step</BlackBtnTextDisable>
+                        </DisableBtn>
+                    }
                     <ContentBlockRow>
 
                         {/* <ContainerText>
