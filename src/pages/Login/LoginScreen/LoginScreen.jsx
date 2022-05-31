@@ -179,8 +179,7 @@ const LoginScreen = () => {
                                             color: errors.userEmail ? C.red : C.black,
                                         }}
                                     />
-                                    {errors.userEmail && <ShowPasswordIconButton onPress={() => setPasswordShown(!passwordShown)}   >
-
+                                    {errors.userEmail && <ShowPasswordIconButton>
                                         <ErrorIcon width={20} height={20} />
                                     </ShowPasswordIconButton>
                                     }

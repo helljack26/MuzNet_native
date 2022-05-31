@@ -16,8 +16,7 @@ import {
 import IMAGES from '@/res/images'
 const {
     GoBackIcon,
-    ShowPassIcon,
-    ShowPassActiveIcon,
+
     ErrorIcon,
 } = IMAGES;
 // Styles
@@ -75,7 +74,7 @@ const ResetPasswordScreen = () => {
     const [isValidPassword, setIsValidPassword] = useState('');
     const [isValidPasswordRepeat, setIsValidPasswordRepeat] = useState('');
 
-    const isValid = isValidPassword === isValidPasswordRepeat
+    const isValid = isValidPassword === isValidPasswordRepeat && isValidPassword >= 8 && isValidPasswordRepeat >= 8
 
 
     // Password live validation
@@ -177,8 +176,12 @@ const ResetPasswordScreen = () => {
                                             color: errors.password ? C.red : C.black,
                                         }}
                                     />
-
+                                    {errors.password && <ShowPasswordIconButton >
+                                        <ErrorIcon width={20} height={20} />
+                                    </ShowPasswordIconButton>
+                                    }
                                 </FormInputContainer>
+
                                 <FormInputLabel isError={errors.password} inputLabel={inputPasswordLabel}>Password</FormInputLabel>
 
                                 {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
@@ -216,13 +219,10 @@ const ResetPasswordScreen = () => {
                                             color: errors.passwordRepeat ? C.red : C.black,
                                         }}
                                     />
-                                    {/* <ShowPasswordIconButton onPress={() => setPasswordShown(!passwordShown)}       >
-                                        {!passwordShown ?
-                                            <ShowPassIcon width={18} height={18} />
-                                            :
-                                            <ShowPassActiveIcon width={18} height={18} />
-                                        }
-                                    </ShowPasswordIconButton> */}
+                                    {errors.passwordRepeat && <ShowPasswordIconButton >
+                                        <ErrorIcon width={20} height={20} />
+                                    </ShowPasswordIconButton>
+                                    }
                                 </FormInputContainer>
                                 <FormInputLabel isError={errors.passwordRepeat} inputLabel={inputPasswordRepeatLabel}>Repeat password</FormInputLabel>
 
@@ -237,7 +237,11 @@ const ResetPasswordScreen = () => {
                 {isValid === true ?
                     <ButtonSubmit
                         isKeyboardOpen={isKeyboardOpen}
-                        onPress={handleSubmit(onSubmit)}>
+                        onPress={() => {
+                            navigation.navigate('LoginStack', { screen: 'LoginScreen' })
+                            handleSubmit(onSubmit)
+                        }
+                        }>
                         <ButtonSubmitText>Save New Password</ButtonSubmitText>
                     </ButtonSubmit>
                     :

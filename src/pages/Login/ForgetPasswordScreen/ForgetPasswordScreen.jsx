@@ -16,6 +16,7 @@ import {
 import IMAGES from '@/res/images'
 const {
     GoBackIcon,
+    ErrorIcon,
 
 } = IMAGES;
 // Styles
@@ -25,11 +26,13 @@ const {
     GoBackButton,
     ContentTitle,
     Header,
+    FormInputContainer,
     FormBlock,
     FormInputBlock,
     FormText,
     FormInputLabel,
     FormInput,
+    ShowPasswordIconButton,
     ButtonSubmit,
     ButtonSubmitDisable,
     ButtonSubmitText,
@@ -129,25 +132,33 @@ const ForgetPasswordScreen = () => {
                                     marginBottom: errors.resetEmail ? 28 : 13,
                                 }}
                             >
-                                <FormInput
-                                    inputLabel={inputEmailLabel}
-                                    selectionColor={C.lightGray}
-                                    placeholder={'Enter your email'}
-                                    cursorColor={C.black}
-                                    onFocus={() => { setInputFocus1(C.black) }}
-                                    onBlur={() => {
-                                        onBlur
-                                        setInputFocus1(C.lightGray)
-                                    }}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    style={{
-                                        borderColor: errors.resetEmail ? C.red : inputFocus1,
-                                        borderWidth: errors.password ? 2 : 1,
-                                        color: errors.password ? C.red : C.black,
-                                    }}
-                                />
-                                <FormInputLabel inputLabel={inputEmailLabel}>Your email</FormInputLabel>
+                                <FormInputContainer>
+
+                                    <FormInput
+                                        inputLabel={inputEmailLabel}
+                                        selectionColor={C.lightGray}
+                                        placeholder={'Enter your email'}
+                                        cursorColor={C.black}
+                                        onFocus={() => { setInputFocus1(C.black) }}
+                                        onBlur={() => {
+                                            onBlur
+                                            setInputFocus1(C.lightGray)
+                                        }}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        style={{
+                                            borderColor: errors.resetEmail ? C.red : inputFocus1,
+                                            borderWidth: errors.resetEmail ? 2 : 1,
+                                            color: errors.resetEmail ? C.red : C.black,
+                                        }}
+                                    />
+                                    {errors.resetEmail && <ShowPasswordIconButton >
+                                        <ErrorIcon width={20} height={20} />
+                                    </ShowPasswordIconButton>
+                                    }
+                                </FormInputContainer>
+
+                                <FormInputLabel isError={errors.resetEmail} inputLabel={inputEmailLabel}>Your email</FormInputLabel>
                                 {errors.resetEmail && <ErrorMessage>{errors.resetEmail.message}</ErrorMessage>}
                             </FormInputBlock>
                         )}
