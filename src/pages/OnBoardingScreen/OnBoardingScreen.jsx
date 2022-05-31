@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { StatusBar } from 'react-native';
+import { StatusBar, TouchableOpacity } from 'react-native';
 import {
     useNavigation
     // , useRoute 
@@ -92,6 +92,14 @@ const OnBoardingScreen = () => {
 
                 {/* Content */}
                 <Content style={{ flex: 1, height: '100%', }}>
+                    <TouchableOpacity
+                        style={{ position: 'absolute', top: 0, left: 0, width: 30, height: 30, backgroundColor: 'gray' }}
+                        onPress={() => {
+                            navigation.navigate('SignUpStack', {
+                                screen: 'AddProfileInfo'
+                            });
+                        }}
+                    ></TouchableOpacity>
                     <ContentTitle>
                         {title}
                     </ContentTitle>

@@ -24,7 +24,7 @@ flex-direction: row;
 const DisableBtn = styled.View`
 width: 100%;
 height: 56px;
-background-color: ${C.lightGray};
+background-color: ${C.gray};
 border-radius: 12px;
 display: flex;
 justify-content: center;
@@ -78,6 +78,12 @@ font-size: 28px;
 font-family: ${F.extraBlack};
 color: ${C.black};
 line-height: 35px;
+`
+const Title24 = styled.Text`
+font-size: 24px;
+font-family: ${F.bold};
+color: ${C.black};
+line-height: 30px;
 `
 const Title20 = styled.Text`
 font-size: 20px;
@@ -170,6 +176,7 @@ export const M = {
     TextBtnText: TextBtnText,
     // Text
     Title28: Title28,
+    Title24: Title24,
     Title20: Title20,
     PlainText17: PlainText17,
     PlainText13: PlainText13,

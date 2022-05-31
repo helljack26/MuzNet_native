@@ -43,7 +43,7 @@ const {
     ContainerLinkText,
 } = signUpStyle;
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
     const navigation = useNavigation();
     const { control, handleSubmit, resetField,
         formState: { dirtyFields, errors } } = useForm({
@@ -228,4 +228,4 @@ const LoginScreen = () => {
     )
 }
 
-export default LoginScreen;
+export default SignUpScreen;

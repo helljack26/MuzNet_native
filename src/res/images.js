@@ -8,6 +8,7 @@ import MailIcon from '../../assets/icon/social/mail_icon.svg'
 import ShowPassIcon from '../../assets/icon/showPass_icon.svg'
 import ShowPassActiveIcon from '../../assets/icon/showPass_active_icon.svg'
 import ErrorIcon from '../../assets/icon/error_icon.svg'
+import RoundGreenCheckIcon from '../../assets/icon/round_green_check_icon.svg'
 // Arrows
 import GoBackIcon from '../../assets/icon/goBack_icon.svg'
 
@@ -26,6 +27,7 @@ const IMAGES = {
     ShowPassIcon: ShowPassIcon,
     ShowPassActiveIcon: ShowPassActiveIcon,
     ErrorIcon: ErrorIcon,
+    RoundGreenCheckIcon: RoundGreenCheckIcon,
     // Arrows
     GoBackIcon: GoBackIcon,
 }
