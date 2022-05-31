@@ -7,6 +7,7 @@ import GoogleIcon from '../../assets/icon/social/google_icon.svg'
 import MailIcon from '../../assets/icon/social/mail_icon.svg'
 import ShowPassIcon from '../../assets/icon/showPass_icon.svg'
 import ShowPassActiveIcon from '../../assets/icon/showPass_active_icon.svg'
+import ErrorIcon from '../../assets/icon/error_icon.svg'
 // Arrows
 import GoBackIcon from '../../assets/icon/goBack_icon.svg'
 
@@ -24,6 +25,7 @@ const IMAGES = {
     MailIcon: MailIcon,
     ShowPassIcon: ShowPassIcon,
     ShowPassActiveIcon: ShowPassActiveIcon,
+    ErrorIcon: ErrorIcon,
     // Arrows
     GoBackIcon: GoBackIcon,
 }

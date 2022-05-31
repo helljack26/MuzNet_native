@@ -1,12 +1,12 @@
 const C = {
-    black: '#0C0C0E',
-    sBlack: '#636364',
+    lightGray: '#b9b9ba',
     gray: '#B9B9BA',
+    cyanGray: '#697A8D',
+    sBlack: '#636364',
+    black: '#0C0C0E',
+
     white: '#FEFEFE',
     red: '#F43B3B',
-
-    lightGray: '#b9b9ba',
-    backgroundGray: '#f4f4f4',
 }
 
 export default C;

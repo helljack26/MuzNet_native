@@ -1,5 +1,5 @@
 const S = {
-    emailNotValid: 'Invalid email adress',
+    emailNotValid: 'Invalid email address',
     passwordNotValid: 'Password is incorrect',
 
 }

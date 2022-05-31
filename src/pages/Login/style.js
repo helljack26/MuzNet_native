@@ -21,21 +21,22 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: row;
-margin-bottom: 21px;
+margin-bottom: 31px;
 `;
-
 const GoBackButton = styled(M.GoBackButton)`
 
 `;
-
 const ContentTitle = styled(M.Title28)`
 
+`;
+const FormText = styled(M.MediumText17)`
+color: ${C.cyanGray};
+margin-bottom: 24px;
 `;
 const FormBlock = styled.View`
 width: 100%;
 
 `;
-
 const FormInputBlock = styled(M.FormInputBlock)`
 
 `;
@@ -51,7 +52,6 @@ const FormInput = styled(M.FormInput)`
 const ShowPasswordIconButton = styled(M.ShowPasswordIconButton)`
 
 `;
-
 const Link = styled.TouchableOpacity`
 width: 100%;
 padding-top: 8px;
@@ -63,7 +63,6 @@ flex-direction: row;
 const LinkText = styled(M.PlainText17)`
 color: ${C.sBlack};
 `;
-
 const ButtonSubmit = styled(M.BlackBtn)`
 position: absolute;
 bottom : ${props => props.isKeyboardOpen === true ? 20 + 'px' : 50 + 'px'};
@@ -75,7 +74,9 @@ bottom : ${props => props.isKeyboardOpen === true ? 20 + 'px' : 50 + 'px'};
 const ButtonSubmitText = styled(M.BlackBtnText)`
 
 `;
+const ButtonSubmitTextDisable = styled(M.BlackBtnTextDisable)`
 
+`;
 const ErrorMessage = styled(M.ErrorMessage)`
 
 `;
@@ -85,6 +86,7 @@ export const style = {
     GoBackButton: GoBackButton,
     ContentTitle: ContentTitle,
     Header: Header,
+    FormText: FormText,
     FormBlock: FormBlock,
     FormInputBlock: FormInputBlock,
     FormInputContainer: FormInputContainer,
@@ -92,6 +94,7 @@ export const style = {
     FormInput: FormInput,
     ButtonSubmit: ButtonSubmit,
     ButtonSubmitDisable: ButtonSubmitDisable,
+    ButtonSubmitTextDisable: ButtonSubmitTextDisable,
     ButtonSubmitText: ButtonSubmitText,
     ShowPasswordIconButton: ShowPasswordIconButton,
     Link: Link,

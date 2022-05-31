@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Keyboard } from "react-native";
 
 export const isKeyboardShown = () => {
-    const [keyboardStatus, setKeyboardStatus] = useState(undefined);
+    const [keyboardStatus, setKeyboardStatus] = useState();
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener("keyboardDidShow", () => {

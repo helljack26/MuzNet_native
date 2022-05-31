@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import C from '@/res/colors'
 import S from '@/res/strings'
@@ -9,7 +9,7 @@ import S from '@/res/strings'
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import {
     useNavigation
-    // , useRoute 
+    // , useRoute
 } from '@react-navigation/native';
 
 // Images
@@ -34,89 +34,90 @@ const {
     FormInput,
     ButtonSubmit,
     ButtonSubmitDisable,
+    ShowPasswordIconButton,
     ButtonSubmitText,
     ButtonSubmitTextDisable,
-    ShowPasswordIconButton,
-    Link,
-    LinkText,
     ErrorMessage,
 } = style;
 
-const LoginScreen = () => {
+const ResetPasswordScreen = () => {
     const navigation = useNavigation();
+
     const { control, handleSubmit, watch, setError, clearErrors, resetField,
         formState: { dirtyFields, errors } } = useForm({
-            defaultValues: { userEmail: '', password: '' }
+            defaultValues: { password: '', passwordRepeat: '' }
         });
 
     const isKeyboardOpen = isKeyboardShown()
 
-    const [inputFocus1, setInputFocus1] = useState(C.lightGray);
-    const [inputEmailLabel, setInputEmailLabel] = useState(false);
-
-    const [inputFocus2, setInputFocus2] = useState(C.lightGray);
+    const [inputFocus, setInputFocus] = useState(C.lightGray);
     const [inputPasswordLabel, setInputPasswordLabel] = useState(false);
-    const [passwordShown, setPasswordShown] = useState(false);
+
+    const [inputFocus1, setInputFocus1] = useState(C.lightGray);
+    const [inputPasswordRepeatLabel, setInputPasswordRepeatLabel] = useState(false);
+
 
     useEffect(() => {
-        if (dirtyFields.userEmail === undefined) {
-            setInputEmailLabel(false)
-        }
-        if (dirtyFields.userEmail === true) {
-            setInputEmailLabel(true)
-        }
         if (dirtyFields.password === undefined) {
             setInputPasswordLabel(false)
         }
         if (dirtyFields.password === true) {
             setInputPasswordLabel(true)
         }
-    }, [dirtyFields.userEmail, dirtyFields.password]);
-
-    // Is both valid
-    const [isValidEmail, setIsValidEmail] = useState(false);
-    const [isValidPassword, setIsValidPassword] = useState(false);
-
-    const isValid = isValidEmail == true && isValidPassword === true
-
-    // Email live validation
-    const emailWatch = watch("userEmail");
-    const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-    function validateEmail(value) {
-        return EMAIL_REGEXP.test(value);
-    }
-    useEffect(() => {
-        if (validateEmail(emailWatch)) {
-            clearErrors('userEmail');
-            setIsValidEmail(true)
-        } else if (!validateEmail(emailWatch) && emailWatch.length > 0) {
-            setError('userEmail', { type: `pattern`, message: S.emailNotValid });
-            setIsValidEmail(false)
+        if (dirtyFields.passwordRepeat === undefined) {
+            setInputPasswordRepeatLabel(false)
         }
-    }, [emailWatch]);
+        if (dirtyFields.passwordRepeat === true) {
+            setInputPasswordRepeatLabel(true)
+        }
+    }, [dirtyFields.password, dirtyFields.passwordRepeat]);
+
+    const [isValidPassword, setIsValidPassword] = useState('');
+    const [isValidPasswordRepeat, setIsValidPasswordRepeat] = useState('');
+
+    const isValid = isValidPassword === isValidPasswordRepeat
+
 
     // Password live validation
     const passwordWatch = watch("password");
     useEffect(() => {
         const isEnoughPassword = passwordWatch.length
 
-        if (isEnoughPassword <= 7 && isEnoughPassword > 0) {
-            setIsValidPassword(false)
+        if (isEnoughPassword < 8 && isEnoughPassword > 0) {
             setError('password', { type: 'minLength', message: 'Minimum 8 characters' });
         }
         if (isEnoughPassword >= 8) {
             clearErrors('password');
-            setIsValidPassword(true)
+            setIsValidPassword(passwordWatch)
         }
     }, [passwordWatch]);
 
+    // Password repeat live validation
+    const passwordRepeatWatch = watch("passwordRepeat");
+    useEffect(() => {
+        const isEnoughPasswordRepeat = passwordRepeatWatch.length
+
+        setIsValidPasswordRepeat(passwordRepeatWatch)
+
+        if (isEnoughPasswordRepeat < 8 && isEnoughPasswordRepeat > 0) {
+            setError('passwordRepeat', { type: 'minLength', message: 'Minimum 8 characters' });
+        } else if (passwordWatch !== passwordRepeatWatch) {
+            setError('passwordRepeat', { type: 'value', message: "Passwords don't match" });
+        }
+        if (isEnoughPasswordRepeat >= 8 && passwordWatch === passwordRepeatWatch) {
+            clearErrors('passwordRepeat');
+        }
+
+    }, [passwordRepeatWatch, passwordWatch]);
+
+    // Submit
     const onSubmit = (data) => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
-        resetField('userEmail');
         resetField('password');
-        setIsValidEmail(false)
-        setIsValidPassword(false)
+        resetField('passwordRepeat');
+        setIsValidPassword('')
+        setIsValidPasswordRepeat('')
         return
     };
 
@@ -132,105 +133,51 @@ const LoginScreen = () => {
             <Container>
                 {/* Header */}
                 <Header>
-                    <GoBackButton
-
-                        onPress={() => {
-                            navigation.goBack()
-                        }}>
+                    <GoBackButton onPress={() => { navigation.goBack() }}>
                         <GoBackIcon width={12} height={20} />
-
                     </GoBackButton>
                     <ContentTitle>
-                        Log in
+                        Reset Password
                     </ContentTitle>
                 </Header>
 
                 {/* Form */}
                 <FormBlock >
 
-                    {/* Email or Name */}
-                    <Controller
-                        control={control}
-                        rules={{
-                            required: S.emailNotValid,
-                        }}
-                        render={({ field: { onChange, onBlur, value } }) => (
-                            <FormInputBlock
-                                style={{
-                                    marginBottom: errors.userEmail ? 28 : 13,
-                                }}
-                            >
-                                <FormInputContainer>
-                                    <FormInput
-                                        inputLabel={inputEmailLabel}
-                                        selectionColor={C.lightGray}
-                                        placeholder={'Enter your email'}
-                                        cursorColor={C.black}
-                                        onFocus={() => { setInputFocus1(C.black) }}
-                                        onBlur={() => {
-                                            onBlur
-                                            setInputFocus1(C.lightGray)
-                                        }}
-                                        onChangeText={onChange}
-                                        value={value}
-                                        style={{
-                                            borderColor: errors.userEmail ? C.red : inputFocus1,
-                                            borderWidth: errors.userEmail ? 2 : 1,
-                                            color: errors.userEmail ? C.red : C.black,
-                                        }}
-                                    />
-                                    {errors.userEmail && <ShowPasswordIconButton onPress={() => setPasswordShown(!passwordShown)}   >
-
-                                        <ErrorIcon width={20} height={20} />
-                                    </ShowPasswordIconButton>
-                                    }
-
-                                </FormInputContainer>
-
-                                <FormInputLabel isError={errors.userEmail} inputLabel={inputEmailLabel}>Your email</FormInputLabel>
-                                {errors.userEmail && <ErrorMessage>{errors.userEmail.message}</ErrorMessage>}
-                            </FormInputBlock>
-                        )}
-                        name="userEmail"
-                    />
-
-                    {/* Password */}
+                    {/* New Password */}
                     <Controller
                         control={control}
                         rules={{
                             required: S.passwordNotValid,
-                            minLength: 8,
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
-                            <FormInputBlock>
+                            <FormInputBlock
+                                style={{
+                                    marginBottom: errors.password ? 28 : 13,
+                                }}
+                            >
                                 <FormInputContainer>
                                     <FormInput
                                         isPassword={true}
                                         inputLabel={inputPasswordLabel}
-                                        secureTextEntry={!passwordShown ? true : false}
+                                        secureTextEntry={false}
                                         selectionColor={C.lightGray}
                                         placeholder={'Enter your password'}
                                         cursorColor={C.black}
-                                        onFocus={() => setInputFocus2(C.black)}
+                                        onFocus={() => setInputFocus(C.black)}
                                         onBlur={() => {
                                             onBlur
-                                            setInputFocus2(C.lightGray)
+                                            setInputFocus(C.lightGray)
                                         }}
                                         onChangeText={onChange}
                                         value={value}
                                         style={{
-                                            borderColor: errors.password ? C.red : inputFocus2,
+                                            borderColor: errors.password ? C.red : inputFocus,
                                             borderWidth: errors.password ? 2 : 1,
                                             color: errors.password ? C.red : C.black,
                                         }}
                                     />
-                                    <ShowPasswordIconButton onPress={() => setPasswordShown(!passwordShown)}       >
-                                        {!passwordShown ?
-                                            <ShowPassIcon width={18} height={18} />
-                                            :
-                                            <ShowPassActiveIcon width={18} height={18} />
-                                        }
-                                    </ShowPasswordIconButton>
+
                                 </FormInputContainer>
                                 <FormInputLabel isError={errors.password} inputLabel={inputPasswordLabel}>Password</FormInputLabel>
 
@@ -239,27 +186,65 @@ const LoginScreen = () => {
                         )}
                         name="password"
                     />
-                    <Link
-                        onPress={() => navigation.navigate('LoginStack', { screen: 'ForgetPasswordScreen' })}
-                        style={{
-                            marginTop: errors.password === undefined ? -12 : 5,
+
+                    {/* Repeat Password */}
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: S.passwordNotValid,
                         }}
-                    >
-                        <LinkText>
-                            Forget password?
-                        </LinkText>
-                    </Link>
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <FormInputBlock>
+                                <FormInputContainer>
+                                    <FormInput
+                                        isPassword={true}
+                                        inputLabel={inputPasswordRepeatLabel}
+                                        secureTextEntry={false}
+                                        selectionColor={C.lightGray}
+                                        placeholder={'Repeat password'}
+                                        cursorColor={C.black}
+                                        onFocus={() => setInputFocus1(C.black)}
+                                        onBlur={() => {
+                                            onBlur
+                                            setInputFocus1(C.lightGray)
+                                        }}
+                                        onChangeText={onChange}
+                                        value={value}
+                                        style={{
+                                            borderColor: errors.passwordRepeat ? C.red : inputFocus1,
+                                            borderWidth: errors.passwordRepeat ? 2 : 1,
+                                            color: errors.passwordRepeat ? C.red : C.black,
+                                        }}
+                                    />
+                                    {/* <ShowPasswordIconButton onPress={() => setPasswordShown(!passwordShown)}       >
+                                        {!passwordShown ?
+                                            <ShowPassIcon width={18} height={18} />
+                                            :
+                                            <ShowPassActiveIcon width={18} height={18} />
+                                        }
+                                    </ShowPasswordIconButton> */}
+                                </FormInputContainer>
+                                <FormInputLabel isError={errors.passwordRepeat} inputLabel={inputPasswordRepeatLabel}>Repeat password</FormInputLabel>
+
+                                {errors.passwordRepeat && <ErrorMessage>{errors.passwordRepeat.message}</ErrorMessage>}
+                            </FormInputBlock>
+                        )}
+                        name="passwordRepeat"
+                    />
                 </FormBlock>
+
 
                 {isValid === true ?
                     <ButtonSubmit
                         isKeyboardOpen={isKeyboardOpen}
                         onPress={handleSubmit(onSubmit)}>
-                        <ButtonSubmitText>Log in</ButtonSubmitText>
+                        <ButtonSubmitText>Save New Password</ButtonSubmitText>
                     </ButtonSubmit>
                     :
-                    <ButtonSubmitDisable isKeyboardOpen={isKeyboardOpen}>
-                        <ButtonSubmitTextDisable>Log in</ButtonSubmitTextDisable>
+                    <ButtonSubmitDisable
+                        isKeyboardOpen={isKeyboardOpen}
+                    >
+                        <ButtonSubmitTextDisable>Save New Password</ButtonSubmitTextDisable>
                     </ButtonSubmitDisable>
 
                 }
@@ -269,4 +254,4 @@ const LoginScreen = () => {
     )
 }
 
-export default LoginScreen;
+export default ResetPasswordScreen;
