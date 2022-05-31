@@ -104,6 +104,13 @@ font-family: ${F.regular};
 color: ${C.black};
 line-height: 22px;
 `
+const PlainText13 = styled.Text`
+font-size: 13px;
+font-family: ${F.regular};
+color: ${C.black};
+line-height: 16px;
+`
+
 const MediumText17 = styled.Text`
 font-size: 17px;
 font-family: ${F.medium};
@@ -179,6 +186,7 @@ export const M = {
     Title28: Title28,
     Title20: Title20,
     PlainText17: PlainText17,
+    PlainText13: PlainText13,
     MediumText17: MediumText17,
     ErrorMessage: ErrorMessage,
 

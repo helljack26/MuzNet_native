@@ -62,6 +62,7 @@ flex-direction: row;
 `;
 const LinkText = styled(M.PlainText17)`
 color: ${C.sBlack};
+
 `;
 const ButtonSubmit = styled(M.BlackBtn)`
 position: absolute;

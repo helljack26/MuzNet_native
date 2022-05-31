@@ -76,7 +76,6 @@ const LoginScreen = () => {
         // Clear input value
         resetField('userEmail');
         resetField('password');
-
         return
     };
 

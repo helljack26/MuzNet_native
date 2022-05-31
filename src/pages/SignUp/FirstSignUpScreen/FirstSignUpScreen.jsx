@@ -21,10 +21,12 @@ const {
     Container,
     Content,
     ContentTitle,
+    ContainerText,
+    AgreementBlock,
+    AgreementText,
     Button,
     ButtonText,
     ContentBlock,
-    ContainerText,
     ContainerLink,
     ContainerLinkText,
 } = style;
@@ -47,28 +49,29 @@ const FirstSignUpScreen = () => {
                 <Content>
 
                     <ContentTitle>
-                        Koin
+                        Join MuzNet!
                     </ContentTitle>
-
                     <Button>
+
                         <FacebookIcon width={10} height={20} />
                         <ButtonText>
-                            Continue with Google
+                            Continue with Facebook
                         </ButtonText>
                     </Button>
                     <Button>
                         <GoogleIcon width={20} height={20} />
 
                         <ButtonText>
-                            Continue with Facebook
+                            Continue with Google
                         </ButtonText>
                     </Button>
+
                     <Button
                         onPress={() => {
                             navigation.navigate('LoginScreen');
                         }}
                     >
-                        <MailIcon width={20} height={24} />
+                        <MailIcon width={24} height={24} />
 
                         <ButtonText>
                             Continue with Email
@@ -80,24 +83,25 @@ const FirstSignUpScreen = () => {
                         <ContainerText>
                             Already have an account?
                         </ContainerText>
-                        <ContainerLink>
+                        <ContainerLink
                             onPress={() => {
-                                navigation.navigate('OnBoardingScreen');
-                            }}
+                                navigation.navigate('LoginStack', { screen: 'WelcomeBackScreen' })
 
+                            }}
+                        >
                             <ContainerLinkText>
                                 Sign In
                             </ContainerLinkText>
                         </ContainerLink>
                     </ContentBlock>
-                    <ContainerLink
-                        style={{ marginTop: 20 }}
 
-                    >
-
-                    </ContainerLink>
                 </Content>
+                <AgreementBlock>
 
+                    <AgreementText>
+                        By signing up, you agree to our Terms of Service and acknowledge that our Privacy Policy applies to you
+                    </AgreementText>
+                </AgreementBlock>
             </Container>
         </>
 

@@ -52,15 +52,15 @@ const WelcomeBackScreen = () => {
 
                     <Button>
                         <FacebookIcon width={10} height={20} />
+
                         <ButtonText>
-                            Log In with Google
+                            Log In with Facebook
                         </ButtonText>
                     </Button>
                     <Button>
                         <GoogleIcon width={20} height={20} />
-
                         <ButtonText>
-                            Log In with Facebook
+                            Log In with Google
                         </ButtonText>
                     </Button>
                     <Button
@@ -68,7 +68,7 @@ const WelcomeBackScreen = () => {
                             navigation.navigate('LoginScreen');
                         }}
                     >
-                        <MailIcon width={20} height={24} />
+                        <MailIcon width={24} height={24} />
 
                         <ButtonText>
                             Log In with Email
@@ -80,7 +80,11 @@ const WelcomeBackScreen = () => {
                         <ContainerText>
                             Don’t have an account?
                         </ContainerText>
-                        <ContainerLink>
+                        <ContainerLink
+                            onPress={() => {
+                                navigation.navigate('SignUpStack', { screen: 'FirstSignUpScreen' })
+                            }}
+                        >
                             <ContainerLinkText>
                                 Sign Up
                             </ContainerLinkText>

@@ -14,6 +14,7 @@ align-items: center;
 background-color: white;
 padding: 0px 20px;
 padding-top: 35px;
+padding-bottom: 35px;
 `;
 const Content = styled.View`
 height: 70%;
@@ -27,7 +28,24 @@ background-color: white;
 
 const ContentTitle = styled(M.Title28)`
 padding-bottom: 8px;
-margin-bottom: 32px;
+margin-bottom: 24px;
+`;
+const AgreementBlock = styled.View`
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+position: absolute;
+bottom:50px;
+
+width: 100%;
+`;
+const AgreementText = styled(M.PlainText13)`
+color: ${C.sBlack};
+opacity: 0.6;
+
+text-align: center;
 `;
 
 const Button = styled(M.BorderBtn)`
@@ -45,7 +63,7 @@ flex-direction: row;
 margin-top: 16px;
 `;
 const ContainerText = styled(M.PlainText17)`
-color: ${C.gray};
+color: ${C.sBlack};
 display: flex;
 align-items: center;
 flex-direction: row;
@@ -55,17 +73,22 @@ const ContainerLink = styled.TouchableOpacity`
 
 `;
 const ContainerLinkText = styled(M.BorderBtnText)`
+    font-family: ${F.bold};
 
 `;
 
 export const style = {
     Container: Container,
-    Content: Content,
     ContentTitle: ContentTitle,
+    ContainerText: ContainerText,
+    AgreementText: AgreementText,
+    AgreementBlock: AgreementBlock,
+    Content: Content,
     Button: Button,
     ButtonText: ButtonText,
     ContentBlock: ContentBlock,
     ContainerText: ContainerText,
     ContainerLink: ContainerLink,
     ContainerLinkText: ContainerLinkText,
+
 }

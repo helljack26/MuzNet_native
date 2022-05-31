@@ -45,7 +45,7 @@ flex-direction: row;
 margin-top: 16px;
 `;
 const ContainerText = styled(M.PlainText17)`
-color: ${C.gray};
+color: ${C.sBlack};
 display: flex;
 align-items: center;
 flex-direction: row;
@@ -55,7 +55,7 @@ const ContainerLink = styled.TouchableOpacity`
 
 `;
 const ContainerLinkText = styled(M.BorderBtnText)`
-
+    font-family: ${F.bold};
 `;
 
 export const style = {
