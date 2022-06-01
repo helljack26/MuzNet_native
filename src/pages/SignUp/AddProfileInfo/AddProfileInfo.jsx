@@ -153,7 +153,7 @@ const AddProfileInfo = () => {
     }, [watchUserName, isListenNameInput])
 
     // Tab 2
-    const [userType, setUserType] = useState(false);
+    const [userType, setUserType] = useState();
     useEffect(() => {
         if (tabNumber === 1) {
             setIsDisableButton(true)
@@ -164,6 +164,10 @@ const AddProfileInfo = () => {
         }
         if (tabNumber === 2) {
             setIsDisableButton(true)
+            if (userType !== undefined) {
+                setIsDisableButton(false)
+
+            }
         }
 
     }, [tabNumber])
@@ -183,12 +187,7 @@ const AddProfileInfo = () => {
                     setScreenNumber(1)
                     setIsListenNameInput(true)
                 }
-                if (watchUserName.length < 1) {
-                    setError('userName', { type: 'value', message: 'Minimum 2 characters' });
-
-                }
-
-                console.log(isExist);
+                if (watchUserName.length < 1) { setError('userName', { type: 'value', message: 'Minimum 2 characters' }); }
                 break;
             case 2:
 
@@ -294,7 +293,7 @@ const AddProfileInfo = () => {
                     }
 
                     {/* =========== Tab 2 =========== */}
-                    {tabNumber === 2 && <SelectProfileType setUserType={setUserType} />}
+                    {tabNumber === 2 && <SelectProfileType userType={userType} setUserType={setUserType} setIsDisableButton={setIsDisableButton} />}
 
                 </Content>
 
@@ -308,9 +307,10 @@ const AddProfileInfo = () => {
                             <BlackBtnTextDisable>Next Step</BlackBtnTextDisable>
                         </DisableBtn>
                     }
-                    <ContentBlockRow>
 
-                        {/* <ContainerText>
+                    {/* <ContentBlockRow>
+
+                        <ContainerText>
                             Already have an account?
                         </ContainerText>
                         <ContainerLink
@@ -322,8 +322,8 @@ const AddProfileInfo = () => {
                         > 
                         onPress={handleSubmit(onSubmit)}
                             <ContainerLinkText>Sign In</ContainerLinkText>
-                        </ContainerLink> */}
-                    </ContentBlockRow>
+                        </ContainerLink>
+                    </ContentBlockRow> */}
 
                 </ContentBlock>
             </Container>

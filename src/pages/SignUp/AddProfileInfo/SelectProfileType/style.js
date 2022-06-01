@@ -6,66 +6,65 @@ import { M } from '@/res/mixin'
 
 
 const Container = styled.View`
-height: 100%;
 width: 100%;
 display: flex;
-flex-direction: column;
+flex-direction: row;
 align-items: center;
+justify-content: space-between;
 background-color: white;
-padding: 0px 20px;
-padding-top: 35px;
+
 `;
-const Content = styled.View`
-height: 70%;
-width: 100%;
+const SelectItem = styled.TouchableOpacity`
+width: 47%;
+border-radius: 12px;
+border-color: ${props => props.isActive === true ? C.black : C.lightGray};
+border-width: ${props => props.isActive === true ? 2 + 'px' : 1 + 'px'};
+border-style: solid;
 display: flex;
-flex-direction: column;
 justify-content: center;
 align-items: center;
-background-color: white;
+flex-direction: row;
 `;
-
-const ContentTitle = styled(M.Title28)`
-padding-bottom: 8px;
-margin-bottom: 32px;
-`;
-
-const Button = styled(M.BorderBtn)`
-margin-bottom: 8px;
-`;
-const ButtonText = styled(M.TextBtnText)`
-color: ${props => props.isSkip === true ? C.gray : C.black};
-padding-right: ${props => props.isSkip === true ? 0 + 'px' : 8 + 'px'};
-padding-left: 8px;
-`;
-const ContentBlock = styled.View`
+const CheckBox = styled.View`
+width: 20px;
+height: 20px;
+border-radius: 10px;
+border-color: ${props => props.isActive === true ? 'transparent' : C.lightGray};
+border-width: 1px;
+border-style: solid;
+position: absolute;
+top: 10px;
+right: 8px;
 display: flex;
+justify-content: center;
 align-items: center;
 flex-direction: row;
-margin-top: 16px;
 `;
-const ContainerText = styled(M.PlainText17)`
-color: ${C.sBlack};
-display: flex;
-align-items: center;
-flex-direction: row;
-padding-right: 5px;
-`;
-const ContainerLink = styled.TouchableOpacity`
+const ImageBlock = styled.View`
 
 `;
-const ContainerLinkText = styled(M.BorderBtnText)`
-    font-family: ${F.bold};
+const SelectTextBlock = styled.View`
+position: absolute;
+left:0px;
+bottom: 16px;
+right: 0px;
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+`;
+
+const SelectText = styled(M.MediumText17)`
+
+
 `;
 
 export const style = {
     Container: Container,
-    Content: Content,
-    ContentTitle: ContentTitle,
-    Button: Button,
-    ButtonText: ButtonText,
-    ContentBlock: ContentBlock,
-    ContainerText: ContainerText,
-    ContainerLink: ContainerLink,
-    ContainerLinkText: ContainerLinkText,
+    SelectItem: SelectItem,
+    CheckBox: CheckBox,
+    ImageBlock: ImageBlock,
+    SelectTextBlock: SelectTextBlock,
+    SelectText: SelectText,
 }

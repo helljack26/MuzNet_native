@@ -20,7 +20,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
-margin-bottom: 18px;
+margin-bottom: 24px;
 `;
 
 const StepBackButton = styled.TouchableOpacity`
