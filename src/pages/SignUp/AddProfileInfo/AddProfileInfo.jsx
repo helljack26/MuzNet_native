@@ -1,5 +1,6 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { Image, StatusBar } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
 import { useForm, Controller } from "react-hook-form";
 
@@ -7,8 +8,10 @@ import { useState, useEffect } from 'react';
 
 // Components
 import SelectProfileType from './SelectProfileType'
+import SelectMusicianType from './SelectMusicianType'
 import DropSelect from '@/components/DropSelect'
 
+// Variables
 import C from '@/res/colors'
 import S from '@/res/strings'
 
@@ -31,6 +34,8 @@ const {
     RoundGreenCheckIcon,
     ShowPassActiveIcon,
     ErrorIcon,
+    UploadPhotoIcon,
+    EditIcon
 } = IMAGES;
 
 // Styles
@@ -52,38 +57,152 @@ const {
     FormInputContainer,
     FormInputLabel,
     FormInput,
+
+    // Submit
+    ButtonSubmitBlock,
+    ButtonSubmitBlockSkip,
+    ButtonSubmitBlockSkipText,
     ButtonSubmit,
     ButtonSubmitText,
     ContentBlock,
+
+    // Main Info
+    UserMainInfoContainer,
+    UserAvatarBlock,
+    UserAvatarContainer,
+    UserAvatar,
+    UserAvatarReplaceButton,
+    UserAvatarButton,
+    UserAvatarButtonText,
+
     ContentBlockRow,
     ContainerText,
     ContainerLink,
     ContainerLinkText,
 } = style;
 
-const SignUpContent = [
+const SignUpContentContractor = [
     {
         tabNumber: 1,
+        fullNumber: 4,
         title: 'Welcome to MuzNet!',
         text: 'Please, pick a username',
         progressWidth: 10
     },
     {
         tabNumber: 2,
-        title: 'Welcome to MuzNet 2!',
+        fullNumber: 4,
+        title: 'Welcome to MuzNet!',
         text: 'Select profile type according to your needs',
         progressWidth: 30
     },
     {
         tabNumber: 3,
-        title: 'Welcome to MuzNet 3!',
-        text: 'Lorem ipsum dolor sit amet, consectetur',
+        fullNumber: 4,
+        title: 'Welcome to MuzNet!',
+        text: 'Select profile position',
         progressWidth: 60
     },
     {
         tabNumber: 4,
-        title: 'Welcome to MuzNet 4!',
-        text: 'Lets add profile iformation',
+        fullNumber: 4,
+        title: 'Welcome to MuzNet!',
+        text: 'Lets add profile information',
+        progressWidth: 100
+    },
+]
+const SignUpContentMusician = [
+    {
+        tabNumber: 1,
+        fullNumber: 6,
+        title: 'Welcome to MuzNet!',
+        text: 'Please, pick a username',
+        progressWidth: 15
+    },
+    {
+        tabNumber: 2,
+        fullNumber: 6,
+        title: 'Welcome to MuzNet!',
+        text: 'Select profile type according to your needs',
+        progressWidth: 32
+    },
+    {
+        tabNumber: 3,
+        fullNumber: 6,
+        title: 'Welcome to MuzNet!',
+        text: 'Select profile type according to your needs',
+        progressWidth: 50
+    },
+    {
+        tabNumber: 4,
+        fullNumber: 6,
+        title: 'Welcome to MuzNet!',
+        text: 'Pease choose your musical instrument',
+        progressWidth: 65
+    },
+    {
+        tabNumber: 5,
+        fullNumber: 6,
+        title: 'Welcome to MuzNet!',
+        text: 'Please choose your music genres',
+        progressWidth: 85
+    },
+    {
+        tabNumber: 6,
+        fullNumber: 6,
+        title: 'Welcome to MuzNet!',
+        text: 'Lets add profile information',
+        progressWidth: 100
+    },
+]
+const SignUpContentBand = [
+    {
+        tabNumber: 1,
+        fullNumber: 7,
+        title: 'Welcome to MuzNet!',
+        text: 'Please, pick a username',
+        progressWidth: 14
+    },
+    {
+        tabNumber: 2,
+        fullNumber: 7,
+        title: 'Welcome to MuzNet!',
+        text: 'Select profile type according to your needs',
+        progressWidth: 28
+    },
+    {
+        tabNumber: 3,
+        fullNumber: 7,
+        title: 'Welcome to MuzNet!',
+        text: 'Select profile type according to your needs',
+        progressWidth: 42
+    },
+    {
+        tabNumber: 4,
+        fullNumber: 7,
+        title: 'Welcome to MuzNet!',
+        text: 'Please, choose group members',
+        progressWidth: 56
+    },
+    {
+        tabNumber: 5,
+        fullNumber: 7,
+        title: 'Welcome to MuzNet!',
+        text: 'Pease choose your musical instrument',
+        progressWidth: 70
+    },
+    {
+        tabNumber: 6,
+        fullNumber: 7,
+        title: 'Welcome to MuzNet!',
+        text: 'Please choose your music genres',
+        progressWidth: 84
+    },
+    {
+        tabNumber: 7,
+        fullNumber: 7,
+        title: 'Welcome to MuzNet!',
+        text: 'Lets add profile information',
         progressWidth: 100
     },
 ]
@@ -95,26 +214,45 @@ const AddProfileInfo = () => {
 
     // Tab logic
     const [screenNumber, setScreenNumber] = useState(0);
-    const [isDisableButton, setIsDisableButton] = useState(false);
+    // const [screenNumberFull, setScreenNumberFull] = useState(4);
 
-    const tabNumber = SignUpContent[screenNumber].tabNumber
-    const title = SignUpContent[screenNumber].title
-    const text = SignUpContent[screenNumber].text
-    const progressWidth = SignUpContent[screenNumber].progressWidth
-
+    // Flow type
+    const [isContractor, setContractorFlow] = useState(true);
+    // Check is musician or band flow
+    const [isMusician, setMusicianFlow] = useState(true);
+    // Set musician or band data
+    const [isMusicianData, setMusicianData] = useState(true);
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            setScreenNumber(0)
-        });
-
-        return unsubscribe;
-    }, [navigation]);
-
-
+        if (isMusician === false) {
+            console.log('Тупа група');
+            setMusicianData(SignUpContentBand)
+        } else {
+            console.log('Тупа музыкант');
+            setMusicianData(SignUpContentMusician)
+        }
+    }, [isMusician]);
+    // const isMusicianData = isMusician === true ? SignUpContentMusician : SignUpContentBand
+    // Flow data
+    const isContractorData = isContractor === true ? SignUpContentContractor : isMusicianData
+    // Tab number / Header
+    const tabNumber = isContractorData[screenNumber].tabNumber
+    const tabFullNumber = isContractorData[screenNumber].fullNumber
+    const title = isContractorData[screenNumber].title
+    const text = isContractorData[screenNumber].text
+    const progressWidth = isContractorData[screenNumber].progressWidth
+    // Is disable button
+    const [isDisableButton, setIsDisableButton] = useState(false);
     // Form 
     const { control, handleSubmit, resetField, setError, watch, clearErrors,
         formState: { dirtyFields, errors } } = useForm({
-            defaultValues: { userName: '' }
+            defaultValues: {
+                userName: '',
+                userFullName: '',
+                userDescription: '',
+                userEmail: '',
+                userLocation: '',
+                userAddress: '',
+            }
         });
 
     // Tab 1 Name
@@ -134,13 +272,11 @@ const AddProfileInfo = () => {
                 setIsNameExist(false)
                 setInputFocus1(C.green)
                 setIsDisableButton(false)
-
             }
             if (isExist !== undefined) {
                 setError('userName', { type: 'value', message: S.userNameExistError });
                 setIsNameExist(true)
                 setIsDisableButton(true)
-
             }
         }
         if (watchUserName.length > 0) {
@@ -150,21 +286,105 @@ const AddProfileInfo = () => {
             setError('userName', { type: 'value', message: 'Minimum 2 characters' });
             setIsNameExist(true)
             setIsDisableButton(true)
-
         }
 
     }, [watchUserName, isListenNameInput])
 
-    // Tab 2 Contractor/Musician
+    // Tab 2 Contractor/Musician 
     const [userType, setUserType] = useState();
 
-    // Tab 3 For contractor
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            setScreenNumber(1)
+            setUserType('Musician')
+        });
+
+        return unsubscribe;
+    }, [navigation]);
+
     const [isOpen, setIsOpen] = useState(false);
     const [positionType, setPositionType] = useState(null);
     const toggling = (state) => setIsOpen(state);
     const onPositionSelect = value => () => { setPositionType(value); setIsOpen(false); };
+
+    // Tab 3 For musician
+    const [musicianType, setMusicianType] = useState();
+
+    // Tab Last with main user info
+    //New user image handler 
+    const [newAvatar, setNewAvatar] = useState(null);
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+
+        if (!result.cancelled) {
+            setNewAvatar(result.uri);
+        }
+    };
+    // Full name input
+    const [inputFocus2, setInputFocus2] = useState(C.lightGray);
+    const [inputFocus3, setInputFocus3] = useState(C.lightGray);
+    const [inputFocus4, setInputFocus4] = useState(C.lightGray);
+    const [inputFocus5, setInputFocus5] = useState(C.lightGray);
+    const [inputFocus6, setInputFocus6] = useState(C.lightGray);
+
+    const [inputFullNameLabel, setInputFullNameLabel] = useState(false);
+    const [inputDescriptionLabel, setInputDescriptionLabel] = useState(false);
+    const [inputEmailLabel, setInputEmailLabel] = useState(false);
+    const [inputLocationLabel, setInputLocationLabel] = useState(false);
+    const [inputAddressLabel, setInputAddressLabel] = useState(false);
+    useEffect(() => {
+        if (dirtyFields.userFullName === undefined) {
+            setInputFullNameLabel(false)
+        }
+        if (dirtyFields.userFullName !== undefined) {
+            setInputFullNameLabel(true)
+        }
+
+        if (dirtyFields.userDescription === undefined) {
+            setInputDescriptionLabel(false)
+        }
+        if (dirtyFields.userDescription !== undefined) {
+            setInputDescriptionLabel(true)
+        }
+
+        if (dirtyFields.userEmail === undefined) {
+            setInputEmailLabel(false)
+        }
+        if (dirtyFields.userEmail !== undefined) {
+            setInputEmailLabel(true)
+        }
+
+        if (dirtyFields.userLocation === undefined) {
+            setInputLocationLabel(false)
+        }
+        if (dirtyFields.userLocation !== undefined) {
+            setInputLocationLabel(true)
+        }
+
+        if (dirtyFields.userAddress === undefined) {
+            setInputAddressLabel(false)
+        }
+        if (dirtyFields.userAddress !== undefined) {
+            setInputAddressLabel(true)
+        }
+
+    }, [
+        dirtyFields.userFullName,
+        dirtyFields.userDescription,
+        dirtyFields.userEmail,
+        dirtyFields.userLocation,
+        dirtyFields.userAddress
+    ]);
     // Submit
     const onSubmit = (data) => {
+        if (newAvatar !== undefined) data.uploadAvatar = (newAvatar)
+
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
 
@@ -182,15 +402,23 @@ const AddProfileInfo = () => {
             setIsDisableButton(true)
             if (userType !== undefined) setIsDisableButton(false)
         }
-        if (tabNumber === 3) {
+        if (tabNumber === 3 && userType === 'Contractor') {
             setIsDisableButton(true)
             if (positionType !== null) setIsDisableButton(false)
         }
+        if (tabNumber === 3 && userType === 'Musician') {
+            setIsDisableButton(true)
+            if (musicianType !== null) setIsDisableButton(false)
+        }
+        // if (tabNumber === 4) {
+        //     setIsDisableButton(true)
+        //     // if (positionType !== null) setIsDisableButton(false)
+        // }
 
     }, [tabNumber, positionType])
 
 
-    // Check
+    // Check data and set next tab
     const formCheck = () => {
         switch (tabNumber) {
             case 1:
@@ -204,16 +432,15 @@ const AddProfileInfo = () => {
                 setScreenNumber(2)
                 break;
             case 3:
-
                 setScreenNumber(3)
                 break;
-
             default:
                 break;
         }
-
         return
     };
+
+
     return (
         <>
             <StatusBar
@@ -238,7 +465,7 @@ const AddProfileInfo = () => {
                             isActive={true}>
                             {tabNumber}
                         </TabNumberText>
-                        <TabNumberText> of 4
+                        <TabNumberText> of {tabFullNumber}
                         </TabNumberText>
 
                     </TabNumberIndication>
@@ -262,7 +489,11 @@ const AddProfileInfo = () => {
 
                 </Header>
 
-                <Content>
+                <Content
+                    style={{
+                        marginBottom: isKeyboardOpen === true ? 130 : 0,
+                    }}
+                    showsVerticalScrollIndicator={false}>
                     {/* =========== Tab 1 =========== */}
                     {tabNumber === 1 && <Controller
                         control={control}
@@ -308,30 +539,291 @@ const AddProfileInfo = () => {
                     }
 
                     {/* =========== Tab 2 =========== */}
-                    {tabNumber === 2 && <SelectProfileType userType={userType} setUserType={setUserType} setIsDisableButton={setIsDisableButton} />}
+                    {tabNumber === 2 &&
+                        <SelectProfileType
+                            userType={userType}
+                            setUserType={setUserType}
+                            setIsDisableButton={setIsDisableButton}
+                            setContractorFlow={setContractorFlow}
+                        />
+                    }
 
-                    {/* =========== Tab 3 =========== */}
+                    {/* =========== Tab 3 Contractor =========== */}
                     {(tabNumber === 3 && userType === 'Contractor') &&
-                        <DropSelect
-                            selectedValue={positionType}
-                            toggling={toggling}
-                            isOpen={isOpen}
-                            onSelect={onPositionSelect}
-                        />}
+                        <DropSelect selectedValue={positionType} toggling={toggling} isOpen={isOpen} onSelect={onPositionSelect} />
+                    }
+
+                    {/* =========== Tab 3 Musician =========== */}
+                    {(tabNumber === 3 && userType === 'Musician') &&
+                        <SelectMusicianType
+                            musicianType={musicianType}
+                            setMusicianType={setMusicianType}
+                            setIsDisableButton={setIsDisableButton}
+                            setMusicianFlow={setMusicianFlow}
+                        />
+                    }
+
+                    {/* =========== Tab 4 Contractor =========== */}
+                    {(tabNumber === 4 && userType === 'Contractor') &&
+                        <UserMainInfoContainer>
+                            {/* User Avatar */}
+                            <UserAvatarBlock>
+                                {/* Avatar upload from user */}
+                                {newAvatar !== null ?
+                                    <UserAvatarContainer>
+
+                                        <UserAvatar>
+                                            <Image source={{ uri: newAvatar }} style={{ width: 120, height: 120 }} resizeMode='stretch' />
+                                        </UserAvatar>
+
+                                        <UserAvatarReplaceButton onPress={pickImage}>
+                                            <EditIcon width={16} height={16} />
+                                        </UserAvatarReplaceButton>
+                                    </UserAvatarContainer>
+                                    :
+                                    <UserAvatarButton onPress={pickImage}>
+                                        <UploadPhotoIcon width={35} height={35} />
+                                        <UserAvatarButtonText>
+                                            Upload photo
+                                        </UserAvatarButtonText>
+                                    </UserAvatarButton>
+                                }
+                            </UserAvatarBlock>
+
+                            {/* User Name  */}
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: S.userNameExistError,
+                                    pattern: /^[aA-zZ\s аА-яЯ\s \d]+$/
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <FormInputBlock
+                                        style={{
+                                            marginBottom: errors.userFullName?.type === 'required' ? 35 : (errors.userFullName?.type === 'pattern' ? 60 : 13),
+                                        }}
+                                    >
+                                        <FormInputContainer>
+                                            <FormInput
+                                                inputLabel={inputFullNameLabel}
+                                                selectionColor={C.lightGray}
+                                                placeholder={'Enter your name'}
+                                                cursorColor={C.black}
+                                                onFocus={() => { setInputFocus2(C.black) }}
+                                                onBlur={() => {
+                                                    onBlur
+                                                    setInputFocus2(C.lightGray)
+                                                }}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                style={{
+                                                    borderColor: errors.userFullName ? C.red : inputFocus2,
+                                                    borderWidth: errors.userFullName ? 2 : 1,
+                                                    color: errors.userFullName ? C.red : C.black,
+                                                }}
+                                            />
+                                            {errors.userFullName && <ShowPasswordIconButton>
+                                                <ErrorIcon width={20} height={20} />
+                                            </ShowPasswordIconButton>
+                                            }
+
+                                        </FormInputContainer>
+                                        <FormInputLabel isError={errors.userFullName} inputLabel={inputFullNameLabel}>Name</FormInputLabel>
+
+                                        {errors.userFullName?.type === 'pattern' && <ErrorMessage >{S.userNameSymbolExclude}</ErrorMessage>}
+                                        {errors.userFullName?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+
+                                    </FormInputBlock>
+                                )}
+                                name="userFullName"
+                            />
+
+                            {/* User Description  */}
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: false,
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <FormInputBlock>
+                                        <FormInputContainer>
+                                            <FormInput
+                                                inputLabel={inputDescriptionLabel}
+                                                selectionColor={C.lightGray}
+                                                placeholder={'Description (optional)'}
+                                                cursorColor={C.black}
+                                                onFocus={() => { setInputFocus3(C.black) }}
+                                                onBlur={() => {
+                                                    onBlur
+                                                    setInputFocus3(C.lightGray)
+                                                }}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                style={{
+                                                    borderColor: inputFocus3,
+                                                    borderWidth: 1,
+                                                    color: C.black,
+                                                }}
+                                            />
+                                        </FormInputContainer>
+                                        <FormInputLabel inputLabel={inputDescriptionLabel}>Description</FormInputLabel>
+
+                                    </FormInputBlock>
+                                )}
+                                name="userDescription"
+                            />
+
+                            {/* Email or Name */}
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: S.emailNotValid,
+                                    pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <FormInputBlock
+                                        style={{
+                                            marginBottom: errors.userEmail ? 40 : 13,
+                                        }}
+                                    >
+                                        <FormInputContainer>
+                                            <FormInput
+                                                inputLabel={inputEmailLabel}
+
+                                                selectionColor={C.lightGray}
+                                                placeholder={'Enter your email'}
+                                                cursorColor={C.black}
+                                                onFocus={() => { setInputFocus4(C.black) }}
+                                                onBlur={() => {
+                                                    onBlur
+                                                    setInputFocus4(C.lightGray)
+                                                }}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                style={{
+                                                    borderColor: errors.userEmail ? C.red : inputFocus4,
+                                                    borderWidth: errors.userEmail ? 2 : 1,
+                                                    color: errors.userEmail ? C.red : C.black,
+                                                }}
+                                            />
+                                            {errors.userEmail && <ShowPasswordIconButton>
+                                                <ErrorIcon width={20} height={20} />
+                                            </ShowPasswordIconButton>
+                                            }
+
+                                        </FormInputContainer>
+                                        <FormInputLabel isError={errors.userEmail} inputLabel={inputEmailLabel}>Email</FormInputLabel>
+
+                                        {errors.userEmail?.type === 'minLength' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
+                                        {errors.userEmail?.type === 'pattern' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
+                                        {errors.userEmail && <ErrorMessage>{errors.userEmail.message}</ErrorMessage>}
+                                    </FormInputBlock>
+                                )}
+                                name="userEmail"
+                            />
+
+                            {/* User location  */}
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: false,
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <FormInputBlock>
+                                        <FormInputContainer>
+                                            <FormInput
+                                                inputLabel={inputLocationLabel}
+                                                selectionColor={C.lightGray}
+                                                placeholder={'Location'}
+                                                cursorColor={C.black}
+                                                onFocus={() => { setInputFocus5(C.black) }}
+                                                onBlur={() => {
+                                                    onBlur
+                                                    setInputFocus5(C.lightGray)
+                                                }}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                style={{
+                                                    borderColor: inputFocus5,
+                                                    borderWidth: 1,
+                                                    color: C.black,
+                                                }}
+                                            />
+                                        </FormInputContainer>
+                                        <FormInputLabel inputLabel={inputLocationLabel}>Location</FormInputLabel>
+
+                                    </FormInputBlock>
+                                )}
+                                name="userLocation"
+                            />
+
+                            {/* User address  */}
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: false,
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <FormInputBlock>
+                                        <FormInputContainer>
+                                            <FormInput
+                                                inputLabel={inputAddressLabel}
+                                                selectionColor={C.lightGray}
+                                                placeholder={'Address'}
+                                                cursorColor={C.black}
+                                                onFocus={() => { setInputFocus6(C.black) }}
+                                                onBlur={() => {
+                                                    onBlur
+                                                    setInputFocus6(C.lightGray)
+                                                }}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                style={{
+                                                    borderColor: inputFocus6,
+                                                    borderWidth: 1,
+                                                    color: C.black,
+                                                }}
+                                            />
+                                        </FormInputContainer>
+                                        <FormInputLabel inputLabel={inputAddressLabel}>Address</FormInputLabel>
+
+                                    </FormInputBlock>
+                                )}
+                                name="userAddress"
+                            />
+
+
+                        </UserMainInfoContainer>
+                    }
 
                 </Content>
 
                 <ContentBlock isKeyboardOpen={isKeyboardOpen}>
-                    {isDisableButton === false ?
-                        <ButtonSubmit onPress={formCheck}>
-                            <ButtonSubmitText>Next Step</ButtonSubmitText>
-                        </ButtonSubmit>
-                        :
-                        <DisableBtn >
-                            <BlackBtnTextDisable>Next Step</BlackBtnTextDisable>
-                        </DisableBtn>
-                    }
+                    {tabNumber !== 4 && (userType !== 'Contractor' || userType !== 'Musician') ?
 
+                        isDisableButton === false ?
+                            <ButtonSubmit onPress={formCheck}>
+                                <ButtonSubmitText>Next Step</ButtonSubmitText>
+                            </ButtonSubmit>
+                            :
+                            <DisableBtn >
+                                <BlackBtnTextDisable>Next Step</BlackBtnTextDisable>
+                            </DisableBtn>
+                        :
+                        <ButtonSubmitBlock>
+                            {/* TODO set redirection to main page */}
+                            <ButtonSubmit onPress={handleSubmit(onSubmit)}>
+                                <ButtonSubmitText>Create an Account</ButtonSubmitText>
+                            </ButtonSubmit>
+                            {/* TODO set skip redirection with sending filled field  */}
+                            {/* <ButtonSubmitBlockSkip>
+
+                                <ButtonSubmitBlockSkipText>
+                                    Skip this step
+                                </ButtonSubmitBlockSkipText>
+                            </ButtonSubmitBlockSkip> */}
+                        </ButtonSubmitBlock>
+                    }
                     {/* <ContentBlockRow>
 
                         <ContainerText>
@@ -351,8 +843,6 @@ const AddProfileInfo = () => {
 
                 </ContentBlock>
             </Container>
-
-
         </>
 
     )

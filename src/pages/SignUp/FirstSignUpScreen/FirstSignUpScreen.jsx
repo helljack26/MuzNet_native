@@ -13,7 +13,7 @@ const {
     PlainLogo,
     FacebookIcon,
     GoogleIcon,
-    MailIcon,
+    PhoneIcon,
 } = IMAGES;
 // Styles
 import { style } from './style'
@@ -69,10 +69,10 @@ const FirstSignUpScreen = () => {
                     <Button
                         onPress={() => { navigation.navigate('SignUpScreen'); }}
                     >
-                        <MailIcon width={24} height={24} />
+                        <PhoneIcon width={20} height={20} />
 
                         <ButtonText>
-                            Continue with Email
+                            Continue with Phone
                         </ButtonText>
                     </Button>
 
@@ -84,11 +84,10 @@ const FirstSignUpScreen = () => {
                         <ContainerLink
                             onPress={() => {
                                 navigation.navigate('LoginStack', { screen: 'WelcomeBackScreen' })
-
                             }}
                         >
                             <ContainerLinkText>
-                                Sign In
+                                Log In
                             </ContainerLinkText>
                         </ContainerLink>
                     </ContentBlock>

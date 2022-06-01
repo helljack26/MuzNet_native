@@ -68,7 +68,7 @@ color: ${C.sBlack};
 margin-top: 8px;
 
 `;
-const Content = styled.View`
+const Content = styled.ScrollView`
 width: 100%;
 
 `;
@@ -87,11 +87,22 @@ const FormInput = styled(M.FormInput)`
 const ButtonSubmit = styled(M.BlackBtn)`
 
 `;
+const ButtonSubmitBlock = styled.View`
+width: 100%;
+display: flex;
+/* justify-content: center; */
+align-items: center;
+flex-direction: column;
+`;
+const ButtonSubmitBlockSkip = styled.TouchableOpacity`
+margin-top: 16px;
+`;
+const ButtonSubmitBlockSkipText = styled(M.PlainText17)`
 
+`;
 const ButtonSubmitText = styled(M.BlackBtnText)`
 
 `;
-
 const ContentBlock = styled.View`
 display: flex;
 width: 100%;
@@ -124,6 +135,64 @@ const ContainerLinkText = styled(M.BorderBtnText)`
     font-family: ${F.bold};
 
 `;
+const UserMainInfoContainer = styled.View`
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+`;
+const UserAvatarBlock = styled.View`
+width: 120px;
+height: 120px;
+margin-bottom: 24px;
+`;
+const UserAvatarContainer = styled.View`
+
+width: 100%;
+height: 100%;
+
+`;
+const UserAvatar = styled.View`
+width: 100%;
+height: 100%;
+border-radius: 6px;
+overflow: hidden;
+background-color: ${C.white};
+border: 1px solid rgba(185, 185, 186, 0.142);
+`;
+const UserAvatarReplaceButton = styled.TouchableOpacity`
+position: absolute;
+bottom: -18px;
+right: -18px;
+width: 48px;
+height: 48px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+border-radius:23px;
+border-color: ${C.white};
+border-width: 4px;
+background-color: ${C.black};
+`;
+const UserAvatarButton = styled.TouchableOpacity`
+background-color: ${C.backGray};
+border-radius: 6px;
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+
+`;
+const UserAvatarButtonText = styled.Text`
+margin-top: 12px;
+font-size: 13px;
+font-family: ${F.semiBold};
+color: ${C.sBlack};
+line-height: 16px;
+`;
 export const style = {
     Container: Container,
     Header: Header,
@@ -144,9 +213,21 @@ export const style = {
     // Submit
     ButtonSubmit: ButtonSubmit,
     ButtonSubmitText: ButtonSubmitText,
+    ButtonSubmitBlock: ButtonSubmitBlock,
+    ButtonSubmitBlockSkip: ButtonSubmitBlockSkip,
+    ButtonSubmitBlockSkipText: ButtonSubmitBlockSkipText,
     ContentBlock: ContentBlock,
     ContentBlockRow: ContentBlockRow,
     ContainerText: ContainerText,
     ContainerLink: ContainerLink,
     ContainerLinkText: ContainerLinkText,
+
+    // User main info
+    UserMainInfoContainer: UserMainInfoContainer,
+    UserAvatarBlock: UserAvatarBlock,
+    UserAvatarContainer: UserAvatarContainer,
+    UserAvatar: UserAvatar,
+    UserAvatarReplaceButton: UserAvatarReplaceButton,
+    UserAvatarButton: UserAvatarButton,
+    UserAvatarButtonText: UserAvatarButtonText,
 }

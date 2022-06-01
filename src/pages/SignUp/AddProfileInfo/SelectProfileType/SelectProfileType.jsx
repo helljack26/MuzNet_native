@@ -22,8 +22,8 @@ const {
     SelectText,
 } = style;
 
-const SelectProfileType = ({ userType, setUserType, setIsDisableButton }) => {
-
+const SelectProfileType = ({ userType, setUserType, setIsDisableButton, setContractorFlow }) => {
+    // Local state
     const [isContractor, setIsContractor] = useState(false);
     const [isMusician, setIsMusician] = useState(false);
 
@@ -46,12 +46,16 @@ const SelectProfileType = ({ userType, setUserType, setIsDisableButton }) => {
             // To form
             setUserType('Contractor')
             setIsDisableButton(false)
+            setContractorFlow(true)
+
         } else {
             setIsContractor(false)
             setIsMusician(true)
             // To form
             setUserType('Musician')
             setIsDisableButton(false)
+
+            setContractorFlow(false)
         }
     }
 

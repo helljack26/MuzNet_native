@@ -115,7 +115,7 @@ color: ${C.red};
 font-family: ${F.regular};
 font-size: 13.5px;
 position:absolute;
-bottom:-22px ;
+top: 53px ;
 left:0px ;
 `;
 // Input

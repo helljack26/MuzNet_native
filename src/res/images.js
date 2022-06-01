@@ -10,6 +10,9 @@ import ShowPassActiveIcon from '../../assets/icon/showPass_active_icon.svg'
 import ErrorIcon from '../../assets/icon/error_icon.svg'
 import RoundGreenCheckIcon from '../../assets/icon/round_green_check_icon.svg'
 import RoundBlackCheckIcon from '../../assets/icon/round_black_check_icon.svg'
+import UploadPhotoIcon from '../../assets/icon/uploadPhoto_icon.svg'
+import EditIcon from '../../assets/icon/edit_icon.svg'
+import PhoneIcon from '../../assets/icon/phone_icon.svg'
 // Arrows
 import GoBackIcon from '../../assets/icon/goBack_icon.svg'
 
@@ -34,6 +37,9 @@ const IMAGES = {
     ErrorIcon: ErrorIcon,
     RoundGreenCheckIcon: RoundGreenCheckIcon,
     RoundBlackCheckIcon: RoundBlackCheckIcon,
+    UploadPhotoIcon: UploadPhotoIcon,
+    EditIcon: EditIcon,
+    PhoneIcon: PhoneIcon,
     // Arrows
     GoBackIcon: GoBackIcon,
 }

@@ -1,5 +1,6 @@
 const C = {
     lightGray: '#f0f0f0',
+    backGray: '#F2F3F9',
     gray: '#B9B9BA',
     cyanGray: '#697A8D',
     sBlack: '#636364',
