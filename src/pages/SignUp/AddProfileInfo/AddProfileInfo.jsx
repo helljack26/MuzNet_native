@@ -4,7 +4,10 @@ import { StatusBar } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 
 import { useState, useEffect } from 'react';
+
+// Components
 import SelectProfileType from './SelectProfileType'
+import DropSelect from '@/components/DropSelect'
 
 import C from '@/res/colors'
 import S from '@/res/strings'
@@ -114,7 +117,7 @@ const AddProfileInfo = () => {
             defaultValues: { userName: '' }
         });
 
-    // Tab 1
+    // Tab 1 Name
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
     const watchUserName = watch("userName");
 
@@ -152,26 +155,14 @@ const AddProfileInfo = () => {
 
     }, [watchUserName, isListenNameInput])
 
-    // Tab 2
+    // Tab 2 Contractor/Musician
     const [userType, setUserType] = useState();
-    useEffect(() => {
-        if (tabNumber === 1) {
-            setIsDisableButton(true)
-            // Active button if return from second tab
-            if (watchUserName.length > 1) {
-                setIsDisableButton(false)
-            }
-        }
-        if (tabNumber === 2) {
-            setIsDisableButton(true)
-            if (userType !== undefined) {
-                setIsDisableButton(false)
 
-            }
-        }
-
-    }, [tabNumber])
-
+    // Tab 3 For contractor
+    const [isOpen, setIsOpen] = useState(false);
+    const [positionType, setPositionType] = useState(null);
+    const toggling = (state) => setIsOpen(state);
+    const onPositionSelect = value => () => { setPositionType(value); setIsOpen(false); };
     // Submit
     const onSubmit = (data) => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
@@ -179,6 +170,26 @@ const AddProfileInfo = () => {
 
         return
     };
+
+    // Button Disable/Active 
+    useEffect(() => {
+        if (tabNumber === 1) {
+            setIsDisableButton(true)
+            // Active button if return from second tab
+            if (watchUserName.length > 1) setIsDisableButton(false)
+        }
+        if (tabNumber === 2) {
+            setIsDisableButton(true)
+            if (userType !== undefined) setIsDisableButton(false)
+        }
+        if (tabNumber === 3) {
+            setIsDisableButton(true)
+            if (positionType !== null) setIsDisableButton(false)
+        }
+
+    }, [tabNumber, positionType])
+
+
     // Check
     const formCheck = () => {
         switch (tabNumber) {
@@ -190,7 +201,11 @@ const AddProfileInfo = () => {
                 if (watchUserName.length < 1) { setError('userName', { type: 'value', message: 'Minimum 2 characters' }); }
                 break;
             case 2:
+                setScreenNumber(2)
+                break;
+            case 3:
 
+                setScreenNumber(3)
                 break;
 
             default:
@@ -294,6 +309,15 @@ const AddProfileInfo = () => {
 
                     {/* =========== Tab 2 =========== */}
                     {tabNumber === 2 && <SelectProfileType userType={userType} setUserType={setUserType} setIsDisableButton={setIsDisableButton} />}
+
+                    {/* =========== Tab 3 =========== */}
+                    {(tabNumber === 3 && userType === 'Contractor') &&
+                        <DropSelect
+                            selectedValue={positionType}
+                            toggling={toggling}
+                            isOpen={isOpen}
+                            onSelect={onPositionSelect}
+                        />}
 
                 </Content>
 
