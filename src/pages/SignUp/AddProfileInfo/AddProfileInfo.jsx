@@ -312,6 +312,9 @@ const AddProfileInfo = () => {
     // Tab Choose musical instrument
     const [chosenInstrument, getChosenInstrument] = useState([]);
 
+    // Tab Choose genres
+    const [chosenGenres, getChosenGenres] = useState([]);
+
     // Tab Last with main user info
     //New user image handler 
     const [newAvatar, setNewAvatar] = useState(null);
@@ -386,15 +389,14 @@ const AddProfileInfo = () => {
     // Submit
     const onSubmit = (data) => {
         if (newAvatar !== undefined) data.uploadAvatar = (newAvatar)
-        if (chosenInstrument !== undefined) data.musicalInstrument = (chosenInstrument)
+        if (chosenInstrument !== undefined) data.userMusicalInstrument = (chosenInstrument)
+        if (chosenGenres !== undefined) data.userGenres = (chosenGenres)
 
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
 
         return
     };
-
-
 
     // Check data and set next tab
     const formCheck = () => {
@@ -417,14 +419,21 @@ const AddProfileInfo = () => {
                     setScreenNumber(4)
                 }
                 break;
+            case 5:
+                if (musicianType !== S.Band && userType !== S.Contractor) {
+                    setScreenNumber(5)
+                }
+                break;
             default:
                 break;
         }
         return
     };
     // Is musician and singer choose instrument 
-    // const isSearchSelect = tabNumber === 4 && (musicianType === S.Singer || musicianType === S.Musician)
-    const isSearchSelect = tabNumber === 4 && (musicianType === S.Singer || musicianType === S.Musician)
+    const isMusicianOrSinger = musicianType === S.Singer || musicianType === S.Musician
+    const isInstrumentsSearchSelect = (tabNumber === 4) && isMusicianOrSinger
+    const isGenresSearchSelect = (tabNumber === 5) && isMusicianOrSinger
+
 
     // Button Disable/Active 
     useEffect(() => {
@@ -445,11 +454,24 @@ const AddProfileInfo = () => {
             setIsDisableButton(true)
             if (musicianType !== null) setIsDisableButton(false)
         }
-        if (isSearchSelect) {
+        if (isInstrumentsSearchSelect) {
             if (chosenInstrument.length === 0) { setIsDisableButton(true) }
             else { setIsDisableButton(false) }
         }
-    }, [tabNumber, positionType, musicianType, chosenInstrument])
+        if (isGenresSearchSelect) {
+            if (chosenGenres.length === 0) {
+            }
+            else { setIsDisableButton(false) }
+        }
+
+    }, [tabNumber, positionType, musicianType, chosenInstrument, chosenGenres])
+
+
+    const isContractorMainForm = tabNumber === 4 && userType === S.Contractor
+    const isMusicianOrSingerMainForm = tabNumber === 6 && isMusicianOrSinger
+    const isBandMainForm = tabNumber === 6 && isMusicianOrSinger
+
+    const typeOfForm = isContractorMainForm || isMusicianOrSingerMainForm || isBandMainForm
     return (
         <>
             <StatusBar
@@ -499,7 +521,7 @@ const AddProfileInfo = () => {
                 </Header>
 
                 <Content
-                    scrollEnabled={!isSearchSelect}
+                    scrollEnabled={!isInstrumentsSearchSelect}
                     nestedScrollEnabled={true}
                     style={{
                         marginBottom: isKeyboardOpen === true ? 100 : 0,
@@ -580,18 +602,26 @@ const AddProfileInfo = () => {
                     }
 
                     {/* =========== Tab Choose instrument =========== */}
-                    {((musicianType === S.Singer || musicianType === S.Musician) && tabNumber === 4) &&
+                    {((isMusicianOrSinger && tabNumber === 4) && userType !== S.Contractor) &&
                         <SelectWithSearch
                             dataForChoose={S.Instruments}
                             alreadyChosenInstrument={chosenInstrument}
                             searchPlaceholder={'Search instruments'}
                             getChosenData={getChosenInstrument}
+                        />
+                    }
 
+                    {/* =========== Tab Choose Genres =========== */}
+                    {(isMusicianOrSinger && tabNumber === 5) &&
+                        <SelectWithSearch
+                            dataForChoose={S.Genres}
+                            searchPlaceholder={'Search music genres'}
+                            getChosenData={getChosenGenres}
                         />
                     }
 
                     {/* =========== Tab 4 Contractor =========== */}
-                    {(tabNumber === 4 && userType === S.Contractor) &&
+                    {typeOfForm &&
                         <UserMainInfoContainer>
                             {/* User Avatar */}
                             <UserAvatarBlock>
@@ -785,7 +815,7 @@ const AddProfileInfo = () => {
                             />
 
                             {/* User address  */}
-                            <Controller
+                            {userType === S.Contractor && <Controller
                                 control={control}
                                 rules={{
                                     required: false,
@@ -817,7 +847,7 @@ const AddProfileInfo = () => {
                                     </FormInputBlock>
                                 )}
                                 name="userAddress"
-                            />
+                            />}
 
 
                         </UserMainInfoContainer>
@@ -826,6 +856,7 @@ const AddProfileInfo = () => {
                 </Content>
 
                 <ContentBlock isKeyboardOpen={isKeyboardOpen}>
+                    {/* Buttom for undefined user2 */}
                     {(tabNumber < 3 && userType === undefined) ?
                         isDisableButton === false ?
                             <ButtonSubmit onPress={formCheck}>
@@ -837,6 +868,7 @@ const AddProfileInfo = () => {
                             </DisableBtn>
                         : null
                     }
+                    {/* Buttom for contractor */}
                     {(tabNumber < 4 && userType === S.Contractor) ?
                         isDisableButton === false ?
                             <ButtonSubmit onPress={formCheck}>
@@ -849,7 +881,7 @@ const AddProfileInfo = () => {
                         : null
                     }
 
-                    {(tabNumber > 1 && userType === S.Musician) ?
+                    {(userType === S.Musician && (tabNumber > 1 && tabNumber < 6)) ?
                         isDisableButton === false ?
                             <ButtonSubmit onPress={formCheck}>
                                 <ButtonSubmitText>Next Step</ButtonSubmitText>
@@ -863,6 +895,14 @@ const AddProfileInfo = () => {
 
 
                     {(tabNumber === 4 && userType === S.Contractor) &&
+                        <ButtonSubmitBlock>
+                            {/* TODO set redirection to main page */}
+                            <ButtonSubmit onPress={handleSubmit(onSubmit)}>
+                                <ButtonSubmitText>Create an Account</ButtonSubmitText>
+                            </ButtonSubmit>
+                        </ButtonSubmitBlock>
+                    }
+                    {(tabNumber === 6 && isMusicianOrSinger) &&
                         <ButtonSubmitBlock>
                             {/* TODO set redirection to main page */}
                             <ButtonSubmit onPress={handleSubmit(onSubmit)}>
