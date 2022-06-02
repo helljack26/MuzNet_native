@@ -83,6 +83,30 @@ const FormInputLabel = styled(M.FormInputLabel)`
 const FormInput = styled(M.FormInput)`
 
 `;
+const CheckboxWilling = styled.View`
+display: flex;
+align-items: center;
+flex-direction: row;
+width: 100%;
+margin-bottom: 20px;
+`;
+const CheckboxWillingImg = styled.TouchableOpacity`
+width: 24px;
+height: 24px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+border-radius: 6px;
+border-color: ${C.lightGray};
+border-width: 1px;
+border-style: solid;
+background-color: ${C.white};
+`;
+const CheckboxWillingText = styled(M.MediumText15)`
+color: ${C.sBlack};
+margin-left: 8px;
+`;
 const ButtonSubmit = styled(M.BlackBtn)`
 
 `;
@@ -210,6 +234,9 @@ export const style = {
     FormInputContainer: FormInputContainer,
     FormInputLabel: FormInputLabel,
     FormInput: FormInput,
+    CheckboxWilling: CheckboxWilling,
+    CheckboxWillingImg: CheckboxWillingImg,
+    CheckboxWillingText: CheckboxWillingText,
 
     // Submit
     ButtonSubmit: ButtonSubmit,

@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Text, Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 
 import { useEffect } from 'react';
-import { ScrollView } from 'react-native';
 import { useState } from 'react';
 
 // Images

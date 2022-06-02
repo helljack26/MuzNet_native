@@ -33,10 +33,10 @@ import IMAGES from '@/res/images'
 const {
     GoBackIcon,
     RoundGreenCheckIcon,
-    ShowPassActiveIcon,
     ErrorIcon,
     UploadPhotoIcon,
-    EditIcon
+    EditIcon,
+    CheckBlackIcon,
 } = IMAGES;
 
 // Styles
@@ -58,7 +58,9 @@ const {
     FormInputContainer,
     FormInputLabel,
     FormInput,
-
+    CheckboxWilling,
+    CheckboxWillingImg,
+    CheckboxWillingText,
     // Submit
     ButtonSubmitBlock,
     // ButtonSubmitBlockSkip,
@@ -76,10 +78,6 @@ const {
     UserAvatarButton,
     UserAvatarButtonText,
 
-    ContentBlockRow,
-    ContainerText,
-    ContainerLink,
-    ContainerLinkText,
 } = style;
 
 const SignUpContentContractor = [
@@ -251,6 +249,7 @@ const AddProfileInfo = () => {
                 userEmail: '',
                 userLocation: '',
                 userAddress: '',
+                willingToTravel: ''
             }
         });
 
@@ -295,7 +294,6 @@ const AddProfileInfo = () => {
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             setScreenNumber(0)
-            // setUserType(S.Musician)
         });
 
         return unsubscribe;
@@ -309,6 +307,8 @@ const AddProfileInfo = () => {
     // Tab 3 For musician
     const [musicianType, setMusicianType] = useState();
 
+    // Tab Choose band members
+    const [chosenBandMembers, getChosenBandMembers] = useState([]);
     // Tab Choose musical instrument
     const [chosenInstrument, getChosenInstrument] = useState([]);
 
@@ -343,6 +343,11 @@ const AddProfileInfo = () => {
     const [inputEmailLabel, setInputEmailLabel] = useState(false);
     const [inputLocationLabel, setInputLocationLabel] = useState(false);
     const [inputAddressLabel, setInputAddressLabel] = useState(false);
+
+    // Willing to travel interstate for gigs
+    const [isWillingToTravel, setWillingToTravel] = useState(false);
+
+
     useEffect(() => {
         if (dirtyFields.userFullName === undefined) {
             setInputFullNameLabel(false)
@@ -388,13 +393,72 @@ const AddProfileInfo = () => {
     ]);
     // Submit
     const onSubmit = (data) => {
-        if (newAvatar !== undefined) data.uploadAvatar = (newAvatar)
-        if (chosenInstrument !== undefined) data.userMusicalInstrument = (chosenInstrument)
-        if (chosenGenres !== undefined) data.userGenres = (chosenGenres)
+        const userAvatar = newAvatar !== undefined ? newAvatar : null
 
-        console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
+        const userContractorPosition = positionType !== undefined ? positionType : null
+        const userBandMember = chosenBandMembers !== undefined ? chosenBandMembers : null
+        const userMusicalInstrument = chosenInstrument !== undefined ? chosenInstrument : null
+        const userGenres = chosenGenres !== undefined ? chosenGenres : null
+
+        if (data.willingToTravel !== undefined) data.willingToTravel = isWillingToTravel
+        if (data.willingToTravel === 'false') data.willingToTravel = false
+        if (data.willingToTravel === 'true') data.willingToTravel = true
+
+        const contractorData = {
+            userType: S.Contractor,
+            contractorPosition: userContractorPosition,
+            userName: data.userName,
+            userAvatar: userAvatar,
+            userFullName: data.userFullName,
+            userDescription: data.userDescription,
+            userEmail: data.userEmail,
+            userLocation: data.userLocation,
+            userAddress: data.userAddress,
+        }
+        const musicianOrSingerData = {
+            userType: S.Musician,
+            userMusiciaType: musicianType,
+            userName: data.userName,
+            userAvatar: userAvatar,
+            userFullName: data.userFullName,
+            userDescription: data.userDescription,
+            userEmail: data.userEmail,
+            userLocation: data.userLocation,
+            willingToTravel: data.willingToTravel,
+        }
+        const bandData = {
+            userName: data.userName,
+            userType: S.Musician,
+            userMusiciaType: S.Band,
+            userBandMembers: userBandMember,
+            userMusicalInstrument: userMusicalInstrument,
+            userGenres: userGenres,
+            userAvatar: userAvatar,
+            userFullName: data.userFullName,
+            userDescription: data.userDescription,
+            userEmail: data.userEmail,
+            userLocation: data.userLocation,
+            willingToTravel: data.willingToTravel,
+        }
+        const defineData = userType === S.Contractor ? contractorData : musicianType !== S.Band ? musicianOrSingerData : bandData
+        console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", defineData)
         // Clear input value
+        setUserType(null)
+        setPositionType(null)
+        setMusicianType(null)
 
+        resetField('userName')
+        setNewAvatar(null)
+        resetField('userFullName')
+        resetField('userDescription')
+        resetField('userEmail')
+        resetField('userLocation')
+        resetField('userAddress')
+        setWillingToTravel(false)
+        setScreenNumber(0)
+        // navigation.navigate('SignUpStack',{
+        //     screen
+        // })
         return
     };
 
@@ -418,10 +482,21 @@ const AddProfileInfo = () => {
                 if (musicianType !== S.Band && userType !== S.Contractor) {
                     setScreenNumber(4)
                 }
+                if (musicianType === S.Band) {
+                    setScreenNumber(4)
+                }
                 break;
             case 5:
                 if (musicianType !== S.Band && userType !== S.Contractor) {
                     setScreenNumber(5)
+                }
+                if (musicianType === S.Band) {
+                    setScreenNumber(5)
+                }
+                break;
+            case 6:
+                if (musicianType === S.Band) {
+                    setScreenNumber(6)
                 }
                 break;
             default:
@@ -429,11 +504,23 @@ const AddProfileInfo = () => {
         }
         return
     };
-    // Is musician and singer choose instrument 
+    // Musician and singer condition
     const isMusicianOrSinger = musicianType === S.Singer || musicianType === S.Musician
+    const isBand = musicianType === S.Band
+    // Is musician and singer choose instrument and genres
     const isInstrumentsSearchSelect = (tabNumber === 4) && isMusicianOrSinger
     const isGenresSearchSelect = (tabNumber === 5) && isMusicianOrSinger
 
+    const isBandMembersSearchSelect = (tabNumber === 4) && isBand
+    const isBandInstrumentsSearchSelect = (tabNumber === 5) && isBand
+    const isBandGenresSearchSelect = (tabNumber === 6) && isBand
+
+    // Define when show last tab with main user info inputs
+    const isContractorMainForm = tabNumber === 4 && userType === S.Contractor
+    const isMusicianOrSingerMainForm = tabNumber === 6 && isMusicianOrSinger
+    const isBandMainForm = tabNumber === 7 && isBand
+
+    const typeOfForm = isContractorMainForm || isMusicianOrSingerMainForm || isBandMainForm
 
     // Button Disable/Active 
     useEffect(() => {
@@ -466,12 +553,7 @@ const AddProfileInfo = () => {
 
     }, [tabNumber, positionType, musicianType, chosenInstrument, chosenGenres])
 
-
-    const isContractorMainForm = tabNumber === 4 && userType === S.Contractor
-    const isMusicianOrSingerMainForm = tabNumber === 6 && isMusicianOrSinger
-    const isBandMainForm = tabNumber === 6 && isMusicianOrSinger
-
-    const typeOfForm = isContractorMainForm || isMusicianOrSingerMainForm || isBandMainForm
+    const isDisableScroll = !isInstrumentsSearchSelect || !isGenresSearchSelect || !isBandMembersSearchSelect || isBandInstrumentsSearchSelect || isBandGenresSearchSelect
     return (
         <>
             <StatusBar
@@ -521,7 +603,7 @@ const AddProfileInfo = () => {
                 </Header>
 
                 <Content
-                    scrollEnabled={!isInstrumentsSearchSelect}
+                    scrollEnabled={isDisableScroll}
                     nestedScrollEnabled={true}
                     style={{
                         marginBottom: isKeyboardOpen === true ? 100 : 0,
@@ -601,8 +683,18 @@ const AddProfileInfo = () => {
                         />
                     }
 
+                    {/* =========== Tab Choose Band members =========== */}
+                    {(isBandMembersSearchSelect && userType !== S.Contractor) &&
+                        <SelectWithSearch
+                            dataForChoose={S.bandMembers}
+                            alreadyChosenInstrument={chosenInstrument}
+                            searchPlaceholder={'Search members type'}
+                            getChosenData={getChosenBandMembers}
+                        />
+                    }
+
                     {/* =========== Tab Choose instrument =========== */}
-                    {((isMusicianOrSinger && tabNumber === 4) && userType !== S.Contractor) &&
+                    {((isMusicianOrSinger && tabNumber === 4 || isBandInstrumentsSearchSelect) && userType !== S.Contractor) &&
                         <SelectWithSearch
                             dataForChoose={S.Instruments}
                             alreadyChosenInstrument={chosenInstrument}
@@ -612,7 +704,7 @@ const AddProfileInfo = () => {
                     }
 
                     {/* =========== Tab Choose Genres =========== */}
-                    {(isMusicianOrSinger && tabNumber === 5) &&
+                    {((isMusicianOrSinger && tabNumber === 5) || isBandGenresSearchSelect) &&
                         <SelectWithSearch
                             dataForChoose={S.Genres}
                             searchPlaceholder={'Search music genres'}
@@ -620,7 +712,7 @@ const AddProfileInfo = () => {
                         />
                     }
 
-                    {/* =========== Tab 4 Contractor =========== */}
+                    {/* =========== Last tab with inputs  =========== */}
                     {typeOfForm &&
                         <UserMainInfoContainer>
                             {/* User Avatar */}
@@ -730,7 +822,7 @@ const AddProfileInfo = () => {
                                 name="userDescription"
                             />
 
-                            {/* Email or Name */}
+                            {/* Email */}
                             <Controller
                                 control={control}
                                 rules={{
@@ -746,7 +838,6 @@ const AddProfileInfo = () => {
                                         <FormInputContainer>
                                             <FormInput
                                                 inputLabel={inputEmailLabel}
-
                                                 selectionColor={C.lightGray}
                                                 placeholder={'Enter your email'}
                                                 cursorColor={C.inputCursor}
@@ -849,12 +940,22 @@ const AddProfileInfo = () => {
                                 name="userAddress"
                             />}
 
+                            {/* Discount checkbox не добавлять */}
+                            {userType !== S.Contractor && <CheckboxWilling   >
+                                <CheckboxWillingImg onPress={() => setWillingToTravel(isWillingToTravel === false ? true : false)}>
+                                    {isWillingToTravel === true ? <CheckBlackIcon width={16} height={12} /> : null}
+                                </CheckboxWillingImg>
+                                <CheckboxWillingText>
+                                    Willing to travel interstate for gigs
+                                </CheckboxWillingText>
 
+                            </CheckboxWilling>}
                         </UserMainInfoContainer>
                     }
 
                 </Content>
 
+                {/* Buttons */}
                 <ContentBlock isKeyboardOpen={isKeyboardOpen}>
                     {/* Buttom for undefined user2 */}
                     {(tabNumber < 3 && userType === undefined) ?
@@ -868,7 +969,7 @@ const AddProfileInfo = () => {
                             </DisableBtn>
                         : null
                     }
-                    {/* Buttom for contractor */}
+                    {/* Next button for contractor */}
                     {(tabNumber < 4 && userType === S.Contractor) ?
                         isDisableButton === false ?
                             <ButtonSubmit onPress={formCheck}>
@@ -880,7 +981,7 @@ const AddProfileInfo = () => {
                             </DisableBtn>
                         : null
                     }
-
+                    {/* Next button for singer or musician */}
                     {(userType === S.Musician && (tabNumber > 1 && tabNumber < 6)) ?
                         isDisableButton === false ?
                             <ButtonSubmit onPress={formCheck}>
@@ -892,8 +993,19 @@ const AddProfileInfo = () => {
                             </DisableBtn>
                         : null
                     }
+                    {(isBandGenresSearchSelect && tabNumber === 6) ?
+                        isDisableButton === false ?
+                            <ButtonSubmit onPress={formCheck}>
+                                <ButtonSubmitText>Next Step</ButtonSubmitText>
+                            </ButtonSubmit>
+                            :
+                            <DisableBtn >
+                                <BlackBtnTextDisable>Next Step</BlackBtnTextDisable>
+                            </DisableBtn>
+                        : null
+                    }
 
-
+                    {/* Submit buttons in last tab */}
                     {(tabNumber === 4 && userType === S.Contractor) &&
                         <ButtonSubmitBlock>
                             {/* TODO set redirection to main page */}
@@ -903,9 +1015,17 @@ const AddProfileInfo = () => {
                         </ButtonSubmitBlock>
                     }
                     {(tabNumber === 6 && isMusicianOrSinger) &&
-                        <ButtonSubmitBlock>
+                        < ButtonSubmitBlock >
                             {/* TODO set redirection to main page */}
-                            <ButtonSubmit onPress={handleSubmit(onSubmit)}>
+                            <ButtonSubmit ButtonSubmit onPress={handleSubmit(onSubmit)}>
+                                <ButtonSubmitText>Create an Account</ButtonSubmitText>
+                            </ButtonSubmit>
+                        </ButtonSubmitBlock>
+                    }
+                    {(tabNumber === 7 && isBand) &&
+                        < ButtonSubmitBlock >
+                            {/* TODO set redirection to main page */}
+                            <ButtonSubmit ButtonSubmit onPress={handleSubmit(onSubmit)}>
                                 <ButtonSubmitText>Create an Account</ButtonSubmitText>
                             </ButtonSubmit>
                         </ButtonSubmitBlock>
@@ -936,7 +1056,7 @@ const AddProfileInfo = () => {
                     </ContentBlockRow> */}
 
                 </ContentBlock>
-            </Container>
+            </Container >
         </>
 
     )
