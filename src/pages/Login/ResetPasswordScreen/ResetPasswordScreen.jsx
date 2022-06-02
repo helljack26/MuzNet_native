@@ -123,7 +123,7 @@ const ResetPasswordScreen = () => {
                                         secureTextEntry={false}
                                         selectionColor={C.lightGray}
                                         placeholder={'Enter your password'}
-                                        cursorColor={C.black}
+                                        cursorColor={C.inputCursor}
                                         onFocus={() => setInputFocus(C.black)}
                                         onBlur={() => {
                                             onBlur
@@ -168,7 +168,7 @@ const ResetPasswordScreen = () => {
                                         secureTextEntry={false}
                                         selectionColor={C.lightGray}
                                         placeholder={'Repeat password'}
-                                        cursorColor={C.black}
+                                        cursorColor={C.inputCursor}
                                         onFocus={() => setInputFocus1(C.black)}
                                         onBlur={() => {
                                             onBlur

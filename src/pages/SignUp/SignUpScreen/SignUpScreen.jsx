@@ -4,7 +4,7 @@ import { StatusBar } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import C from '@/res/colors'
-import S from '@/res/strings'
+import { S } from '@/res/strings'
 
 import GoBack from '@/components/Buttons/GoBack/GoBack'
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
@@ -122,7 +122,7 @@ const SignUpScreen = () => {
                                         inputLabel={inputEmailLabel}
                                         selectionColor={C.lightGray}
                                         placeholder={'Enter your phone'}
-                                        cursorColor={C.black}
+                                        cursorColor={C.inputCursor}
                                         onFocus={() => { setInputFocus1(C.black) }}
                                         onBlur={() => {
                                             onBlur
@@ -169,7 +169,7 @@ const SignUpScreen = () => {
                                         secureTextEntry={!passwordShown ? true : false}
                                         selectionColor={C.lightGray}
                                         placeholder={'Enter your password'}
-                                        cursorColor={C.black}
+                                        cursorColor={C.inputCursor}
                                         onFocus={() => setInputFocus2(C.black)}
                                         onBlur={() => {
                                             onBlur

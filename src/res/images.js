@@ -13,6 +13,10 @@ import RoundBlackCheckIcon from '../../assets/icon/round_black_check_icon.svg'
 import UploadPhotoIcon from '../../assets/icon/uploadPhoto_icon.svg'
 import EditIcon from '../../assets/icon/edit_icon.svg'
 import PhoneIcon from '../../assets/icon/phone_icon.svg'
+import SearchIcon from '../../assets/icon/search_icon.svg'
+import CrossBlackIcon from '../../assets/icon/cross_black_icon.svg'
+import CrossGrayIcon from '../../assets/icon/cross_gray_icon.svg'
+import CheckBlackIcon from '../../assets/icon/check_black_icon.svg'
 // Arrows
 import GoBackIcon from '../../assets/icon/goBack_icon.svg'
 
@@ -40,6 +44,10 @@ const IMAGES = {
     UploadPhotoIcon: UploadPhotoIcon,
     EditIcon: EditIcon,
     PhoneIcon: PhoneIcon,
+    SearchIcon: SearchIcon,
+    CrossBlackIcon: CrossBlackIcon,
+    CrossGrayIcon: CrossGrayIcon,
+    CheckBlackIcon: CheckBlackIcon,
     // Arrows
     GoBackIcon: GoBackIcon,
 }

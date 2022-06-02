@@ -5,6 +5,7 @@ const C = {
     cyanGray: '#697A8D',
     sBlack: '#636364',
     black: '#0C0C0E',
+    inputCursor: '#B9B9BA',
 
     white: '#FEFEFE',
     red: '#F43B3B',

@@ -20,7 +20,6 @@ const {
 } = style;
 
 const SelectMusicianType = ({ musicianType, setMusicianType, setIsDisableButton, setMusicianFlow }) => {
-    console.log("🚀 ~ file: SelectMusicianType.jsx ~ line 23 ~ SelectMusicianType ~ musicianType", musicianType)
     // Local state
     const [localMusicianType, setLocalMusicianType] = useState(musicianType);
 

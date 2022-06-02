@@ -70,7 +70,6 @@ margin-top: 8px;
 `;
 const Content = styled.ScrollView`
 width: 100%;
-
 `;
 const FormInputBlock = styled(M.FormInputBlock)`
 
@@ -108,9 +107,11 @@ display: flex;
 width: 100%;
 align-items: center;
 flex-direction: column;
+background-color: ${C.white};
 
 position: absolute;
-bottom : ${props => props.isKeyboardOpen === true ? 20 + 'px' : 50 + 'px'};
+bottom : 0px;
+padding-bottom : ${props => props.isKeyboardOpen === true ? 20 + 'px' : 50 + 'px'};
 `;
 const ContentBlockRow = styled.View`
 display: flex;

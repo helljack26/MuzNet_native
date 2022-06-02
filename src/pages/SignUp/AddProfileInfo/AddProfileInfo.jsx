@@ -9,11 +9,12 @@ import { useState, useEffect } from 'react';
 // Components
 import SelectProfileType from './SelectProfileType'
 import SelectMusicianType from './SelectMusicianType'
+import SelectWithSearch from './SelectWithSearch'
 import DropSelect from '@/components/DropSelect'
 
 // Variables
 import C from '@/res/colors'
-import S from '@/res/strings'
+import { S } from '@/res/strings'
 
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown';
 import { useNavigation } from '@react-navigation/native';
@@ -60,8 +61,8 @@ const {
 
     // Submit
     ButtonSubmitBlock,
-    ButtonSubmitBlockSkip,
-    ButtonSubmitBlockSkipText,
+    // ButtonSubmitBlockSkip,
+    // ButtonSubmitBlockSkipText,
     ButtonSubmit,
     ButtonSubmitText,
     ContentBlock,
@@ -87,14 +88,14 @@ const SignUpContentContractor = [
         fullNumber: 4,
         title: 'Welcome to MuzNet!',
         text: 'Please, pick a username',
-        progressWidth: 10
+        progressWidth: 15
     },
     {
         tabNumber: 2,
         fullNumber: 4,
         title: 'Welcome to MuzNet!',
         text: 'Select profile type according to your needs',
-        progressWidth: 30
+        progressWidth: 32
     },
     {
         tabNumber: 3,
@@ -137,7 +138,7 @@ const SignUpContentMusician = [
         tabNumber: 4,
         fullNumber: 6,
         title: 'Welcome to MuzNet!',
-        text: 'Pease choose your musical instrument',
+        text: 'Please choose your musical instrument',
         progressWidth: 65
     },
     {
@@ -188,7 +189,7 @@ const SignUpContentBand = [
         tabNumber: 5,
         fullNumber: 7,
         title: 'Welcome to MuzNet!',
-        text: 'Pease choose your musical instrument',
+        text: 'Please choose your musical instrument',
         progressWidth: 70
     },
     {
@@ -224,14 +225,12 @@ const AddProfileInfo = () => {
     const [isMusicianData, setMusicianData] = useState(true);
     useEffect(() => {
         if (isMusician === false) {
-            console.log('Тупа група');
             setMusicianData(SignUpContentBand)
         } else {
-            console.log('Тупа музыкант');
             setMusicianData(SignUpContentMusician)
         }
     }, [isMusician]);
-    // const isMusicianData = isMusician === true ? SignUpContentMusician : SignUpContentBand
+
     // Flow data
     const isContractorData = isContractor === true ? SignUpContentContractor : isMusicianData
     // Tab number / Header
@@ -295,8 +294,8 @@ const AddProfileInfo = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            setScreenNumber(1)
-            setUserType('Musician')
+            setScreenNumber(0)
+            // setUserType(S.Musician)
         });
 
         return unsubscribe;
@@ -309,6 +308,9 @@ const AddProfileInfo = () => {
 
     // Tab 3 For musician
     const [musicianType, setMusicianType] = useState();
+
+    // Tab Choose musical instrument
+    const [chosenInstrument, getChosenInstrument] = useState([]);
 
     // Tab Last with main user info
     //New user image handler 
@@ -384,6 +386,7 @@ const AddProfileInfo = () => {
     // Submit
     const onSubmit = (data) => {
         if (newAvatar !== undefined) data.uploadAvatar = (newAvatar)
+        if (chosenInstrument !== undefined) data.musicalInstrument = (chosenInstrument)
 
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
@@ -391,31 +394,6 @@ const AddProfileInfo = () => {
         return
     };
 
-    // Button Disable/Active 
-    useEffect(() => {
-        if (tabNumber === 1) {
-            setIsDisableButton(true)
-            // Active button if return from second tab
-            if (watchUserName.length > 1) setIsDisableButton(false)
-        }
-        if (tabNumber === 2) {
-            setIsDisableButton(true)
-            if (userType !== undefined) setIsDisableButton(false)
-        }
-        if (tabNumber === 3 && userType === 'Contractor') {
-            setIsDisableButton(true)
-            if (positionType !== null) setIsDisableButton(false)
-        }
-        if (tabNumber === 3 && userType === 'Musician') {
-            setIsDisableButton(true)
-            if (musicianType !== null) setIsDisableButton(false)
-        }
-        // if (tabNumber === 4) {
-        //     setIsDisableButton(true)
-        //     // if (positionType !== null) setIsDisableButton(false)
-        // }
-
-    }, [tabNumber, positionType])
 
 
     // Check data and set next tab
@@ -434,13 +412,44 @@ const AddProfileInfo = () => {
             case 3:
                 setScreenNumber(3)
                 break;
+            case 4:
+                if (musicianType !== S.Band && userType !== S.Contractor) {
+                    setScreenNumber(4)
+                }
+                break;
             default:
                 break;
         }
         return
     };
+    // Is musician and singer choose instrument 
+    // const isSearchSelect = tabNumber === 4 && (musicianType === S.Singer || musicianType === S.Musician)
+    const isSearchSelect = tabNumber === 4 && (musicianType === S.Singer || musicianType === S.Musician)
 
-
+    // Button Disable/Active 
+    useEffect(() => {
+        if (tabNumber === 1) {
+            setIsDisableButton(true)
+            // Active button if return from second tab
+            if (watchUserName.length > 1) setIsDisableButton(false)
+        }
+        if (tabNumber === 2) {
+            setIsDisableButton(true)
+            if (userType !== undefined) setIsDisableButton(false)
+        }
+        if (tabNumber === 3 && userType === S.Contractor) {
+            setIsDisableButton(true)
+            if (positionType !== null) setIsDisableButton(false)
+        }
+        if (tabNumber === 3 && userType === S.Musician) {
+            setIsDisableButton(true)
+            if (musicianType !== null) setIsDisableButton(false)
+        }
+        if (isSearchSelect) {
+            if (chosenInstrument.length === 0) { setIsDisableButton(true) }
+            else { setIsDisableButton(false) }
+        }
+    }, [tabNumber, positionType, musicianType, chosenInstrument])
     return (
         <>
             <StatusBar
@@ -490,10 +499,13 @@ const AddProfileInfo = () => {
                 </Header>
 
                 <Content
+                    scrollEnabled={!isSearchSelect}
+                    nestedScrollEnabled={true}
                     style={{
-                        marginBottom: isKeyboardOpen === true ? 130 : 0,
+                        marginBottom: isKeyboardOpen === true ? 100 : 0,
                     }}
-                    showsVerticalScrollIndicator={false}>
+                    showsVerticalScrollIndicator={false}
+                >
                     {/* =========== Tab 1 =========== */}
                     {tabNumber === 1 && <Controller
                         control={control}
@@ -501,12 +513,16 @@ const AddProfileInfo = () => {
                             required: S.userNameExistError,
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
-                            <FormInputBlock>
+                            <FormInputBlock
+                                style={{
+                                    marginBottom: errors.userName ? 40 : 13,
+                                }}
+                            >
                                 <FormInputContainer>
                                     <FormInput
                                         selectionColor={C.lightGray}
                                         placeholder={'Username'}
-                                        cursorColor={C.black}
+                                        cursorColor={C.inputCursor}
                                         onFocus={() => { setInputFocus1(C.black) }}
                                         onBlur={() => {
                                             onBlur
@@ -549,12 +565,12 @@ const AddProfileInfo = () => {
                     }
 
                     {/* =========== Tab 3 Contractor =========== */}
-                    {(tabNumber === 3 && userType === 'Contractor') &&
+                    {(tabNumber === 3 && userType === S.Contractor) &&
                         <DropSelect selectedValue={positionType} toggling={toggling} isOpen={isOpen} onSelect={onPositionSelect} />
                     }
 
                     {/* =========== Tab 3 Musician =========== */}
-                    {(tabNumber === 3 && userType === 'Musician') &&
+                    {(tabNumber === 3 && userType === S.Musician) &&
                         <SelectMusicianType
                             musicianType={musicianType}
                             setMusicianType={setMusicianType}
@@ -563,8 +579,19 @@ const AddProfileInfo = () => {
                         />
                     }
 
+                    {/* =========== Tab Choose instrument =========== */}
+                    {((musicianType === S.Singer || musicianType === S.Musician) && tabNumber === 4) &&
+                        <SelectWithSearch
+                            dataForChoose={S.Instruments}
+                            alreadyChosenInstrument={chosenInstrument}
+                            searchPlaceholder={'Search instruments'}
+                            getChosenData={getChosenInstrument}
+
+                        />
+                    }
+
                     {/* =========== Tab 4 Contractor =========== */}
-                    {(tabNumber === 4 && userType === 'Contractor') &&
+                    {(tabNumber === 4 && userType === S.Contractor) &&
                         <UserMainInfoContainer>
                             {/* User Avatar */}
                             <UserAvatarBlock>
@@ -608,7 +635,7 @@ const AddProfileInfo = () => {
                                                 inputLabel={inputFullNameLabel}
                                                 selectionColor={C.lightGray}
                                                 placeholder={'Enter your name'}
-                                                cursorColor={C.black}
+                                                cursorColor={C.inputCursor}
                                                 onFocus={() => { setInputFocus2(C.black) }}
                                                 onBlur={() => {
                                                     onBlur
@@ -651,7 +678,7 @@ const AddProfileInfo = () => {
                                                 inputLabel={inputDescriptionLabel}
                                                 selectionColor={C.lightGray}
                                                 placeholder={'Description (optional)'}
-                                                cursorColor={C.black}
+                                                cursorColor={C.inputCursor}
                                                 onFocus={() => { setInputFocus3(C.black) }}
                                                 onBlur={() => {
                                                     onBlur
@@ -692,7 +719,7 @@ const AddProfileInfo = () => {
 
                                                 selectionColor={C.lightGray}
                                                 placeholder={'Enter your email'}
-                                                cursorColor={C.black}
+                                                cursorColor={C.inputCursor}
                                                 onFocus={() => { setInputFocus4(C.black) }}
                                                 onBlur={() => {
                                                     onBlur
@@ -735,7 +762,7 @@ const AddProfileInfo = () => {
                                                 inputLabel={inputLocationLabel}
                                                 selectionColor={C.lightGray}
                                                 placeholder={'Location'}
-                                                cursorColor={C.black}
+                                                cursorColor={C.inputCursor}
                                                 onFocus={() => { setInputFocus5(C.black) }}
                                                 onBlur={() => {
                                                     onBlur
@@ -770,7 +797,7 @@ const AddProfileInfo = () => {
                                                 inputLabel={inputAddressLabel}
                                                 selectionColor={C.lightGray}
                                                 placeholder={'Address'}
-                                                cursorColor={C.black}
+                                                cursorColor={C.inputCursor}
                                                 onFocus={() => { setInputFocus6(C.black) }}
                                                 onBlur={() => {
                                                     onBlur
@@ -799,8 +826,7 @@ const AddProfileInfo = () => {
                 </Content>
 
                 <ContentBlock isKeyboardOpen={isKeyboardOpen}>
-                    {tabNumber !== 4 && (userType !== 'Contractor' || userType !== 'Musician') ?
-
+                    {(tabNumber < 3 && userType === undefined) ?
                         isDisableButton === false ?
                             <ButtonSubmit onPress={formCheck}>
                                 <ButtonSubmitText>Next Step</ButtonSubmitText>
@@ -809,21 +835,49 @@ const AddProfileInfo = () => {
                             <DisableBtn >
                                 <BlackBtnTextDisable>Next Step</BlackBtnTextDisable>
                             </DisableBtn>
-                        :
+                        : null
+                    }
+                    {(tabNumber < 4 && userType === S.Contractor) ?
+                        isDisableButton === false ?
+                            <ButtonSubmit onPress={formCheck}>
+                                <ButtonSubmitText>Next Step</ButtonSubmitText>
+                            </ButtonSubmit>
+                            :
+                            <DisableBtn >
+                                <BlackBtnTextDisable>Next Step</BlackBtnTextDisable>
+                            </DisableBtn>
+                        : null
+                    }
+
+                    {(tabNumber > 1 && userType === S.Musician) ?
+                        isDisableButton === false ?
+                            <ButtonSubmit onPress={formCheck}>
+                                <ButtonSubmitText>Next Step</ButtonSubmitText>
+                            </ButtonSubmit>
+                            :
+                            <DisableBtn >
+                                <BlackBtnTextDisable>Next Step</BlackBtnTextDisable>
+                            </DisableBtn>
+                        : null
+                    }
+
+
+                    {(tabNumber === 4 && userType === S.Contractor) &&
                         <ButtonSubmitBlock>
                             {/* TODO set redirection to main page */}
                             <ButtonSubmit onPress={handleSubmit(onSubmit)}>
                                 <ButtonSubmitText>Create an Account</ButtonSubmitText>
                             </ButtonSubmit>
-                            {/* TODO set skip redirection with sending filled field  */}
-                            {/* <ButtonSubmitBlockSkip>
-
-                                <ButtonSubmitBlockSkipText>
-                                    Skip this step
-                                </ButtonSubmitBlockSkipText>
-                            </ButtonSubmitBlockSkip> */}
                         </ButtonSubmitBlock>
                     }
+
+                    {/* TODO set skip redirection with sending filled field  */}
+                    {/* <ButtonSubmitBlockSkip>
+
+                        <ButtonSubmitBlockSkipText>
+                            Skip this step
+                        </ButtonSubmitBlockSkipText>
+                    </ButtonSubmitBlockSkip> */}
                     {/* <ContentBlockRow>
 
                         <ContainerText>

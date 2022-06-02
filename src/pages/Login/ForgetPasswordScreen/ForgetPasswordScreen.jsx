@@ -109,7 +109,7 @@ const ForgetPasswordScreen = () => {
                                         inputLabel={inputEmailLabel}
                                         selectionColor={C.lightGray}
                                         placeholder={'Enter your email'}
-                                        cursorColor={C.black}
+                                        cursorColor={C.inputCursor}
                                         onFocus={() => { setInputFocus1(C.black) }}
                                         onBlur={() => {
                                             onBlur

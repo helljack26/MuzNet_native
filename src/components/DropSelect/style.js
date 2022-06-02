@@ -26,11 +26,11 @@ transform: ${props => props.isOpen ? 'rotate(90deg)' : 'rotate(-90deg)'};
 `;
 const DropContainer = styled.ScrollView`
 width: 100%;
-position: absolute;
-top: 56px;
+margin-top: 8px;
 background-color: white;
-left: 0px;
-z-index: 999;
+/* position: absolute; */
+/* left: 0px; */
+/* z-index: 999; */
 border-color: ${C.lightGray};
 border-width: 1px;
 border-radius: 6px;

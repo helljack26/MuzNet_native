@@ -119,7 +119,7 @@ const LoginScreen = () => {
                                         inputLabel={inputEmailLabel}
                                         selectionColor={C.lightGray}
                                         placeholder={'Enter your email'}
-                                        cursorColor={C.black}
+                                        cursorColor={C.inputCursor}
                                         onFocus={() => { setInputFocus1(C.black) }}
                                         onBlur={() => {
                                             onBlur
@@ -166,7 +166,7 @@ const LoginScreen = () => {
                                         secureTextEntry={!passwordShown ? true : false}
                                         selectionColor={C.lightGray}
                                         placeholder={'Enter your password'}
-                                        cursorColor={C.black}
+                                        cursorColor={C.inputCursor}
                                         onFocus={() => setInputFocus2(C.black)}
                                         onBlur={() => {
                                             onBlur
