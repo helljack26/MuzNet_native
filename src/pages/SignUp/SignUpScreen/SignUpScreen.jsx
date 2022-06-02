@@ -3,13 +3,18 @@ import { StatusBar } from 'react-native';
 
 import { useState, useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
+
 import C from '@/res/colors'
+import F from '@/res/fonts'
 import { S } from '@/res/strings'
 
 import GoBack from '@/components/Buttons/GoBack/GoBack'
+import DropFlagSelect from './DropFlagSelect'
+
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { useNavigation } from '@react-navigation/native';
 
+import MaskInput from 'react-native-mask-input';
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -41,45 +46,52 @@ const {
     ContainerText,
     ContainerLink,
     ContainerLinkText,
+    FormInputContainerPhone,
 } = signUpStyle;
 
 const SignUpScreen = () => {
     const navigation = useNavigation();
-    const { control, handleSubmit, resetField,
+    const { control, handleSubmit, resetField, watch,
         formState: { dirtyFields, errors } } = useForm({
-            defaultValues: { userEmail: '', password: '' }
+            defaultValues: { userPhoneNumber: '', password: '' }
         });
 
     const isKeyboardOpen = isKeyboardShown()
 
+    const [phone, setPhone] = useState('');
+
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
-    const [inputEmailLabel, setInputEmailLabel] = useState(false);
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [positionType, setPositionType] = useState(null);
+    const toggling = (state) => setIsOpen(state);
+    const onPositionSelect = value => () => { setPositionType(value); setIsOpen(false); };
 
     const [inputFocus2, setInputFocus2] = useState(C.lightGray);
     const [inputPasswordLabel, setInputPasswordLabel] = useState(false);
     const [passwordShown, setPasswordShown] = useState(false);
 
     useEffect(() => {
-        if (dirtyFields.userEmail === undefined) {
-            setInputEmailLabel(false)
-        }
-        if (dirtyFields.userEmail === true) {
-            setInputEmailLabel(true)
-        }
+
         if (dirtyFields.password === undefined) {
             setInputPasswordLabel(false)
         }
         if (dirtyFields.password === true) {
             setInputPasswordLabel(true)
         }
-    }, [dirtyFields.userEmail, dirtyFields.password]);
+    }, [dirtyFields.password]);
 
     const onSubmit = (data) => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
-        resetField('userEmail');
         resetField('password');
-        return
+
+        setPhone('');
+        resetField('userPhoneNumber');
+        return navigation.navigate('VerifyPhoneScreen', {
+            phoneNumber: data.userPhoneNumber,
+        })
+
     };
 
     return (
@@ -104,53 +116,75 @@ const SignUpScreen = () => {
                 {/* Form */}
                 <FormBlock >
 
-                    {/* Email or Name */}
+                    {/* Phone number */}
                     <Controller
                         control={control}
                         rules={{
-                            required: S.emailNotValid,
-                            pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
+                            required: true,
+                            minLength: 17
                         }}
-                        render={({ field: { onChange, onBlur, value } }) => (
+                        render={({ field: { onChange, onBlur } }) => (
                             <FormInputBlock
-                                style={{
-                                    marginBottom: errors.userEmail ? 28 : 13,
-                                }}
+                                style={
+                                    {
+                                        marginBottom: errors.userPhoneNumber ? 20 : 13
+
+                                    }
+                                }
                             >
-                                <FormInputContainer>
-                                    <FormInput
-                                        inputLabel={inputEmailLabel}
-                                        selectionColor={C.lightGray}
-                                        placeholder={'Enter your phone'}
+                                <FormInputContainerPhone>
+                                    <DropFlagSelect
+                                        inputFocus1={inputFocus1}
+                                        isError={errors.userPhoneNumber}
+                                        selectedValue={positionType} toggling={toggling} isOpen={isOpen} onSelect={onPositionSelect} />
+
+                                    <MaskInput
                                         cursorColor={C.inputCursor}
                                         onFocus={() => { setInputFocus1(C.black) }}
                                         onBlur={() => {
                                             onBlur
                                             setInputFocus1(C.lightGray)
                                         }}
-                                        onChangeText={onChange}
-                                        value={value}
+                                        keyboardType='phone-pad'
+                                        maxLength={17}
                                         style={{
-                                            borderColor: errors.userEmail ? C.red : inputFocus1,
-                                            borderWidth: errors.userEmail ? 2 : 1,
-                                            color: errors.userEmail ? C.red : C.black,
+                                            width: '100%',
+                                            flex: 1,
+                                            height: 48,
+                                            paddingLeft: 8,
+                                            borderWidth: 1,
+                                            borderLeftWidth: 0,
+                                            borderTopRightRadius: 6,
+                                            borderBottomRightRadius: 6,
+                                            borderColor: inputFocus1,
+                                            fontSize: 17,
+                                            fontFamily: F.regular,
+                                            color: C.black,
+
+                                            borderColor: errors.userPhoneNumber ? C.red : inputFocus1,
+                                            borderWidth: errors.userPhoneNumber ? 2 : 1,
+                                            color: errors.userPhoneNumber ? C.red : C.black,
                                         }}
+
+                                        value={phone}
+
+                                        onChangeText={(masked, unmasked) => {
+                                            onChange(masked)
+                                            setPhone(masked);
+                                        }}
+                                        mask={['+', /\d/, ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                                     />
-                                    {errors.userEmail && <ShowPasswordIconButton>
+                                    {errors.userPhoneNumber && <ShowPasswordIconButton>
                                         <ErrorIcon width={20} height={20} />
                                     </ShowPasswordIconButton>
                                     }
+                                </FormInputContainerPhone>
+                                {errors.resetEmail?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+                                {errors.resetEmail?.type === 'minLenght' && <ErrorMessage>{S.phoneNumberNotValid}</ErrorMessage>}
 
-                                </FormInputContainer>
-
-                                <FormInputLabel isError={errors.userEmail} inputLabel={inputEmailLabel}>Your phone</FormInputLabel>
-
-                                {errors.userEmail?.type === 'minLength' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
-                                {errors.userEmail?.type === 'pattern' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
-                                {errors.userEmail && <ErrorMessage>{errors.userEmail.message}</ErrorMessage>}
                             </FormInputBlock>
                         )}
-                        name="userEmail"
+                        name="userPhoneNumber"
                     />
 
                     {/* Password */}
@@ -217,7 +251,7 @@ const SignUpScreen = () => {
                                 )
                             }}
                         >
-                            <ContainerLinkText>Sign In</ContainerLinkText>
+                            <ContainerLinkText>Log In</ContainerLinkText>
                         </ContainerLink>
                     </ContentBlockRow>
 

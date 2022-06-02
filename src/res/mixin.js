@@ -137,10 +137,11 @@ width: 100%;
 `;
 const FormInput = styled.TextInput`
 width: 100%;
-background-color: white;
 font-family: ${F.regular};
-border: 1px solid ${C.lightGray};
+/* background-color: white; */
+/* border: 1px solid ${C.lightGray}; */
 color: ${C.black};
+z-index: 0;
 border-style: solid;
 border-radius: 6px;
 height:48px;
@@ -191,7 +192,7 @@ export const M = {
     PlainText17: PlainText17,
     PlainText13: PlainText13,
     MediumText17: MediumText17,
-    MediumText15:MediumText15,
+    MediumText15: MediumText15,
     MediumText13: MediumText13,
     ErrorMessage: ErrorMessage,
 

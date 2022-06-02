@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import FirstSignUpScreen from '../../src/pages/SignUp/FirstSignUpScreen';
 import SignUpScreen from '../../src/pages/SignUp/SignUpScreen';
+import VerifyPhoneScreen from '../../src/pages/SignUp/VerifyPhoneScreen';
 import AddProfileInfo from '../../src/pages/SignUp/AddProfileInfo';
 
 
@@ -19,6 +20,7 @@ export default function SignUpStack() {
         >
             <Stack.Screen name="FirstSignUpScreen" component={FirstSignUpScreen} />
             <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+            <Stack.Screen name="VerifyPhoneScreen" component={VerifyPhoneScreen} />
             <Stack.Screen name="AddProfileInfo" component={AddProfileInfo} />
 
         </Stack.Navigator>

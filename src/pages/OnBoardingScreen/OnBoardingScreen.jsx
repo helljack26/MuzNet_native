@@ -76,7 +76,6 @@ const OnBoardingScreen = () => {
 
     return (
         <>
-
             <StatusBar
                 barStyle={'light-content'}
                 hidden={false}
@@ -84,7 +83,6 @@ const OnBoardingScreen = () => {
                 translucent={true}
             />
             {/* Image */}
-
             <Container >
                 <OnboardImageBlock>
                     <OnboardImage source={image} resizeMode="contain" />
@@ -96,7 +94,8 @@ const OnBoardingScreen = () => {
                         style={{ position: 'absolute', top: 0, left: 0, width: 30, height: 30, backgroundColor: 'gray' }}
                         onPress={() => {
                             navigation.navigate('SignUpStack', {
-                                screen: 'AddProfileInfo'
+                                screen: 'VerifyPhoneScreen',
+                                // phoneNumber: 'Говна тебе в вентилятор',
                             });
                         }}
                     ></TouchableOpacity>

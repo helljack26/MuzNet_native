@@ -1,5 +1,8 @@
+
+
 export const S = {
     emailNotValid: 'Invalid email address',
+    phoneNumberNotValid: 'Invalid phone number',
     inputRequired: 'Required field',
     passwordNotValid: 'Password is incorrect',
     passwordMinimum: 'Minimum 8 characters',

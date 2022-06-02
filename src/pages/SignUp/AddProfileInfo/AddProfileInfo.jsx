@@ -455,10 +455,10 @@ const AddProfileInfo = () => {
         resetField('userLocation')
         resetField('userAddress')
         setWillingToTravel(false)
-        setScreenNumber(0)
-        // navigation.navigate('SignUpStack',{
-        //     screen
-        // })
+
+        navigation.navigate('LoginStack', {
+            screen: 'LoginScreen'
+        })
         return
     };
 
@@ -958,7 +958,7 @@ const AddProfileInfo = () => {
                 {/* Buttons */}
                 <ContentBlock isKeyboardOpen={isKeyboardOpen}>
                     {/* Buttom for undefined user2 */}
-                    {(tabNumber < 3 && userType === undefined) ?
+                    {(tabNumber < 3) ?
                         isDisableButton === false ?
                             <ButtonSubmit onPress={formCheck}>
                                 <ButtonSubmitText>Next Step</ButtonSubmitText>
@@ -970,7 +970,7 @@ const AddProfileInfo = () => {
                         : null
                     }
                     {/* Next button for contractor */}
-                    {(tabNumber < 4 && userType === S.Contractor) ?
+                    {((tabNumber > 2 && tabNumber < 4) && userType === S.Contractor) ?
                         isDisableButton === false ?
                             <ButtonSubmit onPress={formCheck}>
                                 <ButtonSubmitText>Next Step</ButtonSubmitText>
@@ -982,7 +982,7 @@ const AddProfileInfo = () => {
                         : null
                     }
                     {/* Next button for singer or musician */}
-                    {(userType === S.Musician && (tabNumber > 1 && tabNumber < 6)) ?
+                    {(userType === S.Musician && (tabNumber > 2 && tabNumber < 6)) ?
                         isDisableButton === false ?
                             <ButtonSubmit onPress={formCheck}>
                                 <ButtonSubmitText>Next Step</ButtonSubmitText>

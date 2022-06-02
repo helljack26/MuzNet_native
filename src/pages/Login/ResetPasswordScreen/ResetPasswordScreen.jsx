@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
 
 import C from '@/res/colors'
-import S from '@/res/strings'
+import { S } from '@/res/strings'
 
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import {

@@ -4,6 +4,13 @@ import C from '@/res/colors'
 import F from '@/res/fonts'
 import { M } from '@/res/mixin'
 
+const FormInputContainerPhone = styled.View`
+width: 100%;
+height: 48px;
+display: flex;
+align-items: center;
+flex-direction: row;
+`;
 const ButtonSubmit = styled(M.BlackBtn)`
 
 `;
@@ -45,6 +52,7 @@ const ContainerLinkText = styled(M.BorderBtnText)`
 
 `;
 export const signUpStyle = {
+    FormInputContainerPhone: FormInputContainerPhone,
     ButtonSubmit: ButtonSubmit,
     ButtonSubmitText: ButtonSubmitText,
     ContentBlock: ContentBlock,
