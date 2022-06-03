@@ -1,6 +1,8 @@
 
 
 export const S = {
+    emailValidationPattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
+
     emailNotValid: 'Invalid email address',
     phoneNumberNotValid: 'Invalid phone number',
     inputRequired: 'Required field',

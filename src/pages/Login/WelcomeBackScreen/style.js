@@ -5,35 +5,118 @@ import F from '@/res/fonts'
 import { M } from '@/res/mixin'
 
 
-const Container = styled.View`
+const Container = styled.ScrollView`
 height: 100%;
 width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
 background-color: white;
 padding: 0px 20px;
-padding-top: 35px;
 `;
 const Content = styled.View`
-height: 70%;
+padding-top:20%;
+/* height: 100%; */
 width: 100%;
 display: flex;
 flex-direction: column;
-justify-content: center;
+/* justify-content: ; */
 align-items: center;
 background-color: white;
 `;
 
 const ContentTitle = styled(M.Title28)`
-padding-bottom: 8px;
+margin-top: 17%;
 margin-bottom: 32px;
+width: 100%;
+`;
+const FormBlock = styled.View`
+width: 100%;
+
+`;
+const FormInputBlock = styled(M.FormInputBlock)`
+
+`;
+const FormInputContainer = styled.View`
+
+`;
+const FormInputLabel = styled(M.FormInputLabel)`
+
+`;
+const FormInput = styled(M.FormInput)`
+
+`;
+const ShowPasswordIconButton = styled(M.ShowPasswordIconButton)`
+
+`;
+const Link = styled.TouchableOpacity`
+width: 100%;
+padding-top: 8px;
+display: flex;
+justify-content: flex-end;
+align-items: center;
+flex-direction: row;
+`;
+const LinkText = styled(M.PlainText17)`
+color: ${C.sBlack};
+
+`;
+const ButtonSubmit = styled(M.BlackBtn)`
+margin-top: 32px;
+`;
+const ButtonSubmitText = styled(M.BlackBtnText)`
+
+`;
+const ErrorMessage = styled(M.ErrorMessage)`
+
+`;
+const OrBlock = styled.View`
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+margin-top: 10%;
+margin-bottom:9%;
+`;
+const OrBorder = styled.View`
+width: 50%;
+height: 1px;
+background-color: ${C.lightGray};
+`;
+const OrText = styled(M.MediumText20)`
+width: 53px;
+text-align: center;
 `;
 
-const Button = styled(M.BorderBtn)`
-margin-bottom: 8px;
+// Button
+const ButtonsBlock = styled.View`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+width: 100%;
+/* margin-bottom: 50px; */
 `;
-const ButtonText = styled(M.TextBtnText)`
+const Button = styled.TouchableOpacity`
+margin-bottom: 8px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+margin: 0px 3%;
+`;
+const ButtonIconBlock = styled.View`
+width: 60px;
+height: 60px;
+border-color: ${C.lightGray};
+border-width: 1px;
+border-style: solid;
+border-radius: 12px;
+margin-bottom: 6px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+`;
+const ButtonText = styled(M.MediumText17)`
 color: ${props => props.isSkip === true ? C.gray : C.black};
 padding-right: ${props => props.isSkip === true ? 0 + 'px' : 8 + 'px'};
 padding-left: 8px;
@@ -41,8 +124,13 @@ padding-left: 8px;
 const ContentBlock = styled.View`
 display: flex;
 align-items: center;
+justify-content: center;
 flex-direction: row;
-margin-top: 16px;
+position: absolute;
+left: 0px;
+bottom: 10px;
+right: 0px;
+width: 100%;
 `;
 const ContainerText = styled(M.PlainText17)`
 color: ${C.sBlack};
@@ -62,10 +150,28 @@ export const style = {
     Container: Container,
     Content: Content,
     ContentTitle: ContentTitle,
+    FormBlock: FormBlock,
+    FormInputBlock: FormInputBlock,
+    FormInputContainer: FormInputContainer,
+    FormInputLabel: FormInputLabel,
+    FormInput: FormInput,
+    ButtonSubmit: ButtonSubmit,
+    ButtonSubmitText: ButtonSubmitText,
+    ShowPasswordIconButton: ShowPasswordIconButton,
+    Link: Link,
+    LinkText: LinkText,
+    ErrorMessage: ErrorMessage,
+    OrBlock: OrBlock,
+    OrBorder: OrBorder,
+    OrText: OrText,
+    // Buttons
+    ButtonsBlock: ButtonsBlock,
     Button: Button,
+    ButtonIconBlock: ButtonIconBlock,
     ButtonText: ButtonText,
     ContentBlock: ContentBlock,
     ContainerText: ContainerText,
     ContainerLink: ContainerLink,
     ContainerLinkText: ContainerLinkText,
+
 }

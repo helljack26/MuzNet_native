@@ -1,5 +1,6 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import { getWindowDimension } from '@/components/helpers/getWindowDimension'
+
 import { useEffect } from 'react';
 import { useState } from 'react';
 // Images
@@ -21,22 +22,7 @@ const {
 } = style;
 
 const ModalWindow = ({ isOpen, setOpen, type, title, advice }) => {
-    const screen = Dimensions.get("screen");
-    const [dimensions, setDimensions] = useState({ screen });
-
-    const windowHeight = Math.round(dimensions.screen.height)
-    const windowWidth = Math.round(dimensions.screen.width)
-
-    useEffect(() => {
-        const subscription = Dimensions.addEventListener(
-            "change",
-            ({ screen }) => {
-                setDimensions({ screen });
-            }
-        );
-        return () => subscription?.remove();
-    });
-
+    const { windowHeight, windowWidth } = getWindowDimension()
 
     const isWrongIcon = type === true && <ModalWrongIcon width={50} height={50} />
     return (isOpen === true &&
