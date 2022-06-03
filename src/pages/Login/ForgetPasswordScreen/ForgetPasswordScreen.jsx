@@ -1,13 +1,16 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, Linking, Platform, NativeModules } from 'react-native';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useForm, Controller } from "react-hook-form";
+import { openInbox } from "react-native-email-link";
+
 import C from '@/res/colors'
 import { S } from '@/res/strings'
 
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import GoBack from '@/components/Buttons/GoBack/GoBack'
+import AfterSubmitWindow from '@/components/AfterSubmitWindow'
 
 import {
     useNavigation
@@ -21,6 +24,8 @@ const {
 
 } = IMAGES;
 // Styles
+
+
 import { style } from '../style'
 const {
     Container,
@@ -37,7 +42,11 @@ const {
     ButtonSubmitText,
     ErrorMessage,
 } = style;
-
+import { M } from '@/res/mixin'
+const {
+    BlackBtn,
+    BlackBtnText
+} = M;
 const ForgetPasswordScreen = () => {
     const navigation = useNavigation();
 
@@ -49,6 +58,8 @@ const ForgetPasswordScreen = () => {
 
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
     const [inputEmailLabel, setInputEmailLabel] = useState(false);
+
+    const [isOpenAfterSubmitMessage, setOpenAfterSubmitMessage] = useState(false);
 
     useEffect(() => {
         if (dirtyFields.resetEmail === undefined) {
@@ -63,8 +74,14 @@ const ForgetPasswordScreen = () => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
         resetField('resetEmail');
-        navigation.navigate('LoginStack', { screen: 'ResetPasswordScreen' })
+        setOpenAfterSubmitMessage(true)
+
         return
+    };
+
+    const AfterSubmitButtonAction = () => {
+        setOpenAfterSubmitMessage(false)
+        navigation.navigate('LoginStack', { screen: 'ResetPasswordScreen' })
     };
     return (
         <>
@@ -75,6 +92,14 @@ const ForgetPasswordScreen = () => {
                 translucent={true}
             />
             <Container>
+                <AfterSubmitWindow
+                    title={'Check your email'}
+                    message={'We have sent a password recovery instruction to your email'}
+                    windowImage={IMAGES.GifCheckEmail}
+                    isOpen={isOpenAfterSubmitMessage}
+                    afterSubmitButton={AfterSubmitButtonAction}
+                    buttonText={'Open Mail App'}
+                />
                 {/* Header */}
                 <Header>
                     <GoBack />

@@ -28,7 +28,11 @@ const IMAGES = {
     Onboard2: require('../../assets/Onboarding/Onboarding_2.png'),
     Onboard3: require('../../assets/Onboarding/Onboarding_3.png'),
     Onboard4: require('../../assets/Onboarding/Onboarding_4.png'),
-
+    // Gif
+    GifCheckEmail: require('../../assets/gif/reset_password/check_email.gif'),
+    GifNewPassword: require('../../assets/gif/reset_password/new_pass_confirmed.gif'),
+    GifWrongEmail: require('../../assets/gif/reset_password/failed_email.gif'),
+    GifSomethingWrong: require('../../assets/gif/reset_password/something_wrong.gif'),
     // Select AddProfileInfo screen
     SelectContractor: require('../../assets/AddProfileInfo/select_contractor.png'),
     SelectMusician: require('../../assets/AddProfileInfo/select_musician.png'),

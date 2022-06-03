@@ -138,8 +138,6 @@ width: 100%;
 const FormInput = styled.TextInput`
 width: 100%;
 font-family: ${F.regular};
-/* background-color: white; */
-/* border: 1px solid ${C.lightGray}; */
 color: ${C.black};
 z-index: 0;
 border-style: solid;
@@ -155,7 +153,6 @@ font-family: ${F.regular};
 margin-bottom: 5px;
 color: ${C.sBlack};
 color : ${props => props.isError ? C.red : C.sBlack};
-
 font-size: 12px;
 position: absolute;
 top: 5px;

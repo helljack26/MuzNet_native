@@ -12,7 +12,7 @@ import {
     useNavigation
     // , useRoute
 } from '@react-navigation/native';
-
+import AfterSubmitWindow from '@/components/AfterSubmitWindow'
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -53,6 +53,7 @@ const ResetPasswordScreen = () => {
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
     const [inputPasswordRepeatLabel, setInputPasswordRepeatLabel] = useState(false);
 
+    const [isOpenAfterSubmitMessage, setOpenAfterSubmitMessage] = useState(false);
 
     useEffect(() => {
         if (dirtyFields.password === undefined) {
@@ -78,10 +79,15 @@ const ResetPasswordScreen = () => {
             // Clear input value
             resetField('password');
             resetField('passwordRepeat');
-            navigation.navigate('LoginStack', { screen: 'LoginScreen' })
+            setOpenAfterSubmitMessage(true)
+
         }
     };
 
+    const AfterSubmitButtonAction = () => {
+        setOpenAfterSubmitMessage(false)
+        navigation.navigate('LoginStack', { screen: 'LoginScreen' })
+    };
     return (
         <>
             <StatusBar
@@ -92,6 +98,14 @@ const ResetPasswordScreen = () => {
             />
 
             <Container>
+                <AfterSubmitWindow
+                    title={'New password confirmed succesful'}
+                    message={'You have succesfully confirm your new password'}
+                    windowImage={IMAGES.GifNewPassword}
+                    isOpen={isOpenAfterSubmitMessage}
+                    afterSubmitButton={AfterSubmitButtonAction}
+                    buttonText={'Great!'}
+                />
                 {/* Header */}
                 <Header>
                     <ContentTitle>
