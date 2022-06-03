@@ -67,7 +67,6 @@ const VerifyPhoneScreen = () => {
     const num4Watch = watch('num4');
 
     const concatInputCode = `${num1Watch}${num2Watch}${num3Watch}${num4Watch}`
-    console.log("🚀 ~ file: VerifyPhoneScreen.jsx ~ line 70 ~ VerifyPhoneScreen ~ concatInputCode", concatInputCode)
 
     useEffect(() => {
         if (num1Watch.length === 1 && num2Watch.length === 0) {
@@ -80,7 +79,6 @@ const VerifyPhoneScreen = () => {
             num4Ref.current.focus()
         }
 
-        console.log("🚀 ~ file: VerifyPhoneScreen.jsx ~ line 84 ~ useEffect ~ oncatInputCode.length ", concatInputCode.length)
         if (num4Watch.length === 1 && concatInputCode.length === 4) {
             if (Number(concatInputCode) === Number(verifingCode)) {
                 navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' })
@@ -154,10 +152,7 @@ const VerifyPhoneScreen = () => {
                                             color: inputFocus1 === C.black ? C.black : C.sBlack,
                                         }}
                                     />
-
                                 </FormInputContainer>
-
-
                             )}
                             name="num1"
                         />

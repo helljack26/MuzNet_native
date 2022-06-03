@@ -185,6 +185,7 @@ const SelectWithSearch = ({ dataForChoose, searchPlaceholder, getChosenData, alr
 
                         return (item !== undefined && <Item key={key}
                             onPress={() => {
+                                onChangeSearchText('')
                                 handler({
                                     value: item,
                                     action: 'add'

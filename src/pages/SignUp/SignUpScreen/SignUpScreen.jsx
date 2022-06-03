@@ -93,6 +93,7 @@ const SignUpScreen = () => {
         })
 
     };
+    console.log(errors.userPhoneNumber?.type);
 
     return (
         <>
@@ -127,7 +128,7 @@ const SignUpScreen = () => {
                             <FormInputBlock
                                 style={
                                     {
-                                        marginBottom: errors.userPhoneNumber ? 20 : 13
+                                        marginBottom: errors.userPhoneNumber ? 32 : 13
 
                                     }
                                 }
@@ -179,8 +180,8 @@ const SignUpScreen = () => {
                                     </ShowPasswordIconButton>
                                     }
                                 </FormInputContainerPhone>
-                                {errors.resetEmail?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
-                                {errors.resetEmail?.type === 'minLenght' && <ErrorMessage>{S.phoneNumberNotValid}</ErrorMessage>}
+                                {errors.userPhoneNumber?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+                                {errors.userPhoneNumber?.type === 'minLength' && <ErrorMessage>{S.phoneNumberNotValid}</ErrorMessage>}
 
                             </FormInputBlock>
                         )}

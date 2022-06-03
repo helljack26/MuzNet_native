@@ -293,7 +293,7 @@ const AddProfileInfo = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            setScreenNumber(0)
+            setScreenNumber(2)
         });
 
         return unsubscribe;

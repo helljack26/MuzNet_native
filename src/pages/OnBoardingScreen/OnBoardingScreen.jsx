@@ -34,25 +34,25 @@ const OnboardingContent = [
     {
         image: IMAGES.Onboard1,
         title: 'Welcome to MuzNet!',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad',
+        text: 'That’s the place where musicians and venues meet.',
         thumbOffsetLeft: 0
     },
     {
         image: IMAGES.Onboard2,
-        title: 'Welcome to MuzNet 2!',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut tempor incididunt ut labore et dolore magna aliqua. Ut enim ad',
+        title: 'Find your next gig',
+        text: 'You’re a musician? Great! Choose from the list of gigs to book your next performance.',
         thumbOffsetLeft: 14
     },
     {
         image: IMAGES.Onboard3,
-        title: 'Welcome to MuzNet 3!',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,it amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad',
+        title: 'Hire musicians',
+        text: 'Have a venue to offer? Find the most talented musicians to perform at your place.',
         thumbOffsetLeft: 27
     },
     {
         image: IMAGES.Onboard4,
-        title: 'Welcome to MuzNet 4!',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad',
+        title: 'Find your perfect match',
+        text: 'It’s time to connect skillful musicians with unique venues. ',
         thumbOffsetLeft: 41
     },
 ]
@@ -94,7 +94,7 @@ const OnBoardingScreen = () => {
                         style={{ position: 'absolute', top: 0, left: 0, width: 30, height: 30, backgroundColor: 'gray' }}
                         onPress={() => {
                             navigation.navigate('SignUpStack', {
-                                screen: 'VerifyPhoneScreen',
+                                screen: 'AddProfileInfo',
                                 // phoneNumber: 'Говна тебе в вентилятор',
                             });
                         }}
