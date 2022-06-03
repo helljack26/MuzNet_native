@@ -72,13 +72,20 @@ const ButtonSubmitText = styled(M.BlackBtnText)`
 const ErrorMessage = styled(M.ErrorMessage)`
 
 `;
-
+const FormInputContainerPhone = styled.View`
+width: 100%;
+height: 48px;
+display: flex;
+align-items: center;
+flex-direction: row;
+`;
 export const style = {
     Container: Container,
     ContentTitle: ContentTitle,
     Header: Header,
     FormText: FormText,
     FormBlock: FormBlock,
+    FormInputContainerPhone: FormInputContainerPhone,
     FormInputBlock: FormInputBlock,
     FormInputContainer: FormInputContainer,
     FormInputLabel: FormInputLabel,

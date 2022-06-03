@@ -4,10 +4,14 @@ import { StatusBar } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import C from '@/res/colors'
+import F from '@/res/fonts'
+
 import { S } from '@/res/strings'
 
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+
 import GoBack from '@/components/Buttons/GoBack/GoBack'
+import MaskInput from 'react-native-mask-input';
 
 import {
     useNavigation
@@ -29,6 +33,7 @@ const {
     Header,
     FormBlock,
     FormInputBlock,
+    FormInputContainerPhone,
     FormInputContainer,
     FormInputLabel,
     FormInput,
@@ -44,24 +49,26 @@ const LoginScreen = () => {
     const navigation = useNavigation();
     const { control, handleSubmit, resetField,
         formState: { dirtyFields, errors } } = useForm({
-            defaultValues: { userEmail: '', password: '' }
+            defaultValues: { userPhoneNumber: '', password: '' }
         });
 
     const isKeyboardOpen = isKeyboardShown()
 
+    const [phone, setPhone] = useState('');
+
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
-    const [inputEmailLabel, setInputEmailLabel] = useState(false);
+    const [inputPhoneLabel, setInputPhoneLabel] = useState(false);
 
     const [inputFocus2, setInputFocus2] = useState(C.lightGray);
     const [inputPasswordLabel, setInputPasswordLabel] = useState(false);
     const [passwordShown, setPasswordShown] = useState(false);
 
     useEffect(() => {
-        if (dirtyFields.userEmail === undefined) {
-            setInputEmailLabel(false)
+        if (dirtyFields.userPhoneNumber === undefined) {
+            setInputPhoneLabel(false)
         }
-        if (dirtyFields.userEmail === true) {
-            setInputEmailLabel(true)
+        if (dirtyFields.userPhoneNumber === true) {
+            setInputPhoneLabel(true)
         }
         if (dirtyFields.password === undefined) {
             setInputPasswordLabel(false)
@@ -69,12 +76,12 @@ const LoginScreen = () => {
         if (dirtyFields.password === true) {
             setInputPasswordLabel(true)
         }
-    }, [dirtyFields.userEmail, dirtyFields.password]);
+    }, [dirtyFields.userPhoneNumber, dirtyFields.password]);
 
     const onSubmit = (data) => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
-        resetField('userEmail');
+        resetField('userPhoneNumber');
         resetField('password');
         return
     };
@@ -101,53 +108,73 @@ const LoginScreen = () => {
                 {/* Form */}
                 <FormBlock >
 
-                    {/* Email or Name */}
+                    {/* Phone number */}
+                    {/* Phone number */}
                     <Controller
                         control={control}
                         rules={{
-                            required: S.emailNotValid,
-                            pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
+                            required: true,
+                            minLength: 17
                         }}
-                        render={({ field: { onChange, onBlur, value } }) => (
+                        render={({ field: { onChange, onBlur } }) => (
                             <FormInputBlock
-                                style={{
-                                    marginBottom: errors.userEmail ? 28 : 13,
-                                }}
+                                style={
+                                    {
+                                        marginBottom: errors.userPhoneNumber ? 32 : 13
+
+                                    }
+                                }
                             >
-                                <FormInputContainer>
-                                    <FormInput
-                                        inputLabel={inputEmailLabel}
-                                        selectionColor={C.lightGray}
-                                        placeholder={'Enter your email'}
+                                <FormInputContainerPhone>
+
+                                    <MaskInput
                                         cursorColor={C.inputCursor}
                                         onFocus={() => { setInputFocus1(C.black) }}
                                         onBlur={() => {
                                             onBlur
                                             setInputFocus1(C.lightGray)
                                         }}
-                                        onChangeText={onChange}
-                                        value={value}
+                                        keyboardType='phone-pad'
+                                        maxLength={17}
                                         style={{
-                                            borderColor: errors.userEmail ? C.red : inputFocus1,
-                                            borderWidth: errors.userEmail ? 2 : 1,
-                                            color: errors.userEmail ? C.red : C.black,
+                                            width: '100%',
+                                            flex: 1,
+                                            height: 48,
+                                            paddingLeft: 16,
+                                            borderWidth: 1,
+                                            borderRadius: 6,
+                                            borderColor: inputFocus1,
+                                            fontSize: 17,
+                                            fontFamily: F.regular,
+                                            color: C.black,
+                                            paddingTop: inputPhoneLabel === true ? 17 : 0,
+                                            borderColor: errors.userPhoneNumber ? C.red : inputFocus1,
+                                            borderWidth: errors.userPhoneNumber ? 2 : 1,
+                                            color: errors.userPhoneNumber ? C.red : C.black,
                                         }}
+
+                                        value={phone}
+
+                                        onChangeText={(masked, unmasked) => {
+                                            onChange(masked)
+                                            setPhone(masked);
+                                        }}
+                                        placeholder={'Enter your phone number'}
+                                        mask={S.phoneMaskPattern}
                                     />
-                                    {errors.userEmail && <ShowPasswordIconButton>
+                                    {errors.userPhoneNumber && <ShowPasswordIconButton>
                                         <ErrorIcon width={20} height={20} />
                                     </ShowPasswordIconButton>
                                     }
+                                </FormInputContainerPhone>
+                                <FormInputLabel isError={errors.userPhoneNumber} inputLabel={inputPhoneLabel}>Phone number</FormInputLabel>
 
-                                </FormInputContainer>
+                                {errors.userPhoneNumber?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+                                {errors.userPhoneNumber?.type === 'minLength' && <ErrorMessage>{S.phoneNumberNotValid}</ErrorMessage>}
 
-                                <FormInputLabel isError={errors.userEmail} inputLabel={inputEmailLabel}>Your email</FormInputLabel>
-
-                                {errors.userEmail?.type === 'minLength' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
-                                {errors.userEmail?.type === 'pattern' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
-                                {errors.userEmail && <ErrorMessage>{errors.userEmail.message}</ErrorMessage>}
                             </FormInputBlock>
                         )}
-                        name="userEmail"
+                        name="userPhoneNumber"
                     />
 
                     {/* Password */}

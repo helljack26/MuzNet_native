@@ -13,15 +13,12 @@ padding: 0px 20px;
 `;
 const Content = styled.View`
 padding-top:20%;
-/* height: 100%; */
 width: 100%;
 display: flex;
 flex-direction: column;
-/* justify-content: ; */
 align-items: center;
 background-color: white;
 `;
-
 const ContentTitle = styled(M.Title28)`
 margin-top: 17%;
 margin-bottom: 32px;
@@ -29,7 +26,6 @@ width: 100%;
 `;
 const FormBlock = styled.View`
 width: 100%;
-
 `;
 const FormInputBlock = styled(M.FormInputBlock)`
 
@@ -56,7 +52,6 @@ flex-direction: row;
 `;
 const LinkText = styled(M.PlainText17)`
 color: ${C.sBlack};
-
 `;
 const ButtonSubmit = styled(M.BlackBtn)`
 margin-top: 32px;
@@ -93,7 +88,6 @@ justify-content: center;
 align-items: center;
 flex-direction: row;
 width: 100%;
-/* margin-bottom: 50px; */
 `;
 const Button = styled.TouchableOpacity`
 margin-bottom: 8px;
@@ -128,7 +122,7 @@ justify-content: center;
 flex-direction: row;
 position: absolute;
 left: 0px;
-bottom: 10px;
+bottom: 20px;
 right: 0px;
 width: 100%;
 `;

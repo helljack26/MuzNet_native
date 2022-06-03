@@ -173,7 +173,7 @@ const SignUpScreen = () => {
                                             onChange(masked)
                                             setPhone(masked);
                                         }}
-                                        mask={['+', /\d/, ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                                        mask={S.phoneMaskPattern}
                                     />
                                     {errors.userPhoneNumber && <ShowPasswordIconButton>
                                         <ErrorIcon width={20} height={20} />

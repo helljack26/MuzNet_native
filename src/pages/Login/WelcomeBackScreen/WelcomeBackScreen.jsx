@@ -283,10 +283,7 @@ const WelcomeBackScreen = () => {
                         </Button>
                     </ButtonsBlock>
 
-
-
                     <ContentBlock>
-
                         <ContainerText>
                             Don’t have an account?
                         </ContainerText>

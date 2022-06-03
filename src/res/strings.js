@@ -1,8 +1,11 @@
 
 
 export const S = {
+    // Pattern
     emailValidationPattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
+    phoneMaskPattern: ['+', /\d/, ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
 
+    // Input error message
     emailNotValid: 'Invalid email address',
     phoneNumberNotValid: 'Invalid phone number',
     inputRequired: 'Required field',
@@ -11,6 +14,7 @@ export const S = {
     userNameExistError: 'This username is already taken, please choose another',
     userNameSymbolExclude: 'Name must not contain the following characters: < > \ " % ; ( ) &',
 
+    // Role for sign up
     Contractor: 'Contractor',
     Singer: 'Singer',
     Musician: 'Musician',
