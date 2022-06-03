@@ -136,7 +136,7 @@ const ResetPasswordScreen = () => {
                                         inputLabel={inputPasswordLabel}
                                         secureTextEntry={false}
                                         selectionColor={C.lightGray}
-                                        placeholder={'Enter your password'}
+                                        placeholder={'Enter new password'}
                                         cursorColor={C.inputCursor}
                                         onFocus={() => setInputFocus(C.black)}
                                         onBlur={() => {
@@ -181,7 +181,7 @@ const ResetPasswordScreen = () => {
                                         inputLabel={inputPasswordRepeatLabel}
                                         secureTextEntry={false}
                                         selectionColor={C.lightGray}
-                                        placeholder={'Repeat password'}
+                                        placeholder={'Repeat new password'}
                                         cursorColor={C.inputCursor}
                                         onFocus={() => setInputFocus1(C.black)}
                                         onBlur={() => {

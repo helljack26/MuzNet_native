@@ -33,7 +33,6 @@ const {
     Header,
     FormBlock,
     FormInputBlock,
-    FormInputContainerPhone,
     FormInputContainer,
     FormInputLabel,
     FormInput,
@@ -44,7 +43,10 @@ const {
     LinkText,
     ErrorMessage,
 } = style;
-
+import { M } from '@/res/mixin'
+const {
+    FormInputContainerPhone,
+} = M;
 const LoginScreen = () => {
     const navigation = useNavigation();
     const { control, handleSubmit, resetField,
@@ -61,6 +63,7 @@ const LoginScreen = () => {
 
     const [inputFocus2, setInputFocus2] = useState(C.lightGray);
     const [inputPasswordLabel, setInputPasswordLabel] = useState(false);
+
     const [passwordShown, setPasswordShown] = useState(false);
 
     useEffect(() => {
@@ -82,6 +85,8 @@ const LoginScreen = () => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
         resetField('userPhoneNumber');
+        setPhone('');
+
         resetField('password');
         return
     };
@@ -107,8 +112,6 @@ const LoginScreen = () => {
 
                 {/* Form */}
                 <FormBlock >
-
-                    {/* Phone number */}
                     {/* Phone number */}
                     <Controller
                         control={control}
@@ -118,12 +121,7 @@ const LoginScreen = () => {
                         }}
                         render={({ field: { onChange, onBlur } }) => (
                             <FormInputBlock
-                                style={
-                                    {
-                                        marginBottom: errors.userPhoneNumber ? 32 : 13
-
-                                    }
-                                }
+                                style={{ marginBottom: errors.userPhoneNumber ? 32 : 13 }}
                             >
                                 <FormInputContainerPhone>
 
@@ -152,9 +150,7 @@ const LoginScreen = () => {
                                             borderWidth: errors.userPhoneNumber ? 2 : 1,
                                             color: errors.userPhoneNumber ? C.red : C.black,
                                         }}
-
                                         value={phone}
-
                                         onChangeText={(masked, unmasked) => {
                                             onChange(masked)
                                             setPhone(masked);
@@ -230,7 +226,7 @@ const LoginScreen = () => {
                         }}
                     >
                         <LinkText>
-                            Forget password?
+                            Forgot password?
                         </LinkText>
                     </Link>
                 </FormBlock>

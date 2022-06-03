@@ -1,15 +1,19 @@
 import React from 'react';
-import { StatusBar, Linking, Platform, NativeModules } from 'react-native';
+import { StatusBar } from 'react-native';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
-import { openInbox } from "react-native-email-link";
+// import { openInbox } from "react-native-email-link";
 
 import C from '@/res/colors'
+import F from '@/res/fonts'
+
 import { S } from '@/res/strings'
 
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+
 import GoBack from '@/components/Buttons/GoBack/GoBack'
+import MaskInput from 'react-native-mask-input';
 import AfterSubmitWindow from '@/components/AfterSubmitWindow'
 
 import {
@@ -25,7 +29,13 @@ const {
 } = IMAGES;
 // Styles
 
-
+import { forgotPasswordStyle } from './style'
+const {
+    // Buttons
+    ButtonsBlock,
+    Button,
+    ButtonText,
+} = forgotPasswordStyle;
 import { style } from '../style'
 const {
     Container,
@@ -44,24 +54,36 @@ const {
 } = style;
 import { M } from '@/res/mixin'
 const {
-    BlackBtn,
-    BlackBtnText
+    FormInputContainerPhone,
 } = M;
 const ForgetPasswordScreen = () => {
     const navigation = useNavigation();
 
+    const [isEmailTab, setEmailTab] = useState(true);
+
     const { control, handleSubmit, resetField, formState: { dirtyFields, errors } } = useForm({
-        defaultValues: { resetEmail: '' }
+        defaultValues: { resetEmail: '', resetPhone: '' }
     });
 
     const isKeyboardOpen = isKeyboardShown()
 
+    const [phone, setPhone] = useState('');
+
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
     const [inputEmailLabel, setInputEmailLabel] = useState(false);
+
+    const [inputFocus2, setInputFocus2] = useState(C.lightGray);
+    const [inputPhoneLabel, setInputPhoneLabel] = useState(false);
 
     const [isOpenAfterSubmitMessage, setOpenAfterSubmitMessage] = useState(false);
 
     useEffect(() => {
+        if (dirtyFields.resetPhone === undefined) {
+            setInputPhoneLabel(false)
+        }
+        if (dirtyFields.resetPhone === true) {
+            setInputPhoneLabel(true)
+        }
         if (dirtyFields.resetEmail === undefined) {
             setInputEmailLabel(false)
         }
@@ -71,11 +93,19 @@ const ForgetPasswordScreen = () => {
     }, [dirtyFields.resetEmail]);
 
     const onSubmit = (data) => {
-        console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
         // Clear input value
         resetField('resetEmail');
-        setOpenAfterSubmitMessage(true)
+        resetField('resetPhone');
+        setPhone('');
+        const isEmailField = isEmailTab === true ? data.resetEmail : data.resetPhone;
 
+        console.log("🚀 ~ file: ForgetPasswordScreen.jsx ~ line 102 ~ onSubmit ~ isEmailField", isEmailField)
+
+        if (isEmailTab === true) {
+            setOpenAfterSubmitMessage(true)
+        } else {
+
+        }
         return
     };
 
@@ -109,8 +139,31 @@ const ForgetPasswordScreen = () => {
                     </ContentTitle>
                 </Header>
 
+                {/* Switch buttons */}
+                <ButtonsBlock>
+                    <Button
+                        onPress={() => {
+                            setEmailTab(true)
+                        }}
+                        isActive={isEmailTab}>
+                        <ButtonText>
+                            Email
+                        </ButtonText>
+                    </Button>
+
+                    <Button
+                        onPress={() => {
+                            setEmailTab(false)
+                        }}
+                        isActive={!isEmailTab}>
+                        <ButtonText>
+                            Phone number
+                        </ButtonText>
+                    </Button>
+                </ButtonsBlock>
+
                 {/* Form */}
-                <FormBlock >
+                {isEmailTab === true ? <FormBlock>
                     <FormText>
                         Please, enter your email address and you
                         will receive a link to create a new password
@@ -121,7 +174,7 @@ const ForgetPasswordScreen = () => {
                         control={control}
                         rules={{
                             required: S.emailNotValid,
-                            pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
+                            pattern: S.emailValidationPattern,
                         }}
                         render={({ field: { onChange, onBlur, value } }) => (
                             <FormInputBlock
@@ -135,15 +188,15 @@ const ForgetPasswordScreen = () => {
                                         selectionColor={C.lightGray}
                                         placeholder={'Enter your email'}
                                         cursorColor={C.inputCursor}
-                                        onFocus={() => { setInputFocus1(C.black) }}
+                                        onFocus={() => { setInputFocus2(C.black) }}
                                         onBlur={() => {
                                             onBlur
-                                            setInputFocus1(C.lightGray)
+                                            setInputFocus2(C.lightGray)
                                         }}
                                         onChangeText={onChange}
                                         value={value}
                                         style={{
-                                            borderColor: errors.resetEmail ? C.red : inputFocus1,
+                                            borderColor: errors.resetEmail ? C.red : inputFocus2,
                                             borderWidth: errors.resetEmail ? 2 : 1,
                                             color: errors.resetEmail ? C.red : C.black,
                                         }}
@@ -165,12 +218,81 @@ const ForgetPasswordScreen = () => {
                         name="resetEmail"
                     />
                 </FormBlock>
+                    :
+                    <FormBlock>
+                        <FormText>
+                            Please enter your phone number and you will receive a confirmation code to change your password
+                        </FormText>
 
+                        {/* Phone number */}
+                        <Controller
+                            control={control}
+                            rules={{
+                                required: true,
+                                minLength: 17
+                            }}
+                            render={({ field: { onChange, onBlur } }) => (
+                                <FormInputBlock
+                                    style={{ marginBottom: errors.resetPhone ? 32 : 13 }}
+                                >
+                                    <FormInputContainerPhone>
+
+                                        <MaskInput
+                                            cursorColor={C.inputCursor}
+                                            onFocus={() => { setInputFocus1(C.black) }}
+                                            onBlur={() => {
+                                                onBlur
+                                                setInputFocus1(C.lightGray)
+                                            }}
+                                            keyboardType='phone-pad'
+                                            maxLength={17}
+                                            style={{
+                                                width: '100%',
+                                                flex: 1,
+                                                height: 48,
+                                                paddingLeft: 16,
+                                                borderWidth: 1,
+                                                borderRadius: 6,
+                                                borderColor: inputFocus1,
+                                                fontSize: 17,
+                                                fontFamily: F.regular,
+                                                color: C.black,
+                                                paddingTop: inputPhoneLabel === true ? 17 : 0,
+                                                borderColor: errors.resetPhone ? C.red : inputFocus1,
+                                                borderWidth: errors.resetPhone ? 2 : 1,
+                                                color: errors.resetPhone ? C.red : C.black,
+                                            }}
+                                            value={phone}
+                                            onChangeText={(masked, unmasked) => {
+                                                onChange(masked)
+                                                setPhone(masked);
+                                            }}
+                                            placeholder={'Enter your phone number'}
+                                            mask={S.phoneMaskPattern}
+                                        />
+                                        {errors.resetPhone && <ShowPasswordIconButton>
+                                            <ErrorIcon width={20} height={20} />
+                                        </ShowPasswordIconButton>
+                                        }
+                                    </FormInputContainerPhone>
+                                    <FormInputLabel isError={errors.resetPhone} inputLabel={inputPhoneLabel}>Phone number</FormInputLabel>
+
+                                    {errors.resetPhone?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+                                    {errors.resetPhone?.type === 'minLength' && <ErrorMessage>{S.phoneNumberNotValid}</ErrorMessage>}
+
+                                </FormInputBlock>
+                            )}
+                            name="resetPhone"
+                        />
+                    </FormBlock>
+                }
                 <ButtonSubmit
                     isKeyboardOpen={isKeyboardOpen}
                     onPress={handleSubmit(onSubmit)}
                 >
-                    <ButtonSubmitText>Send A Link</ButtonSubmitText>
+                    <ButtonSubmitText>
+                        {isEmailTab === true ? 'Send A Link' : 'Send Code'}
+                    </ButtonSubmitText>
                 </ButtonSubmit>
 
 

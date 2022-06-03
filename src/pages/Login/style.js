@@ -1,9 +1,7 @@
-
 import styled from 'styled-components/native';
 import C from '@/res/colors'
 import F from '@/res/fonts'
 import { M } from '@/res/mixin'
-
 
 const Container = styled.View`
 height: 100%;
@@ -23,7 +21,6 @@ align-items: center;
 flex-direction: row;
 margin-bottom: 31px;
 `;
-
 const ContentTitle = styled(M.Title28)`
 
 `;
@@ -72,20 +69,13 @@ const ButtonSubmitText = styled(M.BlackBtnText)`
 const ErrorMessage = styled(M.ErrorMessage)`
 
 `;
-const FormInputContainerPhone = styled.View`
-width: 100%;
-height: 48px;
-display: flex;
-align-items: center;
-flex-direction: row;
-`;
+
 export const style = {
     Container: Container,
     ContentTitle: ContentTitle,
     Header: Header,
     FormText: FormText,
     FormBlock: FormBlock,
-    FormInputContainerPhone: FormInputContainerPhone,
     FormInputBlock: FormInputBlock,
     FormInputContainer: FormInputContainer,
     FormInputLabel: FormInputLabel,

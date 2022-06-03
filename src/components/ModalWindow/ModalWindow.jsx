@@ -1,8 +1,6 @@
 import React from "react";
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
-import { useEffect } from 'react';
-import { useState } from 'react';
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -34,7 +32,6 @@ const ModalWindow = ({ isOpen, setOpen, type, title, advice }) => {
             }}
         >
             <ModalWindowBlock>
-
                 <CloseButton
                     onPress={() => {
                         setOpen(false)

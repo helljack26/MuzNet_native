@@ -88,6 +88,7 @@ const SignUpScreen = () => {
 
         setPhone('');
         resetField('userPhoneNumber');
+
         return navigation.navigate('VerifyPhoneScreen', {
             phoneNumber: data.userPhoneNumber,
         })

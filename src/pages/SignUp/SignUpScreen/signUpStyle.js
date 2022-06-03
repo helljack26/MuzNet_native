@@ -18,13 +18,11 @@ const ButtonSubmit = styled(M.BlackBtn)`
 const ButtonSubmitText = styled(M.BlackBtnText)`
 
 `;
-
 const ContentBlock = styled.View`
 display: flex;
 width: 100%;
 align-items: center;
 flex-direction: column;
-
 position: absolute;
 bottom : ${props => props.isKeyboardOpen === true ? 20 + 'px' : 50 + 'px'};
 `;

@@ -141,6 +141,13 @@ flex-direction: column;
 margin-bottom: 13px;
 width: 100%;
 `;
+const FormInputContainerPhone = styled.View`
+width: 100%;
+height: 48px;
+display: flex;
+align-items: center;
+flex-direction: row;
+`;
 const FormInput = styled.TextInput`
 width: 100%;
 font-family: ${F.regular};
@@ -202,6 +209,7 @@ export const M = {
 
     // Input
     FormInputBlock: FormInputBlock,
+    FormInputContainerPhone: FormInputContainerPhone,
     FormInput: FormInput,
     FormInputLabel: FormInputLabel,
     ShowPasswordIconButton: ShowPasswordIconButton,

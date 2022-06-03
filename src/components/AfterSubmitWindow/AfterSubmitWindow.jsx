@@ -1,7 +1,8 @@
 import React from "react";
-import { Dimensions, Image, Keyboard } from "react-native";
+import { Image, Keyboard } from "react-native";
 import { useEffect } from 'react';
-import { useState } from 'react';
+
+import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
 // Images
 import IMAGES from '@/res/images'
@@ -25,24 +26,12 @@ const {
     BlackBtnText
 } = M;
 const AfterSubmitWindow = ({ isOpen, setOpen, windowImage, title, message, buttonText, afterSubmitButton }) => {
-    const screen = Dimensions.get("screen");
-    const [dimensions, setDimensions] = useState({ screen });
-
-    const windowHeight = Math.round(dimensions.screen.height)
-    const windowWidth = Math.round(dimensions.screen.width)
+    const { windowHeight, windowWidth } = getWindowDimension()
 
     useEffect(() => {
         if (isOpen === true) {
             Keyboard.dismiss()
-
         }
-        const subscription = Dimensions.addEventListener(
-            "change",
-            ({ screen }) => {
-                setDimensions({ screen });
-            }
-        );
-        return () => subscription?.remove();
     }, [isOpen]);
 
     return (isOpen === true &&
