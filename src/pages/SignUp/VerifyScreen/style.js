@@ -23,14 +23,6 @@ align-items: center;
 flex-direction: row;
 margin-bottom: 31px;
 `;
-const NumberInputsBlock = styled.View`
-width: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
-`;
-
 const ContentTitle = styled(M.Title28)`
 
 `;
@@ -41,29 +33,6 @@ margin-bottom: 32px;
 const FormBlock = styled.View`
 width: 100%;
 
-`;
-const FormInputBlock = styled(M.FormInputBlock)`
-
-`;
-const FormInputContainer = styled.View`
-
-`;
-const FormInputLabel = styled(M.FormInputLabel)`
-
-`;
-const FormInput = styled(M.FormInput)`
-    height: 72px;
-    margin: 0px 4px;
-    width: 64px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    padding: 0px;
-    font-size: 32px;
-    line-height: 40px;
-    font-family: ${F.medium};
-    text-align: center;
 `;
 const ContentBlock = styled.View`
 display: flex;
@@ -91,14 +60,7 @@ export const style = {
     ContentTitle: ContentTitle,
     Header: Header,
     FormText: FormText,
-    FormInputBlock: FormInputBlock,
-
     FormBlock: FormBlock,
-    NumberInputsBlock: NumberInputsBlock,
-    FormInputBlock: FormInputBlock,
-    FormInputContainer: FormInputContainer,
-    FormInputLabel: FormInputLabel,
-    FormInput: FormInput,
     ContentBlock: ContentBlock,
     ContainerText: ContainerText,
     ContainerLink: ContainerLink,

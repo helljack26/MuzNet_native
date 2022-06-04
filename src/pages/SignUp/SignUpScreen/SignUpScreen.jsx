@@ -61,6 +61,7 @@ const SignUpScreen = () => {
     const [phone, setPhone] = useState('');
 
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
+    const [inputPhoneLabel, setInputPhoneLabel] = useState(false);
 
     const [isOpen, setIsOpen] = useState(false);
     const [positionType, setPositionType] = useState(null);
@@ -72,14 +73,19 @@ const SignUpScreen = () => {
     const [passwordShown, setPasswordShown] = useState(false);
 
     useEffect(() => {
-
+        if (dirtyFields.userPhoneNumber === undefined) {
+            setInputPhoneLabel(false)
+        }
+        if (dirtyFields.userPhoneNumber === true) {
+            setInputPhoneLabel(true)
+        }
         if (dirtyFields.password === undefined) {
             setInputPasswordLabel(false)
         }
         if (dirtyFields.password === true) {
             setInputPasswordLabel(true)
         }
-    }, [dirtyFields.password]);
+    }, [dirtyFields.userPhoneNumber, dirtyFields.password]);
 
     const onSubmit = (data) => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
@@ -89,12 +95,14 @@ const SignUpScreen = () => {
         setPhone('');
         resetField('userPhoneNumber');
 
-        return navigation.navigate('VerifyPhoneScreen', {
-            phoneNumber: data.userPhoneNumber,
+        return navigation.navigate('VerifyScreen', {
+            screenTitle: 'Verify your phone',
+            screenAdvice: `Please enter the verification code we sent to ${data.userPhoneNumber}`,
+            whereToSendCode: data.userPhoneNumber,
+            navigateToStackAfterSubmit: 'SignUpStack',
+            navigateToScreenAfterSubmit: 'AddProfileInfo',
         })
-
     };
-    console.log(errors.userPhoneNumber?.type);
 
     return (
         <>
@@ -127,11 +135,7 @@ const SignUpScreen = () => {
                         }}
                         render={({ field: { onChange, onBlur } }) => (
                             <FormInputBlock
-                                style={
-                                    {
-                                        marginBottom: errors.userPhoneNumber ? 32 : 13
-
-                                    }
+                                style={{ marginBottom: errors.userPhoneNumber ? 32 : 13 }
                                 }
                             >
                                 <FormInputContainerPhone>
@@ -162,14 +166,13 @@ const SignUpScreen = () => {
                                             fontSize: 17,
                                             fontFamily: F.regular,
                                             color: C.black,
-
+                                            paddingTop: inputPhoneLabel === true ? 13 : 0,
                                             borderColor: errors.userPhoneNumber ? C.red : inputFocus1,
                                             borderWidth: errors.userPhoneNumber ? 2 : 1,
                                             color: errors.userPhoneNumber ? C.red : C.black,
                                         }}
-
+                                        placeholder={'Enter your phone number'}
                                         value={phone}
-
                                         onChangeText={(masked, unmasked) => {
                                             onChange(masked)
                                             setPhone(masked);
@@ -181,8 +184,16 @@ const SignUpScreen = () => {
                                     </ShowPasswordIconButton>
                                     }
                                 </FormInputContainerPhone>
-                                {errors.userPhoneNumber?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
-                                {errors.userPhoneNumber?.type === 'minLength' && <ErrorMessage>{S.phoneNumberNotValid}</ErrorMessage>}
+                                <FormInputLabel
+                                    style={{ marginLeft: 60 }}
+                                    isError={errors.userPhoneNumber} inputLabel={inputPhoneLabel}>Phone number</FormInputLabel>
+
+                                {errors.userPhoneNumber?.type === 'required' && <ErrorMessage
+                                    style={{ marginLeft: 78 }}
+                                >{S.inputRequired}</ErrorMessage>}
+                                {errors.userPhoneNumber?.type === 'minLength' && <ErrorMessage
+                                    style={{ marginLeft: 78 }}
+                                >{S.phoneNumberNotValid}</ErrorMessage>}
 
                             </FormInputBlock>
                         )}

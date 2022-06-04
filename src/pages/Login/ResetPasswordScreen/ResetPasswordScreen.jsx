@@ -80,13 +80,12 @@ const ResetPasswordScreen = () => {
             resetField('password');
             resetField('passwordRepeat');
             setOpenAfterSubmitMessage(true)
-
         }
     };
 
     const AfterSubmitButtonAction = () => {
         setOpenAfterSubmitMessage(false)
-        navigation.navigate('LoginStack', { screen: 'LoginScreen' })
+        navigation.navigate('LoginStack', { screen: 'WelcomeBackScreen' })
     };
     return (
         <>

@@ -90,7 +90,7 @@ const ForgetPasswordScreen = () => {
         if (dirtyFields.resetEmail === true) {
             setInputEmailLabel(true)
         }
-    }, [dirtyFields.resetEmail]);
+    }, [dirtyFields.resetEmail, dirtyFields.resetPhone]);
 
     const onSubmit = (data) => {
         // Clear input value
@@ -104,7 +104,16 @@ const ForgetPasswordScreen = () => {
         if (isEmailTab === true) {
             setOpenAfterSubmitMessage(true)
         } else {
-
+            navigation.navigate('SignUpStack', {
+                screen: 'VerifyScreen',
+                params: {
+                    screenTitle: 'Reset Password',
+                    screenAdvice: `Please enter the verification code we sent to ${data.resetPhone}`,
+                    whereToSendCode: data.userPhoneNumber,
+                    navigateToStackAfterSubmit: 'LoginStack',
+                    navigateToScreenAfterSubmit: 'ResetPasswordScreen',
+                }
+            })
         }
         return
     };
@@ -113,6 +122,7 @@ const ForgetPasswordScreen = () => {
         setOpenAfterSubmitMessage(false)
         navigation.navigate('LoginStack', { screen: 'ResetPasswordScreen' })
     };
+
     return (
         <>
             <StatusBar
@@ -126,9 +136,10 @@ const ForgetPasswordScreen = () => {
                     title={'Check your email'}
                     message={'We have sent a password recovery instruction to your email'}
                     windowImage={IMAGES.GifCheckEmail}
+                    buttonText={'Open Mail App'}
+
                     isOpen={isOpenAfterSubmitMessage}
                     afterSubmitButton={AfterSubmitButtonAction}
-                    buttonText={'Open Mail App'}
                 />
                 {/* Header */}
                 <Header>
@@ -205,7 +216,6 @@ const ForgetPasswordScreen = () => {
                                         <ErrorIcon width={20} height={20} />
                                     </ShowPasswordIconButton>
                                     }
-
                                 </FormInputContainer>
 
                                 <FormInputLabel isError={errors.resetEmail} inputLabel={inputEmailLabel}>Your email</FormInputLabel>

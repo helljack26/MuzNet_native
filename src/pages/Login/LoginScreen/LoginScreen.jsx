@@ -145,7 +145,7 @@ const LoginScreen = () => {
                                             fontSize: 17,
                                             fontFamily: F.regular,
                                             color: C.black,
-                                            paddingTop: inputPhoneLabel === true ? 17 : 0,
+                                            paddingTop: inputPhoneLabel === true ? 13 : 0,
                                             borderColor: errors.userPhoneNumber ? C.red : inputFocus1,
                                             borderWidth: errors.userPhoneNumber ? 2 : 1,
                                             color: errors.userPhoneNumber ? C.red : C.black,

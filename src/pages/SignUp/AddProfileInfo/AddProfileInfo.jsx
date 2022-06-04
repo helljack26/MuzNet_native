@@ -293,9 +293,8 @@ const AddProfileInfo = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            setScreenNumber(2)
+            setScreenNumber(0)
         });
-
         return unsubscribe;
     }, [navigation]);
 
@@ -309,6 +308,7 @@ const AddProfileInfo = () => {
 
     // Tab Choose band members
     const [chosenBandMembers, getChosenBandMembers] = useState([]);
+
     // Tab Choose musical instrument
     const [chosenInstrument, getChosenInstrument] = useState([]);
 
@@ -346,7 +346,6 @@ const AddProfileInfo = () => {
 
     // Willing to travel interstate for gigs
     const [isWillingToTravel, setWillingToTravel] = useState(false);
-
 
     useEffect(() => {
         if (dirtyFields.userFullName === undefined) {
