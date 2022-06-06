@@ -137,7 +137,7 @@ const ForgetPasswordScreen = () => {
                     message={'We have sent a password recovery instruction to your email'}
                     windowImage={IMAGES.GifCheckEmail}
                     buttonText={'Open Mail App'}
-
+                    setOpen={setOpenAfterSubmitMessage}
                     isOpen={isOpenAfterSubmitMessage}
                     afterSubmitButton={AfterSubmitButtonAction}
                 />

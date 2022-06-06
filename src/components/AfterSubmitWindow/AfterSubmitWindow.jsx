@@ -3,6 +3,7 @@ import { Image, Keyboard } from "react-native";
 import { useEffect } from 'react';
 
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
+import { useNavigation } from '@react-navigation/native';
 
 // Images
 import IMAGES from '@/res/images'
@@ -18,6 +19,11 @@ const {
     ModalTitle,
     ModalAdvice,
     ButtonBlock,
+
+    ContentBlockRow,
+    ContainerText,
+    ContainerLink,
+    ContainerLinkText,
 } = style;
 
 import { M } from '@/res/mixin'
@@ -26,6 +32,8 @@ const {
     BlackBtnText
 } = M;
 const AfterSubmitWindow = ({ isOpen, setOpen, windowImage, title, message, buttonText, afterSubmitButton }) => {
+    const navigation = useNavigation();
+
     const { windowHeight, windowWidth } = getWindowDimension()
 
     useEffect(() => {
@@ -34,6 +42,38 @@ const AfterSubmitWindow = ({ isOpen, setOpen, windowImage, title, message, butto
         }
     }, [isOpen]);
 
+    const isEmail = title === 'Check your email'
+
+    const BlackButton = () => {
+        return <BlackBtn
+            style={{
+                marginTop: isEmail === true ? 32 : 0
+            }}
+            onPress={afterSubmitButton}>
+            <BlackBtnText>
+                {buttonText}
+            </BlackBtnText>
+        </BlackBtn>
+    }
+
+    const EmailFooterText = () => {
+        return <ContentBlockRow>
+            <ContainerText>
+                Did not receive the email? Check your spam filter or
+                <ContainerLink
+                    onPress={() => {
+                        setOpen(false)
+                    }}
+                >
+                    <ContainerLinkText>try another email address</ContainerLinkText>
+                </ContainerLink>
+            </ContainerText>
+        </ContentBlockRow>
+    }
+
+    const isEmailButton = isEmail && <BlackButton />
+    const isEmailFooter = isEmail && <EmailFooterText />
+    const isSuccessResetPassword = title !== 'Check your email' && <BlackButton />
     return (isOpen === true &&
 
         <ModalWindowContainer
@@ -54,18 +94,15 @@ const AfterSubmitWindow = ({ isOpen, setOpen, windowImage, title, message, butto
                 <ModalAdvice>
                     {message}
                 </ModalAdvice>
+                {isEmailButton}
+
             </ModalWindowBlock>
 
             {/* Button */}
             <ButtonBlock>
+                {isSuccessResetPassword}
 
-                <BlackBtn onPress={afterSubmitButton}>
-
-                    <BlackBtnText>
-                        {buttonText}
-                    </BlackBtnText>
-
-                </BlackBtn>
+                {isEmailFooter}
             </ButtonBlock>
         </ModalWindowContainer>
 

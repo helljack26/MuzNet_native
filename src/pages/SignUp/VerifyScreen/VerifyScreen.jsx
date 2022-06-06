@@ -44,9 +44,7 @@ const VerifyScreen = () => {
         if (isVerifySuccess === true) {
             navigation.navigate(navigateToStackAfterSubmit,
                 { screen: navigateToScreenAfterSubmit })
-
-        } else if (isVerifySuccess === false && isVerifySuccess !== undefined) {
-            setModalOpen(true)
+            setVerifySuccess(false)
         }
     }, [isVerifySuccess]);
 
@@ -59,13 +57,13 @@ const VerifyScreen = () => {
                 translucent={true}
             />
             <Container>
-                <ModalWindow
+                {isModalOpen === true && <ModalWindow
                     type={true}
-                    title={'Wrong code'}
-                    advice={'Check the code and try again'}
-                    isOpen={isModalOpen}
+                    title={'Oops!'}
+                    advice={'It looks like you put in the wrong code, try again'}
                     setOpen={setModalOpen}
-                />
+                    btnText={'Try Again!'}
+                />}
                 {/* Header */}
                 <Header>
                     <GoBack />
@@ -85,6 +83,8 @@ const VerifyScreen = () => {
                     <VerifyCodeInputs
                         verifyCode={verifyCode}
                         setVerifySuccess={setVerifySuccess}
+                        setModalOpen={setModalOpen}
+
                     />
                 </FormBlock>
 

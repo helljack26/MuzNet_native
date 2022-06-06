@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from 'react';
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
 // Images
@@ -18,13 +19,20 @@ const {
     ModalTitle,
     ModalAdvice,
 } = style;
-
-const ModalWindow = ({ isOpen, setOpen, type, title, advice }) => {
+import { M } from '@/res/mixin'
+const {
+    BlackBtn,
+    BlackBtnText
+} = M;
+const ModalWindow = ({ isOpen, setOpen, type, title, advice, btnText }) => {
+    console.log("🚀 ~ file: ModalWindow.jsx ~ line 27 ~ ModalWindow ~ isOpen", isOpen)
     const { windowHeight, windowWidth } = getWindowDimension()
 
-    const isWrongIcon = type === true && <ModalWrongIcon width={50} height={50} />
-    return (isOpen === true &&
+    useEffect(() => {
 
+    }, [isOpen]);
+    const isWrongIcon = type === true && <ModalWrongIcon width={80} height={80} />
+    return (
         <ModalWindowContainer
             style={{
                 width: windowWidth,
@@ -33,10 +41,7 @@ const ModalWindow = ({ isOpen, setOpen, type, title, advice }) => {
         >
             <ModalWindowBlock>
                 <CloseButton
-                    onPress={() => {
-                        setOpen(false)
-                    }}
-                >
+                    onPress={() => { setOpen(false) }}  >
                     <CrossBlackIcon width={14} height={14} />
                 </CloseButton>
 
@@ -50,6 +55,18 @@ const ModalWindow = ({ isOpen, setOpen, type, title, advice }) => {
                 <ModalAdvice>
                     {advice}
                 </ModalAdvice>
+
+                <BlackBtn
+                    style={{
+                        width: '90%',
+                        marginTop: 20,
+                    }}
+                    onPress={() => setOpen(false)}
+                >
+                    <BlackBtnText>
+                        {btnText}
+                    </BlackBtnText>
+                </BlackBtn>
             </ModalWindowBlock>
 
         </ModalWindowContainer>

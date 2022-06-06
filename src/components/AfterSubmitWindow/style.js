@@ -67,6 +67,35 @@ right: 0px;
 left: 0px;
 padding: 0px 20px;
 `;
+
+const ContentBlockRow = styled.View`
+display: flex;
+width: 100%;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+margin-top: 16px;
+
+`;
+
+const ContainerText = styled(M.PlainText17)`
+color: ${C.sBlack};
+display: flex;
+align-items: center;
+flex-direction: row;
+padding-right: 5px;
+text-align: center;
+`;
+const ContainerLink = styled.TouchableOpacity`
+padding-left: 6px;
+display:flex;
+margin-bottom: -10px;
+`;
+const ContainerLinkText = styled(M.BorderBtnText)`
+    font-family: ${F.bold};
+    top: 5px;
+text-decoration: underline;
+`;
 export const style = {
     ModalWindowContainer: ModalWindowContainer,
     ModalWindowBlock: ModalWindowBlock,
@@ -75,4 +104,10 @@ export const style = {
     ModalTitle: ModalTitle,
     ModalAdvice: ModalAdvice,
     ButtonBlock: ButtonBlock,
+
+    ContentBlockRow: ContentBlockRow,
+    ContainerText: ContainerText,
+    ContainerLink: ContainerLink,
+    ContainerLinkText: ContainerLinkText,
+
 }

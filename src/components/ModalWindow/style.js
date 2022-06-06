@@ -20,13 +20,13 @@ const ModalWindowBlock = styled.View`
 z-index: 2001;
 background-color: ${C.white};
 width: 100%;
-height: 190px;
 border-radius: 12px;
 display: flex;
 justify-content: flex-end;
 align-items: center;
 flex-direction: column;
-padding-bottom: 24px;
+padding-top: 36px;
+padding-bottom: 5%;
 `;
 const CloseButton = styled.TouchableOpacity`
 width: 42px;
@@ -54,7 +54,9 @@ color: ${C.black};
 margin-bottom: 4px;
 `;
 const ModalAdvice = styled(M.MediumText15)`
-
+padding: 0px 50px;
+text-align: center;
+color: ${C.cyanGray};
 `;
 
 export const style = {

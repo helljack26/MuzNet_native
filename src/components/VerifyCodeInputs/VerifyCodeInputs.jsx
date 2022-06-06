@@ -15,7 +15,7 @@ const {
     FormInput,
 } = style;
 
-const VerifyCodeInputs = ({ verifyCode, setVerifySuccess }) => {
+const VerifyCodeInputs = ({ verifyCode, setVerifySuccess, setModalOpen }) => {
     const navigation = useNavigation();
 
     const { control, resetField, watch } = useForm({
@@ -59,13 +59,18 @@ const VerifyCodeInputs = ({ verifyCode, setVerifySuccess }) => {
         }
         if (num4Watch.length === 1 && concatInputCode.length === 4) {
             if (Number(concatInputCode) === Number(verifyCode)) {
+                resetField('num1')
+                resetField('num2')
+                resetField('num3')
+                resetField('num4')
                 setVerifySuccess(true)
             } else {
                 Keyboard.dismiss()
                 setVerifySuccess(false)
+                setModalOpen(true)
             }
         }
-    }, [num1Watch.length, num2Watch.length, num3Watch.length, num4Watch.length]);
+    }, [num1Watch.length, num2Watch.length, num3Watch.length, num4Watch.length, concatInputCode]);
 
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
     const [inputFocus2, setInputFocus2] = useState(C.lightGray);

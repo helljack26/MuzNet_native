@@ -95,7 +95,6 @@ const OnBoardingScreen = () => {
                         onPress={() => {
                             navigation.navigate('SignUpStack', {
                                 screen: 'AddProfileInfo',
-                                // phoneNumber: 'Говна тебе в вентилятор',
                             });
                         }}
                     ></TouchableOpacity>
