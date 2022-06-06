@@ -19,6 +19,21 @@ import CrossGrayIcon from '../../assets/icon/cross_gray_icon.svg'
 import CheckBlackIcon from '../../assets/icon/check_black_icon.svg'
 import UsaIcon from '../../assets/icon/usa_icon.svg'
 import ModalWrongIcon from '../../assets/icon/modal_wrong.svg'
+// Main screen
+import FilterIcon from '../../assets/icon/filter_icon.svg'
+import RateStarIcon from '../../assets/icon/rate_star_icon.svg'
+import MapPointIcon from '../../assets/icon/map_point_icon.svg'
+import HeartActiveIcon from '../../assets/icon/heart_active_icon.svg'
+import HeartDefaultIcon from '../../assets/icon/heart_default_icon.svg'
+import TrashIcon from '../../assets/icon/trash_icon.svg'
+
+// Tapbar Icon
+import HomeTapbarIcon from '../../assets/icon/tapbar/home_tapbar_icon.svg'
+import MessagesTapbarIcon from '../../assets/icon/tapbar/messages_tapbar_icon.svg'
+import CalendarTapbarIcon from '../../assets/icon/tapbar/calendar_tapbar_icon.svg'
+import CommunityTapbarIcon from '../../assets/icon/tapbar/community_tapbar_icon.svg'
+import ProfileTapbarIcon from '../../assets/icon/tapbar/profile_tapbar_icon.svg'
+
 
 // Arrows
 import GoBackIcon from '../../assets/icon/goBack_icon.svg'
@@ -60,6 +75,23 @@ const IMAGES = {
     ModalWrongIcon: ModalWrongIcon,
     // Arrows
     GoBackIcon: GoBackIcon,
+
+    // Main screen
+    FilterIcon: FilterIcon,
+    WelcomeTitle: require('../../assets/screens/MainScreen/welcome_title.png'),
+    MapMain: require('../../assets/screens/MainScreen/map.png'),
+    RateStarIcon: RateStarIcon,
+    MapPointIcon: MapPointIcon,
+    HeartActiveIcon: HeartActiveIcon,
+    HeartDefaultIcon: HeartDefaultIcon,
+    TrashIcon: TrashIcon,
+
+    // Tapbar icon
+    HomeTapbarIcon: HomeTapbarIcon,
+    MessagesTapbarIcon: MessagesTapbarIcon,
+    CalendarTapbarIcon: CalendarTapbarIcon,
+    CommunityTapbarIcon: CommunityTapbarIcon,
+    ProfileTapbarIcon: ProfileTapbarIcon,
 }
 
 export default IMAGES;

@@ -68,7 +68,9 @@ const OnBoardingScreen = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            setScreenNumber(0)
+            navigation.navigate('ContractorStack', {
+                screen: 'ContractorWelcomeScreen',
+            });
         });
 
         return unsubscribe;
@@ -90,14 +92,7 @@ const OnBoardingScreen = () => {
 
                 {/* Content */}
                 <Content style={{ flex: 1, height: '100%', }}>
-                    <TouchableOpacity
-                        style={{ position: 'absolute', top: 0, left: 0, width: 30, height: 30, backgroundColor: 'gray' }}
-                        onPress={() => {
-                            navigation.navigate('SignUpStack', {
-                                screen: 'AddProfileInfo',
-                            });
-                        }}
-                    ></TouchableOpacity>
+
                     <ContentTitle>
                         {title}
                     </ContentTitle>

@@ -20,6 +20,7 @@ export const S = {
     Musician: 'Musician',
     Band: 'Band',
 
+
     Instruments: [
         "Accordion",
         "Balalaika",
