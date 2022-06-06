@@ -1,5 +1,7 @@
 import React from "react";
 import { useEffect } from 'react';
+import { Image } from 'react-native';
+
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
 // Images
@@ -25,13 +27,19 @@ const {
     BlackBtnText
 } = M;
 const ModalWindow = ({ isOpen, setOpen, type, title, advice, btnText }) => {
-    console.log("🚀 ~ file: ModalWindow.jsx ~ line 27 ~ ModalWindow ~ isOpen", isOpen)
     const { windowHeight, windowWidth } = getWindowDimension()
 
     useEffect(() => {
 
     }, [isOpen]);
-    const isWrongIcon = type === true && <ModalWrongIcon width={80} height={80} />
+    const isWrongIcon = type === true ? <ModalWrongIcon width={80} height={80} /> :
+        <Image source={IMAGES.GifSuccessCheck}
+            style={{
+                width: '120%',
+                height: '120%',
+
+            }}
+            resizeMode={'cover'} width={'100%'} height={'100%'} />
     return (
         <ModalWindowContainer
             style={{

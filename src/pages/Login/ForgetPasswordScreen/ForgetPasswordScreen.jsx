@@ -99,7 +99,7 @@ const ForgetPasswordScreen = () => {
         setPhone('');
         const isEmailField = isEmailTab === true ? data.resetEmail : data.resetPhone;
 
-        console.log("🚀 ~ file: ForgetPasswordScreen.jsx ~ line 102 ~ onSubmit ~ isEmailField", isEmailField)
+        console.log("Кайфовое мыло или телефон", isEmailField)
 
         if (isEmailTab === true) {
             setOpenAfterSubmitMessage(true)

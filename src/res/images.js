@@ -33,6 +33,7 @@ const IMAGES = {
     GifNewPassword: require('../../assets/gif/reset_password/new_pass_confirmed.gif'),
     GifWrongEmail: require('../../assets/gif/reset_password/failed_email.gif'),
     GifSomethingWrong: require('../../assets/gif/reset_password/something_wrong.gif'),
+    GifSuccessCheck: require('../../assets/gif/modal/success_check.gif'),
     // Select AddProfileInfo screen
     SelectContractor: require('../../assets/AddProfileInfo/select_contractor.png'),
     SelectMusician: require('../../assets/AddProfileInfo/select_musician.png'),

@@ -25,7 +25,7 @@ display: flex;
 justify-content: flex-end;
 align-items: center;
 flex-direction: column;
-padding-top: 36px;
+padding-top: 30px;
 padding-bottom: 5%;
 `;
 const CloseButton = styled.TouchableOpacity`
@@ -45,6 +45,12 @@ flex-direction: row;
 `;
 const ModalIcon = styled.View`
 margin-bottom: 21px;
+width: 120px;
+height: 120px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
 `;
 const ModalTitle = styled.Text`
 font-size: 20px;
@@ -54,7 +60,7 @@ color: ${C.black};
 margin-bottom: 4px;
 `;
 const ModalAdvice = styled(M.MediumText15)`
-padding: 0px 50px;
+padding: 0px 60px;
 text-align: center;
 color: ${C.cyanGray};
 `;

@@ -6,6 +6,8 @@ import { useForm, Controller } from "react-hook-form";
 
 import { useState, useEffect } from 'react';
 
+import ModalWindow from '@/components/ModalWindow'
+
 // Components
 import SelectProfileType from './SelectProfileType'
 import SelectMusicianType from './SelectMusicianType'
@@ -390,8 +392,17 @@ const AddProfileInfo = () => {
         dirtyFields.userLocation,
         dirtyFields.userAddress
     ]);
+    // Open modal window
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const AfterSubmitButtonAction = () => {
+        setModalOpen(false)
+        return navigation.navigate('LoginStack', { screen: 'LoginScreen' })
+    };
+
     // Submit
     const onSubmit = (data) => {
+        setModalOpen(true)
         const userAvatar = newAvatar !== undefined ? newAvatar : null
 
         const userContractorPosition = positionType !== undefined ? positionType : null
@@ -455,9 +466,6 @@ const AddProfileInfo = () => {
         resetField('userAddress')
         setWillingToTravel(false)
 
-        navigation.navigate('LoginStack', {
-            screen: 'LoginScreen'
-        })
         return
     };
 
@@ -537,7 +545,7 @@ const AddProfileInfo = () => {
             if (positionType !== null) setIsDisableButton(false)
         }
         if (tabNumber === 3 && userType === S.Musician) {
-            setIsDisableButton(true)
+            setIsDisableButton(false)
             if (musicianType !== null) setIsDisableButton(false)
         }
         if (isInstrumentsSearchSelect) {
@@ -552,6 +560,7 @@ const AddProfileInfo = () => {
 
     }, [tabNumber, positionType, musicianType, chosenInstrument, chosenGenres])
 
+
     const isDisableScroll = !isInstrumentsSearchSelect || !isGenresSearchSelect || !isBandMembersSearchSelect || isBandInstrumentsSearchSelect || isBandGenresSearchSelect
     return (
         <>
@@ -562,6 +571,13 @@ const AddProfileInfo = () => {
                 translucent={true}
             />
             <Container>
+                {isModalOpen === true && <ModalWindow
+                    type={false}
+                    title={'Great!'}
+                    advice={'Your account has been successfully created'}
+                    setOpen={AfterSubmitButtonAction}
+                    btnText={'Get Started'}
+                />}
                 {/* Header */}
                 <Header>
                     {tabNumber > 1 && <StepBackButton
