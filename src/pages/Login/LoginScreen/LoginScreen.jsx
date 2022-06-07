@@ -13,10 +13,7 @@ import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import GoBack from '@/components/Buttons/GoBack/GoBack'
 import MaskInput from 'react-native-mask-input';
 
-import {
-    useNavigation
-    // , useRoute 
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 // Images
 import IMAGES from '@/res/images'

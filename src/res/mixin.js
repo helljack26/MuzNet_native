@@ -90,11 +90,29 @@ font-family: ${F.extraBlack};
 color: ${C.black};
 line-height: 25px;
 `
+const TitleBold20 = styled.Text`
+font-size: 20px;
+font-family: ${F.bold};
+color: ${C.black};
+line-height: 25px;
+`
+const TitleBold18 = styled.Text`
+font-size: 18px;
+font-family: ${F.bold};
+color: ${C.black};
+line-height: 23px;
+`
 const PlainText17 = styled.Text`
 font-size: 17px;
 font-family: ${F.regular};
 color: ${C.black};
 line-height: 22px;
+`
+const PlainText14 = styled.Text`
+font-size: 14px;
+font-family: ${F.regular};
+color: ${C.black};
+line-height: 18px;
 `
 const PlainText13 = styled.Text`
 font-size: 13px;
@@ -199,7 +217,10 @@ export const M = {
     Title28: Title28,
     Title24: Title24,
     Title20: Title20,
+    TitleBold20: TitleBold20,
+    TitleBold18: TitleBold18,
     PlainText17: PlainText17,
+    PlainText14: PlainText14,
     PlainText13: PlainText13,
     MediumText20: MediumText20,
     MediumText17: MediumText17,

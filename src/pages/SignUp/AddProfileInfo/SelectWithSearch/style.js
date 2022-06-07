@@ -4,14 +4,12 @@ import C from '@/res/colors'
 import F from '@/res/fonts'
 import { M } from '@/res/mixin'
 
-
 const Container = styled.View`
 width: 100%;
 display: flex;
 flex-direction: column;
 align-items: center;
 background-color: ${C.white};
-
 `;
 const SearchInputBlock = styled.View`
 width: 100%;
@@ -28,8 +26,6 @@ justify-content: center;
 align-items: center;
 flex-direction: row;
 z-index: 999;
-/* bottom: 0px; */
-
 `;
 const SearchRemoveIconBlock = styled.TouchableOpacity`
 position: absolute;

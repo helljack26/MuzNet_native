@@ -5,7 +5,7 @@ import ContractorWelcomeScreen from '../../src/pages/Contractor/ContractorWelcom
 
 const Stack = createNativeStackNavigator();
 
-export default function LoginStack() {
+export default function ContractorStack() {
     return (
         <Stack.Navigator
             screenOptions={() => ({

@@ -1,3 +1,10 @@
+// Tapbar Icon
+import HomeTapbarIcon from '../../assets/icon/tapbar/home_tapbar_icon.svg'
+import MessagesTapbarIcon from '../../assets/icon/tapbar/messages_tapbar_icon.svg'
+import CalendarTapbarIcon from '../../assets/icon/tapbar/calendar_tapbar_icon.svg'
+import CommunityTapbarIcon from '../../assets/icon/tapbar/community_tapbar_icon.svg'
+import ProfileTapbarIcon from '../../assets/icon/tapbar/profile_tapbar_icon.svg'
+
 // Icon
 import PlainLogo from '../../assets/plain_logo.svg'
 import ArrowIcon from '../../assets/icon/arrow_icon.svg'
@@ -22,23 +29,23 @@ import ModalWrongIcon from '../../assets/icon/modal_wrong.svg'
 // Main screen
 import FilterIcon from '../../assets/icon/filter_icon.svg'
 import RateStarIcon from '../../assets/icon/rate_star_icon.svg'
+import MapShape from '../../assets/screens/MainScreen/map_shape.svg'
 import MapPointIcon from '../../assets/icon/map_point_icon.svg'
 import HeartActiveIcon from '../../assets/icon/heart_active_icon.svg'
 import HeartDefaultIcon from '../../assets/icon/heart_default_icon.svg'
 import TrashIcon from '../../assets/icon/trash_icon.svg'
 
-// Tapbar Icon
-import HomeTapbarIcon from '../../assets/icon/tapbar/home_tapbar_icon.svg'
-import MessagesTapbarIcon from '../../assets/icon/tapbar/messages_tapbar_icon.svg'
-import CalendarTapbarIcon from '../../assets/icon/tapbar/calendar_tapbar_icon.svg'
-import CommunityTapbarIcon from '../../assets/icon/tapbar/community_tapbar_icon.svg'
-import ProfileTapbarIcon from '../../assets/icon/tapbar/profile_tapbar_icon.svg'
-
-
 // Arrows
 import GoBackIcon from '../../assets/icon/goBack_icon.svg'
 
 const IMAGES = {
+    // Tapbar icon
+    HomeTapbarIcon: HomeTapbarIcon,
+    MessagesTapbarIcon: MessagesTapbarIcon,
+    CalendarTapbarIcon: CalendarTapbarIcon,
+    CommunityTapbarIcon: CommunityTapbarIcon,
+    ProfileTapbarIcon: ProfileTapbarIcon,
+
     Onboard1: require('../../assets/Onboarding/Onboarding_1.png'),
     Onboard2: require('../../assets/Onboarding/Onboarding_2.png'),
     Onboard3: require('../../assets/Onboarding/Onboarding_3.png'),
@@ -80,18 +87,14 @@ const IMAGES = {
     FilterIcon: FilterIcon,
     WelcomeTitle: require('../../assets/screens/MainScreen/welcome_title.png'),
     MapMain: require('../../assets/screens/MainScreen/map.png'),
+    MapShape: MapShape,
     RateStarIcon: RateStarIcon,
     MapPointIcon: MapPointIcon,
     HeartActiveIcon: HeartActiveIcon,
     HeartDefaultIcon: HeartDefaultIcon,
     TrashIcon: TrashIcon,
 
-    // Tapbar icon
-    HomeTapbarIcon: HomeTapbarIcon,
-    MessagesTapbarIcon: MessagesTapbarIcon,
-    CalendarTapbarIcon: CalendarTapbarIcon,
-    CommunityTapbarIcon: CommunityTapbarIcon,
-    ProfileTapbarIcon: ProfileTapbarIcon,
+    // Mock artist
 }
 
 export default IMAGES;

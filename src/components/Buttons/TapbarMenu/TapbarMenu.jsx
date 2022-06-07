@@ -36,10 +36,11 @@ const TapbarMenuContent = [
 
 import styled from 'styled-components/native';
 import C from '@/res/colors'
-import F from '@/res/fonts'
-import { M } from '@/res/mixin'
 
 const TapbarBlock = styled.View`
+border-top-color: ${C.lightGray};
+border-top-width: 1px;
+
 display: flex;
 justify-content: space-between;
 flex-direction: row;
@@ -51,7 +52,6 @@ height: 82px;
 z-index:999;
 background-color: ${C.white};
 padding: 0px 10px;
-
 `;
 const TapbarItem = styled.TouchableOpacity`
 padding-top: 16px;
@@ -59,7 +59,7 @@ display: flex;
 align-items: center;
 flex-direction: column;
 width: 20%;
-opacity: ${props => props.isActive === true ? 1 : 0.5};
+opacity: ${props => props.isActive === true ? 1 : 0.2};
 `;
 const ActiveDot = styled.View`
 display: flex;
@@ -84,6 +84,7 @@ const TapbarMenu = () => {
                 return <TapbarItem
                     isActive={isActive}
                     key={id}>
+                    {/* Icon */}
                     {item.icon}
 
                     {isActive === true && <ActiveDot></ActiveDot>}

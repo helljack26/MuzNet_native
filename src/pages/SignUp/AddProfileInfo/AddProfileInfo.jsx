@@ -409,6 +409,7 @@ const AddProfileInfo = () => {
         const userBandMember = chosenBandMembers !== undefined ? chosenBandMembers : null
         const userMusicalInstrument = chosenInstrument !== undefined ? chosenInstrument : null
         const userGenres = chosenGenres !== undefined ? chosenGenres : null
+        console.log("🚀 ~ file: AddProfileInfo.jsx ~ line 412 ~ onSubmit ~ userGenres", userGenres)
 
         if (data.willingToTravel !== undefined) data.willingToTravel = isWillingToTravel
         if (data.willingToTravel === 'false') data.willingToTravel = false
@@ -430,6 +431,8 @@ const AddProfileInfo = () => {
             userMusiciaType: musicianType,
             userName: data.userName,
             userAvatar: userAvatar,
+            userMusicalInstrument: userMusicalInstrument,
+            userGenres: userGenres,
             userFullName: data.userFullName,
             userDescription: data.userDescription,
             userEmail: data.userEmail,
@@ -544,19 +547,19 @@ const AddProfileInfo = () => {
             setIsDisableButton(true)
             if (positionType !== null) setIsDisableButton(false)
         }
-        if (tabNumber === 3 && userType === S.Musician) {
-            setIsDisableButton(false)
-            if (musicianType !== null) setIsDisableButton(false)
-        }
-        if (isInstrumentsSearchSelect) {
-            if (chosenInstrument.length === 0) { setIsDisableButton(true) }
-            else { setIsDisableButton(false) }
-        }
-        if (isGenresSearchSelect) {
-            if (chosenGenres.length === 0) {
-            }
-            else { setIsDisableButton(false) }
-        }
+        // if (tabNumber === 3 && userType === S.Musician) {
+        //     setIsDisableButton(false)
+        //     if (musicianType !== null) setIsDisableButton(false)
+        // }
+        // if (isInstrumentsSearchSelect) {
+        //     if (chosenInstrument.length === 0) { setIsDisableButton(true) }
+        //     else { setIsDisableButton(false) }
+        // }
+        // if (isGenresSearchSelect) {
+        //     if (chosenGenres.length === 0) {
+        //     }
+        //     else { setIsDisableButton(false) }
+        // }
 
     }, [tabNumber, positionType, musicianType, chosenInstrument, chosenGenres])
 

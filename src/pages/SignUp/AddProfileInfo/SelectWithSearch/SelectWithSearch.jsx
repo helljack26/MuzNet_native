@@ -139,14 +139,7 @@ const SelectWithSearch = ({ dataForChoose, searchPlaceholder, getChosenData, alr
                     selectionColor={C.lightGray}
                     placeholder={searchPlaceholder}
                     keyboardType="default"
-
                     onChangeText={onChangeSearchText}
-                // onFocus={() => { setInputFocus(C.black) }}
-                // onBlur={() => { setInputFocus(C.lightGray) }}
-                // style={{
-                //     borderColor: inputFocus,
-                //     borderWidth: 1,
-                // }}
                 />
             </SearchInputBlock>
             {/* Choose block */}

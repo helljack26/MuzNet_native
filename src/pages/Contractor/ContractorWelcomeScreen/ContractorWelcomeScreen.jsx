@@ -10,21 +10,15 @@ import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import MainScreen from '@/components/MainScreen'
 import TapbarMenu from '@/components/Buttons/TapbarMenu'
 
-// Images
-import IMAGES from '@/res/images'
-const {
-
-} = IMAGES;
 // Styles
-
 import styled from 'styled-components/native';
 import C from '@/res/colors'
-import F from '@/res/fonts'
 
 const Container = styled.View`
 height: 100%;
 width: 100%;
-background-color: ${C.black};
+background-color: ${C.white};
+padding-bottom: 82px;
 `;
 const Content = styled.ScrollView`
 padding: 0px 20px;
@@ -34,24 +28,17 @@ width: 100%;
 const ContractorWelcomeScreen = () => {
     const navigation = useNavigation();
 
-    const { windowHeight, windowWidth } = getWindowDimension()
-    console.log("🚀 ~ file: ContractorWelcomeScreen.jsx ~ line 44 ~ ContractorWelcomeScreen ~ windowHeight", windowHeight)
-
     return (
         <>
             <StatusBar
                 barStyle={'dark-content'}
                 hidden={false}
-                backgroundColor="transparent"
+                backgroundColor="white"
                 translucent={true}
             />
 
             {/* Image */}
-            <Container
-            // style={{
-            //     height: windowHeight,
-            // }}
-            >
+            <Container>
                 <Content>
                     <MainScreen />
                 </Content>
