@@ -1,9 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { useState, useEffect } from 'react';
 
-// import { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 // Components
@@ -25,8 +22,7 @@ padding: 0px 20px;
 width: 100%;
 `;
 
-const ContractorWelcomeScreen = () => {
-    const navigation = useNavigation();
+const MusicianWelcomeScreen = () => {
     const isKeyboardOpen = isKeyboardShown()
 
     return (
@@ -44,8 +40,8 @@ const ContractorWelcomeScreen = () => {
             >
                 <Content>
                     <MainScreen
-                        stackName={'ContractorStack'}
-                        screenTitle={'Popular musicians'}
+                        stackName={'MusicianStack'}
+                        screenTitle={'Popular vendors'}
                     />
                 </Content>
 
@@ -56,4 +52,4 @@ const ContractorWelcomeScreen = () => {
     )
 }
 
-export default ContractorWelcomeScreen;
+export default MusicianWelcomeScreen;

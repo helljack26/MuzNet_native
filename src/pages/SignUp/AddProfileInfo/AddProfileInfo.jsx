@@ -397,7 +397,11 @@ const AddProfileInfo = () => {
 
     const AfterSubmitButtonAction = () => {
         setModalOpen(false)
-        return navigation.navigate('LoginStack', { screen: 'LoginScreen' })
+        if (isContractor === true) {
+            return navigation.navigate('ContractorStack', { screen: 'ContractorWelcomeScreen' })
+        } else {
+            return navigation.navigate('MusicianStack', { screen: 'MusicianWelcomeScreen' })
+        }
     };
 
     // Submit

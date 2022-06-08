@@ -68,9 +68,7 @@ const OnBoardingScreen = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            navigation.navigate('ContractorStack', {
-                screen: 'ContractorWelcomeScreen',
-            });
+            navigation.navigate('MusicianStack', { screen: 'MusicianWelcomeScreen' });
         });
 
         return unsubscribe;
@@ -153,8 +151,43 @@ const OnBoardingScreen = () => {
                             </ButtonStart>
 
                         }
-
                     </ButtonsBlock>
+                    <Button
+                        style={{
+                            position: 'absolute',
+                            width: '100%',
+                            bottom: 50,
+                            right: 0,
+                            left: 0,
+                            flex: 1,
+                            paddingLeft: 60,
+                            justifyContent: 'center',
+                            flexDirection: 'row',
+
+                        }}
+                    >
+                        <Button
+
+                            onPress={() => {
+                                navigation.navigate('ContractorStack', { screen: 'ContractorWelcomeScreen' });
+                            }} >
+                            <ButtonText>
+                                Contractor
+                            </ButtonText>
+                        </Button>
+                        <Button
+                            style={{
+                                paddingLeft: 20,
+
+                            }}
+                            onPress={() => {
+                                navigation.navigate('MusicianStack', { screen: 'MusicianWelcomeScreen' });
+                            }} >
+                            <ButtonText>
+                                Musician
+                            </ButtonText>
+                        </Button>
+                    </Button>
                 </Content>
             </Container>
 

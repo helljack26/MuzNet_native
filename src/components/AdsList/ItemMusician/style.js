@@ -26,7 +26,9 @@ height: 100%;
 `;
 const ItemInfo = styled.View`
 margin-left: 12px;
-width: 100%;
+display: flex;
+flex-direction: column;
+width: 65%;
 `;
 const ItemInfoLocation = styled.View`
 display: flex;
@@ -41,7 +43,6 @@ color: ${C.sBlack};
 const ItemInfoName = styled(M.TitleBold18)`
 padding-top: 4px;
 padding-bottom: 7px;
-width: 50%;
 `;
 const ItemInfoGenres = styled.View`
 display: flex;
@@ -49,7 +50,6 @@ align-items: center;
 flex-direction: row;
 flex-wrap: wrap;
 width: 100%;
-padding-right: 96px;
 `;
 const ItemInfoGenre = styled.View`
 padding: 0px 8px;
@@ -79,6 +79,11 @@ margin-right: 5px;
 const ItemInfoCostValuePostfix = styled(M.PlainText14)`
 margin-bottom: 2px;
 `;
+const ItemInfoDescription = styled(M.MediumText12)`
+margin-top: -4px;
+margin-bottom: 4px;
+color: ${C.cyanGray};
+`;
 
 export const style = {
     ItemContainer: ItemContainer,
@@ -95,5 +100,5 @@ export const style = {
     ItemInfoCost: ItemInfoCost,
     ItemInfoCostValue: ItemInfoCostValue,
     ItemInfoCostValuePostfix: ItemInfoCostValuePostfix,
-
+    ItemInfoDescription: ItemInfoDescription,
 }

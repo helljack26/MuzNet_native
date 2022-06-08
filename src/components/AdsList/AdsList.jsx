@@ -1,6 +1,7 @@
 import React from "react";
 // Components
 import ItemMusician from './ItemMusician'
+import ItemVendor from './ItemVendor'
 
 // Styles
 import styled from 'styled-components/native';
@@ -10,12 +11,16 @@ width: 100%;
 margin-top: 16px;
 `;
 const AdsList = ({ adsList, isForContractor }) => {
+    // console.log("🚀 ~ file: AdsList.jsx ~ line 13 ~ AdsList ~ isForContractor", isForContractor)
     if (adsList === undefined) { return }
 
     return (
         <AdsListContainer>
             {adsList.map((item, id) => {
-                return isForContractor === true ? <ItemMusician data={item} key={id} /> : null;
+                return isForContractor === true ?
+                    <ItemMusician data={item} key={id} />
+                    :
+                    <ItemVendor data={item} key={id} />;
             })}
         </AdsListContainer>
     );

@@ -6,6 +6,7 @@ import LoginStack from './LoginStack/LoginStack';
 import SignUpStack from './SignUpStack/SignUpStack';
 
 import ContractorStack from './ContractorStack/ContractorStack';
+import MusicianStack from './MusicianStack/MusicianStack';
 
 const Stack = createNativeStackNavigator();
 export default function UserStackNavigator() {
@@ -27,5 +28,6 @@ export default function UserStackNavigator() {
             <Stack.Screen name="SignUpStack" component={SignUpStack} />
 
             <Stack.Screen name="ContractorStack" component={ContractorStack} />
+            <Stack.Screen name="MusicianStack" component={MusicianStack} />
         </Stack.Navigator>)
 }

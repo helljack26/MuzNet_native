@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
+import ListSearchInput from '@/components/ListSearchInput'
 import AdsList from '@/components/AdsList'
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
@@ -12,13 +13,11 @@ import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { observer } from 'mobx-react-lite';
 import { useSearchApiStore } from '@/stores/SearchApi';
 import C from '@/res/colors'
-import { S } from '@/res/strings'
 
 // Images
 import IMAGES from '@/res/images'
 const {
-    SearchIcon,
-    FilterIcon,
+
     MapShape
 } = IMAGES;
 // Styles
@@ -30,11 +29,7 @@ const {
     WelcomeImage,
     PromoteBtn,
     PromoteBtnText,
-    // Search input
-    SearchInputBlock,
-    SearchInput,
-    SearchIconBlock,
-    SearchRemoveIconBlock,
+
     // Map
     MapContainer,
     MapImage,
@@ -51,12 +46,13 @@ const {
     AdsContainerHeaderLinkText,
 } = style;
 
-const MainScreen = observer(() => {
+const MainScreen = observer(({ stackName, screenTitle }) => {
     const { musicianList, vendorList, setList } = useSearchApiStore();
 
     const navigation = useNavigation();
 
     const route = useRoute();
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             setList(route.name);
@@ -90,6 +86,11 @@ const MainScreen = observer(() => {
         // }
 
     }, [searchText]);
+    const isContractor = stackName === 'ContractorStack'
+    const stackForSwitch = isContractor ? 'MusicianStack' : 'ContractorStack'
+    const screenForSwitch = isContractor ? 'MusicianWelcomeScreen' : 'ContractorWelcomeScreen'
+
+    const isContractorData = isContractor ? musicianList : vendorList
     return (
         <Content>
             {/* Header */}
@@ -99,7 +100,13 @@ const MainScreen = observer(() => {
                     <WelcomeImage source={IMAGES.WelcomeTitle} resizeMode={'contain'} />
                 </Welcome>
 
-                <PromoteBtn>
+                <PromoteBtn
+                    onPress={() => {
+                        navigation.navigate(stackForSwitch, {
+                            screen: screenForSwitch
+                        });
+                    }}
+                >
                     <PromoteBtnText>
                         Promote my add
                     </PromoteBtnText>
@@ -107,26 +114,7 @@ const MainScreen = observer(() => {
 
             </Header>
 
-            {/* Search Input */}
-            <SearchInputBlock>
-
-                <SearchIconBlock>
-                    <SearchIcon width={14} height={14} />
-                </SearchIconBlock>
-
-                <SearchRemoveIconBlock onPress={() => onChangeSearchText('')}   >
-                    <FilterIcon width={15} height={15} />
-                </SearchRemoveIconBlock>
-
-                <SearchInput
-                    cursorColor={C.inputCursor}
-                    selectionColor={C.lightGray}
-                    placeholder={'Search'}
-                    keyboardType="default"
-                    value={searchText}
-                    onChangeText={onChangeSearchText}
-                />
-            </SearchInputBlock>
+            <ListSearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} />
 
             {/* Map container */}
             <MapContainer>
@@ -155,16 +143,20 @@ const MainScreen = observer(() => {
 
             {/* Ads */}
             <AdsContainer>
+
                 {/* Ads header */}
                 <AdsContainerHeader>
-                    <AdsContainerHeaderTitle>Popular musician</AdsContainerHeaderTitle>
+                    <AdsContainerHeaderTitle>{screenTitle}</AdsContainerHeaderTitle>
 
                     <AdsContainerHeaderLink
-                        onPress={() => {
-                            navigation.navigate('ContractorStack', {
-                                screen: 'ListSearchScreen'
-                            });
-                        }} >
+                    // onPress={() => {
+                    //     navigation.navigate(stackName, {
+                    //         screen: 'ListSearchScreen'
+                    //     });
+                    // }} 
+
+                    >
+
                         <AdsContainerHeaderLinkText>
                             View all
                         </AdsContainerHeaderLinkText>
@@ -173,7 +165,8 @@ const MainScreen = observer(() => {
                 </AdsContainerHeader>
 
                 {/* Ads container */}
-                <AdsList adsList={musicianList} isForContractor={true} />
+                <AdsList adsList={isContractorData} isForContractor={isContractor} />
+
             </AdsContainer>
         </Content>
     )
