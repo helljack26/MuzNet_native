@@ -1,4 +1,6 @@
 import React from "react";
+import { useState, useRef } from 'react';
+import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import C from '@/res/colors'
 import { S } from '@/res/strings'
@@ -20,7 +22,7 @@ const {
     SearchRemoveIconBlock,
 } = style;
 
-const ListSearchInput = ({ searchText, onChangeSearchText }) => {
+const ListSearchInput = ({ searchText, onChangeSearchText, isMinOne, initialFocusInput }) => {
     const navigation = useNavigation();
 
     return (
@@ -35,6 +37,9 @@ const ListSearchInput = ({ searchText, onChangeSearchText }) => {
             </SearchRemoveIconBlock>
 
             <SearchInput
+
+                autoFocus={initialFocusInput === true ? true : false}
+                maxLength={isMinOne === true ? 1 : 999}
                 cursorColor={C.inputCursor}
                 selectionColor={C.lightGray}
                 placeholder={'Search'}

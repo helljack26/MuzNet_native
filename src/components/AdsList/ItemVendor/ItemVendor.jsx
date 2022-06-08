@@ -26,6 +26,7 @@ const {
 
 
 const ItemMusician = ({ data }) => {
+    if (data === undefined) return null
     const navigation = useNavigation();
 
     const {

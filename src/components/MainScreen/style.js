@@ -18,7 +18,7 @@ justify-content: space-between;
 align-items: center;
 flex-direction: row;
 width: 100%;
-
+margin-bottom: 26px;
 `;
 const Welcome = styled.View`
 `;
@@ -41,6 +41,7 @@ height: 223px;
 border: 1px solid ${C.gray};
 border-radius: 6px;
 overflow: hidden;
+margin-top: 16px;
 `;
 const MapImage = styled.Image`
 width: 100%;

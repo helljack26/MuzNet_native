@@ -23,17 +23,27 @@ padding-top: 10px;
 padding-bottom: 10px;
 top: 0px;
 left: -10px;
+z-index: 1000;
 bottom: 0px;
 `;
 
-const GoBack = () => {
+const GoBack = ({ stackName, screenName }) => {
     const navigation = useNavigation();
+
+    const isNavigationGoback = () => {
+        if (stackName === undefined) {
+            navigation.goBack()
+        } else {
+            navigation.navigate(stackName, {
+                screen: screenName,
+
+            })
+        }
+    }
 
     return (<GoBackButton
 
-        onPress={() => {
-            navigation.goBack()
-        }}>
+        onPress={isNavigationGoback}>
         <GoBackIcon width={12} height={20} />
 
     </GoBackButton>

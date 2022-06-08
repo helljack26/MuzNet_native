@@ -46,7 +46,7 @@ const {
     AdsContainerHeaderLinkText,
 } = style;
 
-const MainScreen = observer(({ stackName, screenTitle }) => {
+const MainScreen = observer(({ stackName, screenListName, screenCardName, screenTitle }) => {
     const { musicianList, vendorList, setList } = useSearchApiStore();
 
     const navigation = useNavigation();
@@ -65,26 +65,18 @@ const MainScreen = observer(({ stackName, screenTitle }) => {
 
     const [searchText, onChangeSearchText] = useState('');
 
-    const isFilter = searchText.length > 0
+    const isSearch = searchText.length > 0
 
     const compareLetterNumber = searchText.length
-    useEffect(() => {
-        // if (init > 0) {
-        //     if (isFilter) {
-        //         const newLocalData = localChooseData.map((item) => {
-        //             const slicedItem = item.slice(0, compareLetterNumber).toLowerCase()
-        //             if (slicedItem.includes(searchText.toLowerCase())) {
-        //                 return item
-        //             } else {
-        //                 return
-        //             }
-        //         })
-        //         setFilteredChooseData(newLocalData)
-        //     } else {
-        //         setFilteredChooseData(localChooseData)
-        //     }
-        // }
 
+    useEffect(() => {
+        if (isSearch) {
+            onChangeSearchText('')
+            navigation.navigate(stackName, {
+                screen: screenListName,
+                params: { searchText: searchText[0] }
+            });
+        }
     }, [searchText]);
     const isContractor = stackName === 'ContractorStack'
     const stackForSwitch = isContractor ? 'MusicianStack' : 'ContractorStack'
@@ -114,7 +106,7 @@ const MainScreen = observer(({ stackName, screenTitle }) => {
 
             </Header>
 
-            <ListSearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} />
+            <ListSearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} isMinOne={true} />
 
             {/* Map container */}
             <MapContainer>
@@ -149,14 +141,12 @@ const MainScreen = observer(({ stackName, screenTitle }) => {
                     <AdsContainerHeaderTitle>{screenTitle}</AdsContainerHeaderTitle>
 
                     <AdsContainerHeaderLink
-                    // onPress={() => {
-                    //     navigation.navigate(stackName, {
-                    //         screen: 'ListSearchScreen'
-                    //     });
-                    // }} 
-
+                        onPress={() => {
+                            navigation.navigate(stackName, {
+                                screen: screenListName
+                            });
+                        }}
                     >
-
                         <AdsContainerHeaderLinkText>
                             View all
                         </AdsContainerHeaderLinkText>

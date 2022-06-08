@@ -6,8 +6,7 @@ import { M } from '@/res/mixin'
 // Search input
 const SearchInputBlock = styled.View`
 width: 100%;
-margin-top: 26px;
-margin-bottom: 16px;
+
 `;
 const SearchIconBlock = styled.View`
 position: absolute;
@@ -35,7 +34,6 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: row;
-
 `;
 const SearchInput = styled.TextInput`
 width: 100%;

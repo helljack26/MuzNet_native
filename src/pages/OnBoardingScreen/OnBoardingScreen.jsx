@@ -66,13 +66,13 @@ const OnBoardingScreen = () => {
     const text = OnboardingContent[screenNumber].text
     const offsetLeft = OnboardingContent[screenNumber].thumbOffsetLeft
 
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            navigation.navigate('MusicianStack', { screen: 'MusicianWelcomeScreen' });
-        });
+    // useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //         navigation.navigate('ContractorStack', { screen: 'ContractorListSearchScreen' });
+    //     });
 
-        return unsubscribe;
-    }, [navigation]);
+    //     return unsubscribe;
+    // }, [navigation]);
 
     return (
         <>

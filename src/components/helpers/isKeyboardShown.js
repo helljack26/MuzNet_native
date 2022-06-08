@@ -1,9 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Keyboard } from "react-native";
+import { useRoute } from '@react-navigation/native';
 
 export const isKeyboardShown = () => {
-    const [keyboardStatus, setKeyboardStatus] = useState();
+    const [keyboardStatus, setKeyboardStatus] = useState(false);
+    const route = useRoute();
 
     useEffect(() => {
         const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
@@ -20,5 +22,13 @@ export const isKeyboardShown = () => {
         };
     }, []);
 
+
+    useEffect(() => {
+        if (route !== undefined) {
+            if (route.name === 'MusicianListSearchScreen' || route.name === 'ContractorListSearchScreen') {
+                setKeyboardStatus(true);
+            }
+        }
+    }, [Keyboard]);
     return keyboardStatus
 }

@@ -7,8 +7,9 @@ import { useNavigation } from '@react-navigation/native';
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 // Components
-import MainScreen from '@/components/MainScreen'
+import ListSearchScreen from '@/components/ListSearchScreen'
 import TapbarMenu from '@/components/Buttons/TapbarMenu'
+import { Keyboard } from "react-native";
 
 // Styles
 import styled from 'styled-components/native';
@@ -21,12 +22,12 @@ background-color: ${C.white};
 padding-bottom: ${props => props.isKeyboardOpen === true ? 60 + 'px' : 82 + 'px'};
 `;
 const Content = styled.ScrollView`
-padding: 0px 20px;
 width: 100%;
 `;
 
-const ContractorWelcomeScreen = () => {
+const MusicianListSearchScreen = () => {
     const navigation = useNavigation();
+
     const isKeyboardOpen = isKeyboardShown()
 
     return (
@@ -43,11 +44,9 @@ const ContractorWelcomeScreen = () => {
                 isKeyboardOpen={isKeyboardOpen}
             >
                 <Content>
-                    <MainScreen
-                        stackName={'ContractorStack'}
-                        screenListName={'ContractorListSearchScreen'}
-                        screenCardName={'MusicianCardScreen'}
-                        screenTitle={'Popular musicians'}
+                    <ListSearchScreen
+                        stackName={'MusicianStack'}
+                        screenName={'VendorCardScreen'}
                     />
                 </Content>
 
@@ -58,4 +57,4 @@ const ContractorWelcomeScreen = () => {
     )
 }
 
-export default ContractorWelcomeScreen;
+export default MusicianListSearchScreen;

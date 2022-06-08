@@ -41,6 +41,8 @@ const MusicianWelcomeScreen = () => {
                 <Content>
                     <MainScreen
                         stackName={'MusicianStack'}
+                        screenListName={'MusicianListSearchScreen'}
+                        screenCardName={'VendorCardScreen'}
                         screenTitle={'Popular vendors'}
                     />
                 </Content>

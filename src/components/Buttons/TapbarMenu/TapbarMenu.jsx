@@ -1,7 +1,7 @@
 import React from "react";
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 
+import { useRoute } from '@react-navigation/native';
+import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 // Icons
 import IMAGES from '@/res/images'
 const {
@@ -73,22 +73,23 @@ border-radius: 2px;
 background-color: ${C.black};
 `;
 
-const TapbarMenu = () => {
-    // const navigation = useNavigation();
+const TapbarMenu = ({ isShowKeyboard }) => {
     const route = useRoute();
+
     const isKeyboardOpen = isKeyboardShown()
 
     return (
         <TapbarBlock
-            isKeyboardOpen={isKeyboardOpen}
+            isKeyboardOpen={isShowKeyboard !== undefined ? isShowKeyboard : isKeyboardOpen}
         >
             {TapbarMenuContent.map((item, id) => {
                 const isContractor = route.name.slice(0, 10) === 'Contractor' ? 10 : 8
 
                 const cleanRoute = route.name.slice(isContractor, route.name.length)
 
-                const isActive = item.screenName === cleanRoute
+                const isSearch = cleanRoute === 'ListSearchScreen' ? 'WelcomeScreen' : cleanRoute
 
+                const isActive = isSearch === item.screenName
                 return <TapbarItem
                     isActive={isActive}
                     key={id}>
