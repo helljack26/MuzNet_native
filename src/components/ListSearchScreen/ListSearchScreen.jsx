@@ -1,11 +1,12 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+
 import { useState, useEffect } from 'react';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
 import ListSearchInput from '@/components/ListSearchInput'
 import AdsList from '@/components/AdsList'
+
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 // Store
@@ -43,7 +44,6 @@ const ListSearchScreen = observer(({ stackName }) => {
 
     const [searchText, onChangeSearchText] = useState('');
     const [initialFocusInput, setInitialFocusInput] = useState(false);
-
 
     // Set list
     useEffect(() => {
@@ -85,35 +85,38 @@ const ListSearchScreen = observer(({ stackName }) => {
     const isContractorData = isContractor ? musicianList : vendorList
 
     return (
-        <Content>
-            {/* Header */}
-            <Header>
-                <GoBack stackName={stackName} screenName={isToContractorWelcomeHash} />
+        <>
+            <Content>
+                {/* Header */}
+                <Header>
+                    <GoBack stackName={stackName} screenName={isToContractorWelcomeHash} />
 
-                <ContentTitle>
-                    Search
-                </ContentTitle>
+                    <ContentTitle>
+                        Search
+                    </ContentTitle>
 
-            </Header>
+                </Header>
 
-            <ListSearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} initialFocusInput={initialFocusInput} />
+                <ListSearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} initialFocusInput={initialFocusInput} />
 
-            {/* Ads */}
-            <AdsContainer>
+                {/* Ads */}
+                <AdsContainer>
 
-                {/* Ads header */}
-                {nothingWasFound === true && <AdsContainerHeader>
-                    <AdsContainerHeaderTitle>
-                        Nothing was found
-                    </AdsContainerHeaderTitle>
+                    {/* Ads header */}
+                    {nothingWasFound === true && <AdsContainerHeader>
+                        <AdsContainerHeaderTitle>
+                            Nothing was found
+                        </AdsContainerHeaderTitle>
 
-                </AdsContainerHeader>
-                }
-                {/* Ads container */}
-                <AdsList adsList={isContractorData} isForContractor={isContractor} />
+                    </AdsContainerHeader>
+                    }
+                    {/* Ads container */}
+                    <AdsList adsList={isContractorData} isForContractor={isContractor} />
 
-            </AdsContainer>
-        </Content>
+                </AdsContainer>
+            </Content>
+        </>
+
     )
 })
 

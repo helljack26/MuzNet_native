@@ -68,7 +68,7 @@ const OnBoardingScreen = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
+            navigation.navigate('ContractorStack', { screen: 'ContractorListSearchScreen' });
         });
 
         return unsubscribe;

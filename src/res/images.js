@@ -25,6 +25,7 @@ import CrossBlackIcon from '../../assets/icon/cross_black_icon.svg'
 import CrossGrayIcon from '../../assets/icon/cross_gray_icon.svg'
 import CheckBlackIcon from '../../assets/icon/check_black_icon.svg'
 import CheckBlackFilledIcon from '../../assets/icon/check_black_filled_icon.svg'
+import CheckRoundBlackIcon from '../../assets/icon/check_round_black_icon.svg'
 import UsaIcon from '../../assets/icon/usa_icon.svg'
 import ModalWrongIcon from '../../assets/icon/modal_wrong.svg'
 // Main screen
@@ -80,6 +81,7 @@ const IMAGES = {
     CrossGrayIcon: CrossGrayIcon,
     CheckBlackIcon: CheckBlackIcon,
     CheckBlackFilledIcon: CheckBlackFilledIcon,
+    CheckRoundBlackIcon: CheckRoundBlackIcon,
     UsaIcon: UsaIcon,
     ModalWrongIcon: ModalWrongIcon,
     // Arrows

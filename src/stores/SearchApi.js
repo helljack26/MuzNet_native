@@ -7,23 +7,29 @@ class SearchApi {
     musicianList = []
     vendorList = []
     nothingWasFound = false
+    isOpenFilters = false
 
     constructor() {
         makeAutoObservable(this, {
             musicianList: observable,
             vendorList: observable,
             nothingWasFound: observable,
+            isOpenFilters: observable,
             resetState: action.bound,
             setList: action.bound,
             sortPopular: action.bound,
             searchInList: action.bound,
             setNothingWasFound: action.bound,
+            setOpenFilters: action.bound,
         })
     }
 
+    setOpenFilters(boolean) {
+        console.log("🚀 ~ file: SearchApi.js ~ line 28 ~ SearchApi ~ setOpenFilters ~ boolean", boolean)
+        this.isOpenFilters = boolean
+    }
     setNothingWasFound() {
         this.nothingWasFound = false
-
     }
     resetState() {
         this.musicianList = []

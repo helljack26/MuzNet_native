@@ -9,6 +9,8 @@ import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 // Components
 import ListSearchScreen from '@/components/ListSearchScreen'
 import TapbarMenu from '@/components/Buttons/TapbarMenu'
+import SearchFilters from '@components/SearchFilters';
+
 
 // Styles
 import styled from 'styled-components/native';
@@ -33,7 +35,7 @@ const ContractorListSearchScreen = () => {
             <StatusBar
                 barStyle={'dark-content'}
                 hidden={false}
-                backgroundColor="white"
+                backgroundColor="transparent"
                 translucent={true}
             />
 
@@ -49,6 +51,8 @@ const ContractorListSearchScreen = () => {
                 </Content>
 
                 <TapbarMenu />
+                <SearchFilters />
+
             </Container>
         </>
 

@@ -1,9 +1,11 @@
 import React from "react";
+import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
 // Images
 import IMAGES from '@/res/images'
 const {
-    GoBackIcon
+    GoBackIcon,
+    CheckRoundBlackIcon
 } = IMAGES;
 // Styles
 import { style } from './style'
@@ -17,15 +19,21 @@ const {
     OptionsList,
     Option,
     OptionText,
-
+    OptionActiveIcon
 } = style;
 
 const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dropOptions }) => {
+    const { windowHeight, windowWidth } = getWindowDimension()
 
     const mainHeader = selectedValue || dropHeader
 
     return (
-        <DropBlock onPress={() => toggling(false)} >
+        <DropBlock
+            style={{
+                width: windowWidth - 32,
+                elevation: isOpen === true ? 15 : 0,
+            }}
+            onPress={() => toggling(false)} >
             <Drop>
                 <DropHeader
                     style={{
@@ -43,31 +51,38 @@ const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dro
                     </ArrowBlock>
                 </DropHeader>
             </Drop>
-            {isOpen && (
-                <DropContainer
-                    style={{
-                        zIndex: 999,
-                        borderTopLeftRadius: isOpen === true ? 0 : 6,
-                        borderTopRightRadius: isOpen === true ? 0 : 6,
-                    }}>
-                    <OptionsList>
+            {
+                isOpen && (
+                    <DropContainer
+                        style={{
+                            borderTopLeftRadius: isOpen === true ? 0 : 6,
+                            borderTopRightRadius: isOpen === true ? 0 : 6,
+                        }}>
+                        <OptionsList>
 
-                        {dropOptions.map((option, id) => {
-                            const isActive = option === selectedValue
+                            {dropOptions.map((option, id) => {
+                                const isActive = option === selectedValue
 
-                            return <Option onPress={onSelect(option)} key={id}>
-                                <OptionText isActive={isActive}>
-                                    {option}
-                                </OptionText>
-                            </Option>
-                        }
-                        )
-                        }
+                                return <Option onPress={onSelect(option)} key={id}>
+                                    <OptionText isActive={isActive}>
+                                        {option}
+                                    </OptionText>
 
-                    </OptionsList>
-                </DropContainer>
-            )}
-        </DropBlock>
+                                    {isActive === true && <OptionActiveIcon >
+                                        <CheckRoundBlackIcon width={20} height={20} />
+
+                                    </OptionActiveIcon>
+                                    }
+                                </Option>
+                            }
+                            )
+                            }
+
+                        </OptionsList>
+                    </DropContainer>
+                )
+            }
+        </DropBlock >
 
     );
 }

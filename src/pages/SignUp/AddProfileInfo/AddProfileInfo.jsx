@@ -1,15 +1,13 @@
 import React from 'react';
+import { useForm, Controller } from "react-hook-form";
+import { useState, useEffect } from 'react';
+
 import { Image, StatusBar, KeyboardAvoidingView, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-import { useForm, Controller } from "react-hook-form";
-
-import { useState, useEffect } from 'react';
-import MaskInput from 'react-native-mask-input';
-
-import ModalWindow from '@/components/ModalWindow'
 
 // Components
+import ModalWindow from '@/components/ModalWindow'
 import SelectProfileType from './SelectProfileType'
 import SelectMusicianType from './SelectMusicianType'
 import SelectWithSearch from './SelectWithSearch'
@@ -22,6 +20,7 @@ import { S } from '@/res/strings'
 import F from '@/res/fonts'
 
 // Helpers
+import MaskInput from 'react-native-mask-input';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown';
 import { useNavigation } from '@react-navigation/native';
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'

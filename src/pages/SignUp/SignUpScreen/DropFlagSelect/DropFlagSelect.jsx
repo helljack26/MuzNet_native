@@ -41,6 +41,7 @@ const DropFlagSelect = ({ selectedValue, toggling, isOpen, onSelect, inputFocus1
                     style={{
                         borderColor: isError ? C.red : inputFocus1,
                         borderWidth: isError ? 2 : 1,
+                        borderBottomLeftRadius: isOpen === true ? 0 : 6,
                         // color: isError ? C.red : C.black,
                         // borderColor: inputFocus1,
                     }}
@@ -60,8 +61,8 @@ const DropFlagSelect = ({ selectedValue, toggling, isOpen, onSelect, inputFocus1
                 <DropContainer
                     style={{
                         zIndex: 999,
-                        elevation: 0.5
-
+                        borderTopLeftRadius: isOpen === true ? 0 : 6,
+                        borderTopRightRadius: isOpen === true ? 0 : 6,
                     }}>
                     <OptionsList>
 

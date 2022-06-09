@@ -22,14 +22,22 @@ z-index: 999;
 `;
 const SearchRemoveIconBlock = styled.TouchableOpacity`
 position: absolute;
-top: 6px;
+top: 0px;
 bottom: 0px;
-right: 6px;
+right: 0px;
+width: 40px;
+height: 40px;
+z-index: 999;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+`;
+const SearchRemoveIcon = styled.View`
 width: 28px;
 height: 28px;
 border-radius: 6px;
 background-color: ${C.black};
-z-index: 999;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -45,6 +53,7 @@ padding-right: 42px;
 font-size: 15px;
 font-family: ${F.medium};
 color: ${C.black};
+
 `;
 
 
@@ -53,5 +62,6 @@ export const style = {
     SearchInputBlock: SearchInputBlock,
     SearchInput: SearchInput,
     SearchIconBlock: SearchIconBlock,
+    SearchRemoveIcon: SearchRemoveIcon,
     SearchRemoveIconBlock: SearchRemoveIconBlock,
 }

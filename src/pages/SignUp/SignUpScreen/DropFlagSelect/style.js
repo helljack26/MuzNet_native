@@ -37,7 +37,7 @@ background-color: ${C.lightGray};
 const DropContainer = styled.View`
 width: 100%;
 margin-top: 4px;
-top: 56px;
+top: 43px;
 background-color: white;
 position: absolute;
 left: 0px;

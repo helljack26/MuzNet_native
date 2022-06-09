@@ -19,7 +19,16 @@ export const S = {
     Singer: 'Singer',
     Musician: 'Musician',
     Band: 'Band',
-
+    // Sort by
+    SortByOptions: {
+        dropHeader: 'Sort by',
+        dropOptions: [
+            'Best Match',
+            'Rating',
+            'Most Popular'
+        ]
+    },
+    // Sign up
     PositionOptions: {
         dropHeader: 'Choose your position',
         dropOptions: [

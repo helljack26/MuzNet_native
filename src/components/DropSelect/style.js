@@ -4,10 +4,15 @@ import C from '@/res/colors'
 
 const DropBlock = styled.View`
 width: 100%;
+margin: 0px 16px;
+background-color: white;
+border-radius: 6px;
 margin-bottom: 22px;
+margin-top: 22px;
+
 `;
 const Drop = styled.TouchableOpacity`
-width: 100%;
+
 `;
 const DropHeader = styled.TouchableOpacity`
 border-radius: 6px;
@@ -19,10 +24,13 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
-padding: 0px 20px;
+padding: 0px 16px;
+
+
 `;
 const ArrowBlock = styled.View`
 transform: ${props => props.isOpen ? 'rotate(90deg)' : 'rotate(-90deg)'};
+margin-right: 7px;
 `;
 const DropContainer = styled.ScrollView`
 width: 100%;
@@ -34,6 +42,7 @@ background-color: white;
 border-color: ${C.lightGray};
 border-width: 1px;
 border-radius: 6px;
+box-shadow: 10px 5px 5px black;
 `;
 const OptionsList = styled.View`
 border-radius: 6px;
@@ -45,38 +54,24 @@ const Option = styled.TouchableOpacity`
 width: 100%;
 display: flex;
 flex-direction: row;
+justify-content: space-between;
 align-items: center;
-padding: 8px 20px;
+padding: 8px 16px;
 
 `;
 const OptionText = styled.Text`
-font-family: ${props => props.isActive === true ? F.extraBold : F.regular};
+font-family: ${F.regular};
 color: ${props => props.isHeader === true ? C.sBlack : C.black};
 font-size: 17px;
 `;
-const FormDateInputBlock = styled.View`
-width: 100%;
-height: 44px;
-border-bottom-color: ${C.lightGray};
-border-bottom-width: 1px;
+
+const OptionActiveIcon = styled.View`
+width: 20px;
+height: 20px;
 display: flex;
-justify-content: space-between;
+justify-content: center;
 align-items: center;
 flex-direction: row;
-padding-left: 13px;
-padding-right: 13px;
-`;
-const FormDateInputPlaceHolder = styled.TouchableOpacity`
-width: 100%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-flex-direction: row; 
-`;
-const FormDateInputPlaceHolderText = styled.Text`
-font-size: 16px;
-font-family: ${F.light};
-color: ${C.mainBlack};
 `;
 
 export const style = {
@@ -87,8 +82,6 @@ export const style = {
     OptionsList: OptionsList,
     Option: Option,
     OptionText: OptionText,
-    FormDateInputBlock: FormDateInputBlock,
-    FormDateInputPlaceHolder: FormDateInputPlaceHolder,
-    FormDateInputPlaceHolderText: FormDateInputPlaceHolderText,
     ArrowBlock: ArrowBlock,
+    OptionActiveIcon: OptionActiveIcon,
 }
