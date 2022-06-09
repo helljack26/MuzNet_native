@@ -1,5 +1,4 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
 import { useState, useEffect } from 'react';
 
 import { useNavigation, useRoute } from '@react-navigation/native';

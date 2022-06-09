@@ -34,7 +34,7 @@ const OnboardingContent = [
     {
         image: IMAGES.Onboard1,
         title: 'Welcome to MuzNet!',
-        text: 'That’s the place where musicians and venues meet.',
+        text: 'The place where musicians and venues meet.',
         thumbOffsetLeft: 0
     },
     {
@@ -66,13 +66,13 @@ const OnBoardingScreen = () => {
     const text = OnboardingContent[screenNumber].text
     const offsetLeft = OnboardingContent[screenNumber].thumbOffsetLeft
 
-    // useEffect(() => {
-    //     const unsubscribe = navigation.addListener('focus', () => {
-    //         navigation.navigate('ContractorStack', { screen: 'ContractorListSearchScreen' });
-    //     });
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
+        });
 
-    //     return unsubscribe;
-    // }, [navigation]);
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <>

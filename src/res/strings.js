@@ -20,7 +20,18 @@ export const S = {
     Musician: 'Musician',
     Band: 'Band',
 
-
+    PositionOptions: {
+        dropHeader: 'Choose your position',
+        dropOptions: [
+            'Event Coordinator',
+            "Restaurant Manager",
+            "Talent Acquisition",
+            "Corporate Talent Acquisition",
+            "Music Director",
+            "Organization Leader",
+            "Other",
+        ]
+    },
     Instruments: [
         "Accordion",
         "Balalaika",

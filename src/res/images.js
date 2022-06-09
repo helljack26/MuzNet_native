@@ -24,6 +24,7 @@ import SearchIcon from '../../assets/icon/search_icon.svg'
 import CrossBlackIcon from '../../assets/icon/cross_black_icon.svg'
 import CrossGrayIcon from '../../assets/icon/cross_gray_icon.svg'
 import CheckBlackIcon from '../../assets/icon/check_black_icon.svg'
+import CheckBlackFilledIcon from '../../assets/icon/check_black_filled_icon.svg'
 import UsaIcon from '../../assets/icon/usa_icon.svg'
 import ModalWrongIcon from '../../assets/icon/modal_wrong.svg'
 // Main screen
@@ -78,6 +79,7 @@ const IMAGES = {
     CrossBlackIcon: CrossBlackIcon,
     CrossGrayIcon: CrossGrayIcon,
     CheckBlackIcon: CheckBlackIcon,
+    CheckBlackFilledIcon: CheckBlackFilledIcon,
     UsaIcon: UsaIcon,
     ModalWrongIcon: ModalWrongIcon,
     // Arrows

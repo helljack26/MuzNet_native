@@ -20,24 +20,20 @@ const {
 
 } = style;
 
-const PositionOptions = [
-    'Event Coordinator',
-    "Restaurant Manager",
-    "Talent Acquisition",
-    "Corporate Talent Acquisition",
-    "Music Director",
-    "Organization Leader",
-    "Other",
-]
+const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dropOptions }) => {
 
-const DropSelect = ({ selectedValue, toggling, isOpen, onSelect }) => {
-
-    const mainHeader = selectedValue || 'Choose your position'
+    const mainHeader = selectedValue || dropHeader
 
     return (
         <DropBlock onPress={() => toggling(false)} >
             <Drop>
-                <DropHeader onPress={() => toggling(!isOpen)} >
+                <DropHeader
+                    style={{
+                        borderBottomWidth: isOpen === true ? 0 : 1,
+                        borderBottomLeftRadius: isOpen === true ? 0 : 6,
+                        borderBottomRightRadius: isOpen === true ? 0 : 6,
+                    }}
+                    onPress={() => toggling(!isOpen)} >
                     <OptionText isHeader={true}>
                         {mainHeader}
                     </OptionText>
@@ -51,10 +47,12 @@ const DropSelect = ({ selectedValue, toggling, isOpen, onSelect }) => {
                 <DropContainer
                     style={{
                         zIndex: 999,
+                        borderTopLeftRadius: isOpen === true ? 0 : 6,
+                        borderTopRightRadius: isOpen === true ? 0 : 6,
                     }}>
                     <OptionsList>
 
-                        {PositionOptions.map((option, id) => {
+                        {dropOptions.map((option, id) => {
                             const isActive = option === selectedValue
 
                             return <Option onPress={onSelect(option)} key={id}>

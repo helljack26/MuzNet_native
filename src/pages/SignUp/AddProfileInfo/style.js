@@ -69,7 +69,7 @@ margin-top: 8px;
 
 `;
 const Content = styled.ScrollView`
-width: 100%;
+padding: 0px 20px;
 `;
 const FormInputBlock = styled(M.FormInputBlock)`
 
@@ -83,29 +83,14 @@ const FormInputLabel = styled(M.FormInputLabel)`
 const FormInput = styled(M.FormInput)`
 
 `;
-const CheckboxWilling = styled.View`
-display: flex;
-align-items: center;
-flex-direction: row;
+
+const CheckboxBlock = styled.View`
 width: 100%;
-margin-bottom: 20px;
-`;
-const CheckboxWillingImg = styled.TouchableOpacity`
-width: 24px;
-height: 24px;
 display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
-border-radius: 6px;
-border-color: ${C.lightGray};
-border-width: 1px;
-border-style: solid;
-background-color: ${C.white};
+flex-direction: column;
 `;
-const CheckboxWillingText = styled(M.MediumText15)`
-color: ${C.sBlack};
-margin-left: 8px;
+const CheckboxBlockTitle = styled(M.TitleBold15)`
+margin-bottom: 24px;
 `;
 const ButtonSubmit = styled(M.BlackBtn)`
 
@@ -218,6 +203,32 @@ font-family: ${F.semiBold};
 color: ${C.sBlack};
 line-height: 16px;
 `;
+const FormInputPricePerHourBlock = styled.View`
+width: 100%;
+z-index: 0;
+border-style: solid;
+border-radius: 6px;
+height:48px;
+padding-left: 16px;
+padding-top: ${props => props.inputLabel === true ? 17 + 'px' : 0 + 'px'};
+padding-right: ${props => props.isPassword === true ? 50 + 'px' : 16 + 'px'};
+z-index: -1;
+position: absolute;
+
+left: 0px;
+bottom: 0px;
+right: 0px;
+display: flex;
+align-items: center;
+flex-direction: row;
+`;
+const FormInputPricePerHourText = styled.Text`
+margin-top: 12px;
+font-size: 13px;
+font-family: ${F.regular};
+font-size: 17px;
+
+`;
 export const style = {
     Container: Container,
     Header: Header,
@@ -234,9 +245,10 @@ export const style = {
     FormInputContainer: FormInputContainer,
     FormInputLabel: FormInputLabel,
     FormInput: FormInput,
-    CheckboxWilling: CheckboxWilling,
-    CheckboxWillingImg: CheckboxWillingImg,
-    CheckboxWillingText: CheckboxWillingText,
+    CheckboxBlock: CheckboxBlock,
+    CheckboxBlockTitle: CheckboxBlockTitle,
+    FormInputPricePerHourBlock: FormInputPricePerHourBlock,
+    FormInputPricePerHourText: FormInputPricePerHourText,
 
     // Submit
     ButtonSubmit: ButtonSubmit,

@@ -26,7 +26,7 @@ transform: ${props => props.isOpen ? 'rotate(90deg)' : 'rotate(-90deg)'};
 `;
 const DropContainer = styled.ScrollView`
 width: 100%;
-margin-top: 8px;
+margin-top: 0px;
 background-color: white;
 /* position: absolute; */
 /* left: 0px; */
