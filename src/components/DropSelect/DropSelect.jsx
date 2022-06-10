@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from 'react';
+import { StatusBar, View } from 'react-native';
+
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
 // Images
@@ -23,16 +25,14 @@ const {
 } = style;
 
 const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dropOptions }) => {
+    console.log("🚀 ~ file: DropSelect.jsx ~ line 28 ~ DropSelect ~ isOpen", isOpen)
     const { windowHeight, windowWidth } = getWindowDimension()
 
     const mainHeader = selectedValue || dropHeader
 
     return (
         <DropBlock
-            style={{
-                width: windowWidth - 32,
-                elevation: isOpen === true ? 15 : 0,
-            }}
+
             onPress={() => toggling(false)} >
             <Drop>
                 <DropHeader
@@ -40,50 +40,53 @@ const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dro
                         borderBottomWidth: isOpen === true ? 0 : 1,
                         borderBottomLeftRadius: isOpen === true ? 0 : 6,
                         borderBottomRightRadius: isOpen === true ? 0 : 6,
+                        elevation: isOpen === true ? 5 : 0,
+
                     }}
                     onPress={() => toggling(!isOpen)} >
                     <OptionText isHeader={true}>
                         {mainHeader}
                     </OptionText>
-
                     <ArrowBlock isOpen={isOpen}>
-                        <GoBackIcon width={7} height={14} />
+                        <GoBackIcon width={10} height={15} />
                     </ArrowBlock>
+
                 </DropHeader>
             </Drop>
-            {
-                isOpen && (
-                    <DropContainer
-                        style={{
-                            borderTopLeftRadius: isOpen === true ? 0 : 6,
-                            borderTopRightRadius: isOpen === true ? 0 : 6,
-                        }}>
-                        <OptionsList>
+            {isOpen && (
+                <DropContainer
+                    nestedScrollEnabled={true}
+                    style={{
+                        zIndex: 999,
+                        borderTopLeftRadius: isOpen === true ? 0 : 6,
+                        borderTopRightRadius: isOpen === true ? 0 : 6,
+                        elevation: 4,
+                    }}
+                >
+                    <OptionsList>
+                        {dropOptions.map((option, id) => {
+                            const isActive = option === selectedValue
 
-                            {dropOptions.map((option, id) => {
-                                const isActive = option === selectedValue
+                            return <Option
+                                isActive={isActive}
+                                onPress={onSelect(option)} key={id}>
+                                <OptionText>
+                                    {option}
+                                </OptionText>
+                                {isActive === true && <OptionActiveIcon >
+                                    <CheckRoundBlackIcon width={20} height={20} />
 
-                                return <Option onPress={onSelect(option)} key={id}>
-                                    <OptionText isActive={isActive}>
-                                        {option}
-                                    </OptionText>
+                                </OptionActiveIcon>
+                                }
+                            </Option>
+                        }
+                        )
+                        }
 
-                                    {isActive === true && <OptionActiveIcon >
-                                        <CheckRoundBlackIcon width={20} height={20} />
-
-                                    </OptionActiveIcon>
-                                    }
-                                </Option>
-                            }
-                            )
-                            }
-
-                        </OptionsList>
-                    </DropContainer>
-                )
-            }
-        </DropBlock >
-
+                    </OptionsList>
+                </DropContainer>
+            )}
+        </DropBlock>
     );
 }
 

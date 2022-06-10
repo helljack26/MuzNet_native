@@ -62,10 +62,9 @@ justify-content: center;
 padding: 10px 0px;
 
 `;
-const OptionText = styled.Text`
-font-family: ${props => props.isActive === true ? F.extraBold : F.regular};
-color: ${props => props.isHeader === true ? C.sBlack : C.black};
-font-size: 17px;
+const OptionText = styled.View`
+/* background-color: ${C.lightGray}; */
+
 `;
 
 

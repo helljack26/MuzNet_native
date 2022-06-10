@@ -5,11 +5,15 @@ import IMAGES from '@/res/images'
 import C from '@/res/colors'
 const {
     GoBackIcon,
-    UsaIcon
+    UsaIcon,
+    JamaicaIcon,
+    GermanyIcon,
+    UnitedKingdomIcon,
+    CanadaIcon,
+    FranceIcon
 } = IMAGES;
 // Styles
 import { style } from './style'
-
 const {
     DropBlock,
     Drop,
@@ -20,19 +24,50 @@ const {
     BorderRight,
     Option,
     OptionText,
-
 } = style;
 
 const PositionOptions = [
-    { uri: <UsaIcon width={24} height={16} /> },
-    { uri: <UsaIcon width={24} height={16} /> },
-    { uri: <UsaIcon width={24} height={16} /> },
-    { uri: <UsaIcon width={24} height={16} /> }
+    {
+        uri: <UsaIcon width={24} height={16} />,
+        phonePattern: [
+            ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+        ],
+    },
+    {
+        uri: <JamaicaIcon width={24} height={16} />,
+        phonePattern: [
+            ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+        ],
+    },
+    {
+        uri: <GermanyIcon width={24} height={16} />,
+        phonePattern: [
+            ['+', '4', '9', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]
+        ],
+    },
+    {
+        uri: <UnitedKingdomIcon width={24} height={16} />,
+        phonePattern: [
+            ['+', '4', '4', ' ', '(', /\d/, /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]
+        ],
+    },
+    {
+        uri: <CanadaIcon width={24} height={16} />,
+        phonePattern: [
+            ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+        ],
+    },
+    {
+        uri: <FranceIcon width={24} height={16} />,
+        phonePattern: [
+            ['+', '3', '3', ' ', /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/, ' ', /\d/, /\d/]
+        ],
+    },
 ]
 
 const DropFlagSelect = ({ selectedValue, toggling, isOpen, onSelect, inputFocus1, isError }) => {
 
-    const mainHeader = selectedValue || <UsaIcon width={24} height={16} />
+    const mainHeader = selectedValue.icon || <UsaIcon width={24} height={16} />
 
     return (
         <DropBlock onPress={() => toggling(false)} >
@@ -42,8 +77,6 @@ const DropFlagSelect = ({ selectedValue, toggling, isOpen, onSelect, inputFocus1
                         borderColor: isError ? C.red : inputFocus1,
                         borderWidth: isError ? 2 : 1,
                         borderBottomLeftRadius: isOpen === true ? 0 : 6,
-                        // color: isError ? C.red : C.black,
-                        // borderColor: inputFocus1,
                     }}
 
                     onPress={() => toggling(!isOpen)} >
@@ -69,7 +102,11 @@ const DropFlagSelect = ({ selectedValue, toggling, isOpen, onSelect, inputFocus1
                         {PositionOptions.map((option, id) => {
                             // const isActive = option === selectedValue
 
-                            return <Option onPress={onSelect(option.uri)} key={id}>
+                            return <Option onPress={onSelect({
+                                icon: option.uri,
+                                phonePattern: option.phonePattern,
+
+                            })} key={id}>
                                 <OptionText
                                 // isActive={isActive}
                                 >

@@ -28,13 +28,13 @@ export const useAnimateItemStyle = ({ isOpenFilters }) => {
     }
     // Set list
     useEffect(() => {
-        if (isOpenFilters === false) {
+        if (isOpenFilters === true) {
             onPress(true)
         }
 
     }, [isOpenFilters]);
     const inputRange = Object.values(animate_state)
-    const height = value.interpolate({ inputRange, outputRange: [0, windowHeight] })
+    const height = value.interpolate({ inputRange, outputRange: ['0%', '100%'] })
 
     return { height, onPress }
 }

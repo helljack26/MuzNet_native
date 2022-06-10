@@ -23,6 +23,7 @@ export const S = {
     SortByOptions: {
         dropHeader: 'Sort by',
         dropOptions: [
+            'Sort by',
             'Best Match',
             'Rating',
             'Most Popular'

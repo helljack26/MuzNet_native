@@ -64,9 +64,17 @@ const SignUpScreen = () => {
     const [inputPhoneLabel, setInputPhoneLabel] = useState(false);
 
     const [isOpen, setIsOpen] = useState(false);
-    const [positionType, setPositionType] = useState(null);
+    const [flagType, setPositionType] = useState({
+        icon: '',
+        phonePattern: [],
+    });
+    useEffect(() => {
+        if (flagType) {
+            setPhone('')
+        }
+    }, [flagType]);
     const toggling = (state) => setIsOpen(state);
-    const onPositionSelect = value => () => { setPositionType(value); setIsOpen(false); };
+    const onFlagSelect = value => () => { setPositionType(value); setIsOpen(false); };
 
     const [inputFocus2, setInputFocus2] = useState(C.lightGray);
     const [inputPasswordLabel, setInputPasswordLabel] = useState(false);
@@ -142,7 +150,7 @@ const SignUpScreen = () => {
                                     <DropFlagSelect
                                         inputFocus1={inputFocus1}
                                         isError={errors.userPhoneNumber}
-                                        selectedValue={positionType} toggling={toggling} isOpen={isOpen} onSelect={onPositionSelect} />
+                                        selectedValue={flagType} toggling={toggling} isOpen={isOpen} onSelect={onFlagSelect} />
 
                                     <MaskInput
                                         cursorColor={C.inputCursor}
@@ -177,7 +185,9 @@ const SignUpScreen = () => {
                                             onChange(masked)
                                             setPhone(masked);
                                         }}
-                                        mask={S.phoneMaskPattern}
+                                        mask={flagType.phonePattern.length > 0 ? flagType.phonePattern[0] :
+                                            ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+                                        }
                                     />
                                     {errors.userPhoneNumber && <ShowPasswordIconButton>
                                         <ErrorIcon width={20} height={20} />

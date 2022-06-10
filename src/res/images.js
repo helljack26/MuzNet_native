@@ -4,14 +4,21 @@ import MessagesTapbarIcon from '../../assets/icon/tapbar/messages_tapbar_icon.sv
 import CalendarTapbarIcon from '../../assets/icon/tapbar/calendar_tapbar_icon.svg'
 import CommunityTapbarIcon from '../../assets/icon/tapbar/community_tapbar_icon.svg'
 import ProfileTapbarIcon from '../../assets/icon/tapbar/profile_tapbar_icon.svg'
-
-// Icon
-import PlainLogo from '../../assets/plain_logo.svg'
-import ArrowIcon from '../../assets/icon/arrow_icon.svg'
+// Countries flag
+import CanadaIcon from '../../assets/icon/countries_flag/flag_Canada.svg'
+import FranceIcon from '../../assets/icon/countries_flag/flag_France.svg'
+import GermanyIcon from '../../assets/icon/countries_flag/flag_Germany.svg'
+import JamaicaIcon from '../../assets/icon/countries_flag/flag_Jamaica.svg'
+import UnitedKingdomIcon from '../../assets/icon/countries_flag/flag_UnitedKingdom.svg'
+import UsaIcon from '../../assets/icon/countries_flag/flag_USA.svg'
 // Social
 import FacebookIcon from '../../assets/icon/social/fb_icon.svg'
 import GoogleIcon from '../../assets/icon/social/google_icon.svg'
 import MailIcon from '../../assets/icon/social/mail_icon.svg'
+import PhoneIcon from '../../assets/icon/phone_icon.svg'
+// Icon
+import PlainLogo from '../../assets/plain_logo.svg'
+import ArrowIcon from '../../assets/icon/arrow_icon.svg'
 import ShowPassIcon from '../../assets/icon/showPass_icon.svg'
 import ShowPassActiveIcon from '../../assets/icon/showPass_active_icon.svg'
 import ErrorIcon from '../../assets/icon/error_icon.svg'
@@ -19,14 +26,13 @@ import RoundGreenCheckIcon from '../../assets/icon/round_green_check_icon.svg'
 import RoundBlackCheckIcon from '../../assets/icon/round_black_check_icon.svg'
 import UploadPhotoIcon from '../../assets/icon/uploadPhoto_icon.svg'
 import EditIcon from '../../assets/icon/edit_icon.svg'
-import PhoneIcon from '../../assets/icon/phone_icon.svg'
 import SearchIcon from '../../assets/icon/search_icon.svg'
+import SearchBigIcon from '../../assets/icon/search_big_icon.svg'
 import CrossBlackIcon from '../../assets/icon/cross_black_icon.svg'
 import CrossGrayIcon from '../../assets/icon/cross_gray_icon.svg'
 import CheckBlackIcon from '../../assets/icon/check_black_icon.svg'
 import CheckBlackFilledIcon from '../../assets/icon/check_black_filled_icon.svg'
 import CheckRoundBlackIcon from '../../assets/icon/check_round_black_icon.svg'
-import UsaIcon from '../../assets/icon/usa_icon.svg'
 import ModalWrongIcon from '../../assets/icon/modal_wrong.svg'
 // Main screen
 import FilterIcon from '../../assets/icon/filter_icon.svg'
@@ -61,7 +67,13 @@ const IMAGES = {
     // Select AddProfileInfo screen
     SelectContractor: require('../../assets/AddProfileInfo/select_contractor.png'),
     SelectMusician: require('../../assets/AddProfileInfo/select_musician.png'),
-
+    // Countries flag
+    CanadaIcon: CanadaIcon,
+    FranceIcon: FranceIcon,
+    GermanyIcon: GermanyIcon,
+    JamaicaIcon: JamaicaIcon,
+    UnitedKingdomIcon: UnitedKingdomIcon,
+    UsaIcon: UsaIcon,
     // Icon
     PlainLogo: PlainLogo,
     ArrowIcon: ArrowIcon,
@@ -77,12 +89,12 @@ const IMAGES = {
     EditIcon: EditIcon,
     PhoneIcon: PhoneIcon,
     SearchIcon: SearchIcon,
+    SearchBigIcon: SearchBigIcon,
     CrossBlackIcon: CrossBlackIcon,
     CrossGrayIcon: CrossGrayIcon,
     CheckBlackIcon: CheckBlackIcon,
     CheckBlackFilledIcon: CheckBlackFilledIcon,
     CheckRoundBlackIcon: CheckRoundBlackIcon,
-    UsaIcon: UsaIcon,
     ModalWrongIcon: ModalWrongIcon,
     // Arrows
     GoBackIcon: GoBackIcon,

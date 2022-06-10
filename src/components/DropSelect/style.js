@@ -3,18 +3,15 @@ import F from '@/res/fonts'
 import C from '@/res/colors'
 
 const DropBlock = styled.View`
-width: 100%;
 margin: 0px 16px;
-background-color: white;
-border-radius: 6px;
-margin-bottom: 22px;
+margin-bottom: 24px;
 margin-top: 22px;
+`;
+const Drop = styled.Pressable`
+width: 100%;
 
 `;
-const Drop = styled.TouchableOpacity`
-
-`;
-const DropHeader = styled.TouchableOpacity`
+const DropHeader = styled.Pressable`
 border-radius: 6px;
 border: 1px solid ${C.lightGray};
 background-color: white;
@@ -26,6 +23,7 @@ justify-content: space-between;
 align-items: center;
 padding: 0px 16px;
 
+z-index: 1000;
 
 `;
 const ArrowBlock = styled.View`
@@ -34,15 +32,16 @@ margin-right: 7px;
 `;
 const DropContainer = styled.ScrollView`
 width: 100%;
-margin-top: 0px;
 background-color: white;
-/* position: absolute; */
-/* left: 0px; */
-/* z-index: 999; */
-border-color: ${C.lightGray};
-border-width: 1px;
+position: absolute;
+top: 48px;
 border-radius: 6px;
-box-shadow: 10px 5px 5px black;
+border: 1px solid ${C.lightGray};
+border-top-width: 0px ;
+left: 0px;
+z-index: 999;
+border-radius: 6px;
+
 `;
 const OptionsList = styled.View`
 border-radius: 6px;

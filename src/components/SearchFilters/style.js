@@ -4,10 +4,9 @@ import C from '@/res/colors'
 import { M } from '@/res/mixin'
 
 const FilterContainer = styled.ScrollView`
-height: 100%;
 width: 100%;
 background-color: ${C.white};
-margin-top: 60px;
+margin-top: 5%;
 border-top-left-radius: 16px;
 border-top-right-radius: 16px;
 overflow: hidden;
@@ -31,7 +30,7 @@ width: 32px;
 height: 32px;
 position: absolute;
 top: -3px;
-left:   16px;
+right:   16px;
 bottom: 0px;
 `;
 const HeaderTitle = styled(M.MediumText20)`
@@ -39,7 +38,6 @@ margin-bottom: 12px;
 `;
 const FilterBlock = styled.ScrollView`
 width: 100%;
-/* padding: 0px 16px; */
 `;
 
 export const style = {
