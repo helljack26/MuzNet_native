@@ -40,21 +40,13 @@ color: ${C.sBlack};
 margin-left: 8px;
 `;
 
-const CheckBoxWithText = ({ checkboxState, setCheckboxState, checkboxTitle, isCheckBlackFilled }) => {
+const CheckBoxWithText = ({ checkboxState, setCheckboxState, checkboxTitle }) => {
 
     return (
         <CheckboxBlock >
-            {isCheckBlackFilled === true ?
-                <CheckboxBlackIcon
-                    isActive={checkboxState}
-                    onPress={() => setCheckboxState(checkboxState === false ? true : false)}>
-                    {checkboxState === true ? < CheckBlackFilledIcon width={21} height={21} /> : null}
-                </CheckboxBlackIcon>
-                :
-                <CheckboxIcon onPress={() => setCheckboxState(checkboxState === false ? true : false)}>
-                    {checkboxState === true ? < CheckBlackIcon width={19} height={12} /> : null}
-                </CheckboxIcon>
-            }
+            <CheckboxIcon onPress={() => setCheckboxState(checkboxState === false ? true : false)}>
+                {checkboxState === true ? < CheckBlackIcon width={19} height={12} /> : null}
+            </CheckboxIcon>
 
             <CheckboxText>{checkboxTitle}</CheckboxText>
         </CheckboxBlock>

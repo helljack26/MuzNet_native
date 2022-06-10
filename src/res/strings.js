@@ -3,6 +3,7 @@
 export const S = {
     // Pattern
     emailValidationPattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
+    userNamePattern: /^[aA-zZ\s аА-яЯ\s \d]+$/,
     phoneMaskPattern: ['+', /\d/, ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
 
     // Input error message

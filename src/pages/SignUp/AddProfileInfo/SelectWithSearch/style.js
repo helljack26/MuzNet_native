@@ -4,11 +4,9 @@ import C from '@/res/colors'
 import F from '@/res/fonts'
 import { M } from '@/res/mixin'
 
-const Container = styled.View`
+const Container = styled.ScrollView`
 width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
+
 background-color: ${C.white};
 `;
 const SearchInputBlock = styled.View`

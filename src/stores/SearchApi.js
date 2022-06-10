@@ -25,7 +25,6 @@ class SearchApi {
     }
 
     setOpenFilters(boolean) {
-        console.log("🚀 ~ file: SearchApi.js ~ line 28 ~ SearchApi ~ setOpenFilters ~ boolean", boolean)
         this.isOpenFilters = boolean
     }
     setNothingWasFound() {

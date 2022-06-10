@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { Animated, Button, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
+import { Animated } from 'react-native';
 // Components
 import DropSelect from '@/components/DropSelect'
 import SearchInputDropSelect from '@/components/SearchInputDropSelect'
+import SearchLocationDropSelect from '@/components/SearchLocationDropSelect'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateItemStyle } from './useAnimateItemStyle';
@@ -49,11 +50,17 @@ const SearchFilters = observer(() => {
     const [chosenGenres, getChosenGenres] = useState([]);
     // Instruments Search 
     const [chosenInstrument, getChosenInstrument] = useState([]);
+    // Get location
+    const [chosenLocation, getChosenLocation] = useState();
 
+    useEffect(() => {
+        console.log(chosenLocation);
+    }, [chosenLocation]);
     return (<Animated.View style={{
         zIndex: 1000,
-        // height,
-        height: '100%',
+        height,
+        // maxHeight: windowHeight - 50,
+        // height: '100%',
         width: windowWidth,
         justifyContent: 'center',
         position: "absolute",
@@ -105,6 +112,12 @@ const SearchFilters = observer(() => {
                     searchPlaceholder={'Choose instruments'}
                     getChosenData={getChosenInstrument}
                 />
+                {/* Search music genre */}
+                <SearchLocationDropSelect
+                    getLocation={getChosenLocation}
+                />
+
+
             </FilterBlock>
 
         </FilterContainer>

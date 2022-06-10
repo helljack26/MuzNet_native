@@ -15,7 +15,9 @@ import SearchFilters from '@components/SearchFilters';
 // Styles
 import styled from 'styled-components/native';
 import C from '@/res/colors'
-
+const Block = styled.View`
+width: 100%;
+`
 const Container = styled.View`
 height: 100%;
 width: 100%;
@@ -38,22 +40,25 @@ const ContractorListSearchScreen = () => {
                 backgroundColor="transparent"
                 translucent={true}
             />
+            <Block>
 
-            {/* Image */}
-            <Container
-                isKeyboardOpen={isKeyboardOpen}
-            >
-                <Content>
-                    <ListSearchScreen
-                        stackName={'ContractorStack'}
-                        screenName={'MusicianCardScreen'}
-                    />
-                </Content>
+                {/* Image */}
+                <Container
+                    isKeyboardOpen={isKeyboardOpen}
+                >
+                    <Content>
+                        <ListSearchScreen
+                            stackName={'ContractorStack'}
+                            screenName={'MusicianCardScreen'}
+                        />
+                    </Content>
 
-                <TapbarMenu />
+                    <TapbarMenu />
+
+                </Container>
                 <SearchFilters />
+            </Block>
 
-            </Container>
         </>
 
     )

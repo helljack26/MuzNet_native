@@ -114,6 +114,8 @@ const ButtonSubmitText = styled(M.BlackBtnText)`
 const ContentBlock = styled.View`
 display: flex;
 width: 100%;
+
+padding-bottom: 100%;
 align-items: center;
 flex-direction: column;
 background-color: ${C.white};

@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, Controller } from "react-hook-form";
 import { useState, useEffect } from 'react';
 
-import { Image, StatusBar, KeyboardAvoidingView, Platform } from 'react-native';
+import { Image, StatusBar, KeyboardAvoidingView, Platform, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 
@@ -306,7 +306,7 @@ const AddProfileInfo = () => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            setScreenNumber(1)
+            setScreenNumber(0)
         });
         return unsubscribe;
     }, [navigation]);
@@ -666,12 +666,17 @@ const AddProfileInfo = () => {
                 </Header>
                 <KeyboardAvoidingView
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                    style={{ flex: 1 }}>
+                    style={{
+                        flex: 1,
+                        height: "0%"
+                    }}
+                >
                     <Content
                         scrollEnabled={isDisableScroll}
                         nestedScrollEnabled={true}
                         style={{
                             width: windowWidth,
+                            paddingBottom: isKeyboardOpen !== true ? 0 : '100%',
                             marginBottom: isKeyboardOpen === true ? 90 : 120,
                         }}
                         showsVerticalScrollIndicator={false}
@@ -736,14 +741,25 @@ const AddProfileInfo = () => {
 
                         {/* =========== Tab 3 Contractor =========== */}
                         {(tabNumber === 3 && userType === S.Contractor) &&
-                            <DropSelect
-                                selectedValue={positionType}
-                                toggling={toggling}
-                                isOpen={isOpen}
-                                onSelect={onPositionSelect}
-                                dropHeader={S.PositionOptions.dropHeader}
-                                dropOptions={S.PositionOptions.dropOptions}
-                            />
+                            <View
+                                style={{
+                                    width: windowWidth - 5,
+                                    marginTop: -20,
+                                    marginLeft: -26,
+                                    paddingLeft: 16,
+                                    // marginRight: -20,
+                                    paddingBottom: '100%',
+                                }}>
+
+                                <DropSelect
+                                    selectedValue={positionType}
+                                    toggling={toggling}
+                                    isOpen={isOpen}
+                                    onSelect={onPositionSelect}
+                                    dropHeader={S.PositionOptions.dropHeader}
+                                    dropOptions={S.PositionOptions.dropOptions}
+                                />
+                            </View>
                         }
 
                         {/* =========== Tab 3 Musician =========== */}
@@ -787,7 +803,9 @@ const AddProfileInfo = () => {
 
                         {/* =========== Last tab with inputs  =========== */}
                         {typeOfForm &&
-                            <UserMainInfoContainer>
+                            <UserMainInfoContainer
+
+                            >
                                 {/* User Avatar */}
                                 <UserAvatarBlock>
                                     {/* Avatar upload from user */}
@@ -817,7 +835,7 @@ const AddProfileInfo = () => {
                                     control={control}
                                     rules={{
                                         required: S.userNameExistError,
-                                        pattern: /^[aA-zZ\s аА-яЯ\s \d]+$/
+                                        pattern: S.userNamePattern
                                     }}
                                     render={({ field: { onChange, onBlur, value } }) => (
                                         <FormInputBlock
@@ -900,7 +918,7 @@ const AddProfileInfo = () => {
                                     control={control}
                                     rules={{
                                         required: S.emailNotValid,
-                                        pattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
+                                        pattern: S.emailValidationPattern,
                                     }}
                                     render={({ field: { onChange, onBlur, value } }) => (
                                         <FormInputBlock
@@ -1086,7 +1104,6 @@ const AddProfileInfo = () => {
                                             checkboxState={isSingByEar}
                                             setCheckboxState={setSingByEar}
                                             checkboxTitle={'Sing by ear'}
-                                            isCheckBlackFilled={true}
                                         />
 
                                         {/* Play By ear */}
@@ -1094,7 +1111,6 @@ const AddProfileInfo = () => {
                                             checkboxState={isPlayByEar}
                                             setCheckboxState={setPlayByEar}
                                             checkboxTitle={'Play By ear'}
-                                            isCheckBlackFilled={true}
                                         />
 
                                         {/* Read sheet music */}
@@ -1102,7 +1118,6 @@ const AddProfileInfo = () => {
                                             checkboxState={isReadSheetMusic}
                                             setCheckboxState={setReadSheetMusic}
                                             checkboxTitle={'Read sheet music'}
-                                            isCheckBlackFilled={true}
                                         />
                                     </CheckboxBlock>
                                 }

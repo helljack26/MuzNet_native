@@ -3,6 +3,7 @@ import { Dimensions } from "react-native";
 
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { isKeyboardShown } from '@/components/helpers/isKeyboardShown';
 
 // Images
 import IMAGES from '@/res/images'
@@ -36,6 +37,7 @@ const SelectWithSearch = ({ dataForChoose, searchPlaceholder, getChosenData, alr
     const window = Dimensions.get("window");
     const [dimensions, setDimensions] = useState({ window });
     const windowHeight = Math.round(dimensions.window.height)
+    const isKeyboardOpen = isKeyboardShown()
 
     const containerHeight = windowHeight - 362
 
@@ -121,7 +123,11 @@ const SelectWithSearch = ({ dataForChoose, searchPlaceholder, getChosenData, alr
     const isFiltered = isFilter ? filteredChooseData : localChooseData
 
     return (
-        <Container>
+        <Container
+            style={{
+                marginBottom: isKeyboardOpen === true ? 90 : 120,
+            }}
+        >
             {/* Search Input */}
             <SearchInputBlock>
 

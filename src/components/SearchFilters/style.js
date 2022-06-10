@@ -18,6 +18,7 @@ justify-content: center;
 align-items: center;
 flex-direction: row;
 margin-top: 24px;
+padding-bottom: 12px;
 border-bottom-color: ${C.lightGray};
 border-bottom-width: 1px;
 `;
@@ -34,7 +35,8 @@ right:   16px;
 bottom: 0px;
 `;
 const HeaderTitle = styled(M.MediumText20)`
-margin-bottom: 12px;
+/* margin-bottom: 12px; */
+line-height: 30px;
 `;
 const FilterBlock = styled.ScrollView`
 width: 100%;

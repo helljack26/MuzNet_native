@@ -8,7 +8,6 @@ import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 export const useAnimateItemStyle = ({ isOpenFilters }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
-
     const [isOpen, setIsOpen] = useState(false)
 
     const animate_state = {
@@ -34,7 +33,7 @@ export const useAnimateItemStyle = ({ isOpenFilters }) => {
 
     }, [isOpenFilters]);
     const inputRange = Object.values(animate_state)
-    const height = value.interpolate({ inputRange, outputRange: ['0%', '100%'] })
+    const height = value.interpolate({ inputRange, outputRange: ['0%', '97%'] })
 
     return { height, onPress }
 }

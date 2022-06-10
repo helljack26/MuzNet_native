@@ -1,7 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { StatusBar, View } from 'react-native';
-
-import { getWindowDimension } from '@/components/helpers/getWindowDimension'
+import React from 'react';
 
 // Images
 import IMAGES from '@/res/images'
@@ -25,14 +22,11 @@ const {
 } = style;
 
 const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dropOptions }) => {
-    console.log("🚀 ~ file: DropSelect.jsx ~ line 28 ~ DropSelect ~ isOpen", isOpen)
-    const { windowHeight, windowWidth } = getWindowDimension()
 
     const mainHeader = selectedValue || dropHeader
 
     return (
         <DropBlock
-
             onPress={() => toggling(false)} >
             <Drop>
                 <DropHeader
@@ -41,7 +35,6 @@ const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dro
                         borderBottomLeftRadius: isOpen === true ? 0 : 6,
                         borderBottomRightRadius: isOpen === true ? 0 : 6,
                         elevation: isOpen === true ? 5 : 0,
-
                     }}
                     onPress={() => toggling(!isOpen)} >
                     <OptionText isHeader={true}>
@@ -50,7 +43,6 @@ const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dro
                     <ArrowBlock isOpen={isOpen}>
                         <GoBackIcon width={10} height={15} />
                     </ArrowBlock>
-
                 </DropHeader>
             </Drop>
             {isOpen && (
