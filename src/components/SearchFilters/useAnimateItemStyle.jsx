@@ -27,7 +27,8 @@ export const useAnimateItemStyle = ({ isOpenFilters }) => {
     }
     // Set list
     useEffect(() => {
-        if (isOpenFilters === true) {
+        // if (isOpenFilters === true) {
+        if (isOpenFilters === false) {
             onPress(true)
         }
 

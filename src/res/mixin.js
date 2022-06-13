@@ -114,6 +114,12 @@ font-family: ${F.regular};
 color: ${C.black};
 line-height: 22px;
 `
+const PlainText15 = styled.Text`
+font-size: 15px;
+font-family: ${F.regular};
+color: ${C.black};
+line-height: 19px;
+`
 const PlainText14 = styled.Text`
 font-size: 14px;
 font-family: ${F.regular};
@@ -171,6 +177,9 @@ flex-direction: column;
 margin-bottom: 13px;
 width: 100%;
 `;
+const FormInputContainer = styled.View`
+
+`;
 const FormInputContainerPhone = styled.View`
 width: 100%;
 height: 48px;
@@ -194,7 +203,6 @@ padding-right: ${props => props.isPassword === true ? 50 + 'px' : 16 + 'px'};
 const FormInputLabel = styled.Text`
 font-family: ${F.regular};
 margin-bottom: 5px;
-color: ${C.sBlack};
 color : ${props => props.isError ? C.red : C.sBlack};
 font-size: 12px;
 position: absolute;
@@ -233,6 +241,7 @@ export const M = {
     TitleBold18: TitleBold18,
     TitleBold15: TitleBold15,
     PlainText17: PlainText17,
+    PlainText15: PlainText15,
     PlainText14: PlainText14,
     PlainText13: PlainText13,
     MediumText20: MediumText20,
@@ -244,6 +253,7 @@ export const M = {
 
     // Input
     FormInputBlock: FormInputBlock,
+    FormInputContainer: FormInputContainer,
     FormInputContainerPhone: FormInputContainerPhone,
     FormInput: FormInput,
     FormInputLabel: FormInputLabel,

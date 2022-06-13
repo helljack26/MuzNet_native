@@ -1,67 +1,58 @@
+
 import styled from 'styled-components/native';
-import F from '@/res/fonts'
 import C from '@/res/colors'
+import F from '@/res/fonts'
 import { M } from '@/res/mixin'
 
-// Search input
-const SearchInputBlock = styled.View`
-width: 100%;
+const Container = styled.ScrollView`
 
 `;
-const SearchIconBlock = styled.View`
+const DropContainer = styled.ScrollView`
+margin: 0px 16px;
 position: absolute;
-top: 13px;
-left: 10px;
-width: 14px;
-height: 14px;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
+top: 48px;
+left: 0px;
 z-index: 999;
-`;
-const SearchRemoveIconBlock = styled.TouchableOpacity`
-position: absolute;
-top: 0px;
-bottom: 0px;
-right: 0px;
-width: 40px;
-height: 40px;
-z-index: 999;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
-`;
-const SearchRemoveIcon = styled.View`
-width: 28px;
-height: 28px;
+border: 1px solid ${C.lightGray};
+border-top-width: 1px ;
 border-radius: 6px;
-background-color: ${C.black};
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
 `;
-const SearchInput = styled.TextInput`
+const ChosenBlock = styled.View`
 width: 100%;
-height: 40px;
-background-color: ${C.backGray};
-border-radius: 6px;
-padding-left: 32px;
-padding-right: 42px;
-font-size: 15px;
-font-family: ${F.medium};
-color: ${C.black};
+padding-top: 8px;
+background-color: white;
+overflow: hidden;
+border-bottom-right-radius: 6px;
+border-bottom-left-radius: 6px;
+overflow: hidden;
 
+`;
+const Item = styled.TouchableOpacity`
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 8px 16px;
+`;
+const ItemText = styled(M.PlainText15)`
+width: 100%;
+`;
+const RemoveChosenItem = styled.TouchableOpacity`
+width: 24px;
+height: 24px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
 `;
 
 
 export const style = {
-    // Search input
-    SearchInputBlock: SearchInputBlock,
-    SearchInput: SearchInput,
-    SearchIconBlock: SearchIconBlock,
-    SearchRemoveIcon: SearchRemoveIcon,
-    SearchRemoveIconBlock: SearchRemoveIconBlock,
+    Container: Container,
+    DropContainer: DropContainer,
+    ChosenBlock: ChosenBlock,
+    Item: Item,
+    ItemText: ItemText,
+    RemoveChosenItem: RemoveChosenItem,
 }

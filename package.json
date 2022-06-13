@@ -47,7 +47,6 @@
     "react-native-custom-scroll-indicator": "^1.0.8",
     "react-native-email-link": "^1.13.1",
     "react-native-gesture-handler": "~2.1.0",
-    "react-native-google-places-autocomplete": "^2.4.1",
     "react-native-mask-input": "^1.2.0",
     "react-native-pager-view": "5.4.9",
     "react-native-paper": "^4.7.2",

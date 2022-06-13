@@ -35,7 +35,6 @@ width: 100%;
 background-color: white;
 position: absolute;
 top: 48px;
-border-radius: 6px;
 border: 1px solid ${C.lightGray};
 border-top-width: 0px ;
 left: 0px;

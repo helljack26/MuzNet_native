@@ -54,7 +54,7 @@ const SearchFilters = observer(() => {
     const [chosenLocation, getChosenLocation] = useState();
 
     useEffect(() => {
-        console.log(chosenLocation);
+        console.log("🚀 ~ file: SearchFilters.jsx ~ line 58 ~ useEffect ~ chosenLocation", chosenLocation)
     }, [chosenLocation]);
     return (<Animated.View style={{
         zIndex: 1000,
@@ -69,8 +69,8 @@ const SearchFilters = observer(() => {
         right: 0,
     }}
     >
-        <FilterContainer style={{ elevation: 100 }}  >
-
+        <FilterContainer
+            style={{ elevation: 100 }}>
             {/* Header */}
             <Header>
                 <HeaderClose
@@ -87,9 +87,10 @@ const SearchFilters = observer(() => {
                 </HeaderTitle>
             </Header>
 
-
             {/* Sort and filters */}
-            <FilterBlock>
+            <FilterBlock
+                keyboardShouldPersistTaps={'handled'}
+            >
                 <DropSelect
                     selectedValue={sortType}
                     toggling={toggling}
@@ -114,7 +115,7 @@ const SearchFilters = observer(() => {
                 />
                 {/* Search music genre */}
                 <SearchLocationDropSelect
-                    getLocation={getChosenLocation}
+                    setFilterLocation={getChosenLocation}
                 />
 
 
