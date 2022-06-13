@@ -45,6 +45,7 @@ import TrashIcon from '../../assets/icon/trash_icon.svg'
 
 // Arrows
 import GoBackIcon from '../../assets/icon/goBack_icon.svg'
+import PriceRangeBgIcon from '../../assets/icon/range_slider_bg.svg'
 
 const IMAGES = {
     // Tapbar icon
@@ -109,6 +110,7 @@ const IMAGES = {
     HeartActiveIcon: HeartActiveIcon,
     HeartDefaultIcon: HeartDefaultIcon,
     TrashIcon: TrashIcon,
+    PriceRangeBgIcon: PriceRangeBgIcon,
 
     // Mock artist
 }

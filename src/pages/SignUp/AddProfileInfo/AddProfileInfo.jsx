@@ -11,7 +11,7 @@ import ModalWindow from '@/components/ModalWindow'
 import SelectProfileType from './SelectProfileType'
 import SelectMusicianType from './SelectMusicianType'
 import SelectWithSearch from './SelectWithSearch'
-import DropSelect from '@/components/DropSelect'
+import DropSelect from '@/components/Dropdowns/DropSelect'
 import CheckBoxWithText from '@/components/Buttons/CheckBoxWithText'
 
 // Variables

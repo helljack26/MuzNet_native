@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react';
 
 import { Animated } from 'react-native';
 // Components
-import DropSelect from '@/components/DropSelect'
-import SearchInputDropSelect from '@/components/SearchInputDropSelect'
-import SearchLocationDropSelect from '@/components/SearchLocationDropSelect'
+import DropSelect from '@/components/Dropdowns/DropSelect'
+import SearchInputDropSelect from '@/components/Dropdowns/SearchInputDropSelect'
+import SearchLocationDropSelect from '@/components/Dropdowns/SearchLocationDropSelect'
+import DropSelectCalendar from '@/components/Dropdowns/DropSelectCalendar'
+import PriceRangeSlider from '@/components/PriceRangeSlider'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateItemStyle } from './useAnimateItemStyle';
@@ -53,9 +55,10 @@ const SearchFilters = observer(() => {
     // Get location
     const [chosenLocation, getChosenLocation] = useState();
 
+    const [chosenDate, getChosenDate] = useState('');
     useEffect(() => {
-        console.log("🚀 ~ file: SearchFilters.jsx ~ line 58 ~ useEffect ~ chosenLocation", chosenLocation)
-    }, [chosenLocation]);
+        console.log("🚀 ~ file: SearchFilters.jsx ~ line 58 ~ useEffect ~ chosenLocation", chosenDate)
+    }, [chosenDate]);
     return (<Animated.View style={{
         zIndex: 1000,
         height,
@@ -116,6 +119,13 @@ const SearchFilters = observer(() => {
                 {/* Search music genre */}
                 <SearchLocationDropSelect
                     setFilterLocation={getChosenLocation}
+                />
+                {/* Search music genre */}
+                <DropSelectCalendar
+                    setFilterDate={getChosenDate}
+                />
+                <PriceRangeSlider
+
                 />
 
 

@@ -85,11 +85,7 @@ const SearchLocationDropSelect = observer(({ setFilterLocation }) => {
     return (
         <Container>
             {/* Search Input */}
-            <FormInputBlock
-                style={{
-                    marginBottom: 200,
-                }}
-            >
+            <FormInputBlock       >
                 <FormInputContainer
                     style={{
                         marginLeft: 16,

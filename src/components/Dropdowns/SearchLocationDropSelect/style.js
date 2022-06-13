@@ -4,17 +4,19 @@ import C from '@/res/colors'
 import F from '@/res/fonts'
 import { M } from '@/res/mixin'
 
-const Container = styled.ScrollView`
+const Container = styled.View`
 
 `;
-const DropContainer = styled.ScrollView`
+const DropContainer = styled.View`
 margin: 0px 16px;
+border-radius: 6px;
+background-color: white;
 position: absolute;
 top: 48px;
+border: 1px solid ${C.lightGray};
+border-top-width: 0px ;
 left: 0px;
 z-index: 999;
-border: 1px solid ${C.lightGray};
-border-top-width: 1px ;
 border-radius: 6px;
 `;
 const ChosenBlock = styled.View`
