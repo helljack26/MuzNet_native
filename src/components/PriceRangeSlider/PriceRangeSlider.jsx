@@ -30,10 +30,10 @@ const {
     Rail,
     RailSelected,
     Label,
-    Notch,
+    RangeBlockSlider,
 } = style;
 
-const PriceRangeSlider = ({ getPriceRange }) => {
+const PriceRangeSlider = ({ isResetAll, getPriceRange }) => {
 
     const [low, setLow] = useState('0');
     const [high, setHigh] = useState('10,000');
@@ -63,9 +63,17 @@ const PriceRangeSlider = ({ getPriceRange }) => {
         setLeftOverflowWidth((100 - leftWidth) + 0.5)
         const rightWidth = (10000 - high) / 100
         setRightOverflowWidth(rightWidth)
-
     }, []);
-
+    // If resetAll
+    useEffect(() => {
+        if (isResetAll === true) {
+            setLow('0')
+            setHigh('10,000')
+            setLeftOverflowWidth(0)
+            setRightOverflowWidth(0)
+            // (true)
+        }
+    }, [isResetAll]);
     return (
         <RangeBlock>
             <RangeBlockHeader>
@@ -92,23 +100,26 @@ const PriceRangeSlider = ({ getPriceRange }) => {
                     }}
                 ></RightOverflowBLock>
             </RangeBlockBg>
-            <Slider
-                style={{
-                    zIndex: 710
-                }}
-                min={0}
-                max={10000}
-                step={50}
-                renderThumb={renderThumb}
-                renderRail={renderRail}
-                renderRailSelected={renderRailSelected}
-                renderLabel={renderLabel}
+            <RangeBlockSlider>
+
+                {isResetAll === false && <Slider
+                    style={{
+                        zIndex: 710
+                    }}
+                    min={0}
+                    max={10000}
+                    step={50}
+                    renderThumb={renderThumb}
+                    renderRail={renderRail}
+                    renderRailSelected={renderRailSelected}
+                    renderLabel={renderLabel}
+                    onValueChanged={handleValueChange}
                 // disableRange={rangeDisabled}
                 // floatingLabel={floatingLabel}
                 // renderNotch={renderNotch}
-                onValueChanged={handleValueChange}
-            />
-
+                />
+                }
+            </RangeBlockSlider>
         </RangeBlock>
     );
 

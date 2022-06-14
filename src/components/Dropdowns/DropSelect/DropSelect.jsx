@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 
 // Images
 import IMAGES from '@/res/images'
@@ -21,10 +22,20 @@ const {
     OptionActiveIcon
 } = style;
 
-const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dropOptions }) => {
+const DropSelect = ({ isResetAll, selectedValue, toggling, isOpen, onSelect, dropHeader, dropOptions }) => {
 
-    const mainHeader = selectedValue || dropHeader
+    const [mainHeader, setMainHeader] = useState()
 
+    useEffect(() => {
+        setMainHeader(selectedValue || dropHeader)
+    }, [selectedValue, dropHeader]);
+
+    // If resetAll
+    useEffect(() => {
+        if (isResetAll === true) {
+            setMainHeader(dropHeader)
+        }
+    }, [isResetAll]);
     return (
         <DropBlock
             onPress={() => toggling(false)} >
@@ -58,7 +69,6 @@ const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dro
                     <OptionsList>
                         {dropOptions.map((option, id) => {
                             const isActive = option === selectedValue
-
                             return <Option
                                 isActive={isActive}
                                 onPress={onSelect(option)} key={id}>
@@ -67,14 +77,10 @@ const DropSelect = ({ selectedValue, toggling, isOpen, onSelect, dropHeader, dro
                                 </OptionText>
                                 {isActive === true && <OptionActiveIcon >
                                     <CheckRoundBlackIcon width={20} height={20} />
-
                                 </OptionActiveIcon>
                                 }
                             </Option>
-                        }
-                        )
-                        }
-
+                        })}
                     </OptionsList>
                 </DropContainer>
             )}

@@ -29,10 +29,9 @@ const {
     RemoveChosenItem,
 } = style;
 
-const SearchInputDropSelect = ({ dataForChoose, searchPlaceholder, getChosenData, alreadyChosenInstrument }) => {
+const SearchInputDropSelect = ({ isResetAll, dataForChoose, searchPlaceholder, getChosenData, alreadyChosenInstrument }) => {
     const window = Dimensions.get("window");
     const [dimensions, setDimensions] = useState({ window });
-    const windowHeight = Math.round(dimensions.window.height)
 
     useEffect(() => {
         const subscription = Dimensions.addEventListener(
@@ -83,6 +82,18 @@ const SearchInputDropSelect = ({ dataForChoose, searchPlaceholder, getChosenData
             setFilteredChooseData([])
         }
     }, [searchText, chosenBlock, init]);
+
+    // If resetAll
+    useEffect(() => {
+        if (isResetAll === true) {
+            onChangeSearchText('')
+            setInputFocus1(C.lightGray)
+            setChoosenBlock([])
+            setLocalChooseData([])
+            setFilteredChooseData([])
+            setInit(0)
+        }
+    }, [isResetAll]);
 
     const handler = ({ value, action }) => {
 

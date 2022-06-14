@@ -50,13 +50,16 @@ const ContractorListSearchScreen = () => {
                         <ListSearchScreen
                             stackName={'ContractorStack'}
                             screenName={'MusicianCardScreen'}
+
                         />
                     </Content>
 
                     <TapbarMenu />
 
                 </Container>
-                <SearchFilters />
+                <SearchFilters
+                    isContractor={true}
+                />
             </Block>
 
         </>

@@ -1,13 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { Animated } from 'react-native';
+import { Animated, Keyboard } from 'react-native';
 // Components
 import DropSelect from '@/components/Dropdowns/DropSelect'
 import SearchInputDropSelect from '@/components/Dropdowns/SearchInputDropSelect'
 import SearchLocationDropSelect from '@/components/Dropdowns/SearchLocationDropSelect'
 import DropSelectCalendar from '@/components/Dropdowns/DropSelectCalendar'
 import PriceRangeSlider from '@/components/PriceRangeSlider'
+import CheckBoxWithText from '@/components/Buttons/CheckBoxWithText'
+
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateItemStyle } from './useAnimateItemStyle';
@@ -29,13 +31,21 @@ const {
     HeaderClose,
     HeaderTitle,
     FilterBlock,
+    CheckboxBlock,
+    CheckboxBlockTitle,
+    ContentBlock,
+    ContentBlockRow,
+    ContainerLink,
+    ContainerLinkText,
+    ButtonSubmit,
+    ButtonSubmitText,
 } = style;
 
 // Store
 import { observer } from 'mobx-react-lite';
 import { useSearchApiStore } from '@/stores/SearchApi';
 
-const SearchFilters = observer(() => {
+const SearchFilters = observer(({ isContractor }) => {
     const { isOpenFilters, setOpenFilters } = useSearchApiStore();
     const isKeyboardOpen = isKeyboardShown()
 
@@ -54,21 +64,60 @@ const SearchFilters = observer(() => {
     const [chosenInstrument, getChosenInstrument] = useState([]);
     // Get location
     const [chosenLocation, getChosenLocation] = useState();
-
+    // Calendar
+    const [isCalendarOpen, setCalendarOpen] = useState(false);
     const [chosenDate, getChosenDate] = useState('');
 
     const [priceRange, getPriceRange] = useState({
         minPrice: '',
         maxPrice: ''
     });
+
+    // Checkbox state
+    const [isWillingToTravel, setWillingToTravel] = useState(false);
+
+    const [isSingByEar, setSingByEar] = useState(false);
+    const [isPlayByEar, setPlayByEar] = useState(false);
+    const [isReadSheetMusic, setReadSheetMusic] = useState(false);
+
     useEffect(() => {
-        // console.log("🚀 ~ file: SearchFilters.jsx ~ line 58 ~ useEffect ~ chosenLocation", priceRange)
-    }, [chosenDate, priceRange]);
+        // console.log("🚀 ~ file: SearchFilters.jsx ~ line 58 ~ useEffect ~ chosenLocation", isCalendarOpen)
+    }, [chosenDate, priceRange, isCalendarOpen]);
+
+    const [isResetAll, setResetAll] = useState(false);
+    const clearAllFilters = () => {
+        // For components set reset
+        console.log('Удаляю все нахуй');
+        setResetAll(true)
+        Keyboard.dismiss()
+        // Components reset 
+        setIsOpen(false)
+        setSortType(null)
+        getChosenGenres(null)
+        getChosenInstrument(null)
+        getChosenLocation(null)
+        getChosenDate(null)
+        getPriceRange({
+            minPrice: '',
+            maxPrice: ''
+        })
+        // Checkboxes
+        setWillingToTravel(false)
+        setSingByEar(false)
+        setPlayByEar(false)
+        setReadSheetMusic(false)
+
+        // Set reset to default
+        setTimeout(() => {
+            setResetAll(false)
+
+        }, 0);
+    }
     return (<Animated.View style={{
         zIndex: 1000,
         height,
         // maxHeight: windowHeight - 50,
-        // height: '100%',
+        // height: '90%',
         width: windowWidth,
         justifyContent: 'center',
         position: "absolute",
@@ -77,6 +126,7 @@ const SearchFilters = observer(() => {
         right: 0,
     }}
     >
+
         <FilterContainer
             style={{ elevation: 100 }}>
             {/* Header */}
@@ -106,6 +156,7 @@ const SearchFilters = observer(() => {
                     onSelect={onPositionSelect}
                     dropHeader={S.SortByOptions.dropHeader}
                     dropOptions={S.SortByOptions.dropOptions}
+                    isResetAll={isResetAll}
                 />
                 {/* Search music genre */}
                 <SearchInputDropSelect
@@ -113,6 +164,7 @@ const SearchFilters = observer(() => {
                     alreadyChosenInstrument={chosenGenres}
                     searchPlaceholder={'Choose music genres'}
                     getChosenData={getChosenGenres}
+                    isResetAll={isResetAll}
                 />
                 {/* Search music genre */}
                 <SearchInputDropSelect
@@ -120,23 +172,85 @@ const SearchFilters = observer(() => {
                     alreadyChosenInstrument={chosenInstrument}
                     searchPlaceholder={'Choose instruments'}
                     getChosenData={getChosenInstrument}
+                    isResetAll={isResetAll}
                 />
                 {/* Search music genre */}
                 <SearchLocationDropSelect
                     setFilterLocation={getChosenLocation}
+                    isResetAll={isResetAll}
                 />
+
+                {/* Willing checbox */}
+                {isContractor === true &&
+                    <CheckboxBlock isWilling={true}>
+                        <CheckBoxWithText
+                            checkboxState={isWillingToTravel}
+                            setCheckboxState={setWillingToTravel}
+                            checkboxTitle={'Willing to travel interstate for gigs'}
+                        />
+                    </CheckboxBlock>
+                }
                 {/* Search music genre */}
                 <DropSelectCalendar
                     setFilterDate={getChosenDate}
+                    setCalendarOpen={setCalendarOpen}
+                    isResetAll={isResetAll}
                 />
+                {/* Price range slider */}
                 <PriceRangeSlider
                     getPriceRange={getPriceRange}
+                    isResetAll={isResetAll}
                 />
+                {/* Skills Checkbox */}
+                {isContractor === true && <CheckboxBlock>
+                    <CheckboxBlockTitle>Skills:</CheckboxBlockTitle>
+
+                    {/* Sing by ear */}
+                    <CheckBoxWithText
+                        checkboxState={isSingByEar}
+                        setCheckboxState={setSingByEar}
+                        checkboxTitle={'Sing by ear'}
+                    />
+
+                    {/* Play By ear */}
+                    <CheckBoxWithText
+                        checkboxState={isPlayByEar}
+                        setCheckboxState={setPlayByEar}
+                        checkboxTitle={'Play By ear'}
+                    />
+
+                    {/* Read sheet music */}
+                    <CheckBoxWithText
+                        checkboxState={isReadSheetMusic}
+                        setCheckboxState={setReadSheetMusic}
+                        checkboxTitle={'Read sheet music'}
+                    />
+                </CheckboxBlock>}
+
 
 
             </FilterBlock>
 
+            <ContentBlock isKeyboardOpen={isKeyboardOpen}>
+                <ContentBlockRow>
+
+                    <ContainerLink
+                        onPress={() => {
+                            clearAllFilters()
+                        }}
+                    >
+                        <ContainerLinkText>Clear all</ContainerLinkText>
+                    </ContainerLink>
+                    <ButtonSubmit
+                    // onPress={handleSubmit(onSubmit)} 
+                    >
+                        <ButtonSubmitText>Show Perfomers</ButtonSubmitText>
+                    </ButtonSubmit>
+                </ContentBlockRow>
+            </ContentBlock>
         </FilterContainer>
+
+
     </Animated.View>
     )
 })

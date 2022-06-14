@@ -1,6 +1,6 @@
 import React from 'react';
-import { Dimensions } from "react-native";
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown';
@@ -8,11 +8,6 @@ import C from '@/res/colors'
 
 // Images
 import IMAGES from '@/res/images'
-const {
-    SearchIcon,
-    CrossBlackIcon,
-    CrossGrayIcon
-} = IMAGES;
 
 // Styles
 import { style } from './style'
@@ -35,16 +30,12 @@ const {
     FormInputLabel
 } = M;
 
-
 // Store
 import { observer } from 'mobx-react-lite';
 import { toJS } from "mobx";
 import { useLocationAutocompleteApiStore } from '@/stores/LocationAutocompleteApi';
 
-import { Text, View, Image } from 'react-native';
-
-const SearchLocationDropSelect = observer(({ setFilterLocation }) => {
-    const isKeyboardOpen = isKeyboardShown()
+const SearchLocationDropSelect = observer(({ isResetAll, setFilterLocation }) => {
     // Store
     const { locationList, setLocationList } = useLocationAutocompleteApiStore();
     const jsLocationList = toJS(locationList)
@@ -77,12 +68,22 @@ const SearchLocationDropSelect = observer(({ setFilterLocation }) => {
         if (searchText.length === 0) {
             setShiftInputLocationLabel(false)
             setLocationList([])
+            setInputFocus1(C.lightGray)
         }
     }, [searchText.length, selectedLocation]);
 
-
-
+    // If resetAll
+    useEffect(() => {
+        if (isResetAll === true) {
+            setLocationList([])
+            onChangeSearchText('')
+            setSelectedLocation('')
+            setShiftInputLocationLabel(false)
+            setOpenDropList(false)
+        }
+    }, [isResetAll]);
     return (
+
         <Container>
             {/* Search Input */}
             <FormInputBlock       >
@@ -149,8 +150,10 @@ const SearchLocationDropSelect = observer(({ setFilterLocation }) => {
                         </Item>)
                     })}
                 </ChosenBlock>
+
             </DropContainer>}
         </Container>
+
     );
 });
 

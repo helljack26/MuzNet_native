@@ -41,7 +41,6 @@ color: ${props => props.isHeader === true ? C.sBlack : C.black};
 font-size: 17px;
 `;
 
-
 export const style = {
     DropBlock: DropBlock,
     Drop: Drop,

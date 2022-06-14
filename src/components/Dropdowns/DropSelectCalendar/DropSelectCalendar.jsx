@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { TouchableOpacity } from 'react-native';
 import F from '@/res/fonts'
 
@@ -45,16 +45,16 @@ const customDayHeaderStylesCallback = ({ dayOfWeek, month, year }) => {
     }
 
 }
-const DropSelectCalendar = ({ setFilterDate }) => {
+const DropSelectCalendar = ({ isResetAll, setFilterDate, setCalendarOpen }) => {
 
     const [placeholder, setPlaceholder] = useState('');
     const mainHeader = placeholder || 'Any date'
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const toggling = (state) => setIsOpen(state);
-    const onPositionSelect = value => () => { setSortType(value); setIsOpen(false); };
+    const calendarRef = useRef();
 
+    const toggling = (state) => setIsOpen(state);
 
     const onDateChange = (date) => {
         const dateStr = date.toString()
@@ -66,10 +66,20 @@ const DropSelectCalendar = ({ setFilterDate }) => {
         const croppedMonth = monthFullName.slice(0, 3)
         const placeholderString = `${weekFullName}, ${croppedMonth} ${day}`
         setIsOpen(false)
+        // For parent filters
+        setCalendarOpen(false)
         setPlaceholder(placeholderString)
         setFilterDate(millisecondForFilter)
     };
 
+    // If resetAll
+    useEffect(() => {
+        if (isResetAll === true) {
+            setPlaceholder('')
+            setIsOpen(false)
+            calendarRef.current.resetSelections()
+        }
+    }, [isResetAll]);
     return (
         <DropBlock
             onPress={() => toggling(false)} >
@@ -82,7 +92,10 @@ const DropSelectCalendar = ({ setFilterDate }) => {
                         borderBottomRightRadius: isOpen === true ? 0 : 6,
                         elevation: isOpen === true ? 5 : 0,
                     }}
-                    onPress={() => toggling(!isOpen)} >
+                    onPress={() => {
+                        toggling(!isOpen)
+                        setCalendarOpen(!isOpen)
+                    }} >
                     {/* Label */}
                     <FormInputLabel inputLabel={placeholder.length > 0}>Date</FormInputLabel>
                     <OptionText >
@@ -99,7 +112,6 @@ const DropSelectCalendar = ({ setFilterDate }) => {
             <DropContainer
                 nestedScrollEnabled={true}
                 style={{
-
                     borderTopLeftRadius: isOpen === true ? 0 : 6,
                     borderTopRightRadius: isOpen === true ? 0 : 6,
                     elevation: isOpen === true ? 4 : 0,
@@ -109,6 +121,7 @@ const DropSelectCalendar = ({ setFilterDate }) => {
             >
                 <View style={styles.container}>
                     <CalendarPicker
+                        ref={calendarRef}
                         onDateChange={onDateChange}
                         startFromMonday={true}
                         showDayStragglers={true}

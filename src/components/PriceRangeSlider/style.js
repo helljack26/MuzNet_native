@@ -7,6 +7,10 @@ const RangeBlock = styled.View`
 margin: 0px 16px;
 margin-bottom: 10px;
 `;
+
+const RangeBlockSlider = styled.View`
+height: 45px;
+`;
 const RangeBlockBg = styled.View`
 width: 100%;
 display: flex;
@@ -93,4 +97,5 @@ export const style = {
     RailSelected: RailSelected,
     Label: Label,
     Notch: Notch,
+    RangeBlockSlider: RangeBlockSlider,
 }

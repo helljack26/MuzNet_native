@@ -1,16 +1,11 @@
 import React from "react";
 
+// Icon
 import IMAGES from '@/res/images'
-import {
-    useNavigation
-    // , useRoute 
-} from '@react-navigation/native';
-// Styles
-import styled from "styled-components";
-
 const { GoBackIcon } = IMAGES;
 
-
+// Styles
+import styled from "styled-components";
 const Arrow = styled.View`
 display: flex;
 justify-content: center;
@@ -18,13 +13,7 @@ align-items: center;
 flex-direction: row;
 padding-left: 5px;
 padding-right: 10px;
-/* padding-top: 10px;
-padding-bottom: 10px; */
-/* position: absolute; */
-/* top: 0px; */
-/* left: -10px;/ */
 z-index: 1000;
-/* bottom: 0px; */
 `;
 const CalendarArrowButtonLeft = styled(Arrow)`
 left: 0px;
