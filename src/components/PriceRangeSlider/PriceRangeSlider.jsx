@@ -1,10 +1,11 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import { View, Text } from 'react-native';
+import CheckBoxWithText from '@/components/Buttons/CheckBoxWithText'
 
-import RangeSlider from 'rn-range-slider';
-
+import { addDotForNumber } from '@/components/helpers/addDotForNumber';
+import Slider from 'rn-range-slider';
 
 // Variables
 import C from '@/res/colors'
@@ -19,38 +20,50 @@ import { style } from './style'
 
 const {
     RangeBlock,
+    RangeBlockBg,
     RangeBlockHeader,
     RangeBlockHeaderTitle,
     RangeBlockHeaderText,
-
+    LeftOverflowBLock,
+    RightOverflowBLock,
     Thumb,
-
+    Rail,
+    RailSelected,
+    Label,
+    Notch,
 } = style;
 
 const PriceRangeSlider = () => {
 
     const [rangeDisabled, setRangeDisabled] = useState(false);
-    const [low, setLow] = useState(0);
-    const [high, setHigh] = useState(10000);
-    const [min, setMin] = useState(0);
-    const [max, setMax] = useState(10000);
-    const [floatingLabel, setFloatingLabel] = useState(false);
+    const [low, setLow] = useState('0');
+    const [high, setHigh] = useState('10,000');
+
+    const [leftOverflowWidth, setLeftOverflowWidth] = useState(0);
+    const [rightOverflowWidth, setRightOverflowWidth] = useState(0);
+
 
     const renderThumb = useCallback(() => <Thumb></Thumb>, []);
     const renderRail = useCallback(() => <Rail></Rail>, []);
     const renderRailSelected = useCallback(() => <RailSelected></RailSelected>, []);
-    const renderLabel = useCallback(value => <Label text={value} />, []);
-    const renderNotch = useCallback(() => <Notch />, []);
+    const renderLabel = useCallback(value => <Label text={value} ></Label>, []);
+    // const renderNotch = useCallback(() => <Notch></Notch>, []);
+
     const handleValueChange = useCallback((low, high) => {
-        setLow(low);
-        setHigh(high);
+
+        const dottedLow = addDotForNumber(low)
+        const dottedHigh = addDotForNumber(high)
+        // Set value
+        setLow(dottedLow);
+        setHigh(dottedHigh);
+
+        // Set width for overflow block
+        const leftWidth = (10000 - low) / 100
+        setLeftOverflowWidth((100 - leftWidth) + 0.5)
+        const rightWidth = (10000 - high) / 100
+        setRightOverflowWidth(rightWidth)
     }, []);
-    const toggleRangeEnabled = useCallback(() => setRangeDisabled(!rangeDisabled), [rangeDisabled]);
-    const setMinTo50 = useCallback(() => setMin(50), []);
-    const setMinTo0 = useCallback(() => setMin(0), []);
-    const setMaxTo100 = useCallback(() => setMax(100), []);
-    const setMaxTo500 = useCallback(() => setMax(500), []);
-    const toggleFloatingLabel = useCallback(() => setFloatingLabel(!floatingLabel), [floatingLabel]);
+
     return (
         <RangeBlock>
             <RangeBlockHeader>
@@ -63,18 +76,34 @@ const PriceRangeSlider = () => {
                 </RangeBlockHeaderText>
 
             </RangeBlockHeader>
+
+            <RangeBlockBg>
+                <LeftOverflowBLock
+                    style={{
+                        width: leftOverflowWidth < 0 ? 0 : `${leftOverflowWidth}%`,
+                    }}
+                ></LeftOverflowBLock>
+                <PriceRangeBgIcon width={'100%'} height={43} />
+                <RightOverflowBLock
+                    style={{
+                        width: rightOverflowWidth < 0 ? 0 : `${rightOverflowWidth}%`,
+                    }}
+                ></RightOverflowBLock>
+            </RangeBlockBg>
             <Slider
-                style={styles.slider}
-                min={min}
-                max={max}
-                step={1}
+                style={{
+                    zIndex: 710
+                }}
+                min={0}
+                max={10000}
+                step={50}
                 disableRange={rangeDisabled}
-                floatingLabel={floatingLabel}
                 renderThumb={renderThumb}
                 renderRail={renderRail}
                 renderRailSelected={renderRailSelected}
                 renderLabel={renderLabel}
-                renderNotch={renderNotch}
+                // floatingLabel={floatingLabel}
+                // renderNotch={renderNotch}
                 onValueChanged={handleValueChange}
             />
 

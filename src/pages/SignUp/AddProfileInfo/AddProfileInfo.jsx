@@ -24,6 +24,7 @@ import MaskInput from 'react-native-mask-input';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown';
 import { useNavigation } from '@react-navigation/native';
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
+import { addDotForNumber } from '@/components/helpers/addDotForNumber';
 
 // Mixins
 import { M } from '@/res/mixin'
@@ -1084,7 +1085,7 @@ const AddProfileInfo = () => {
                                                             top: pricePerHourInput.length > 0 ? 1 : -7,
                                                             color: C.black,
                                                         }}>
-                                                        {pricePerHourInput.length > 0 ? `$ ${pricePerHourInput}/hour` : 'Enter your price per hour'}</FormInputPricePerHourText>
+                                                        {pricePerHourInput.length > 0 ? `$ ${addDotForNumber(pricePerHourInput)}/hour` : 'Enter your price per hour'}</FormInputPricePerHourText>
                                                 </FormInputPricePerHourBlock>
                                             </FormInputContainerPhone>
                                             <FormInputLabel inputLabel={pricePerHourLabel}>Price</FormInputLabel>
