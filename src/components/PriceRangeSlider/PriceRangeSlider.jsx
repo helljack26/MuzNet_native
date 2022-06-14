@@ -33,15 +33,13 @@ const {
     Notch,
 } = style;
 
-const PriceRangeSlider = () => {
+const PriceRangeSlider = ({ getPriceRange }) => {
 
-    const [rangeDisabled, setRangeDisabled] = useState(false);
     const [low, setLow] = useState('0');
     const [high, setHigh] = useState('10,000');
 
     const [leftOverflowWidth, setLeftOverflowWidth] = useState(0);
     const [rightOverflowWidth, setRightOverflowWidth] = useState(0);
-
 
     const renderThumb = useCallback(() => <Thumb></Thumb>, []);
     const renderRail = useCallback(() => <Rail></Rail>, []);
@@ -50,7 +48,10 @@ const PriceRangeSlider = () => {
     // const renderNotch = useCallback(() => <Notch></Notch>, []);
 
     const handleValueChange = useCallback((low, high) => {
-
+        getPriceRange({
+            minPrice: low,
+            maxPrice: high,
+        })
         const dottedLow = addDotForNumber(low)
         const dottedHigh = addDotForNumber(high)
         // Set value
@@ -62,6 +63,7 @@ const PriceRangeSlider = () => {
         setLeftOverflowWidth((100 - leftWidth) + 0.5)
         const rightWidth = (10000 - high) / 100
         setRightOverflowWidth(rightWidth)
+
     }, []);
 
     return (
@@ -97,11 +99,11 @@ const PriceRangeSlider = () => {
                 min={0}
                 max={10000}
                 step={50}
-                disableRange={rangeDisabled}
                 renderThumb={renderThumb}
                 renderRail={renderRail}
                 renderRailSelected={renderRailSelected}
                 renderLabel={renderLabel}
+                // disableRange={rangeDisabled}
                 // floatingLabel={floatingLabel}
                 // renderNotch={renderNotch}
                 onValueChanged={handleValueChange}

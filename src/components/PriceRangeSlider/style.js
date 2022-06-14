@@ -60,10 +60,9 @@ const Rail = styled.View`
     height: 2px;
     border-radius: 2px;
     background-color: ${C.lightGray};
-/* z-index: 300; */
 `;
 const RailSelected = styled.View`
-    height: 4px;
+    height: 2px;
     border-radius: 2px;
     background-color: ${C.black};
 `;

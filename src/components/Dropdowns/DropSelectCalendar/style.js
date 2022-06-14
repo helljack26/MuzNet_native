@@ -24,8 +24,7 @@ align-items: center;
 padding: 0px 16px;
 `;
 const ArrowBlock = styled.View`
-transform: ${props => props.isOpen ? 'rotate(90deg)' : 'rotate(-90deg)'};
-margin-right: 7px;
+margin-right: 3px;
 `;
 const DropContainer = styled.ScrollView`
 width: 100%;

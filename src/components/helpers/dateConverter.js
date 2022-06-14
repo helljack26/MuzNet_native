@@ -1,63 +1,51 @@
 export const dateConverter = (date) => {
-    console.log("🚀 ~ file: dateConverter.js ~ line 69 ~ dateConverter ~ date", date[1])
 
-    const splitedDate = `${date}`.split(' ')
+    const splitedDate = `${date}`.split('-')
+    console.log("🚀 ~ file: dateConverter.js ~ line 71 ~ dateConverter ~ date", splitedDate)
 
-    const day = splitedDate[2]
-    const year = splitedDate[3]
-    const monthWord = splitedDate[1]
+    const day = splitedDate[1]
+    const year = splitedDate[0]
+    const monthWord = splitedDate[2]
 
     let monthFullName
     let monthNumber
-    console.log(splitedDate)
+
     switch (monthWord) {
-        case 'Jan':
+        case '01' || '01':
             monthFullName = 'January'
-            monthNumber = '01'
             break;
-        case 'Feb':
+        case '02':
             monthFullName = 'February'
-            monthNumber = '02'
             break;
-        case 'Mar':
+        case '03':
             monthFullName = 'March'
-            monthNumber = '03'
             break;
-        case 'Apr':
+        case '04':
             monthFullName = 'April'
-            monthNumber = '04'
             break;
-        case 'May':
+        case '05':
             monthFullName = 'May'
-            monthNumber = '05'
             break;
-        case 'Jun':
+        case '06':
             monthFullName = 'June'
-            monthNumber = '06'
             break;
-        case 'Jul':
+        case '07':
             monthFullName = 'July'
-            monthNumber = '07'
             break;
-        case 'Aug':
+        case '08':
             monthFullName = 'August'
-            monthNumber = '08'
             break;
-        case 'Sep':
+        case '09':
             monthFullName = 'September'
-            monthNumber = '09'
             break;
-        case 'Oct':
+        case '10':
             monthFullName = 'October'
-            monthNumber = '10'
             break;
-        case 'Nov':
+        case '11':
             monthFullName = 'November'
-            monthNumber = '11'
             break;
-        case 'Dec':
+        case '12':
             monthFullName = 'December'
-            monthNumber = '12'
             break;
 
         default:
@@ -67,6 +55,8 @@ export const dateConverter = (date) => {
 
     return { correctDate, monthFullName, year }
 }
+
+
 
 
 

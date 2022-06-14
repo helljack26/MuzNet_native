@@ -56,9 +56,14 @@ const SearchFilters = observer(() => {
     const [chosenLocation, getChosenLocation] = useState();
 
     const [chosenDate, getChosenDate] = useState('');
+
+    const [priceRange, getPriceRange] = useState({
+        minPrice: '',
+        maxPrice: ''
+    });
     useEffect(() => {
-        console.log("🚀 ~ file: SearchFilters.jsx ~ line 58 ~ useEffect ~ chosenLocation", chosenDate)
-    }, [chosenDate]);
+        console.log("🚀 ~ file: SearchFilters.jsx ~ line 58 ~ useEffect ~ chosenLocation", priceRange)
+    }, [chosenDate, priceRange]);
     return (<Animated.View style={{
         zIndex: 1000,
         height,
@@ -125,7 +130,7 @@ const SearchFilters = observer(() => {
                     setFilterDate={getChosenDate}
                 />
                 <PriceRangeSlider
-
+                    getPriceRange={getPriceRange}
                 />
 
 

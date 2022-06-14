@@ -11,7 +11,7 @@ import styled from "styled-components";
 const { GoBackIcon } = IMAGES;
 
 
-const Arrow = styled.TouchableOpacity`
+const Arrow = styled.View`
 display: flex;
 justify-content: center;
 align-items: center;
@@ -27,32 +27,21 @@ z-index: 1000;
 bottom: 0px;
 `;
 const CalendarArrowButtonLeft = styled(Arrow)`
-left: -50px;
+left: 0px;
 `;
 const CalendarArrowButtonRight = styled(Arrow)`
 transform: rotate(180deg);
 `;
 
-const CalendarArrow = ({ direction, leftAction, rightAction }) => {
+const CalendarArrow = ({ direction }) => {
 
-    return (direction === 'left' ? <CalendarArrowButtonLeft
-        onPress={() => {
-            leftAction(true)
-            rightAction(false)
-        }}
-    >
-        <GoBackIcon width={12} height={20} />
-
-    </CalendarArrowButtonLeft>
-        :
-        <CalendarArrowButtonRight
-            onPress={() => {
-                rightAction(true)
-                leftAction(false)
-            }}
-        >
+    return (direction === 'left' ?
+        <CalendarArrowButtonLeft>
             <GoBackIcon width={12} height={20} />
-
+        </CalendarArrowButtonLeft>
+        :
+        <CalendarArrowButtonRight>
+            <GoBackIcon width={12} height={20} />
         </CalendarArrowButtonRight>
     )
 }
