@@ -1,59 +1,93 @@
 export const dateConverter = (date) => {
 
-    const splitedDate = `${date}`.split('-')
-    console.log("🚀 ~ file: dateConverter.js ~ line 71 ~ dateConverter ~ date", splitedDate)
+    const splitedDate = `${date}`.split(' ')
 
-    const day = splitedDate[1]
-    const year = splitedDate[0]
-    const monthWord = splitedDate[2]
+    const weekDay = splitedDate[0]
+    const day = splitedDate[2]
+    const year = splitedDate[3]
+    const monthWord = splitedDate[1]
 
     let monthFullName
+    let weekFullName
     let monthNumber
 
     switch (monthWord) {
-        case '01' || '01':
+        case 'Jan':
             monthFullName = 'January'
             break;
-        case '02':
+        case 'Feb':
             monthFullName = 'February'
             break;
-        case '03':
+        case 'Mar':
             monthFullName = 'March'
             break;
-        case '04':
+        case 'Apr':
             monthFullName = 'April'
             break;
-        case '05':
+        case 'May':
             monthFullName = 'May'
             break;
-        case '06':
+        case 'Jun':
             monthFullName = 'June'
             break;
-        case '07':
+        case 'Jul':
             monthFullName = 'July'
             break;
-        case '08':
+        case 'Aug':
             monthFullName = 'August'
             break;
-        case '09':
+        case 'Sep':
             monthFullName = 'September'
             break;
-        case '10':
+        case 'Oct':
             monthFullName = 'October'
             break;
-        case '11':
+        case 'Nov':
             monthFullName = 'November'
             break;
-        case '12':
+        case 'Dec':
             monthFullName = 'December'
             break;
 
         default:
             break;
     }
+
+    switch (weekDay) {
+        case 'Mon':
+            weekFullName = 'Monday '
+            break;
+        case 'Tue':
+            weekFullName = 'Tuesday'
+            break;
+        case 'Wed':
+            weekFullName = 'Wednesday'
+            break;
+        case 'Thu':
+            weekFullName = 'Thursday'
+            break;
+        case 'Fri':
+            weekFullName = 'Friday'
+            break;
+        case 'Sat':
+            weekFullName = 'Saturday'
+            break;
+        case 'Sun':
+            weekFullName = 'Sunday'
+            break;
+        default:
+            break;
+    }
     const correctDate = `${day}/${monthNumber}/${year}`
 
-    return { correctDate, monthFullName, year }
+    return {
+        correctDate: correctDate,
+        day: day,
+        monthFullName: monthFullName,
+        year: year,
+        weekFullName: weekFullName
+    }
+
 }
 
 

@@ -1,21 +1,20 @@
 import React from 'react';
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
 import { useState, useEffect } from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import F from '@/res/fonts'
 
 // Helpers
 import { dateConverter } from '@/components/helpers/dateConverter'
 import CalendarArrow from './CalendarArrow/CalendarArrow'
+import CalendarPicker from 'react-native-calendar-picker';
 
 import C from '@/res/colors'
 
 // Images
 import IMAGES from '@/res/images'
 const {
-    GoBackIcon,
     CalendarIcon,
-    CheckRoundBlackIcon
 } = IMAGES;
 
 // Styles
@@ -27,16 +26,25 @@ const {
     ArrowBlock,
     DropContainer,
     OptionText,
-    CalendarHeaderText,
-    CalendarHeader,
-    CalendarHeaderArrows,
 } = style;
 
 import { M } from '@/res/mixin'
 const {
 
     FormInputLabel
-} = M
+} = M;
+const customDayHeaderStylesCallback = ({ dayOfWeek, month, year }) => {
+    if (dayOfWeek) {
+        return {
+            textStyle: {
+                color: '#C4C4C6',
+                fontSize: 12,
+                fontFamily: F.bold,
+            }
+        };
+    }
+
+}
 const DropSelectCalendar = ({ setFilterDate }) => {
 
     const [placeholder, setPlaceholder] = useState('');
@@ -46,16 +54,22 @@ const DropSelectCalendar = ({ setFilterDate }) => {
 
     const toggling = (state) => setIsOpen(state);
     const onPositionSelect = value => () => { setSortType(value); setIsOpen(false); };
-    const now = new Date()
-    const day = now.getDate()
-    const month = (now.getMonth() + 1)
-    const monthWitZero = month < 10 ? `0${month}` : month
-    const year = now.getFullYear()
-    const todayString = `${year}-${monthWitZero}-${day}`
 
-    // useEffect(() => {
-    //     console.log("🚀 ~ file: SearchFilters.jsx ~ line 58 ~ useEffect ~ chosenLocation", chosenDate)
-    // }, [chosenDate]);
+
+    const onDateChange = (date) => {
+        const dateStr = date.toString()
+        const { day, monthFullName, weekFullName } = dateConverter(dateStr)
+
+        // Get millisecond
+        const millisecondForFilter = new Date(dateStr).getTime()
+
+        const croppedMonth = monthFullName.slice(0, 3)
+        const placeholderString = `${weekFullName}, ${croppedMonth} ${day}`
+        setIsOpen(false)
+        setPlaceholder(placeholderString)
+        setFilterDate(millisecondForFilter)
+    };
+
     return (
         <DropBlock
             onPress={() => toggling(false)} >
@@ -71,7 +85,7 @@ const DropSelectCalendar = ({ setFilterDate }) => {
                     onPress={() => toggling(!isOpen)} >
                     {/* Label */}
                     <FormInputLabel inputLabel={placeholder.length > 0}>Date</FormInputLabel>
-                    <OptionText isHeader={true}>
+                    <OptionText >
                         {mainHeader}
                     </OptionText>
                     <ArrowBlock
@@ -82,156 +96,99 @@ const DropSelectCalendar = ({ setFilterDate }) => {
                     </ArrowBlock>
                 </DropHeader>
             </Drop>
-            {isOpen && (
-                <DropContainer
-                    nestedScrollEnabled={true}
-                    style={{
-                        borderTopLeftRadius: isOpen === true ? 0 : 6,
-                        borderTopRightRadius: isOpen === true ? 0 : 6,
-                        elevation: 4,
-                    }}
-                >
-                    <Calendar
-                        // dayComponent={({ date, state }) => {
-                        //     return (
-                        //         <TouchableOpacity>
-                        //             <Text style={{ textAlign: 'center', color: state === 'disabled' ? 'gray' : 'black' }}>{date.day}</Text>
-                        //         </TouchableOpacity>
-                        //     );
-                        // }}
-                        markingType={'custom'}
-                        markedDates={{
+            <DropContainer
+                nestedScrollEnabled={true}
+                style={{
 
-                            todayString: {
-                                customStyles: {
-                                    container: {
-                                        backgroundColor: 'green'
-                                    },
-                                    text: {
-                                        color: 'black',
-                                        fontWeight: 'bold'
-                                    }
-                                }
-                            }
+                    borderTopLeftRadius: isOpen === true ? 0 : 6,
+                    borderTopRightRadius: isOpen === true ? 0 : 6,
+                    elevation: isOpen === true ? 4 : 0,
+                    width: isOpen === true ? '100%' : 0,
+                    height: isOpen !== true ? 0 : undefined
+                }}
+            >
+                <View style={styles.container}>
+                    <CalendarPicker
+                        onDateChange={onDateChange}
+                        startFromMonday={true}
+                        showDayStragglers={true}
+                        allowRangeSelection={false}
+                        minDate={new Date()}
+                        maxDate={new Date(2050, 6, 3)}
+                        weekdays={['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']}
+                        months={['January', 'Febraury', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',]}
+                        nextComponent={<CalendarArrow />}
+                        previousComponent={<CalendarArrow direction={'left'} />}
+
+                        // Today
+                        todayTextStyle={{
+                            color: C.white,
+                            backgroundColor: C.sBlack,
+                            width: 35,
+                            height: 40,
+                            textAlign: 'center',
+                            textAlignVertical: 'center',
+                            borderRadius: 8
                         }}
-                        showTodayButton={true}
-                        // Initially visible month. Default = now
-                        // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                        minDate={'2022-06-06'}
-                        // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-                        maxDate={'2030-05-30'}
-                        // Handler which gets executed on day press. Default = undefined
-                        onDayPress={day => {
-                            console.log('selected day', day);
-                            setPlaceholder(day.dateString)
-                            setIsOpen(false)
+                        scaleFactor={375}
+                        textStyle={{
+                            fontFamily: F.regular,
+                            color: C.black,
+                            fontSize: 17,
                         }}
-                        // Handler which gets executed on day long press. Default = undefined
-                        onDayLongPress={day => {
-                            setPlaceholder(day.dateString)
-                            setIsOpen(false)
-                            console.log('selected day', day);
+                        // Selected day
+                        selectedDayStyle={{
+                            backgroundColor: C.black,
+                            width: 35,
+                            height: 40,
+                            textAlign: 'center',
+                            textAlignVertical: 'center',
+                            borderRadius: 8
                         }}
-                        // Replace default arrows with custom ones (direction can be 'left' or 'right')
-                        renderArrow={direction => {
-                            if (direction === 'left') {
-                                return <CalendarArrow
-
-                                    direction={'left'} />
-                            } else {
-                                return <CalendarArrow
-                                    direction={'right'} />
-                            }
+                        selectedDayTextStyle={{
+                            color: 'white'
                         }}
-
-                        hideArrows={false}
-                        // If hideArrows = false and hideExtraDays = false do not switch month when tapping on greyed out
-                        // day from another month that is visible in calendar page. Default = false
-                        // disableMonthChange={true}
-                        // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday
-                        firstDay={1}
-                        // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-                        onPressArrowLeft={subtractMonth => subtractMonth()}
-                        // Handler which gets executed when press arrow icon right. It receive a callback can go next month
-
-                        onPressArrowRight={addMonth => addMonth()}
-                        // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
-                        disableAllTouchEventsForDisabledDays={true}
-                        // Replace default month and year title with custom one. the function receive a date as parameter
-                        // renderHeader={date => {
-                        //     /*Return JSX*/
-                        //     console.log("🚀 ~ file: DropSelectCalendar.jsx ~ line 99 ~ DropSelectCalendar ~ date", date)
-                        //     return <CalendarHeaderText isHeader={true}>
-                        //         {`${date}`}
-                        //     </CalendarHeaderText>
-                        // }}
-                        onMonthChange={month => {
-                            console.log('month changed', month);
+                        // Header
+                        monthTitleStyle={{
+                            fontFamily: F.bold,
+                            color: C.black,
+                            fontSize: 18,
                         }}
-                        // renderHeader={(date) => {
-                        //     const dateStr = date.toISOString();
-                        //     const endIndex = dateStr.indexOf("T");
-                        //     const clearDate = dateStr.slice(0, endIndex)
-                        //     const { monthFullName, year } = dateConverter(clearDate)
-                        //     return <CalendarHeader>
-                        //         <CalendarHeaderText>
-                        //             {monthFullName} {year}
-                        //         </CalendarHeaderText>
-                        //         <CalendarHeaderArrows>
-
-
-                        //         </CalendarHeaderArrows>
-                        //     </CalendarHeader>
-                        // }}
-                        // Enable the option to swipe between months. Default = false
-                        style={{
-
+                        yearTitleStyle={{
+                            fontFamily: F.bold,
+                            color: C.black,
+                            fontSize: 18,
                         }}
-                        theme={{
-                            backgroundColor: '#ffffff',
-                            calendarBackground: '#ffffff',
-                            textSectionTitleColor: '#b6c1cd',
-                            textSectionTitleDisabledColor: '#d9e1e8',
-                            selectedDayBackgroundColor: '#00adf5',
-                            selectedDayTextColor: '#ffffff',
-                            todayTextColor: '#00adf5',
-                            todayBackgroundcolor: '#00adf5',
-                            dayTextColor: C.black,
-                            textDisabledColor: '#d9e1e8',
-                            disabledArrowColor: '#050505',
-                            monthTextColor: 'black',
-                            indicatorColor: 'blue',
-                            textDayFontFamily: F.regular,
-                            textMonthFontFamily: F.bold,
-                            textDayHeaderFontFamily: F.regular,
-                            textDayFontWeight: '400',
-                            textDayHeaderFontWeight: '400',
-                            textDayFontSize: 17,
-                            textMonthFontSize: 17,
-                            textDayHeaderFontSize: 15,
-                            arrowColor: 'black',
-                            'stylesheet.calendar.header': {
-                                week: {
-                                    marginTop: 5,
-                                    marginLeft: 5,
-                                    marginRight: 5,
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                },
-                                dayTextAtIndex0: {
-                                    textTransform: 'uppercase',
-                                    color: 'red'
-                                },
-                                dayTextAtIndex6: {
-                                    color: 'blue'
-                                }
-                            }
+                        customDayHeaderStyles={customDayHeaderStylesCallback}
+                        headerWrapperStyle={{
+                            paddingHorizontal: 16,
+                            paddingVertical: 0,
+                        }}
+                        dayLabelsWrapper={{
+                            paddingVertical: 0,
+                            marginHorizontal: 16,
+                            width: '100%',
+                            borderTopColor: 'white',
+                            borderBottomColor: 'white'
                         }}
                     />
-                </DropContainer>
-            )}
+                </View>
+            </DropContainer>
+
         </DropBlock>
     );
 }
 
 export default DropSelectCalendar;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        borderRadius: 6,
+        backgroundColor: '#ffffff',
+        paddingHorizontal: 20,
+        paddingTop: 16,
+        paddingBottom: 10,
+    },
+
+});

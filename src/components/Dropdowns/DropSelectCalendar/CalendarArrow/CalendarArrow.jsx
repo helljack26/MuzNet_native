@@ -16,15 +16,15 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: row;
-position: absolute;
 padding-left: 5px;
 padding-right: 10px;
-padding-top: 10px;
-padding-bottom: 10px;
-top: 0px;
-left: -10px;
+/* padding-top: 10px;
+padding-bottom: 10px; */
+/* position: absolute; */
+/* top: 0px; */
+/* left: -10px;/ */
 z-index: 1000;
-bottom: 0px;
+/* bottom: 0px; */
 `;
 const CalendarArrowButtonLeft = styled(Arrow)`
 left: 0px;

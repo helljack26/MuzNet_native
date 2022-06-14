@@ -62,7 +62,7 @@ const SearchFilters = observer(() => {
         maxPrice: ''
     });
     useEffect(() => {
-        console.log("🚀 ~ file: SearchFilters.jsx ~ line 58 ~ useEffect ~ chosenLocation", priceRange)
+        // console.log("🚀 ~ file: SearchFilters.jsx ~ line 58 ~ useEffect ~ chosenLocation", priceRange)
     }, [chosenDate, priceRange]);
     return (<Animated.View style={{
         zIndex: 1000,

@@ -40,25 +40,6 @@ font-family: ${F.regular};
 color: ${props => props.isHeader === true ? C.sBlack : C.black};
 font-size: 17px;
 `;
-const CalendarHeader = styled.View`
-height: 53px;
-display: flex;
-flex-direction: row;
-justify-content: flex-start;
-align-items: center;
-`;
-const CalendarHeaderArrows = styled.View`
-display: flex;
-align-items: center;
-flex-direction: row;
-position: absolute;
-top: 16px;
-right: 17px;
-`;
-
-const CalendarHeaderText = styled(M.TitleBold17)`
-
-`;
 
 
 export const style = {
@@ -68,8 +49,4 @@ export const style = {
     DropContainer: DropContainer,
     OptionText: OptionText,
     ArrowBlock: ArrowBlock,
-
-    CalendarHeader: CalendarHeader,
-    CalendarHeaderArrows: CalendarHeaderArrows,
-    CalendarHeaderText: CalendarHeaderText,
 }
