@@ -29,7 +29,7 @@ const {
     RemoveChosenItem,
 } = style;
 
-const SearchInputDropSelect = ({ isResetAll, dataForChoose, searchPlaceholder, getChosenData, alreadyChosenInstrument }) => {
+const SearchInputDropSelect = ({ isResetAll, isCloseAllDropdown, dataForChoose, searchPlaceholder, getChosenData }) => {
     const window = Dimensions.get("window");
     const [dimensions, setDimensions] = useState({ window });
 
@@ -94,6 +94,14 @@ const SearchInputDropSelect = ({ isResetAll, dataForChoose, searchPlaceholder, g
             setInit(0)
         }
     }, [isResetAll]);
+    // If resetAll
+
+
+    useEffect(() => {
+        if (isCloseAllDropdown === true) {
+            onChangeSearchText('')
+        }
+    }, [isCloseAllDropdown]);
 
     const handler = ({ value, action }) => {
 
@@ -126,7 +134,7 @@ const SearchInputDropSelect = ({ isResetAll, dataForChoose, searchPlaceholder, g
         }
     }
 
-    const isShowDropdownList = filteredChooseData.length > 0 && searchText.length > 0
+    const isShowDropdownList = (filteredChooseData.length > 0 && searchText.length > 0)
 
     return (
 

@@ -11,7 +11,6 @@ import ListSearchScreen from '@/components/ListSearchScreen'
 import TapbarMenu from '@/components/Buttons/TapbarMenu'
 import SearchFilters from '@components/SearchFilters';
 
-
 // Styles
 import styled from 'styled-components/native';
 import C from '@/res/colors'
@@ -41,7 +40,6 @@ const ContractorListSearchScreen = () => {
                 translucent={true}
             />
             <Block>
-
                 {/* Image */}
                 <Container
                     isKeyboardOpen={isKeyboardOpen}
@@ -50,7 +48,6 @@ const ContractorListSearchScreen = () => {
                         <ListSearchScreen
                             stackName={'ContractorStack'}
                             screenName={'MusicianCardScreen'}
-
                         />
                     </Content>
 

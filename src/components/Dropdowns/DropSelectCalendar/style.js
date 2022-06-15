@@ -37,7 +37,7 @@ border-radius: 6px;
 
 const OptionText = styled.Text`
 font-family: ${F.regular};
-color: ${props => props.isHeader === true ? C.sBlack : C.black};
+color: ${props => props.isHeader === true ? C.sBlack : C.sBlack};
 font-size: 17px;
 `;
 

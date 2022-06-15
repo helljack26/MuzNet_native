@@ -49,7 +49,8 @@ position: absolute;
 left: 0px;
 bottom: 0px;
 width: 100%;
-height : ${props => props.isKeyboardOpen === true ? 60 + 'px' : 82 + 'px'};
+height : 82px;
+/* height : ${props => props.isKeyboardOpen === true ? 60 + 'px' : 82 + 'px'}; */
 z-index:999;
 background-color: ${C.white};
 padding: 0px 10px;

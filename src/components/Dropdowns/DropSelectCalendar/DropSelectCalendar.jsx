@@ -1,15 +1,15 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Keyboard } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
 import { TouchableOpacity } from 'react-native';
+
 import F from '@/res/fonts'
+import C from '@/res/colors'
 
 // Helpers
 import { dateConverter } from '@/components/helpers/dateConverter'
 import CalendarArrow from './CalendarArrow/CalendarArrow'
 import CalendarPicker from 'react-native-calendar-picker';
-
-import C from '@/res/colors'
 
 // Images
 import IMAGES from '@/res/images'
@@ -30,7 +30,6 @@ const {
 
 import { M } from '@/res/mixin'
 const {
-
     FormInputLabel
 } = M;
 const customDayHeaderStylesCallback = ({ dayOfWeek, month, year }) => {
@@ -43,10 +42,8 @@ const customDayHeaderStylesCallback = ({ dayOfWeek, month, year }) => {
             }
         };
     }
-
 }
-const DropSelectCalendar = ({ isResetAll, setFilterDate, setCalendarOpen }) => {
-
+const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, setCalendarOpen }) => {
     const [placeholder, setPlaceholder] = useState('');
     const mainHeader = placeholder || 'Any date'
 
@@ -77,9 +74,16 @@ const DropSelectCalendar = ({ isResetAll, setFilterDate, setCalendarOpen }) => {
         if (isResetAll === true) {
             setPlaceholder('')
             setIsOpen(false)
+            setCalendarOpen(false)
             calendarRef.current.resetSelections()
         }
     }, [isResetAll]);
+    useEffect(() => {
+        if (isCloseAllDropdown === true) {
+            setIsOpen(false)
+            setCalendarOpen(false)
+        }
+    }, [isCloseAllDropdown]);
     return (
         <DropBlock
             onPress={() => toggling(false)} >
@@ -95,6 +99,7 @@ const DropSelectCalendar = ({ isResetAll, setFilterDate, setCalendarOpen }) => {
                     onPress={() => {
                         toggling(!isOpen)
                         setCalendarOpen(!isOpen)
+                        Keyboard.dismiss()
                     }} >
                     {/* Label */}
                     <FormInputLabel inputLabel={placeholder.length > 0}>Date</FormInputLabel>

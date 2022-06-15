@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { Animated, Keyboard } from 'react-native';
+import { Animated, Keyboard, View } from 'react-native';
 // Components
 import DropSelect from '@/components/Dropdowns/DropSelect'
 import SearchInputDropSelect from '@/components/Dropdowns/SearchInputDropSelect'
@@ -87,7 +87,6 @@ const SearchFilters = observer(({ isContractor }) => {
     const [isResetAll, setResetAll] = useState(false);
     const clearAllFilters = () => {
         // For components set reset
-        console.log('Удаляю все нахуй');
         setResetAll(true)
         Keyboard.dismiss()
         // Components reset 
@@ -110,148 +109,175 @@ const SearchFilters = observer(({ isContractor }) => {
         // Set reset to default
         setTimeout(() => {
             setResetAll(false)
-
         }, 0);
     }
-    return (<Animated.View style={{
-        zIndex: 1000,
-        height,
-        // maxHeight: windowHeight - 50,
-        // height: '90%',
-        width: windowWidth,
-        justifyContent: 'center',
-        position: "absolute",
-        left: 0,
-        bottom: 0,
-        right: 0,
-    }}
-    >
+    const [isCloseAllDropdown, setCloseAllDropdown] = useState(false);
+    useEffect(() => {
+        if (isCloseAllDropdown === true) {
+            toggling(false)
+            // Set reset to default
+            setTimeout(() => {
+                setCloseAllDropdown(false)
+            }, 0);
+        }
+    }, [isCloseAllDropdown]);
+    console.log(isCalendarOpen);
+    console.log("🚀 ~ file: SearchFilters.jsx ~ line 125 ~ SearchFilters ~ isCalendarOpen", isCalendarOpen)
+    return (
+        <Animated.View style={{
+            zIndex: 1000,
+            height,
+            // maxHeight: windowHeight - 50,
+            // height: '90%',
+            width: windowWidth,
+            justifyContent: 'center',
+            position: "absolute",
+            left: 0,
+            bottom: 0,
+            right: 0,
+        }}
+        >
 
-        <FilterContainer
-            style={{ elevation: 100 }}>
-            {/* Header */}
-            <Header>
-                <HeaderClose
-                    onPress={() => {
-                        setOpenFilters(false)
-                        onPress(false)
-                    }}
-                >
-                    <CrossBlackIcon width={16} height={16} />
-                </HeaderClose>
-
-                <HeaderTitle>
-                    Sort and filter
-                </HeaderTitle>
-            </Header>
-
-            {/* Sort and filters */}
-            <FilterBlock
-                keyboardShouldPersistTaps={'handled'}
-            >
-                <DropSelect
-                    selectedValue={sortType}
-                    toggling={toggling}
-                    isOpen={isOpen}
-                    onSelect={onPositionSelect}
-                    dropHeader={S.SortByOptions.dropHeader}
-                    dropOptions={S.SortByOptions.dropOptions}
-                    isResetAll={isResetAll}
-                />
-                {/* Search music genre */}
-                <SearchInputDropSelect
-                    dataForChoose={S.Genres}
-                    alreadyChosenInstrument={chosenGenres}
-                    searchPlaceholder={'Choose music genres'}
-                    getChosenData={getChosenGenres}
-                    isResetAll={isResetAll}
-                />
-                {/* Search music genre */}
-                <SearchInputDropSelect
-                    dataForChoose={S.Instruments}
-                    alreadyChosenInstrument={chosenInstrument}
-                    searchPlaceholder={'Choose instruments'}
-                    getChosenData={getChosenInstrument}
-                    isResetAll={isResetAll}
-                />
-                {/* Search music genre */}
-                <SearchLocationDropSelect
-                    setFilterLocation={getChosenLocation}
-                    isResetAll={isResetAll}
-                />
-
-                {/* Willing checbox */}
-                {isContractor === true &&
-                    <CheckboxBlock isWilling={true}>
-                        <CheckBoxWithText
-                            checkboxState={isWillingToTravel}
-                            setCheckboxState={setWillingToTravel}
-                            checkboxTitle={'Willing to travel interstate for gigs'}
-                        />
-                    </CheckboxBlock>
-                }
-                {/* Search music genre */}
-                <DropSelectCalendar
-                    setFilterDate={getChosenDate}
-                    setCalendarOpen={setCalendarOpen}
-                    isResetAll={isResetAll}
-                />
-                {/* Price range slider */}
-                <PriceRangeSlider
-                    getPriceRange={getPriceRange}
-                    isResetAll={isResetAll}
-                />
-                {/* Skills Checkbox */}
-                {isContractor === true && <CheckboxBlock>
-                    <CheckboxBlockTitle>Skills:</CheckboxBlockTitle>
-
-                    {/* Sing by ear */}
-                    <CheckBoxWithText
-                        checkboxState={isSingByEar}
-                        setCheckboxState={setSingByEar}
-                        checkboxTitle={'Sing by ear'}
-                    />
-
-                    {/* Play By ear */}
-                    <CheckBoxWithText
-                        checkboxState={isPlayByEar}
-                        setCheckboxState={setPlayByEar}
-                        checkboxTitle={'Play By ear'}
-                    />
-
-                    {/* Read sheet music */}
-                    <CheckBoxWithText
-                        checkboxState={isReadSheetMusic}
-                        setCheckboxState={setReadSheetMusic}
-                        checkboxTitle={'Read sheet music'}
-                    />
-                </CheckboxBlock>}
-
-
-
-            </FilterBlock>
-
-            <ContentBlock isKeyboardOpen={isKeyboardOpen}>
-                <ContentBlockRow>
-
-                    <ContainerLink
+            <FilterContainer
+                style={{ elevation: 100 }}>
+                {/* Header */}
+                <Header>
+                    <HeaderClose
                         onPress={() => {
-                            clearAllFilters()
+                            setOpenFilters(false)
+                            onPress(false)
+                            setCloseAllDropdown(true)
                         }}
                     >
-                        <ContainerLinkText>Clear all</ContainerLinkText>
-                    </ContainerLink>
-                    <ButtonSubmit
-                    // onPress={handleSubmit(onSubmit)} 
+                        <CrossBlackIcon width={16} height={16} />
+                    </HeaderClose>
+
+                    <HeaderTitle>
+                        Sort and filter
+                    </HeaderTitle>
+                </Header>
+                {/* Sort and filters */}
+                <FilterBlock
+
+                    keyboardShouldPersistTaps={'handled'}
+                >
+                    <DropSelect
+                        selectedValue={sortType}
+                        toggling={toggling}
+                        isOpen={isOpen}
+                        onSelect={onPositionSelect}
+                        dropHeader={S.SortByOptions.dropHeader}
+                        dropOptions={S.SortByOptions.dropOptions}
+                        isResetAll={isResetAll}
+                    />
+                    {/* Search music genre */}
+                    <SearchInputDropSelect
+                        dataForChoose={S.Genres}
+                        alreadyChosenInstrument={chosenGenres}
+                        searchPlaceholder={'Choose music genres'}
+                        getChosenData={getChosenGenres}
+                        isResetAll={isResetAll}
+                        isCloseAllDropdown={isCloseAllDropdown}
+                    />
+                    {/* Search music genre */}
+                    <SearchInputDropSelect
+                        dataForChoose={S.Instruments}
+                        alreadyChosenInstrument={chosenInstrument}
+                        searchPlaceholder={'Choose instruments'}
+                        getChosenData={getChosenInstrument}
+                        isResetAll={isResetAll}
+                        isCloseAllDropdown={isCloseAllDropdown}
+                    />
+                    {/* Search music genre */}
+                    <SearchLocationDropSelect
+                        setFilterLocation={getChosenLocation}
+                        isResetAll={isResetAll}
+                        isCloseAllDropdown={isCloseAllDropdown}
+                    />
+
+                    {/* Willing checbox */}
+                    {isContractor === true &&
+                        <CheckboxBlock isWilling={true}>
+                            <CheckBoxWithText
+                                checkboxState={isWillingToTravel}
+                                setCheckboxState={setWillingToTravel}
+                                checkboxTitle={'Willing to travel interstate for gigs'}
+                            />
+                        </CheckboxBlock>
+                    }
+                    {/* Search music genre */}
+                    <DropSelectCalendar
+                        setFilterDate={getChosenDate}
+                        setCalendarOpen={setCalendarOpen}
+                        isResetAll={isResetAll}
+                        isCloseAllDropdown={isCloseAllDropdown}
+                    />
+                    {/* Price range slider */}
+                    <PriceRangeSlider
+                        getPriceRange={getPriceRange}
+                        isResetAll={isResetAll}
+                    />
+                    {!isContractor && <View
+                        style={{
+                            height: isCalendarOpen === true ? 200 : 125,
+                            height: isKeyboardOpen === true ? 170 : 125,
+                        }}
                     >
-                        <ButtonSubmitText>Show Perfomers</ButtonSubmitText>
-                    </ButtonSubmit>
-                </ContentBlockRow>
-            </ContentBlock>
-        </FilterContainer>
+
+                    </View>
+                    }
+
+                    {/* Skills Checkbox */}
+                    {isContractor === true && <CheckboxBlock>
+                        <CheckboxBlockTitle>Skills:</CheckboxBlockTitle>
+
+                        {/* Sing by ear */}
+                        <CheckBoxWithText
+                            checkboxState={isSingByEar}
+                            setCheckboxState={setSingByEar}
+                            checkboxTitle={'Sing by ear'}
+                        />
+
+                        {/* Play By ear */}
+                        <CheckBoxWithText
+                            checkboxState={isPlayByEar}
+                            setCheckboxState={setPlayByEar}
+                            checkboxTitle={'Play By ear'}
+                        />
+
+                        {/* Read sheet music */}
+                        <CheckBoxWithText
+                            checkboxState={isReadSheetMusic}
+                            setCheckboxState={setReadSheetMusic}
+                            checkboxTitle={'Read sheet music'}
+                        />
+                    </CheckboxBlock>}
 
 
-    </Animated.View>
+
+                </FilterBlock>
+
+                <ContentBlock isKeyboardOpen={isKeyboardOpen}>
+                    <ContentBlockRow>
+
+                        <ContainerLink
+                            onPress={() => {
+                                clearAllFilters()
+                            }}
+                        >
+                            <ContainerLinkText>Clear all</ContainerLinkText>
+                        </ContainerLink>
+                        <ButtonSubmit
+                        // onPress={handleSubmit(onSubmit)} 
+                        >
+                            <ButtonSubmitText>Show Perfomers</ButtonSubmitText>
+                        </ButtonSubmit>
+                    </ContentBlockRow>
+                </ContentBlock>
+            </FilterContainer>
+
+
+        </Animated.View>
     )
 })
 

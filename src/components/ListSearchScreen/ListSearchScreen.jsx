@@ -80,6 +80,7 @@ const ListSearchScreen = observer(({ stackName }) => {
     }, [searchText.length]);
 
     const isContractor = stackName === 'ContractorStack'
+    console.log("🚀 ~ file: ListSearchScreen.jsx ~ line 83 ~ ListSearchScreen ~ stackName", stackName)
 
     const isToContractorWelcomeHash = isContractor ? 'ContractorWelcomeScreen' : 'MusicianWelcomeScreen'
     const isContractorData = isContractor ? musicianList : vendorList
@@ -97,7 +98,12 @@ const ListSearchScreen = observer(({ stackName }) => {
 
                 </Header>
 
-                <ListSearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} initialFocusInput={initialFocusInput} />
+                <ListSearchInput
+                    stackName={stackName}
+                    searchText={searchText}
+                    onChangeSearchText={onChangeSearchText}
+                    initialFocusInput={initialFocusInput}
+                />
 
                 {/* Ads */}
                 <AdsContainer>

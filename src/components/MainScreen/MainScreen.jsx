@@ -105,7 +105,12 @@ const MainScreen = observer(({ stackName, screenListName, screenCardName, screen
 
             </Header>
 
-            <ListSearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} isMinOne={true} />
+            <ListSearchInput
+                searchText={searchText}
+                onChangeSearchText={onChangeSearchText}
+                isMinOne={true}
+                isContractor={isContractor}
+            />
 
             {/* Map container */}
             <MapContainer>

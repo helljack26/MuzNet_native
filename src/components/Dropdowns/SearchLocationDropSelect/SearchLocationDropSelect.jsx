@@ -1,4 +1,5 @@
 import React from 'react';
+import { Keyboard } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useEffect } from 'react';
@@ -35,7 +36,7 @@ import { observer } from 'mobx-react-lite';
 import { toJS } from "mobx";
 import { useLocationAutocompleteApiStore } from '@/stores/LocationAutocompleteApi';
 
-const SearchLocationDropSelect = observer(({ isResetAll, setFilterLocation }) => {
+const SearchLocationDropSelect = observer(({ isResetAll, isCloseAllDropdown, setFilterLocation }) => {
     // Store
     const { locationList, setLocationList } = useLocationAutocompleteApiStore();
     const jsLocationList = toJS(locationList)
@@ -82,6 +83,12 @@ const SearchLocationDropSelect = observer(({ isResetAll, setFilterLocation }) =>
             setOpenDropList(false)
         }
     }, [isResetAll]);
+    useEffect(() => {
+        if (isCloseAllDropdown === true) {
+            setOpenDropList(false)
+        }
+    }, [isCloseAllDropdown]);
+
     return (
 
         <Container>
@@ -141,6 +148,7 @@ const SearchLocationDropSelect = observer(({ isResetAll, setFilterLocation }) =>
                                 setSelectedLocation(item)
                                 setFilterLocation(item)
                                 setLocationList([])
+                                Keyboard.dismiss()
                             }}
                         >
                             <ItemText>

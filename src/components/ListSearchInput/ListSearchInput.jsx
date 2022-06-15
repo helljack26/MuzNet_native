@@ -26,9 +26,16 @@ const {
 import { observer } from 'mobx-react-lite';
 import { useSearchApiStore } from '@/stores/SearchApi';
 
-const ListSearchInput = observer(({ searchText, onChangeSearchText, isMinOne, initialFocusInput }) => {
+const ListSearchInput = observer(({ searchText, isContractor, onChangeSearchText, isMinOne, initialFocusInput }) => {
+    const navigation = useNavigation();
+
     const { isOpenFilters, setOpenFilters } = useSearchApiStore();
 
+    const stack = isContractor === true ? 'ContractorStack' : 'MusicianStack'
+    // console.log("🚀 ~ file: ListSearchInput.jsx ~ line 35 ~ ListSearchInput ~ stack", stack)
+    const screen = isContractor === true ? 'ContractorListSearchScreen' : 'MusicianListSearchScreen'
+    // console.log("🚀 ~ file: ListSearchInput.jsx ~ line 37 ~ ListSearchInput ~ screen", screen)
+    // console.log("🚀 ~ file: ListSearchInput.jsx ~ line 36 ~ ListSearchInput ~ isContractor", stackName)
 
     return (
         <SearchInputBlock>
@@ -39,6 +46,7 @@ const ListSearchInput = observer(({ searchText, onChangeSearchText, isMinOne, in
             {/* Filters button */}
             <SearchRemoveIconBlock
                 onPress={() => {
+                    navigation.navigate(stack, { screen: screen });
                     setOpenFilters(true)
                 }}
             >

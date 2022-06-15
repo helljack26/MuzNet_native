@@ -64,14 +64,16 @@ const PriceRangeSlider = ({ isResetAll, getPriceRange }) => {
         const rightWidth = (10000 - high) / 100
         setRightOverflowWidth(rightWidth)
     }, []);
+
     // If resetAll
     useEffect(() => {
+
         if (isResetAll === true) {
             setLow('0')
             setHigh('10,000')
             setLeftOverflowWidth(0)
             setRightOverflowWidth(0)
-            // (true)
+
         }
     }, [isResetAll]);
     return (

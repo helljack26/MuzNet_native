@@ -65,7 +65,8 @@ margin-top: 16px;
 padding: 0px 10px;
 padding-top: 7px;
 width: 100%;
-height : ${props => props.isKeyboardOpen === true ? 116 + 'px' : 146 + 'px'};
+/* height : ${props => props.isKeyboardOpen === true ? 116 + 'px' : 146 + 'px'}; */
+height : 146px;
 position: absolute;
 left:0;
 bottom:0;
