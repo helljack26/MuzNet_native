@@ -10,9 +10,9 @@ border-color: ${C.lightGray};
 border-width: 1px;
 border-style: solid;
 padding: 8px;
-margin-bottom: 8px;
 display: flex;
 flex-direction: row;
+background-color: ${C.white};
 `;
 const ItemImageBlock = styled.View`
 border-radius: 6px;

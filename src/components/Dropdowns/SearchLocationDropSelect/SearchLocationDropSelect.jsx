@@ -61,14 +61,20 @@ const SearchLocationDropSelect = observer(({ isResetAll, isCloseAllDropdown, set
 
     useEffect(() => {
         if (searchText.length > 0 && searchText !== selectedLocation) {
-            setLocationList(searchText)
+            setLocationList({
+                inputValue: searchText,
+                type: 'city'
+            })
         }
         if (searchText.length > 0) {
             setShiftInputLocationLabel(true)
         }
         if (searchText.length === 0) {
             setShiftInputLocationLabel(false)
-            setLocationList([])
+            setLocationList({
+                inputValue: [],
+                type: ''
+            })
             setInputFocus1(C.lightGray)
         }
     }, [searchText.length, selectedLocation]);
@@ -76,7 +82,10 @@ const SearchLocationDropSelect = observer(({ isResetAll, isCloseAllDropdown, set
     // If resetAll
     useEffect(() => {
         if (isResetAll === true) {
-            setLocationList([])
+            setLocationList({
+                inputValue: [],
+                type: ''
+            })
             onChangeSearchText('')
             setSelectedLocation('')
             setShiftInputLocationLabel(false)

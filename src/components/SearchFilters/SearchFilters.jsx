@@ -121,8 +121,6 @@ const SearchFilters = observer(({ isContractor }) => {
             }, 0);
         }
     }, [isCloseAllDropdown]);
-    console.log(isCalendarOpen);
-    console.log("🚀 ~ file: SearchFilters.jsx ~ line 125 ~ SearchFilters ~ isCalendarOpen", isCalendarOpen)
     return (
         <Animated.View style={{
             zIndex: 1000,

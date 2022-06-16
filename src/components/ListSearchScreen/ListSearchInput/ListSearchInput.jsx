@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useRef } from 'react';
 import { useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 // Variables
 import C from '@/res/colors'
 import { S } from '@/res/strings'
@@ -28,14 +28,14 @@ import { useSearchApiStore } from '@/stores/SearchApi';
 
 const ListSearchInput = observer(({ searchText, isContractor, onChangeSearchText, isMinOne, initialFocusInput }) => {
     const navigation = useNavigation();
+    const route = useRoute();
+
+    const screenName = route.name === 'MusicianListSearchScreen' || route.name === 'ContractorListSearchScreen'
 
     const { isOpenFilters, setOpenFilters } = useSearchApiStore();
 
     const stack = isContractor === true ? 'ContractorStack' : 'MusicianStack'
-    // console.log("🚀 ~ file: ListSearchInput.jsx ~ line 35 ~ ListSearchInput ~ stack", stack)
     const screen = isContractor === true ? 'ContractorListSearchScreen' : 'MusicianListSearchScreen'
-    // console.log("🚀 ~ file: ListSearchInput.jsx ~ line 37 ~ ListSearchInput ~ screen", screen)
-    // console.log("🚀 ~ file: ListSearchInput.jsx ~ line 36 ~ ListSearchInput ~ isContractor", stackName)
 
     return (
         <SearchInputBlock>
@@ -46,7 +46,9 @@ const ListSearchInput = observer(({ searchText, isContractor, onChangeSearchText
             {/* Filters button */}
             <SearchRemoveIconBlock
                 onPress={() => {
-                    navigation.navigate(stack, { screen: screen });
+                    if (!screenName) {
+                        navigation.navigate(stack, { screen: screen });
+                    }
                     setOpenFilters(true)
                 }}
             >

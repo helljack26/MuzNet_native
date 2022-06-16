@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
-import ListSearchInput from '@/components/ListSearchInput'
+import ListSearchInput from '@/components/ListSearchScreen/ListSearchInput'
 import AdsList from '@/components/AdsList'
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
@@ -45,7 +45,7 @@ const {
     AdsContainerHeaderLinkText,
 } = style;
 
-const MainScreen = observer(({ stackName, screenListName, screenCardName, screenTitle }) => {
+const MainScreen = observer(({ stackName, screenMapName, screenListName, screenCardName, screenTitle }) => {
     const { musicianList, vendorList, setList } = useSearchApiStore();
 
     const navigation = useNavigation();
@@ -129,7 +129,13 @@ const MainScreen = observer(({ stackName, screenListName, screenCardName, screen
                     </MapTitle>
 
                     <MapLink>
-                        <MapLinkText>
+                        <MapLinkText
+                            onPress={() => {
+                                navigation.navigate(stackName, {
+                                    screen: screenMapName
+                                });
+                            }}
+                        >
                             Go to the map
                         </MapLinkText>
                     </MapLink>

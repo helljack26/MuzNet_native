@@ -13,13 +13,14 @@ class LocationAutocompleteApi {
         })
     }
 
-    setLocationList(inputValue) {
+    setLocationList({ inputValue, type }) {
+        const isFullAddress = type !== 'full' ? '&types=cities' : '&types=geocode'
         const iosMapApiKey = 'AIzaSyD-DV5jVOuC7XYA4ZlXATAQLCnyjs5wdC4'
         const androidMapApiKey = 'AIzaSyBoMLvM4rFyVORaYA7XJezdfElJ26huwsg'
         const GOOGLE_PACES_API_BASE_URL = 'https://maps.googleapis.com/maps/api/place'
 
         const GOOGLE_API_KEY = Platform.OS === 'ios' ? iosMapApiKey : androidMapApiKey
-        const apiUrl = `${GOOGLE_PACES_API_BASE_URL}/autocomplete/json?key=${GOOGLE_API_KEY}&types=(cities)&components=country:us|country:de|country:fr|country:gb|country:ca&input=${inputValue}`
+        const apiUrl = `${GOOGLE_PACES_API_BASE_URL}/autocomplete/json?key=${GOOGLE_API_KEY}${isFullAddress}&components=country:us|country:de|country:fr|country:gb|country:ca&input=${inputValue}`
 
         return fetch(apiUrl)
             .then((response) => response.json())

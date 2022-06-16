@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
-import ListSearchInput from './ListSearchInput'
+import MapSearchInput from './MapSearchInput'
 import AdsList from '@/components/AdsList'
+import ExploreScreen from './ExploreScreen'
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
@@ -22,11 +23,11 @@ const {
 } = IMAGES;
 // Styles
 import { style } from './style'
-import GoBack from '@components/Buttons/GoBack/GoBack';
 const {
     Content,
     Header,
     ContentTitle,
+
     // Ads
     AdsContainer,
     AdsContainerHeader,
@@ -34,7 +35,7 @@ const {
 
 } = style;
 
-const ListSearchScreen = observer(({ stackName }) => {
+const MapSearchScreen = observer(({ stackName }) => {
     const { musicianList, vendorList, setList, searchInList, nothingWasFound, setNothingWasFound } = useSearchApiStore();
 
     const navigation = useNavigation();
@@ -86,18 +87,10 @@ const ListSearchScreen = observer(({ stackName }) => {
     return (
         <>
             <Content>
-                {/* Header */}
-                <Header>
-                    <GoBack stackName={stackName} screenName={isToContractorWelcomeHash} />
 
-                    <ContentTitle>
-                        Search
-                    </ContentTitle>
-
-                </Header>
-
-                <ListSearchInput
+                <MapSearchInput
                     stackName={stackName}
+                    toWelcomeScreenHash={isToContractorWelcomeHash}
                     searchText={searchText}
                     onChangeSearchText={onChangeSearchText}
                     initialFocusInput={initialFocusInput}
@@ -106,16 +99,9 @@ const ListSearchScreen = observer(({ stackName }) => {
                 {/* Ads */}
                 <AdsContainer>
 
-                    {/* Ads header */}
-                    {nothingWasFound === true && <AdsContainerHeader>
-                        <AdsContainerHeaderTitle>
-                            Nothing was found
-                        </AdsContainerHeaderTitle>
-
-                    </AdsContainerHeader>
-                    }
                     {/* Ads container */}
-                    <AdsList adsList={isContractorData} isForContractor={isContractor} />
+                    <ExploreScreen />
+                    {/* <ExploreScreen adsList={isContractorData} isForContractor={isContractor} /> */}
 
                 </AdsContainer>
             </Content>
@@ -124,4 +110,4 @@ const ListSearchScreen = observer(({ stackName }) => {
     )
 })
 
-export default ListSearchScreen;
+export default MapSearchScreen;

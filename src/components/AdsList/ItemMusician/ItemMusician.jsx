@@ -27,7 +27,7 @@ const {
 } = style;
 
 
-const ItemMusician = ({ data }) => {
+const ItemMusician = ({ data, isDisableBottomMargin }) => {
     if (data === undefined) return null
 
     const navigation = useNavigation();
@@ -46,6 +46,9 @@ const ItemMusician = ({ data }) => {
 
     return (
         <ItemContainer
+            style={{
+                marginBottom: isDisableBottomMargin === true ? 0 : 8,
+            }}
         // onPress={() => navigation.navigate('ContractorStack', {
         //     screen: 'MusicianCardScreen',
         //     params: {

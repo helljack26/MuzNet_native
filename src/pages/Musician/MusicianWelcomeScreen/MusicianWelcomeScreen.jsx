@@ -42,11 +42,11 @@ const MusicianWelcomeScreen = () => {
                     <MainScreen
                         stackName={'MusicianStack'}
                         screenListName={'MusicianListSearchScreen'}
+                        screenMapName={'MusicianMapSearchScreen'}
                         screenCardName={'VendorCardScreen'}
                         screenTitle={'Popular vendors'}
                     />
                 </Content>
-
                 <TapbarMenu />
             </Container>
         </>
