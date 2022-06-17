@@ -19,7 +19,12 @@ import ItemVendor from '@/components/AdsList/ItemVendor'
 // Variables
 import C from '@/res/colors'
 import F from '@/res/fonts'
+// Images
+import IMAGES from '@/res/images'
+const {
 
+    MapUserLocationIcon
+} = IMAGES;
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { getUserLocation } from '@/components/helpers/getUserLocation'
@@ -94,28 +99,26 @@ const ExploreScreen = observer(() => {
     }
     // Set list
     useEffect(() => {
-        const isExistProfileLocation = isEmpty(userProfileCoords) !== false;
         const isExistCurrentLocation = isEmpty(userCurrentCoords) === false ?
             userCurrentCoords
             :
-            isExistProfileLocation ? userProfileCoords : defaultMapState
+            defaultMapState
 
         const { region } = isExistCurrentLocation
-        console.log("🚀 ~ file: ExploreScreen.js ~ line 104 ~ useEffect ~ isExistCurrentLocation", userProfileCoords)
-        console.log("🚀 ~ file: ExploreScreen.js ~ line 104 ~ useEffect ~ region", region)
+        console.log("🚀 ~ file: ExploreScreen.js ~ line 108 ~ useEffect ~ isExistCurrentLocation", isExistCurrentLocation)
         const newCamera = {
             center: {
                 ...region
             },
             pitch: 0,
             heading: 0,
-            zoom: 13
+            zoom: isEmpty(userCurrentCoords) === false ? 13 : 1
         }
 
         if (region !== undefined) {
             _map.current.animateCamera(newCamera, { duration: 400 })
         }
-    }, [userCurrentCoords, userProfileCoords]);
+    }, [userCurrentCoords]);
 
 
     // Map animation
@@ -135,9 +138,7 @@ const ExploreScreen = observer(() => {
             if (index <= 0) {
                 index = 0;
             }
-
             clearTimeout(regionTimeout);
-
             const regionTimeout = setTimeout(() => {
                 if (mapIndex !== index) {
                     mapIndex = index;
@@ -176,6 +177,14 @@ const ExploreScreen = observer(() => {
             width: windowWidth,
             height: windowHeight,
         }}>
+            <TouchableOpacity
+                onPress={() => {
+                    return setUserCurrentCoords()
+                }}
+                style={styles.locationUserMap}
+            >
+                <MapUserLocationIcon width={20} height={20} />
+            </TouchableOpacity>
             <MapView
                 ref={_map}
                 initialRegion={state.region}
@@ -324,5 +333,21 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         fontFamily: F.bold,
         fontSize: 15,
+    },
+    locationUserMap: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: "center",
+        justifyContent: "center",
+        width: 48,
+        height: 48,
+        backgroundColor: C.black,
+        borderRadius: 24,
+        position: 'absolute',
+        bottom: 220,
+        right: 16,
+        zIndex: 900,
+        paddingTop: 2,
+        paddingRight: 2,
     }
 });

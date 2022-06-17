@@ -35,6 +35,7 @@ import CheckBlackFilledIcon from '../../assets/icon/check_black_filled_icon.svg'
 import CheckRoundBlackIcon from '../../assets/icon/check_round_black_icon.svg'
 import ModalWrongIcon from '../../assets/icon/modal_wrong.svg'
 import CalendarIcon from '../../assets/icon/calendar_icon.svg'
+import MapUserLocationIcon from '../../assets/icon/map_userLocation_icon.svg'
 // Main screen
 import FilterIcon from '../../assets/icon/filter_icon.svg'
 import RateStarIcon from '../../assets/icon/rate_star_icon.svg'
@@ -99,6 +100,7 @@ const IMAGES = {
     CheckRoundBlackIcon: CheckRoundBlackIcon,
     ModalWrongIcon: ModalWrongIcon,
     CalendarIcon: CalendarIcon,
+    MapUserLocationIcon: MapUserLocationIcon,
     // Arrows
     GoBackIcon: GoBackIcon,
 
