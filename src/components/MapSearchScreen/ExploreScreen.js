@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
     StyleSheet,
     Text,
-    TextInput,
+    LogBox,
     View,
     ScrollView,
     Animated,
@@ -22,8 +22,9 @@ import F from '@/res/fonts'
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
+import { getUserLocation } from '@/components/helpers/getUserLocation'
 
-import { markers, mapDarkStyle, mapStandardStyle } from './mapData';
+import { mapStandardStyle } from './mapData';
 
 // Store
 import { observer } from 'mobx-react-lite';
@@ -38,6 +39,10 @@ const SPACING_FOR_CARD_INSET = width * 0.1 - 20;
 //////////////////////////////////////////////////////////////////////////////
 
 const ExploreScreen = observer(() => {
+    const _map = useRef(null);
+    const _scrollView = useRef(null);
+
+    LogBox.ignoreLogs(['Unhandled']);
     const navigation = useNavigation();
     const route = useRoute();
 
@@ -45,29 +50,74 @@ const ExploreScreen = observer(() => {
 
     const { windowHeight, windowWidth } = getWindowDimension()
     // Store
-    const { musicianMapData, vendorMapData, setMapData } = useMapSearchApiStore();
+    const {
+        musicianMapData,
+        vendorMapData,
+        setMapData,
+        userLocation,
+        userCurrentCoords,
+        setUserCurrentCoords,
+        userProfileCoords,
+        setUserProfileCoords,
+    } = useMapSearchApiStore();
+
     const jsMusicianMapData = toJS(musicianMapData)
     const jsVendorMapData = toJS(vendorMapData)
     const mapData = isForContractor ? jsMusicianMapData : jsVendorMapData
 
+    // User profile location
+    const userProfileLocation = 'Francisko St, Berkeley'
     // Set list
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             setMapData(route.name);
+            setUserProfileCoords(userProfileLocation)
+            setUserCurrentCoords()
         });
         return unsubscribe;
     }, [navigation]);
 
-    const initialMapState = {
+    const defaultMapState = {
         region: {
-            latitude: 37.87631002055519,
-            longitude: -122.27392673492432,
-            latitudeDelta: 0.04864195044303443,
-            longitudeDelta: 0.040142817690068,
+            latitude: 33.66252098453488,
+            longitude: -101.69318789741597,
+            latitudeDelta: 1,
+            longitudeDelta: 100,
         },
     };
 
-    const [state, setState] = useState(initialMapState);
+    const [state, setState] = useState(defaultMapState);
+
+    function isEmpty(obj) {
+        return Object.keys(obj).length === 0;
+    }
+    // Set list
+    useEffect(() => {
+        const isExistProfileLocation = isEmpty(userProfileCoords) !== false;
+        const isExistCurrentLocation = isEmpty(userCurrentCoords) === false ?
+            userCurrentCoords
+            :
+            isExistProfileLocation ? userProfileCoords : defaultMapState
+
+        const { region } = isExistCurrentLocation
+        console.log("🚀 ~ file: ExploreScreen.js ~ line 104 ~ useEffect ~ isExistCurrentLocation", userProfileCoords)
+        console.log("🚀 ~ file: ExploreScreen.js ~ line 104 ~ useEffect ~ region", region)
+        const newCamera = {
+            center: {
+                ...region
+            },
+            pitch: 0,
+            heading: 0,
+            zoom: 13
+        }
+
+        if (region !== undefined) {
+            _map.current.animateCamera(newCamera, { duration: 400 })
+        }
+    }, [userCurrentCoords, userProfileCoords]);
+
+
     // Map animation
     let mapIndex = 0;
 
@@ -91,16 +141,13 @@ const ExploreScreen = observer(() => {
             const regionTimeout = setTimeout(() => {
                 if (mapIndex !== index) {
                     mapIndex = index;
-
-
                     setTimeout(() => {
                         setCurrentIndex(mapIndex)
                         const { coordinate } = mapData[index];
+
                         _map.current.animateToRegion(
                             {
                                 ...coordinate,
-                                latitudeDelta: state.region.latitudeDelta,
-                                longitudeDelta: state.region.longitudeDelta,
                             },
                             400
                         );
@@ -109,24 +156,6 @@ const ExploreScreen = observer(() => {
             }, 10)
         });
 
-    });
-
-
-    const interpolations = mapData.map((marker, index) => {
-
-        const inputRange = [
-            (index - 1) * CARD_WIDTH,
-            index * CARD_WIDTH,
-            ((index + 1) * CARD_WIDTH),
-        ];
-
-        const scale = mapAnimation.interpolate({
-            inputRange,
-            outputRange: [1, 1.5, 1],
-            extrapolate: "clamp"
-        });
-
-        return { scale };
     });
 
     const onMarkerPress = (mapEventData) => {
@@ -140,8 +169,6 @@ const ExploreScreen = observer(() => {
         _scrollView.current.scrollTo({ x: x, y: 0, animated: true });
     }
 
-    const _map = useRef(null);
-    const _scrollView = useRef(null);
 
 
     return (
@@ -152,9 +179,20 @@ const ExploreScreen = observer(() => {
             <MapView
                 ref={_map}
                 initialRegion={state.region}
+                region={{
+                    latitude: 48.6304526,
+                    latitudeDelta: -0.004108305729096278,
+                    longitude: 22.2721646,
+                    longitudeDelta: 0.00026370823661757593,
+                }
+                }
                 style={styles.container}
                 provider={PROVIDER_GOOGLE}
                 customMapStyle={mapStandardStyle}
+                showsUserLocation={true}
+                toolbarEnabled={false}
+                showsCompass={false}
+                showsMyLocationButton={false}
             >
                 {mapData.map((marker, index) => {
                     const isActive = index === currentIndex
@@ -225,7 +263,7 @@ const ExploreScreen = observer(() => {
                     </View>
                 })}
             </Animated.ScrollView>
-        </View>
+        </View >
     );
 })
 export default ExploreScreen;
@@ -236,6 +274,7 @@ const styles = StyleSheet.create({
         minHeight: 500,
         width: '100%',
         marginBottom: 15,
+
     },
     bottomCardView: {
         position: "absolute",

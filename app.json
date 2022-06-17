@@ -33,7 +33,6 @@
         "plugins": [
           "react-native-email-link",
       [
-      
         "expo-image-picker",
         {
           "photosPermission": "Allow MuzNet to access your photos"

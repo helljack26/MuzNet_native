@@ -1,11 +1,15 @@
 import React from 'react';
-import { makeAutoObservable, action, observable } from 'mobx';
+import { makeAutoObservable, action, runInAction, observable } from 'mobx';
 import { apiMocks } from '@/api/mock/apiMocks'
-
+import * as Location from 'expo-location';
+import Geocoder from 'react-native-geocoding';
 import { rateAverageCount } from '@/components/helpers/rateAverageCount'
+import { apiKey } from '@/res/apiKey'
 class MapSearchApi {
     musicianMapData = []
     vendorMapData = []
+    userCurrentCoords = {}
+    userProfileCoords = {}
 
     isOpenFilters = false
 
@@ -13,12 +17,15 @@ class MapSearchApi {
         makeAutoObservable(this, {
             musicianMapData: observable,
             vendorMapData: observable,
+            userCurrentCoords: observable,
+            userProfileCoords: observable,
             isOpenFilters: observable,
+
             resetState: action.bound,
             setMapData: action.bound,
-            sortPopular: action.bound,
+            setUserCurrentCoords: action.bound,
+            setUserProfileCoords: action.bound,
             searchInList: action.bound,
-
             setOpenFilters: action.bound,
         })
     }
@@ -31,19 +38,74 @@ class MapSearchApi {
         this.musicianMapData = []
         this.vendorMapData = []
     }
-    sortPopular(data, isContractor) {
-        const dataWithAverageRate = data.map((item) => {
-            const reviewObject = isContractor === true ? item.userReview : item.adReview
-            item.averageRate = rateAverageCount(reviewObject)
-            return item
-        })
 
-        const sortedByAverageRate = dataWithAverageRate.sort((a, b) => a.averageRate < b.averageRate ? 1 : -1);
-        return sortedByAverageRate
+    setUserProfileCoords(userProfileLocation) {
+        (async () => {
+            console.log("🚀 ~ file: MapSearchApi.js ~ line 43 ~ MapSearchApi ~ setUserProfileCoords ~ userProfileLocation", userProfileLocation)
+            Location.setGoogleApiKey(apiKey.geocodingApiKey)
+
+            Location.geocodeAsync(userProfileLocation, true).then((result) => {
+
+                console.log("🚀 ~ file: MapSearchApi.js ~ line 46 ~ MapSearchApi ~ result", result)
+                if (result.length > 0) {
+                    const oneDegreeOfLongitudeInMeters = 111.32 * 950;
+                    const circumference = (40075 / 360) * 950;
+                    const latDelta = result[0].accuracy * (1 / (Math.cos(result[0].latitude) * circumference));
+                    const lonDelta = (result[0].accuracy / oneDegreeOfLongitudeInMeters);
+                    const userProfileRegion = {
+                        region: {
+                            latitude: result[0].latitude,
+                            longitude: result[0].longitude,
+                            latitudeDelta: latDelta,
+                            longitudeDelta: lonDelta,
+                        }
+                    }
+                    console.log("🚀 ~ file: MapSearchApi.js ~ line 59 ~ MapSearchApi ~ userProfileRegion", userProfileRegion)
+                    runInAction(() => {
+                        this.userProfileCoords = {}
+                        return this.userProfileCoords = userProfileRegion
+                    })
+                }
+            }).catch((error) => {
+                console.log(error);
+            })
+
+
+        })();
+    }
+
+    setUserCurrentCoords() {
+        (async () => {
+            const { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                runInAction(() => {
+                    return this.userCurrentCoords = {}
+                })
+            }
+            const location = await Location.getCurrentPositionAsync({});
+
+            const oneDegreeOfLongitudeInMeters = 111.32 * 1000;
+            const circumference = (40075 / 360) * 1000;
+
+            const latDelta = location.coords.accuracy * (1 / (Math.cos(location.coords.latitude) * circumference));
+            const lonDelta = (location.coords.accuracy / oneDegreeOfLongitudeInMeters);
+
+            const userProfileRegion = {
+                region: {
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude,
+                    latitudeDelta: latDelta,
+                    longitudeDelta: lonDelta,
+                }
+            }
+            runInAction(() => {
+                this.userCurrentCoords = {};
+                return this.userCurrentCoords = userProfileRegion;
+            })
+        })();
     }
 
     setMapData(route) {
-        console.log("🚀 ~ file: MapSearchApi.js ~ line 46 ~ MapSearchApi ~ setMapData ~ route", route)
         if (route === 'ContractorMapSearchScreen') {
             this.resetState()
             return this.musicianMapData = apiMocks.PerfomerMockApi

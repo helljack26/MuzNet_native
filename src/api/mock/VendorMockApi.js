@@ -15,7 +15,9 @@ export const VendorMockApi =
             adAddress: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
             coordinate: {
                 latitude: 37.88068574665098,
-                longitude: -122.2798887321131
+                longitude: -122.2798887321131,
+                latitudeDelta: 0.04864195044303443,
+                longitudeDelta: 0.040142817690068,
             },
             adReview: [
                 {
@@ -77,7 +79,9 @@ export const VendorMockApi =
             adAddress: "1443 Milvia Street, Berkeley, CA 94709 Berkeley California United States",
             coordinate: {
                 latitude: 37.880279273131066,
-                longitude: -122.27139149395391
+                longitude: -122.27139149395391,
+                latitudeDelta: 0.04864195044303443,
+                longitudeDelta: 0.040142817690068,
             },
             adReview: [
                 {
@@ -139,7 +143,9 @@ export const VendorMockApi =
             adAddress: "1632 Spruce Street, Berkeley, CA 94709 Berkeley California United States",
             coordinate: {
                 latitude: 37.87756939233716,
-                longitude: -122.26555500713751
+                longitude: -122.26555500713751,
+                latitudeDelta: 0.04864195044303443,
+                longitudeDelta: 0.040142817690068,
             },
             adReview: [
                 {
@@ -201,7 +207,9 @@ export const VendorMockApi =
             adAddress: "1709 Shattuck Avenue, Berkeley, CA 94709 Berkeley California United States",
             coordinate: {
                 latitude: 37.87601116573566,
-                longitude: -122.26864491192266
+                longitude: -122.26864491192266,
+                latitudeDelta: 0.04864195044303443,
+                longitudeDelta: 0.040142817690068,
             },
             adReview: [
                 {
@@ -263,7 +271,9 @@ export const VendorMockApi =
             adAddress: "1523 Grant Street, Berkeley, CA 94703 Berkeley California United States",
             coordinate: {
                 latitude: 37.878517861955864,
-                longitude: -122.27551136700079
+                longitude: -122.27551136700079,
+                latitudeDelta: 0.04864195044303443,
+                longitudeDelta: 0.040142817690068,
             },
             adReview: [
                 {
@@ -325,7 +335,9 @@ export const VendorMockApi =
             adAddress: "1632 Spruce Street, Berkeley, CA 94709 Berkeley California United States",
             coordinate: {
                 latitude: 37.873165623409385,
-                longitude: -122.27937374798223
+                longitude: -122.27937374798223,
+                latitudeDelta: 0.04864195044303443,
+                longitudeDelta: 0.040142817690068,
             },
             adReview: [
                 {
