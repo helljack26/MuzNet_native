@@ -38,7 +38,7 @@ const MusicianMapSearchScreen = () => {
             <StatusBar
                 barStyle={'dark-content'}
                 hidden={false}
-                backgroundColor="transparent"
+                backgroundColor="#f0f0f0ad"
                 translucent={true}
             />
 

@@ -27,6 +27,7 @@ class LocationAutocompleteApi {
             .then((json) => {
                 const { predictions } = json;
                 const onlyDescription = predictions.map((item) => {
+
                     return item.description
                 })
                 runInAction(() => {

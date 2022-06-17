@@ -43,25 +43,26 @@ import { toJS } from "mobx";
 
 import { useSearchApiStore } from '@/stores/SearchApi';
 import { useLocationAutocompleteApiStore } from '@/stores/LocationAutocompleteApi';
+import { useMapSearchApiStore } from '@/stores/MapSearchApi';
 
 const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, onChangeSearchText, isMinOne, initialFocusInput }) => {
     const navigation = useNavigation();
     const route = useRoute();
     const { windowHeight, windowWidth } = getWindowDimension()
 
-    const { isOpenFilters, setOpenFilters } = useSearchApiStore();
 
     // Store
+    const { isOpenFilters, setOpenFilters } = useSearchApiStore();
+
     const { locationList, setLocationList } = useLocationAutocompleteApiStore();
     const jsLocationList = toJS(locationList)
 
-    // Search input
-    // const [searchText, onChangeSearchText] = useState('');
+    // Store for setting coords from search
+    const { setCoordsFromSearch } = useMapSearchApiStore();
     // Local selected location
     const [selectedLocation, setSelectedLocation] = useState('');
 
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
-    const [isShiftInputLocationLabel, setShiftInputLocationLabel] = useState(false);
 
     const [isOpenDropList, setOpenDropList] = useState(false);
 
@@ -80,11 +81,8 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
                 type: 'full'
             })
         }
-        if (searchText.length > 0) {
-            setShiftInputLocationLabel(true)
-        }
+
         if (searchText.length === 0) {
-            setShiftInputLocationLabel(false)
             setLocationList({
                 inputValue: [],
                 type: ''
@@ -93,9 +91,26 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
         }
     }, [searchText.length, selectedLocation]);
 
+    const onPressEnter = () => {
+        const item = jsLocationList[0]
+        onChangeSearchText(item)
+        setSelectedLocation(item)
+        setCoordsFromSearch(item)
+        setLocationList([])
+        Keyboard.dismiss()
+    }
+
     return (
         <>
             {isOpenDropList === true && <OpacityBg
+                onPress={() => {
+                    setOpenDropList(false)
+                    setLocationList([])
+                    setSelectedLocation('')
+                    onChangeSearchText('')
+                    setInputFocus1(C.lightGray)
+                    Keyboard.dismiss()
+                }}
                 style={{
                     height: windowHeight,
                     width: windowWidth,
@@ -132,12 +147,17 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
                         </SearchRemoveIcon>
                     </SearchRemoveIconBlock>
                     <FormInput
-                        inputLabel={isShiftInputLocationLabel}
+                        onSubmitEditing={() => onPressEnter()}
                         selectionColor={C.lightGray}
                         placeholderTextColor={'#8E8E93'}
                         placeholder={'Nearby'}
                         cursorColor={C.inputCursor}
-                        onFocus={() => { setInputFocus1(C.black) }}
+                        onFocus={() => {
+                            onChangeSearchText('')
+                            setSelectedLocation('')
+                            setLocationList([])
+                            setInputFocus1(C.black)
+                        }}
                         onBlur={() => { setInputFocus1(C.lightGray) }}
                         onChangeText={onChangeSearchText}
                         value={searchText}
@@ -166,12 +186,19 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
                 >
                     <ChosenBlock>
                         {jsLocationList.map((item, key) => {
+                            const isFirst = key === 0
                             return (item !== undefined && <Item
+
+                                style={{
+                                    backgroundColor: isFirst === true ? C.lightGray : C.white,
+                                    marginTop: isFirst === true ? -8 : 0,
+                                }}
                                 zIndex={2000}
                                 key={key}
                                 onPress={() => {
                                     onChangeSearchText(item)
                                     setSelectedLocation(item)
+                                    setCoordsFromSearch(item)
                                     setLocationList([])
                                     Keyboard.dismiss()
                                 }}

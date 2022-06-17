@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-    PermissionsAndroid
+    PermissionsAndroid,
+    Platform
 } from "react-native";
 import { makeAutoObservable, action, runInAction, observable } from 'mobx';
 import { apiMocks } from '@/api/mock/apiMocks'
@@ -14,7 +15,7 @@ class MapSearchApi {
     musicianMapData = []
     vendorMapData = []
     userCurrentCoords = {}
-    userProfileCoords = {}
+    userCoordsFromSearch = {}
 
     isOpenFilters = false
 
@@ -23,14 +24,14 @@ class MapSearchApi {
             musicianMapData: observable,
             vendorMapData: observable,
             userCurrentCoords: observable,
-            userProfileCoords: observable,
+            userCoordsFromSearch: observable,
             isGrantedLocationPermission: observable,
             isOpenFilters: observable,
 
             resetState: action.bound,
             setMapData: action.bound,
             setUserCurrentCoords: action.bound,
-            setUserProfileCoords: action.bound,
+            setCoordsFromSearch: action.bound,
             searchInList: action.bound,
             setOpenFilters: action.bound,
         })
@@ -45,27 +46,26 @@ class MapSearchApi {
         this.vendorMapData = []
     }
 
-    setUserProfileCoords(userProfileLocation) {
+    setCoordsFromSearch(addressFropDropdown) {
         (async () => {
             Geocoder.init(apiKey.geocodingApiKey);
             // Search by address
-            Geocoder.from(userProfileLocation)
+            Geocoder.from(addressFropDropdown)
                 .then(json => {
-                    const result = json.results[0].geometry;
-                    if (result.length > 0) {
-                        const oneDegreeOfLongitudeInMeters = 111.32 * 950;
-                        const circumference = (40075 / 360) * 950;
-                        const latDelta = result[0].accuracy * (1 / (Math.cos(result[0].latitude) * circumference));
-                        const lonDelta = (result[0].accuracy / oneDegreeOfLongitudeInMeters);
+                    const result = json.results[0].geometry.location;
+                    console.log(json.results[0].geometry);
+                    if (result !== undefined) {
                         const userProfileRegion = {
                             region: {
-                                latitude: result[0].lat,
-                                longitude: result[0].lng,
+                                latitude: result.lat,
+                                longitude: result.lng,
+                                latitudeDelta: 0.3,
+                                longitudeDelta: 0.3,
                             }
                         }
                         runInAction(() => {
-                            this.userProfileCoords = {}
-                            return this.userProfileCoords = userProfileRegion
+                            this.userCoordsFromSearch = {}
+                            return this.userCoordsFromSearch = userProfileRegion
                         })
                     }
                 })
@@ -93,27 +93,24 @@ class MapSearchApi {
                 }
             }
             runInAction(() => {
-
                 return this.userCurrentCoords = userProfileRegion;
             })
         }
+        if (Platform.OS === 'android') {
+            PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+            ).then((status) => {
+                if (status === 'granted') {
+                    getUserCoords()
+                }
 
-        PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-        ).then((status) => {
-
-            ////////////////////
-            if (status === 'granted') {
-                getUserCoords()
-            }
-
-            if (status === 'denied' || status === 'never_ask_again') {
-                runInAction(() => {
-                    return this.userCurrentCoords = {}
-                })
-            }
-        })
-
+                if (status === 'denied' || status === 'never_ask_again') {
+                    runInAction(() => {
+                        return this.userCurrentCoords = {}
+                    })
+                }
+            })
+        }
     }
 
     setMapData(route) {

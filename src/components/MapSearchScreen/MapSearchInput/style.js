@@ -106,7 +106,7 @@ font-family: ${F.medium};
 color: ${C.black};
 `;
 
-const OpacityBg = styled.View`
+const OpacityBg = styled.Pressable`
 position: absolute;
 top: 0px;
 left: 0px;

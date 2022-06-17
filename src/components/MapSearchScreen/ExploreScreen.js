@@ -59,25 +59,19 @@ const ExploreScreen = observer(() => {
         musicianMapData,
         vendorMapData,
         setMapData,
-        userLocation,
         userCurrentCoords,
         setUserCurrentCoords,
-        userProfileCoords,
-        setUserProfileCoords,
+        userCoordsFromSearch
     } = useMapSearchApiStore();
 
     const jsMusicianMapData = toJS(musicianMapData)
     const jsVendorMapData = toJS(vendorMapData)
     const mapData = isForContractor ? jsMusicianMapData : jsVendorMapData
 
-    // User profile location
-    const userProfileLocation = 'Francisko St, Berkeley'
     // Set list
-
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             setMapData(route.name);
-            setUserProfileCoords(userProfileLocation)
             setUserCurrentCoords()
         });
         return unsubscribe;
@@ -105,7 +99,6 @@ const ExploreScreen = observer(() => {
             defaultMapState
 
         const { region } = isExistCurrentLocation
-        console.log("🚀 ~ file: ExploreScreen.js ~ line 108 ~ useEffect ~ isExistCurrentLocation", isExistCurrentLocation)
         const newCamera = {
             center: {
                 ...region
@@ -119,6 +112,22 @@ const ExploreScreen = observer(() => {
             _map.current.animateCamera(newCamera, { duration: 400 })
         }
     }, [userCurrentCoords]);
+
+    useEffect(() => {
+        const { region } = userCoordsFromSearch
+        const newCamera = {
+            center: {
+                ...region
+            },
+            pitch: 0,
+            heading: 0,
+            zoom: 13
+        }
+
+        if (region !== undefined) {
+            _map.current.animateCamera(newCamera, { duration: 400 })
+        }
+    }, [userCoordsFromSearch]);
 
 
     // Map animation
