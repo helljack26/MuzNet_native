@@ -50,15 +50,11 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
     const route = useRoute();
     const { windowHeight, windowWidth } = getWindowDimension()
 
-
-    // Store
-    const { isOpenFilters, setOpenFilters } = useSearchApiStore();
-
     const { locationList, setLocationList } = useLocationAutocompleteApiStore();
     const jsLocationList = toJS(locationList)
 
-    // Store for setting coords from search
-    const { setCoordsFromSearch } = useMapSearchApiStore();
+    // Store for setting coords from search and open filters
+    const { setCoordsFromSearch, setOpenFilters } = useMapSearchApiStore();
     // Local selected location
     const [selectedLocation, setSelectedLocation] = useState('');
 
@@ -66,6 +62,7 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
 
     const [isOpenDropList, setOpenDropList] = useState(false);
 
+    const [isShowOpacityBg, setShowOpacityBg] = useState(false);
     useEffect(() => {
         if (jsLocationList.length > 0) {
             setOpenDropList(true)
@@ -88,22 +85,32 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
                 type: ''
             })
             setInputFocus1(C.lightGray)
+        } else {
+            setInputFocus1(C.black)
+
         }
     }, [searchText.length, selectedLocation]);
 
     const onPressEnter = () => {
-        const item = jsLocationList[0]
-        onChangeSearchText(item)
-        setSelectedLocation(item)
-        setCoordsFromSearch(item)
-        setLocationList([])
-        Keyboard.dismiss()
+        if (jsLocationList.length > 0) {
+
+            const item = jsLocationList[0]
+            onChangeSearchText(item)
+            setSelectedLocation(item)
+            setCoordsFromSearch(item)
+            setLocationList([])
+            Keyboard.dismiss()
+        } else {
+            onChangeSearchText('')
+            Keyboard.dismiss()
+        }
     }
 
     return (
         <>
-            {isOpenDropList === true && <OpacityBg
+            {isShowOpacityBg === true && <OpacityBg
                 onPress={() => {
+                    setShowOpacityBg(false)
                     setOpenDropList(false)
                     setLocationList([])
                     setSelectedLocation('')
@@ -140,12 +147,14 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
                     <SearchRemoveIconBlock
                         onPress={() => {
                             setOpenFilters(true)
+                            Keyboard.dismiss()
                         }}
                     >
                         <SearchRemoveIcon>
                             <FilterIcon width={15} height={15} />
                         </SearchRemoveIcon>
                     </SearchRemoveIconBlock>
+
                     <FormInput
                         onSubmitEditing={() => onPressEnter()}
                         selectionColor={C.lightGray}
@@ -157,6 +166,7 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
                             setSelectedLocation('')
                             setLocationList([])
                             setInputFocus1(C.black)
+                            setShowOpacityBg(true)
                         }}
                         onBlur={() => { setInputFocus1(C.lightGray) }}
                         onChangeText={onChangeSearchText}
@@ -191,7 +201,6 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
 
                                 style={{
                                     backgroundColor: isFirst === true ? C.lightGray : C.white,
-                                    marginTop: isFirst === true ? -8 : 0,
                                 }}
                                 zIndex={2000}
                                 key={key}
@@ -199,6 +208,7 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
                                     onChangeSearchText(item)
                                     setSelectedLocation(item)
                                     setCoordsFromSearch(item)
+                                    setShowOpacityBg(false)
                                     setLocationList([])
                                     Keyboard.dismiss()
                                 }}

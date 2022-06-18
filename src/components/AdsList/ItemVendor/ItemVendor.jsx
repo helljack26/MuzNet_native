@@ -1,4 +1,6 @@
 import React from "react";
+import { useState } from 'react';
+
 import { useNavigation } from '@react-navigation/native';
 // Images
 import IMAGES from '@/res/images'
@@ -40,6 +42,19 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
         adReview
     } = data;
 
+
+
+    const [isInfoBiggerThanImage, setInfoBiggerThanImage] = useState(false);
+
+    const onLayout = (event) => {
+        const { height } = event.nativeEvent.layout;
+        if (height > 106) {
+            setInfoBiggerThanImage(true)
+        } else {
+            setInfoBiggerThanImage(false)
+        }
+        return
+    }
     return (
         <ItemContainer
             style={{
@@ -61,24 +76,35 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
             </ItemImageBlock>
 
             {/* Main data */}
-            <ItemInfo>
+            <ItemInfo
+                isInfoBiggerThanImage={isInfoBiggerThanImage}
+                onLayout={onLayout}
+                isForMap={isDisableBottomMargin}
+            >
                 {/* Location */}
                 <ItemInfoLocation>
                     <MapPointIcon width={8} height={12} />
 
-                    <ItemInfoLocationText>
+                    <ItemInfoLocationText
+                        ellipsizeMode={'tail'}
+                        numberOfLines={1}
+                    >
                         {adLocation}
                     </ItemInfoLocationText>
                 </ItemInfoLocation>
 
                 {/* Name */}
-                <ItemInfoName>
+                <ItemInfoName
+                    numberOfLines={2}
+                    ellipsizeMode={'tail'}
+                >
                     {adTitle}
                 </ItemInfoName>
                 {/* Description */}
                 <ItemInfoDescription
                     ellipsizeMode={'tail'}
-                    numberOfLines={1}>
+                    numberOfLines={1}
+                >
                     {adDescription}
                 </ItemInfoDescription>
 

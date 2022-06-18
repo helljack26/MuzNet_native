@@ -65,7 +65,7 @@ border-radius: 6px;
 background-color: white;
 position: absolute;
 top: 40px;
-border: 1px solid ${C.lightGray};
+border: 1px solid ${C.black};
 border-top-width: 0px ;
 left: 0px;
 z-index: 999;
@@ -73,7 +73,7 @@ border-radius: 6px;
 `;
 const ChosenBlock = styled.View`
 width: 100%;
-padding-top: 8px;
+/* padding-top: 8px; */
 padding-bottom: 8px;
 overflow: hidden;
 border-bottom-right-radius: 6px;

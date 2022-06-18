@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Animated, Keyboard, View } from 'react-native';
 // Components
 import DropSelect from '@/components/Dropdowns/DropSelect'
@@ -44,9 +44,13 @@ const {
 // Store
 import { observer } from 'mobx-react-lite';
 import { useSearchApiStore } from '@/stores/SearchApi';
+import { useMapSearchApiStore } from '@/stores/MapSearchApi';
 
-const SearchFilters = observer(({ isContractor }) => {
-    const { isOpenFilters, setOpenFilters } = useSearchApiStore();
+const SearchFilters = observer(({ isContractor, isForMap }) => {
+    const route = useRoute();
+    const storeApi = isForMap === true ? useMapSearchApiStore() : useSearchApiStore()
+
+    const { isOpenFilters, setOpenFilters } = storeApi;
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()

@@ -55,7 +55,7 @@ const MusicianMapSearchScreen = () => {
                         screenName={'VendorCardScreen'}
                     />
                 </Container>
-                <SearchFilters />
+                <SearchFilters isForMap={true} />
             </Block>
         </>
     )

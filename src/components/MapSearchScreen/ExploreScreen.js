@@ -207,6 +207,7 @@ const ExploreScreen = observer(() => {
                 style={styles.container}
                 provider={PROVIDER_GOOGLE}
                 customMapStyle={mapStandardStyle}
+                isAccessibilityElement={false}
                 showsUserLocation={true}
                 toolbarEnabled={false}
                 showsCompass={false}

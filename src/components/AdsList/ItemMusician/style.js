@@ -28,7 +28,9 @@ const ItemInfo = styled.View`
 margin-left: 12px;
 display: flex;
 flex-direction: column;
-width: 65%;
+justify-content : ${props => props.isInfoBiggerThanImage === true ? 'flex-start' : 'space-between'};
+min-height: 100px;
+width : ${props => props.isForMap === true ? 61 + '%' : 65 + '%'};
 `;
 const ItemInfoLocation = styled.View`
 display: flex;
@@ -40,7 +42,7 @@ const ItemInfoLocationText = styled(M.PlainText14)`
 margin-left: 5px;
 color: ${C.sBlack};
 `;
-const ItemInfoName = styled(M.TitleBold18)`
+const ItemInfoName = styled(M.TitleBold16)`
 padding-top: 4px;
 padding-bottom: 7px;
 `;
