@@ -8,7 +8,11 @@ import ModalWindow from '@/components/ModalWindow'
 import VerifyCodeInputs from '@/components/VerifyCodeInputs'
 
 import { useNavigation, useRoute } from '@react-navigation/native';
-
+// Images
+import IMAGES from '@/res/images'
+const {
+    ModalWrongIcon,
+} = IMAGES;
 // Styles
 import { style } from './style'
 const {
@@ -58,7 +62,7 @@ const VerifyScreen = () => {
             />
             <Container>
                 {isModalOpen === true && <ModalWindow
-                    type={true}
+                    modalPic={<ModalWrongIcon width={80} height={80} />}
                     title={'Oops!'}
                     advice={'It looks like you put in the wrong code, try again'}
                     setOpen={setModalOpen}

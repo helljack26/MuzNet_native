@@ -60,7 +60,7 @@ color: ${C.black};
 margin-bottom: 4px;
 `;
 const ModalAdvice = styled(M.MediumText15)`
-padding: 0px 60px;
+padding: 0px 20px;
 text-align: center;
 color: ${C.cyanGray};
 `;

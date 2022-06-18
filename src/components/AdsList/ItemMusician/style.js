@@ -50,8 +50,10 @@ const ItemInfoGenres = styled.View`
 display: flex;
 align-items: center;
 flex-direction: row;
-flex-wrap: wrap;
 width: 100%;
+flex-wrap: wrap;
+max-height: 33px;
+overflow: hidden;
 `;
 const ItemInfoGenre = styled.View`
 padding: 0px 8px;

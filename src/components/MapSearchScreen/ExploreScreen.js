@@ -68,7 +68,7 @@ const ExploreScreen = observer(() => {
     const jsVendorMapData = toJS(vendorMapData)
     const mapData = isForContractor ? jsMusicianMapData : jsVendorMapData
 
-    // Set list
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             setMapData(route.name);
@@ -94,15 +94,11 @@ const ExploreScreen = observer(() => {
     // Set list
     useEffect(() => {
         const isExistCurrentLocation = isEmpty(userCurrentCoords) === false ?
-            userCurrentCoords
-            :
-            defaultMapState
+            userCurrentCoords : defaultMapState;
 
         const { region } = isExistCurrentLocation
         const newCamera = {
-            center: {
-                ...region
-            },
+            center: { ...region },
             pitch: 0,
             heading: 0,
             zoom: isEmpty(userCurrentCoords) === false ? 13 : 1
@@ -178,22 +174,12 @@ const ExploreScreen = observer(() => {
 
         _scrollView.current.scrollTo({ x: x, y: 0, animated: true });
     }
-
-
-
     return (
         <View style={{
             width: windowWidth,
             height: windowHeight,
         }}>
-            <TouchableOpacity
-                onPress={() => {
-                    return setUserCurrentCoords()
-                }}
-                style={styles.locationUserMap}
-            >
-                <MapUserLocationIcon width={20} height={20} />
-            </TouchableOpacity>
+
             <MapView
                 ref={_map}
                 initialRegion={state.region}
@@ -233,55 +219,67 @@ const ExploreScreen = observer(() => {
                                 <Animated.Text
                                     style={isActiveText}
                                 >
-                                    $ {marker.adCostPerHour}
+                                    {marker.costPerHourCurrency} {marker.costPerHour}
                                 </Animated.Text>
                             </Animated.View>
                         </MapView.Marker>
                     );
                 })}
             </MapView>
-
-            <Animated.ScrollView
-                ref={_scrollView}
-                horizontal
-                pagingEnabled
-                scrollEventThrottle={1}
-                showsHorizontalScrollIndicator={false}
-                snapToInterval={CARD_WIDTH + 20}
-                snapToAlignment="center"
-                style={styles.bottomCardView}
-                contentInset={{
-                    top: 0,
-                    left: SPACING_FOR_CARD_INSET,
-                    bottom: 0,
-                    right: SPACING_FOR_CARD_INSET
-                }}
-                contentContainerStyle={{
-                    paddingHorizontal: Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0
-                }}
-                onScroll={Animated.event(
-                    [
-                        {
-                            nativeEvent: {
-                                contentOffset: {
-                                    x: mapAnimation,
-                                }
-                            },
-                        },
-                    ],
-                    { useNativeDriver: true }
-                )}
+            <View
+                style={styles.bottomCardViewContainer}
             >
-                {mapData.map((marker, id) => {
-                    return <View
-                        style={styles.card} key={id}>
-                        {isForContractor === true ?
-                            <ItemMusician data={marker} key={id} isDisableBottomMargin={true} />
-                            :
-                            <ItemVendor data={marker} key={id} isDisableBottomMargin={true} />}
-                    </View>
-                })}
-            </Animated.ScrollView>
+                <TouchableOpacity
+                    onPress={() => {
+                        setUserCurrentCoords()
+                    }}
+                    style={styles.locationUserMap}
+                >
+                    <MapUserLocationIcon width={20} height={20} />
+                </TouchableOpacity>
+                <Animated.ScrollView
+                    ref={_scrollView}
+                    horizontal
+                    pagingEnabled
+                    scrollEventThrottle={1}
+                    showsHorizontalScrollIndicator={false}
+                    snapToInterval={CARD_WIDTH + 20}
+                    snapToAlignment="center"
+                    style={styles.bottomCardView}
+                    contentInset={{
+                        top: 0,
+                        left: SPACING_FOR_CARD_INSET,
+                        bottom: 0,
+                        right: SPACING_FOR_CARD_INSET
+                    }}
+                    contentContainerStyle={{
+                        paddingHorizontal: Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0
+                    }}
+                    onScroll={Animated.event(
+                        [
+                            {
+                                nativeEvent: {
+                                    contentOffset: {
+                                        x: mapAnimation,
+                                    }
+                                },
+                            },
+                        ],
+                        { useNativeDriver: true }
+                    )}
+                >
+                    {mapData.map((marker, id) => {
+                        return <View
+                            style={styles.card} key={id}>
+                            {isForContractor === true ?
+                                <ItemMusician data={marker} key={id} isDisableBottomMargin={true} />
+                                :
+                                <ItemVendor data={marker} key={id} isDisableBottomMargin={true} />}
+                        </View>
+                    })}
+                </Animated.ScrollView>
+            </View>
+
         </View >
     );
 })
@@ -295,11 +293,15 @@ const styles = StyleSheet.create({
         marginBottom: 15,
 
     },
-    bottomCardView: {
+    bottomCardViewContainer: {
         position: "absolute",
         bottom: 60,
         left: 0,
         right: 0,
+        width: '100%',
+    },
+    bottomCardView: {
+
         width: '100%',
     },
     card: {
@@ -354,7 +356,7 @@ const styles = StyleSheet.create({
         backgroundColor: C.black,
         borderRadius: 24,
         position: 'absolute',
-        bottom: 220,
+        top: -70,
         right: 16,
         zIndex: 900,
         paddingTop: 2,

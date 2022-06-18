@@ -36,8 +36,8 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
     const {
         id,
         userAvatar,
-        userCostPerHour,
-        userCostPerHourCurrency,
+        costPerHour,
+        costPerHourCurrency,
         userFullName,
         userLocation,
         userGenres,
@@ -118,7 +118,7 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
                 {/* Cost */}
                 <ItemInfoCost>
                     <ItemInfoCostValue>
-                        {userCostPerHourCurrency}{userCostPerHour}
+                        {costPerHourCurrency}{costPerHour}
                     </ItemInfoCostValue>
                     <ItemInfoCostValuePostfix>
                         / hour

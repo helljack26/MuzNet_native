@@ -75,6 +75,7 @@ class MapSearchApi {
     }
 
     setUserCurrentCoords() {
+
         const getUserCoords = async () => {
             const location = await Location.getCurrentPositionAsync({});
 
@@ -92,14 +93,15 @@ class MapSearchApi {
                     longitudeDelta: lonDelta,
                 }
             }
+            console.log("🚀 ~ file: MapSearchApi.js ~ line 95 ~ MapSearchApi ~ getUserCoords ~ userProfileRegion", userProfileRegion)
             runInAction(() => {
-                return this.userCurrentCoords = userProfileRegion;
+                this.userCurrentCoords = userProfileRegion;
             })
+
         }
-        if (Platform.OS === 'android') {
-            PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-            ).then((status) => {
+        (async () => {
+            if (Platform.OS === 'android') {
+                let { status } = await Location.requestForegroundPermissionsAsync();
                 if (status === 'granted') {
                     getUserCoords()
                 }
@@ -109,8 +111,8 @@ class MapSearchApi {
                         return this.userCurrentCoords = {}
                     })
                 }
-            })
-        }
+            }
+        })();
     }
 
     setMapData(route) {

@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import ContractorWelcomeScreen from '../../src/pages/Contractor/ContractorWelcomeScreen';
 import ContractorListSearchScreen from '../../src/pages/Contractor/ContractorListSearchScreen';
+import ContractorMapSearchScreen from '../../src/pages/Contractor/ContractorMapSearchScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ export default function ContractorStack() {
         >
             <Stack.Screen name="ContractorWelcomeScreen" component={ContractorWelcomeScreen} />
             <Stack.Screen name="ContractorListSearchScreen" component={ContractorListSearchScreen} />
+            <Stack.Screen name="ContractorMapSearchScreen" component={ContractorMapSearchScreen} />
 
 
         </Stack.Navigator>)

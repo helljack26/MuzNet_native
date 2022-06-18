@@ -272,7 +272,12 @@ const SearchFilters = observer(({ isContractor, isForMap }) => {
                         <ButtonSubmit
                         // onPress={handleSubmit(onSubmit)} 
                         >
-                            <ButtonSubmitText>Show Perfomers</ButtonSubmitText>
+                            <ButtonSubmitText>
+                                {isContractor ?
+                                    'Show Perfomers' :
+                                    'Show Ads'
+                                }
+                            </ButtonSubmitText>
                         </ButtonSubmit>
                     </ContentBlockRow>
                 </ContentBlock>

@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { Image, StatusBar, KeyboardAvoidingView, Platform, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-
 // Components
 import ModalWindow from '@/components/ModalWindow'
 import SelectProfileType from './SelectProfileType'
@@ -621,7 +620,13 @@ const AddProfileInfo = () => {
             />
             <Container>
                 {isModalOpen === true && <ModalWindow
-                    type={false}
+                    modalPic={<Image source={IMAGES.GifSuccessCheck}
+                        style={{
+                            width: '120%',
+                            height: '120%',
+                        }}
+                        resizeMode={'cover'} width={'100%'} height={'100%'} />
+                    }
                     title={'Great!'}
                     advice={'Your account has been successfully created'}
                     setOpen={AfterSubmitButtonAction}
