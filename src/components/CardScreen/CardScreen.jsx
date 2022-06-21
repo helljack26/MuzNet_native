@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Collapsible from 'react-native-collapsible';
 // Components
@@ -8,6 +8,7 @@ import CardImageSlider from './CardImageSlider'
 import CardFullscreenImageSlider from './CardFullscreenImageSlider'
 import CardMediaImage from './CardMediaImage'
 import CardReviewsList from './CardReviewsList'
+import CardSimilarList from './CardSimilarList'
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
@@ -17,7 +18,8 @@ import IMAGES from '@/res/images'
 const {
     ShareWhiteIcon,
     GoBackWhiteIcon,
-    MapPointIcon
+    MapPointIcon,
+    WarningGrayIcon,
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
@@ -50,6 +52,8 @@ const {
     CardListText,
     CardListItem,
     CardListDot,
+    WarningBlock,
+    WarningBlockText,
     // Bottom buttons
     ContentBlock,
     ContentBlockRow,
@@ -101,6 +105,19 @@ const CardScreen = ({ isMusician, data }) => {
         return unsubscribe;
     }, [navigation]);
 
+    // Scroll top
+    const scrollViewRef = useRef(null)
+    const scrollTop = () => {
+        if (scrollViewRef.current) {
+            setTimeout(() => {
+                scrollViewRef.current.scrollTo({ y: 0, animated: false })
+            }, 20);
+        }
+    }
+    if (data) { scrollTop() }
+    // Is reset slider 
+    const [isResetSlider, setResetSlider] = useState();
+
 
     return (
         <CardContainer
@@ -119,6 +136,7 @@ const CardScreen = ({ isMusician, data }) => {
             <CardContainerScrollView
                 showsVerticalScrollIndicator={false}
                 horizontal={false}
+                ref={scrollViewRef}
             >
                 {/* Header */}
                 <Header>
@@ -143,7 +161,9 @@ const CardScreen = ({ isMusician, data }) => {
                 </Header>
 
                 {/* Image slider */}
-                <CardImageSlider cardImages={cardImages} fullscreenImgState={fullscreenImgState} setFullscreenImgState={setFullscreenImgState} />
+                <CardImageSlider
+                    isResetSlider={isResetSlider}
+                    cardImages={cardImages} fullscreenImgState={fullscreenImgState} setFullscreenImgState={setFullscreenImgState} />
 
                 <CardInfo>
                     <CardInfoRow>
@@ -258,13 +278,25 @@ const CardScreen = ({ isMusician, data }) => {
                     {/* Review block */}
                     <CardReviewsList cardReviews={cardReviews} fullscreenReviewState={fullscreenReviewState} setFullscreenReviewState={setFullscreenReviewState} />
 
+                    {/* Border */}
+                    <CardBorder></CardBorder>
+
+                    {/* Warning */}
+                    <WarningBlock>
+                        <WarningGrayIcon width={27} height={27} />
+                        <WarningBlockText>
+                            To protect your payment, never transfer money or communicate outside of the MuzNet app
+                        </WarningBlockText>
+                    </WarningBlock>
+
+                    {/* Similar */}
+                    <CardSimilarList isMusician={isMusicianTrue} setResetSlider={setResetSlider} />
                 </CardInfo>
             </CardContainerScrollView>
 
             {/* Bottom block */}
             <ContentBlock>
                 <ContentBlockRow>
-
                     <ContainerPerHour>
                         <PricePerHourValue>{costPerHourCurrency}{costPerHour}</PricePerHourValue>
                         <PricePerHourText> / hour</PricePerHourText>

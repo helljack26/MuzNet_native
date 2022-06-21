@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useCallback, useEffect } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { View, Text } from 'react-native';
 // Helpers
@@ -24,7 +25,9 @@ const {
     SliderDot
 } = style;
 
-const CardImageSlider = ({ cardImages, fullscreenImgState, setFullscreenImgState }) => {
+const CardImageSlider = ({ cardImages, isResetSlider, fullscreenImgState, setFullscreenImgState }) => {
+    const route = useRoute();
+    const routeParams = route.params
     const { windowHeight, windowWidth } = getWindowDimension()
     const [initialContentOffset, setInitialContentOffset] = useState();
     useEffect(() => {
@@ -33,9 +36,14 @@ const CardImageSlider = ({ cardImages, fullscreenImgState, setFullscreenImgState
             setInitialContentOffset(paddingLeft)
         } else {
             setInitialContentOffset(0)
-
         }
     }, [fullscreenImgState.initialSlide]);
+    // Reset image state if press on similar item
+    useEffect(() => {
+        if (routeParams) {
+            setFullscreenImgState({ isOpen: false, initialSlide: 0, })
+        }
+    }, [routeParams]);
 
     const onSlide = (nativeEvent) => {
         if (nativeEvent) {

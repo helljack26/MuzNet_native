@@ -133,10 +133,19 @@ const CardListDot = styled.View`
 width: 6px;
 height:6px ;
 margin-bottom: 8px;
-
 margin-right: 8px;
 border-radius: 3px;
 background-color: ${C.black};
+`;
+const WarningBlock = styled.View`
+width: 100%;
+display: flex;
+align-items: center;
+flex-direction: row;
+`;
+const WarningBlockText = styled(M.PlainText13)`
+margin-left: 10px;
+color: ${C.cyanGray};
 `;
 // Bottom buttons
 const ContentBlock = styled.View`
@@ -210,6 +219,8 @@ export const style = {
     CardListHeader: CardListHeader,
     CardListItem: CardListItem,
     CardListDot: CardListDot,
+    WarningBlock: WarningBlock,
+    WarningBlockText: WarningBlockText,
     // Bottom buttons
     ContentBlock: ContentBlock,
     ContentBlockRow: ContentBlockRow,

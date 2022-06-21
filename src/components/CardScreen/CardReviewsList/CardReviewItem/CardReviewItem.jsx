@@ -1,10 +1,6 @@
 import React from "react";
-import { useState } from 'react';
-
 // Styles
 import { style } from './style'
-import RateBlock from "@/components/RateBlock";
-
 const {
     ItemContainer,
     ItemImageBlock,
@@ -25,7 +21,6 @@ const CardReviewItem = ({ reviewData }) => {
 
     const {
         reviewDate,
-        reviewRate,
         reviewWritter,
         reviewerAvatar,
         reviewMessage
@@ -37,7 +32,6 @@ const CardReviewItem = ({ reviewData }) => {
         const convertedDate = +subscriptionDeadline.getDate() + "." + (subscriptionDeadline.getMonth() + 1) + "." + subscriptionDeadline.getFullYear()
         const daysLeft = Math.abs(Math.floor((dueDate - currentDate) / 86400000))
         const isDay = dueDate > 86400000 ? `${daysLeft} days ago` : 'Today'
-
         return { convertedDate, isDay }
     }
     const { convertedDate, isDay } = getDaysLeftString(reviewDate)
@@ -45,7 +39,6 @@ const CardReviewItem = ({ reviewData }) => {
     // Description
     const isDescriptionWithHiddenText = reviewMessage.length > 160
     const descriptionFirstPart = reviewMessage.slice(0, 160)
-    console.log(reviewMessage.length);
     return (
         <ItemContainer>
             {/* Main data */}

@@ -55,7 +55,6 @@ const MediaViewAllBtnText = styled(M.BorderBtnText)`
 
 `;
 
-
 export const style = {
     MediaContainer: MediaContainer,
     MediaBlock: MediaBlock,

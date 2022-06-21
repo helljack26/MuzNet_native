@@ -66,7 +66,6 @@ class SearchApi {
         }
     }
     searchInList(searchString, route) {
-
         const compareLetterNumber = searchString.length
         if (route === 'ContractorListSearchScreen') {
             const newLocalData = apiMocks.MusicianMockApi.map((item, id) => {
