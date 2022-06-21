@@ -70,7 +70,7 @@ const IMAGES = {
     GifWrongEmail: require('../../assets/gif/reset_password/failed_email.gif'),
     GifSomethingWrong: require('../../assets/gif/reset_password/something_wrong.gif'),
     GifSuccessCheck: require('../../assets/gif/modal/success_check.gif'),
-    GifMapSearch: require('../../assets/gif/modal/map_search.jpg'),
+    GifMapSearch: require('../../assets/gif/modal/map_search.gif'),
     // Select AddProfileInfo screen
     SelectContractor: require('../../assets/AddProfileInfo/select_contractor.png'),
     SelectMusician: require('../../assets/AddProfileInfo/select_musician.png'),

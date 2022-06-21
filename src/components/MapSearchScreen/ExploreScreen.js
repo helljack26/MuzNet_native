@@ -238,6 +238,7 @@ const ExploreScreen = observer(() => {
                 >
                     <MapUserLocationIcon width={20} height={20} />
                 </TouchableOpacity>
+
                 <Animated.ScrollView
                     ref={_scrollView}
                     horizontal

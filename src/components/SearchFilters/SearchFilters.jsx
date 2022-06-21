@@ -198,15 +198,15 @@ const SearchFilters = observer(({ isContractor, isForMap }) => {
                     />
 
                     {/* Willing checbox */}
-                    {isContractor === true &&
-                        <CheckboxBlock isWilling={true}>
-                            <CheckBoxWithText
-                                checkboxState={isWillingToTravel}
-                                setCheckboxState={setWillingToTravel}
-                                checkboxTitle={'Willing to travel interstate for gigs'}
-                            />
-                        </CheckboxBlock>
-                    }
+
+                    <CheckboxBlock isWilling={true}>
+                        <CheckBoxWithText
+                            checkboxState={isWillingToTravel}
+                            setCheckboxState={setWillingToTravel}
+                            checkboxTitle={'Willing to travel interstate for gigs'}
+                        />
+                    </CheckboxBlock>
+
                     {/* Search music genre */}
                     <DropSelectCalendar
                         setFilterDate={getChosenDate}
@@ -219,18 +219,10 @@ const SearchFilters = observer(({ isContractor, isForMap }) => {
                         getPriceRange={getPriceRange}
                         isResetAll={isResetAll}
                     />
-                    {!isContractor && <View
-                        style={{
-                            height: isCalendarOpen === true ? 200 : 125,
-                            height: isKeyboardOpen === true ? 170 : 125,
-                        }}
-                    >
 
-                    </View>
-                    }
 
                     {/* Skills Checkbox */}
-                    {isContractor === true && <CheckboxBlock>
+                    <CheckboxBlock>
                         <CheckboxBlockTitle>Skills:</CheckboxBlockTitle>
 
                         {/* Sing by ear */}
@@ -253,9 +245,7 @@ const SearchFilters = observer(({ isContractor, isForMap }) => {
                             setCheckboxState={setReadSheetMusic}
                             checkboxTitle={'Read sheet music'}
                         />
-                    </CheckboxBlock>}
-
-
+                    </CheckboxBlock>
 
                 </FilterBlock>
 

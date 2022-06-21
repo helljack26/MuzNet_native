@@ -42,6 +42,9 @@ padding: 27px 16px;
 border-radius: 12px;
 margin-top: -12px;
 background-color: ${C.white};
+border-color: #eaeaea41;
+border-width: 1px;
+border-style: solid;
 `;
 const CardInfoRow = styled.View`
 display: flex;
@@ -101,7 +104,40 @@ margin-top: 8px;
 const ShowDescriptionButtonText = styled(M.TitleBold15)`
 text-decoration: underline;
 `;
+const CardBorder = styled.View`
+margin: 24px 0px;
+height: 1px;
+border-radius: 2px;
+background-color: ${C.gray};
+opacity: 0.2;
+`;
+const CardList = styled.View`
 
+`;
+const CardListBlock = styled.View`
+
+`;
+const CardListHeader = styled(M.TitleBold20)`
+margin-bottom: 16px;
+`;
+const CardListText = styled(M.PlainText17)`
+color: ${C.cyanGray};
+margin-bottom: 8px;
+`;
+const CardListItem = styled.View`
+display: flex;
+align-items: center;
+flex-direction: row;
+`;
+const CardListDot = styled.View`
+width: 6px;
+height:6px ;
+margin-bottom: 8px;
+
+margin-right: 8px;
+border-radius: 3px;
+background-color: ${C.black};
+`;
 // Bottom buttons
 const ContentBlock = styled.View`
 display: flex;
@@ -167,6 +203,13 @@ export const style = {
     DescriptionContainerText: DescriptionContainerText,
     ShowDescriptionButton: ShowDescriptionButton,
     ShowDescriptionButtonText: ShowDescriptionButtonText,
+    CardBorder: CardBorder,
+    CardList: CardList,
+    CardListBlock: CardListBlock,
+    CardListText: CardListText,
+    CardListHeader: CardListHeader,
+    CardListItem: CardListItem,
+    CardListDot: CardListDot,
     // Bottom buttons
     ContentBlock: ContentBlock,
     ContentBlockRow: ContentBlockRow,

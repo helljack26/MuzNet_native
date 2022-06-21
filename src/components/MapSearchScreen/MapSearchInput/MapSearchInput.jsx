@@ -93,12 +93,12 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
 
     const onPressEnter = () => {
         if (jsLocationList.length > 0) {
-
+            setLocationList([])
             const item = jsLocationList[0]
             onChangeSearchText(item)
             setSelectedLocation(item)
             setCoordsFromSearch(item)
-            setLocationList([])
+            setShowOpacityBg(false)
             Keyboard.dismiss()
         } else {
             onChangeSearchText('')

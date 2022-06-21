@@ -31,6 +31,9 @@ const CardImageSlider = ({ cardImages, fullscreenImgState, setFullscreenImgState
         if (fullscreenImgState.initialSlide > 0) {
             const paddingLeft = windowWidth * fullscreenImgState.initialSlide
             setInitialContentOffset(paddingLeft)
+        } else {
+            setInitialContentOffset(0)
+
         }
     }, [fullscreenImgState.initialSlide]);
 

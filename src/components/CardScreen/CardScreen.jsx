@@ -3,12 +3,15 @@ import { useState, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Collapsible from 'react-native-collapsible';
 // Components
+import RateBlock from "@/components/RateBlock";
 import CardImageSlider from './CardImageSlider'
 import CardFullscreenImageSlider from './CardFullscreenImageSlider'
-import RateBlock from "@/components/RateBlock";
+import CardMediaImage from './CardMediaImage'
+import CardReviewsList from './CardReviewsList'
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
+import { skillGenerator } from './scripts/skillGenerator'
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -40,6 +43,13 @@ const {
     DescriptionContainerText,
     ShowDescriptionButton,
     ShowDescriptionButtonText,
+    CardBorder,
+    CardList,
+    CardListBlock,
+    CardListHeader,
+    CardListText,
+    CardListItem,
+    CardListDot,
     // Bottom buttons
     ContentBlock,
     ContentBlockRow,
@@ -59,13 +69,14 @@ const CardScreen = ({ isMusician, data }) => {
 
     const cardImages = isMusicianTrue ? data.userAvatar : data.adImage
     const cardLocation = isMusicianTrue ? data.userLocation : data.adLocation
-    const userReview = isMusicianTrue ? data.userReview : data.adReview
+    const cardReviews = isMusicianTrue ? data.userReview : data.adReview
     const cardTitle = isMusicianTrue ? `${data.userFirstName} ${data.userLastName}` : data.adTitle
     const cardGenres = isMusicianTrue ? data.userGenres : data.adGenres
     const cardDescription = isMusicianTrue ? data.userDescription : data.adDescription
+    const cardSkills = isMusicianTrue ? data.userSkills : data.adSkills
+    const cardMusicalInstrument = isMusicianTrue ? data.userMusicalInstrument : data.adMusicalInstrument
     const cardAddress = data.adAddress
     const willingToTravel = data.willingToTravel
-    const cardMusicalInstrument = isMusicianTrue ? data.userMusicalInstrument : data.adMusicalInstrument
     const costPerHour = data.costPerHour
     const costPerHourCurrency = data.costPerHourCurrency
 
@@ -76,8 +87,20 @@ const CardScreen = ({ isMusician, data }) => {
     const isDescriptionWithHiddenText = cardDescription.length > 201
     const descriptionFirstPart = cardDescription.slice(0, 200)
     const descriptionSecondPart = cardDescription.slice(201, cardDescription.length)
-
     const [showMoreDescription, setShowMoreDescription] = useState(true);
+
+    // Review block
+    const [fullscreenReviewState, setFullscreenReviewState] = useState(false);
+
+    // Reset state on focus
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            setShowMoreDescription(true)
+            setFullscreenImgState({ isOpen: false, initialSlide: 0, })
+        });
+        return unsubscribe;
+    }, [navigation]);
+
 
     return (
         <CardContainer
@@ -136,7 +159,7 @@ const CardScreen = ({ isMusician, data }) => {
                             <CardLocation></CardLocation>
                         }
                         {/* Rate */}
-                        <RateBlock reviewData={userReview} screenType={'card'} />
+                        <RateBlock reviewData={cardReviews} screenType={'card'} />
                     </CardInfoRow>
 
                     {/* Title */}
@@ -158,8 +181,7 @@ const CardScreen = ({ isMusician, data }) => {
                     </GenreBlock>}
 
                     {/* Description */}
-                    {cardDescription !== undefined &&
-                        isDescriptionWithHiddenText === true ?
+                    {cardDescription !== undefined && isDescriptionWithHiddenText === true ?
                         <DescriptionContainer>
                             <DescriptionContainerText>
                                 {descriptionFirstPart}
@@ -188,8 +210,55 @@ const CardScreen = ({ isMusician, data }) => {
                             </DescriptionContainerText>
                         </DescriptionContainer>
                     }
-                </CardInfo>
 
+                    {/* Border */}
+                    <CardBorder></CardBorder>
+
+                    {/* Skills list */}
+                    {cardSkills !== undefined && <CardList>
+                        <CardListHeader>Skills:</CardListHeader>
+                        <CardListBlock>
+                            {skillGenerator(cardSkills).map((skill, key) => {
+                                return <CardListText key={key}>
+                                    {skill}
+                                </CardListText>
+                            })}
+                        </CardListBlock>
+                    </CardList>}
+
+                    {/* Border */}
+                    <CardBorder></CardBorder>
+
+                    {/* Instruments */}
+                    {cardMusicalInstrument !== undefined && <CardList>
+                        <CardListHeader>Instruments:</CardListHeader>
+                        <CardListBlock>
+                            {cardMusicalInstrument.map((skill, key) => {
+                                return (
+                                    <CardListItem key={key}>
+                                        <CardListDot></CardListDot>
+                                        <CardListText>
+                                            {skill}
+                                        </CardListText>
+                                    </CardListItem>
+                                )
+                            })}
+                        </CardListBlock>
+                    </CardList>}
+
+                    {/* Border */}
+                    <CardBorder></CardBorder>
+
+                    {/* Media block */}
+                    <CardMediaImage cardImages={cardImages} fullscreenImgState={fullscreenImgState} setFullscreenImgState={setFullscreenImgState} />
+
+                    {/* Border */}
+                    <CardBorder></CardBorder>
+
+                    {/* Review block */}
+                    <CardReviewsList cardReviews={cardReviews} fullscreenReviewState={fullscreenReviewState} setFullscreenReviewState={setFullscreenReviewState} />
+
+                </CardInfo>
             </CardContainerScrollView>
 
             {/* Bottom block */}
