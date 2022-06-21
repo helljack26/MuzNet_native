@@ -11,7 +11,7 @@ top: 0px;
 left: 0px;
 bottom: 0px;
 right: 0px;
-z-index: 999;
+z-index: 1010;
 `;
 const Header = styled.View`
 width: 100%;
@@ -24,8 +24,7 @@ position: absolute;
 top: 60px;
 left: 0px;
 right: 0px;
-z-index: 999;
-
+z-index: 1010;
 `;
 const HeaderClose = styled.TouchableOpacity`
 display: flex;

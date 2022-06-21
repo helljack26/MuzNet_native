@@ -26,6 +26,20 @@ const ListRateFullCountOfReview = styled(M.PlainText14)`
 color: ${C.cyanGray};
 margin-left: 4px;
 `;
+// Card rate
+const CardRate = styled.View`
+display: flex;
+align-items: center;
+flex-direction: row;
+`;
+const CardRateAverage = styled(M.PlainText17)`
+color: ${C.black};
+margin-left: 4px;
+`;
+const CardRateFullCountOfReview = styled(M.PlainText17)`
+color: ${C.cyanGray};
+margin-left: 4px;
+`;
 
 const RateBlock = ({ reviewData, screenType }) => {
     const rateAverage = rateAverageCount(reviewData)
@@ -41,6 +55,17 @@ const RateBlock = ({ reviewData, screenType }) => {
                     ({reviewData.length})
                 </ListRateFullCountOfReview>
             </ListRate>
+
+        case 'card':
+            return <CardRate>
+                <RateStarIcon width={20} height={19} />
+                <CardRateAverage>
+                    {rateAverage}
+                </CardRateAverage>
+                <CardRateFullCountOfReview>
+                    ({reviewData.length})
+                </CardRateFullCountOfReview>
+            </CardRate>
 
         default:
             return

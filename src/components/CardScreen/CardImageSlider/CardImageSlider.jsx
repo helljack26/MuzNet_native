@@ -28,11 +28,11 @@ const CardImageSlider = ({ cardImages, fullscreenImgState, setFullscreenImgState
     const { windowHeight, windowWidth } = getWindowDimension()
     const [initialContentOffset, setInitialContentOffset] = useState();
     useEffect(() => {
-        if (fullscreenImgState.isOpen === true && fullscreenImgState.initialSlide > 0) {
+        if (fullscreenImgState.initialSlide > 0) {
             const paddingLeft = windowWidth * fullscreenImgState.initialSlide
             setInitialContentOffset(paddingLeft)
         }
-    }, [fullscreenImgState.isOpen]);
+    }, [fullscreenImgState.initialSlide]);
 
     const onSlide = (nativeEvent) => {
         if (nativeEvent) {

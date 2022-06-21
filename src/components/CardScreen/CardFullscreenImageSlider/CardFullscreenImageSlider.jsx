@@ -1,9 +1,7 @@
 import React from 'react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BackHandler } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
 
-import { View, Text } from 'react-native';
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 // Variables
@@ -15,7 +13,6 @@ const {
 } = IMAGES;
 // Styles
 import { style } from './style'
-
 const {
     SliderContainer,
     Header,
@@ -29,8 +26,6 @@ const {
 
 const CardFullscreenImageSlider = ({ cardImages, fullscreenImgState, setFullscreenImgState }) => {
     if (cardImages === undefined || cardImages.lenght === 0) return
-
-    const navigation = useNavigation();
     const { windowHeight, windowWidth } = getWindowDimension()
 
     const [initialContentOffset, setInitialContentOffset] = useState();

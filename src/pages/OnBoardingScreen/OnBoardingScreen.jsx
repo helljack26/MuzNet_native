@@ -66,20 +66,20 @@ const OnBoardingScreen = () => {
     const text = OnboardingContent[screenNumber].text
     const offsetLeft = OnboardingContent[screenNumber].thumbOffsetLeft
 
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            // navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
-            navigation.navigate(
-                'ContractorStack', {
-                screen: 'MusicianCardScreen',
-                params: {
-                    musicianId: 5404541,
-                }
-            });
-        });
+    // useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //         // navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
+    //         navigation.navigate(
+    //             'ContractorStack', {
+    //             screen: 'MusicianCardScreen',
+    //             params: {
+    //                 musicianId: 5404541,
+    //             }
+    //         });
+    //     });
 
-        return unsubscribe;
-    }, [navigation]);
+    //     return unsubscribe;
+    // }, [navigation]);
 
     return (
         <>

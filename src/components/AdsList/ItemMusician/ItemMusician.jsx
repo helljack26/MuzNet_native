@@ -99,7 +99,7 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
                     numberOfLines={2}
                     ellipsizeMode={'tail'}
                 >
-                    {userFirstName}{userLastName}
+                    {userFirstName} {userLastName}
                 </ItemInfoName>
 
                 {/* Genres */}

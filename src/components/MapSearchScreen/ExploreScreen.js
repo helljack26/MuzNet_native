@@ -289,7 +289,6 @@ export default ExploreScreen;
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
-        marginBottom: 15,
         flex: 1,
         minHeight: 500,
         width: '100%',
@@ -308,7 +307,6 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     bottomCardView: {
-
         width: '100%',
     },
     card: {
