@@ -2,6 +2,6 @@
 
 export const apiKey = {
     // Input error message
-    geocodingApiKey: 'AIzaSyD-DV5jVOuC7XYA4ZlXATAQLCnyjs5wdC4',
+    geocodingApiKey: 'AIzaSyCOfhQtULzDYDGE5NnZu7PMGySCWtXA6Fw',
     phoneNumberNotValid: 'Invalid phone number',
 }

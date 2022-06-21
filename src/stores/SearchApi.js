@@ -48,18 +48,18 @@ class SearchApi {
     setList(route) {
         if (route === 'ContractorWelcomeScreen') {
             this.resetState()
-            return this.musicianList = this.sortPopular(apiMocks.PerfomerMockApi, true)
+            return this.musicianList = this.sortPopular(apiMocks.MusicianMockApi, true)
         } else if (route === 'MusicianWelcomeScreen') {
             this.resetState()
-            return this.vendorList = this.sortPopular(apiMocks.VendorMockApi, false)
+            return this.vendorList = this.sortPopular(apiMocks.ContractorAdsMockApi, false)
         }
         else if (route === 'ContractorListSearchScreen') {
             this.resetState()
-            return this.musicianList = apiMocks.PerfomerMockApi
+            return this.musicianList = apiMocks.MusicianMockApi
         }
         else if (route === 'MusicianListSearchScreen') {
             this.resetState()
-            return this.vendorList = apiMocks.VendorMockApi
+            return this.vendorList = apiMocks.ContractorAdsMockApi
         }
         else {
             return this.resetState()
@@ -69,7 +69,7 @@ class SearchApi {
 
         const compareLetterNumber = searchString.length
         if (route === 'ContractorListSearchScreen') {
-            const newLocalData = apiMocks.PerfomerMockApi.map((item, id) => {
+            const newLocalData = apiMocks.MusicianMockApi.map((item, id) => {
                 const slicedItem = item.userFullName.slice(0, compareLetterNumber).toLowerCase()
                 if (slicedItem.includes(searchString.toLowerCase())) {
                     return item
@@ -79,7 +79,7 @@ class SearchApi {
             })
             this.resetState()
             const removeAllUndefined = newLocalData.filter((el) => el !== undefined);
-            this.musicianList = removeAllUndefined.length !== 0 ? removeAllUndefined : apiMocks.PerfomerMockApi
+            this.musicianList = removeAllUndefined.length !== 0 ? removeAllUndefined : apiMocks.MusicianMockApi
             if (removeAllUndefined.length === 0) {
                 this.nothingWasFound = true
             } else {
@@ -87,7 +87,7 @@ class SearchApi {
             }
         }
         if (route === 'MusicianListSearchScreen') {
-            const newLocalData = apiMocks.VendorMockApi.map((item) => {
+            const newLocalData = apiMocks.ContractorAdsMockApi.map((item) => {
                 const slicedItem = item.adTitle.slice(0, compareLetterNumber).toLowerCase()
                 if (slicedItem.includes(searchString.toLowerCase())) {
                     return item
@@ -95,7 +95,7 @@ class SearchApi {
             })
             this.resetState()
             const removeAllUndefined = newLocalData.filter((el) => el !== undefined);
-            this.vendorList = removeAllUndefined.length !== 0 ? removeAllUndefined : apiMocks.VendorMockApi
+            this.vendorList = removeAllUndefined.length !== 0 ? removeAllUndefined : apiMocks.ContractorAdsMockApi
             if (removeAllUndefined.length === 0) {
                 this.nothingWasFound = true
             } else {

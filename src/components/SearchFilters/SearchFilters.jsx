@@ -7,12 +7,12 @@ import DropSelect from '@/components/Dropdowns/DropSelect'
 import SearchInputDropSelect from '@/components/Dropdowns/SearchInputDropSelect'
 import SearchLocationDropSelect from '@/components/Dropdowns/SearchLocationDropSelect'
 import DropSelectCalendar from '@/components/Dropdowns/DropSelectCalendar'
-import PriceRangeSlider from '@/components/PriceRangeSlider'
+import PriceRangeSlider from './PriceRangeSlider'
 import CheckBoxWithText from '@/components/Buttons/CheckBoxWithText'
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
-import { useAnimateItemStyle } from './useAnimateItemStyle';
+import { useAnimateBottomFilters } from './useAnimateBottomFilters';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 // Images
 import IMAGES from '@/res/images'
@@ -54,7 +54,7 @@ const SearchFilters = observer(({ isContractor, isForMap }) => {
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
-    const { onPress, height } = useAnimateItemStyle({ isOpenFilters })
+    const { onPress, height } = useAnimateBottomFilters({ isOpenFilters })
 
     // Sort by
     const [isOpen, setIsOpen] = useState(false);

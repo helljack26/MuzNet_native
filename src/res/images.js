@@ -35,7 +35,10 @@ import CheckBlackFilledIcon from '../../assets/icon/check_black_filled_icon.svg'
 import CheckRoundBlackIcon from '../../assets/icon/check_round_black_icon.svg'
 import ModalWrongIcon from '../../assets/icon/modal_wrong.svg'
 import CalendarIcon from '../../assets/icon/calendar_icon.svg'
+import PriceRangeBgIcon from '../../assets/icon/range_slider_bg.svg'
 import MapUserLocationIcon from '../../assets/icon/map_userLocation_icon.svg'
+import ShareWhiteIcon from '../../assets/icon/share_white_icon.svg'
+import WarningGrayIcon from '../../assets/icon/warning_gray_icon.svg'
 // Main screen
 import FilterIcon from '../../assets/icon/filter_icon.svg'
 import RateStarIcon from '../../assets/icon/rate_star_icon.svg'
@@ -47,7 +50,7 @@ import TrashIcon from '../../assets/icon/trash_icon.svg'
 
 // Arrows
 import GoBackIcon from '../../assets/icon/goBack_icon.svg'
-import PriceRangeBgIcon from '../../assets/icon/range_slider_bg.svg'
+import GoBackWhiteIcon from '../../assets/icon/goback_white_icon.svg'
 
 const IMAGES = {
     // Tapbar icon
@@ -102,8 +105,11 @@ const IMAGES = {
     ModalWrongIcon: ModalWrongIcon,
     CalendarIcon: CalendarIcon,
     MapUserLocationIcon: MapUserLocationIcon,
+    ShareWhiteIcon: ShareWhiteIcon,
+    WarningGrayIcon: WarningGrayIcon,
     // Arrows
     GoBackIcon: GoBackIcon,
+    GoBackWhiteIcon: GoBackWhiteIcon,
 
     // Main screen
     FilterIcon: FilterIcon,

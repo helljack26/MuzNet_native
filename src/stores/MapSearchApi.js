@@ -75,54 +75,47 @@ class MapSearchApi {
     }
 
     setUserCurrentCoords() {
-
-        const getUserCoords = async () => {
-            const location = await Location.getCurrentPositionAsync({});
-
-            const oneDegreeOfLongitudeInMeters = 111.32 * 1000;
-            const circumference = (40075 / 360) * 1000;
-
-            const latDelta = location.coords.accuracy * (1 / (Math.cos(location.coords.latitude) * circumference));
-            const lonDelta = (location.coords.accuracy / oneDegreeOfLongitudeInMeters);
-
-            const userProfileRegion = {
-                region: {
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                    latitudeDelta: latDelta,
-                    longitudeDelta: lonDelta,
-                }
-            }
-            console.log("🚀 ~ file: MapSearchApi.js ~ line 95 ~ MapSearchApi ~ getUserCoords ~ userProfileRegion", userProfileRegion)
-            runInAction(() => {
-                this.userCurrentCoords = userProfileRegion;
-            })
-
-        }
         (async () => {
-            if (Platform.OS === 'android') {
-                let { status } = await Location.requestForegroundPermissionsAsync();
-                if (status === 'granted') {
-                    getUserCoords()
-                }
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status === 'granted') {
+                const location = await Location.getCurrentPositionAsync({});
 
-                if (status === 'denied' || status === 'never_ask_again') {
-                    runInAction(() => {
-                        return this.userCurrentCoords = {}
-                    })
+                const oneDegreeOfLongitudeInMeters = 111.32 * 1000;
+                const circumference = (40075 / 360) * 1000;
+
+                const latDelta = location.coords.accuracy * (1 / (Math.cos(location.coords.latitude) * circumference));
+                const lonDelta = (location.coords.accuracy / oneDegreeOfLongitudeInMeters);
+
+                const userProfileRegion = {
+                    region: {
+                        latitude: location.coords.latitude,
+                        longitude: location.coords.longitude,
+                        latitudeDelta: latDelta,
+                        longitudeDelta: lonDelta,
+                    }
                 }
+                runInAction(() => {
+                    this.userCurrentCoords = userProfileRegion;
+                })
             }
+
+            if (status === 'denied' || status === 'never_ask_again') {
+                runInAction(() => {
+                    return this.userCurrentCoords = {}
+                })
+            }
+
         })();
     }
 
     setMapData(route) {
         if (route === 'ContractorMapSearchScreen') {
             this.resetState()
-            return this.musicianMapData = apiMocks.PerfomerMockApi
+            return this.musicianMapData = apiMocks.MusicianMockApi
         }
         else if (route === 'MusicianMapSearchScreen') {
             this.resetState()
-            return this.vendorMapData = apiMocks.VendorMockApi
+            return this.vendorMapData = apiMocks.ContractorAdsMockApi
         }
         else {
             return this.resetState()
@@ -132,7 +125,7 @@ class MapSearchApi {
     searchInList(searchString, route) {
         const compareLetterNumber = searchString.length
         if (route === 'ContractorMapSearchScreen') {
-            const newLocalData = apiMocks.PerfomerMockApi.map((item, id) => {
+            const newLocalData = apiMocks.MusicianMockApi.map((item, id) => {
                 const slicedItem = item.userFullName.slice(0, compareLetterNumber).toLowerCase()
                 if (slicedItem.includes(searchString.toLowerCase())) {
                     return item
@@ -142,7 +135,7 @@ class MapSearchApi {
             })
             this.resetState()
             const removeAllUndefined = newLocalData.filter((el) => el !== undefined);
-            this.musicianMapData = removeAllUndefined.length !== 0 ? removeAllUndefined : apiMocks.PerfomerMockApi
+            this.musicianMapData = removeAllUndefined.length !== 0 ? removeAllUndefined : apiMocks.MusicianMockApi
             if (removeAllUndefined.length === 0) {
                 this.nothingWasFound = true
             } else {
@@ -150,7 +143,7 @@ class MapSearchApi {
             }
         }
         if (route === 'MusicianMapSearchScMapData') {
-            const newLocalData = apiMocks.VendorMockApi.map((item) => {
+            const newLocalData = apiMocks.ContractorAdsMockApi.map((item) => {
                 const slicedItem = item.adTitle.slice(0, compareLetterNumber).toLowerCase()
                 if (slicedItem.includes(searchString.toLowerCase())) {
                     return item
@@ -158,7 +151,7 @@ class MapSearchApi {
             })
             this.resetState()
             const removeAllUndefined = newLocalData.filter((el) => el !== undefined);
-            this.vendorMapData = removeAllUndefined.length !== 0 ? removeAllUndefined : apiMocks.VendorMockApi
+            this.vendorMapData = removeAllUndefined.length !== 0 ? removeAllUndefined : apiMocks.ContractorAdsMockApi
         }
     }
 }

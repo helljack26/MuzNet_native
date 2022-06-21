@@ -5,9 +5,7 @@ import { Animated, Easing } from 'react-native';
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
-export const useAnimateItemStyle = ({ isOpenFilters }) => {
-    const { windowHeight, windowWidth } = getWindowDimension()
-
+export const useAnimateBottomFilters = ({ isOpenFilters }) => {
     const [isOpen, setIsOpen] = useState(false)
 
     const animate_state = {

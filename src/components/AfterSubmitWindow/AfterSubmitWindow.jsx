@@ -19,7 +19,6 @@ const {
     ModalTitle,
     ModalAdvice,
     ButtonBlock,
-
     ContentBlockRow,
     ContainerText,
     ContainerLink,

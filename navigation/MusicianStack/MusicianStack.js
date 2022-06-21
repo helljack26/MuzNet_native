@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MusicianWelcomeScreen from '../../src/pages/Musician/MusicianWelcomeScreen';
 import MusicianListSearchScreen from '../../src/pages/Musician/MusicianListSearchScreen';
 import MusicianMapSearchScreen from '../../src/pages/Musician/MusicianMapSearchScreen';
+import ContractorAdsCardScreen from '../../src/pages/Musician/ContractorAdsCardScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,7 @@ export default function MusicianStack() {
             <Stack.Screen name="MusicianWelcomeScreen" component={MusicianWelcomeScreen} />
             <Stack.Screen name="MusicianListSearchScreen" component={MusicianListSearchScreen} />
             <Stack.Screen name="MusicianMapSearchScreen" component={MusicianMapSearchScreen} />
-
+            <Stack.Screen name="ContractorAdsCardScreen" component={ContractorAdsCardScreen} />
 
         </Stack.Navigator>)
 }

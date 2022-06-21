@@ -47,7 +47,6 @@ const ContractorWelcomeScreen = () => {
                         stackName={'ContractorStack'}
                         screenListName={'ContractorListSearchScreen'}
                         screenMapName={'ContractorMapSearchScreen'}
-                        screenCardName={'MusicianCardScreen'}
                         screenTitle={'Popular musicians'}
                     />
                 </Content>

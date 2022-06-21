@@ -15,6 +15,7 @@ import { observer } from 'mobx-react-lite';
 import { useSearchApiStore } from '@/stores/SearchApi';
 import C from '@/res/colors'
 
+
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -101,7 +102,6 @@ const MapSearchScreen = observer(({ stackName }) => {
 
                     {/* Ads container */}
                     <ExploreScreen />
-                    {/* <ExploreScreen adsList={isContractorData} isForContractor={isContractor} /> */}
 
                 </AdsContainer>
             </Content>

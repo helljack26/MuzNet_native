@@ -8,6 +8,7 @@ const C = {
     inputCursor: '#B9B9BA',
 
     white: '#FEFEFE',
+    opacity20white: '#ffffff4c',
     red: '#F43B3B',
     green: '#3AC946',
 }

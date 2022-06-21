@@ -72,7 +72,7 @@ const ExploreScreen = observer(() => {
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             setMapData(route.name);
-            setUserCurrentCoords()
+            // setUserCurrentCoords()
         });
         return unsubscribe;
     }, [navigation]);
@@ -176,8 +176,16 @@ const ExploreScreen = observer(() => {
     }
     return (
         <View style={{
+            ...StyleSheet.absoluteFillObject,
             width: windowWidth,
             height: windowHeight,
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
         }}>
 
             <MapView
@@ -203,13 +211,6 @@ const ExploreScreen = observer(() => {
                     const isActive = index === currentIndex
                     const isActiveMark = isActive ? styles.activeMark : styles.defaultMark
                     const isActiveText = isActive ? styles.activeMarkerText : styles.markerText
-                    const scaleStyle = {
-                        // transform: [
-                        //     {
-                        //         scale: interpolations[index].scale,
-                        //     },
-                        // ],
-                    };
 
                     return (
                         <MapView.Marker
@@ -287,11 +288,17 @@ export default ExploreScreen;
 
 const styles = StyleSheet.create({
     container: {
+        ...StyleSheet.absoluteFillObject,
+        marginBottom: 15,
         flex: 1,
         minHeight: 500,
         width: '100%',
-        marginBottom: 15,
-
+        height: '100%',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
     },
     bottomCardViewContainer: {
         position: "absolute",

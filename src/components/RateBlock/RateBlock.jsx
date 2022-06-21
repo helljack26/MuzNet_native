@@ -28,7 +28,6 @@ margin-left: 4px;
 `;
 
 const RateBlock = ({ reviewData, screenType }) => {
-
     const rateAverage = rateAverageCount(reviewData)
 
     switch (screenType) {

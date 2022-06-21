@@ -1,4 +1,4 @@
-export const PerfomerMockApi =
+export const MusicianMockApi =
     [
         {
             id: 5404541,
@@ -11,7 +11,8 @@ export const PerfomerMockApi =
             costPerHourCurrency: '$',
             userDescription: "",
             userEmail: "georgiaDowney@gmail.com",
-            userFullName: "Georgia Downey",
+            userFirstName: "Georgia",
+            userLastName: "Downey",
             userLocation: "Victoria, Ballarat",
             coordinate: {
                 latitude: 37.88068574665098,
@@ -23,6 +24,11 @@ export const PerfomerMockApi =
             userName: "Georgia",
             userType: "Musician",
             willingToTravel: true,
+            userSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
             userGenres: ["Classical", "Jazz", "Pop",],
             userMusicalInstrument: ["Harp", "Piano"],
             userReview: [
@@ -79,7 +85,8 @@ export const PerfomerMockApi =
             costPerHourCurrency: '$',
             userDescription: "",
             userEmail: "fkj@gmail.com",
-            userFullName: "FKJ",
+            userFirstName: "FKJ",
+            userLastName: "",
             userLocation: "USA, California",
             coordinate: {
                 latitude: 37.87756939233716,
@@ -91,6 +98,11 @@ export const PerfomerMockApi =
             userName: "FKJ",
             userType: "Musician",
             willingToTravel: true,
+            userSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
             userGenres: ["Pop", "Classical", "Jazz", "Hip-Hop", "Electronic", "Fusion", "Funk",
             ],
             userMusicalInstrument: ["Bassoon", "Baton", "Chamber music", "Contrabass",
@@ -152,7 +164,8 @@ export const PerfomerMockApi =
             costPerHourCurrency: '$',
             userDescription: "",
             userEmail: "leo_balamut@gmail.com",
-            userFullName: "Leo Balamut",
+            userFirstName: "Leo",
+            userLastName: "Balamut",
             userLocation: "Victoria, Ballarat",
             coordinate: {
                 latitude: 37.878517861955864,
@@ -164,6 +177,11 @@ export const PerfomerMockApi =
             userName: "Georgia",
             userType: "Musician",
             willingToTravel: true,
+            userSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
             userGenres: ["Electronic", "Rock", "Disco", "Pop", "Classical", "Jazz", "Fusion"],
             userMusicalInstrument: ["Harp", "Piano"],
             userReview: [
@@ -221,7 +239,8 @@ export const PerfomerMockApi =
             costPerHourCurrency: '$',
             userDescription: "",
             userEmail: "fkj@gmail.com",
-            userFullName: "FKJ",
+            userFirstName: "FKJ",
+            userLastName: "",
             userLocation: "USA, California",
             coordinate: {
                 latitude: 37.873165623409385,
@@ -233,6 +252,11 @@ export const PerfomerMockApi =
             userName: "FKJ",
             userType: "Musician",
             willingToTravel: true,
+            userSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
             userGenres: ["Jazz", "Hip-Hop", "Pop", "Classical", "Electronic", "Fusion", "Funk",
             ],
             userMusicalInstrument: ["Bassoon", "Baton", "Chamber music", "Contrabass",
@@ -307,7 +331,8 @@ export const PerfomerMockApi =
             costPerHourCurrency: '$',
             userDescription: "",
             userEmail: "fkj@gmail.com",
-            userFullName: "FKJ",
+            userFirstName: "FKJ",
+            userLastName: "",
             userLocation: "USA, California",
             coordinate: {
                 latitude: 44.51761322995867,
@@ -319,6 +344,11 @@ export const PerfomerMockApi =
             userName: "FKJ",
             userType: "Musician",
             willingToTravel: true,
+            userSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
             userGenres: ["Fusion", "Funk", "Pop", "Classical", "Jazz", "Hip-Hop", "Electronic",
             ],
             userMusicalInstrument: ["Bassoon", "Baton", "Chamber music", "Contrabass",

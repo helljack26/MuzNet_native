@@ -42,8 +42,6 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
         adReview
     } = data;
 
-
-
     const [isInfoBiggerThanImage, setInfoBiggerThanImage] = useState(false);
 
     const onLayout = (event) => {
@@ -60,12 +58,12 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
             style={{
                 marginBottom: isDisableBottomMargin === true ? 0 : 8,
             }}
-        // onPress={() => navigation.navigate('ContractorStack', {
-        //     screen: 'MusicianCardScreen',
-        //     params: {
-        //         id: id,
-        //     }
-        // })}
+            onPress={() => navigation.navigate('MusicianStack', {
+                screen: 'ContractorAdsCardScreen',
+                params: {
+                    adsId: id,
+                }
+            })}
         >
             {/* Rate */}
             <RateBlock reviewData={adReview} screenType={'list'} />

@@ -11,7 +11,6 @@ width: 100%;
 margin-top: 16px;
 `;
 const AdsList = ({ adsList, isForContractor }) => {
-    // console.log("🚀 ~ file: AdsList.jsx ~ line 13 ~ AdsList ~ isForContractor", isForContractor)
     if (adsList === undefined) { return }
 
     return (

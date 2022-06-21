@@ -1,4 +1,4 @@
-export const VendorMockApi =
+export const ContractorAdsMockApi =
     [
         {
             id: 5404541,
@@ -19,6 +19,14 @@ export const VendorMockApi =
                 latitudeDelta: 0.04864195044303443,
                 longitudeDelta: 0.040142817690068,
             },
+            willingToTravel: true,
+            adSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
+            adGenres: ["Classical", "Jazz", "Pop",],
+            adMusicalInstrument: ["Harp", "Piano"],
             adReview: [
                 {
                     rewiewDate: 1652541822755,
@@ -84,6 +92,14 @@ export const VendorMockApi =
                 latitudeDelta: 0.04864195044303443,
                 longitudeDelta: 0.040142817690068,
             },
+            willingToTravel: true,
+            adSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
+            adGenres: ["Classical", "Jazz", "Pop",],
+            adMusicalInstrument: ["Harp", "Piano"],
             adReview: [
                 {
                     rewiewDate: 1652541822755,
@@ -148,6 +164,14 @@ export const VendorMockApi =
                 latitudeDelta: 0.04864195044303443,
                 longitudeDelta: 0.040142817690068,
             },
+            willingToTravel: true,
+            adSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
+            adGenres: ["Classical", "Jazz", "Pop",],
+            adMusicalInstrument: ["Harp", "Piano"],
             adReview: [
                 {
                     rewiewDate: 1652541822755,
@@ -212,6 +236,14 @@ export const VendorMockApi =
                 latitudeDelta: 0.04864195044303443,
                 longitudeDelta: 0.040142817690068,
             },
+            willingToTravel: true,
+            adSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
+            adGenres: ["Classical", "Jazz", "Pop",],
+            adMusicalInstrument: ["Harp", "Piano"],
             adReview: [
                 {
                     rewiewDate: 1652541822755,
@@ -276,6 +308,14 @@ export const VendorMockApi =
                 latitudeDelta: 0.04864195044303443,
                 longitudeDelta: 0.040142817690068,
             },
+            willingToTravel: true,
+            adSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
+            adGenres: ["Classical", "Jazz", "Pop",],
+            adMusicalInstrument: ["Harp", "Piano"],
             adReview: [
                 {
                     rewiewDate: 1652541822755,
@@ -340,6 +380,14 @@ export const VendorMockApi =
                 latitudeDelta: 0.04864195044303443,
                 longitudeDelta: 0.040142817690068,
             },
+            willingToTravel: true,
+            adSkills: {
+                singByEar: true,
+                playByEar: true,
+                readSheetMusic: true,
+            },
+            adGenres: ["Classical", "Jazz", "Pop",],
+            adMusicalInstrument: ["Harp", "Piano"],
             adReview: [
                 {
                     rewiewDate: 1652541822755,

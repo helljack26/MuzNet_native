@@ -1,9 +1,9 @@
-import { PerfomerMockApi } from './PerfomerMockApi'
-import { VendorMockApi } from './VendorMockApi'
+import { MusicianMockApi } from './MusicianMockApi'
+import { ContractorAdsMockApi } from './ContractorAdsMockApi'
 
 
 export const apiMocks = {
-    PerfomerMockApi: PerfomerMockApi,
-    VendorMockApi: VendorMockApi,
+    MusicianMockApi: MusicianMockApi,
+    ContractorAdsMockApi: ContractorAdsMockApi,
 
 }

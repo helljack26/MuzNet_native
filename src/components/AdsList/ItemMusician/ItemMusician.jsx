@@ -38,10 +38,10 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
         userAvatar,
         costPerHour,
         costPerHourCurrency,
-        userFullName,
+        userFirstName,
+        userLastName,
         userLocation,
         userGenres,
-        userMusicalInstrument,
         userReview
     } = data;
 
@@ -61,12 +61,12 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
             style={{
                 marginBottom: isDisableBottomMargin === true ? 0 : 8,
             }}
-        // onPress={() => navigation.navigate('ContractorStack', {
-        //     screen: 'MusicianCardScreen',
-        //     params: {
-        //         id: id,
-        //     }
-        // })}
+            onPress={() => navigation.navigate('ContractorStack', {
+                screen: 'MusicianCardScreen',
+                params: {
+                    musicianId: id,
+                }
+            })}
         >
             {/* Rate */}
             <RateBlock reviewData={userReview} screenType={'list'} />
@@ -99,7 +99,7 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
                     numberOfLines={2}
                     ellipsizeMode={'tail'}
                 >
-                    {userFullName}
+                    {userFirstName}{userLastName}
                 </ItemInfoName>
 
                 {/* Genres */}

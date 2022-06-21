@@ -10,7 +10,6 @@ import styled from "styled-components";
 
 const { GoBackIcon } = IMAGES;
 
-
 const GoBackButton = styled.TouchableOpacity`
 display: flex;
 justify-content: center;
@@ -36,17 +35,15 @@ const GoBack = ({ stackName, screenName }) => {
         } else {
             navigation.navigate(stackName, {
                 screen: screenName,
-
             })
         }
     }
 
-    return (<GoBackButton
-
-        onPress={isNavigationGoback}>
-        <GoBackIcon width={12} height={20} />
-
-    </GoBackButton>
+    return (
+        <GoBackButton
+            onPress={isNavigationGoback}>
+            <GoBackIcon width={12} height={20} />
+        </GoBackButton>
     )
 }
 export default GoBack; 

@@ -26,8 +26,8 @@
     <meta-data android:name="expo.modules.updates.EXPO_UPDATE_URL" android:value="https://exp.host/@helljack/my-app"/>
     <meta-data android:name="expo.modules.updates.EXPO_RELEASE_CHANNEL" android:value="default"/>
        <meta-data
-     android:name="com.google.android.geo.AIzaSyBoMLvM4rFyVORaYA7XJezdfElJ26huwsg"
-     android:value="AIzaSyBoMLvM4rFyVORaYA7XJezdfElJ26huwsg"/>
+     android:name="com.google.android.geo.AIzaSyCOfhQtULzDYDGE5NnZu7PMGySCWtXA6Fw"
+     android:value="AIzaSyCOfhQtULzDYDGE5NnZu7PMGySCWtXA6Fw"/>
      
     <activity android:name=".MainActivity" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize" android:theme="@style/Theme.App.SplashScreen">
       <intent-filter>
@@ -36,5 +36,6 @@
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
+      <uses-library android:name="org.apache.http.legacy" android:required="false"/>
   </application>
 </manifest>

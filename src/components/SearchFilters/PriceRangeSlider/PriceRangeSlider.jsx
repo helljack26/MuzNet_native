@@ -12,8 +12,7 @@ import C from '@/res/colors'
 // Images
 import IMAGES from '@/res/images'
 const {
-    PriceRangeBgIcon,
-    CheckRoundBlackIcon
+    PriceRangeBgIcon
 } = IMAGES;
 // Styles
 import { style } from './style'
