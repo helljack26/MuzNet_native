@@ -25,6 +25,7 @@ const {
     MediaContainerTitle,
     MediaViewAllBtn,
     MediaViewAllBtnText,
+    CardBorder,
 } = style;
 
 const CardMediaImage = ({ cardImages, setFullscreenImgState }) => {
@@ -42,7 +43,7 @@ const CardMediaImage = ({ cardImages, setFullscreenImgState }) => {
         </MediaImgTwoItem>
     </MediaBlock>
 
-    const isThreeImageBlock = cardImages.length === 3 && <MediaBlock>
+    const isThreeImageBlock = cardImages.length >= 3 && <MediaBlock>
         <MediaImgLeft
             onPress={() => { setFullscreenImgState({ isOpen: true, initialSlide: 0, }) }}>
             <MediaImg source={cardImages[0]} resizeMode={'cover'} />
@@ -75,6 +76,8 @@ const CardMediaImage = ({ cardImages, setFullscreenImgState }) => {
                 View All
             </MediaViewAllBtnText>
         </MediaViewAllBtn>
+        {/* Border */}
+        <CardBorder></CardBorder>
     </MediaContainer>
 
     );

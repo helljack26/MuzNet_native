@@ -9,15 +9,16 @@ import { M } from '@/res/mixin'
 
 const SimilarListContainer = styled.View`
 width: 100%;
-margin-top: 24px;
+
 `;
 const SimilarItem = styled.TouchableOpacity`
-
+width: 100%;
+height: 100%;
 `;
 const SimilarListTitle = styled(M.TitleBold20)`
 margin-bottom: 16px;
 `;
-const CardSimilarList = ({ isMusician }) => {
+const CardSimilarList = ({ isMusician, setScrollToTop }) => {
     if (isMusician === undefined) return
     const mockApi = isMusician ? apiMocks.MusicianMockApi : apiMocks.ContractorAdsMockApi;
 
@@ -31,9 +32,14 @@ const CardSimilarList = ({ isMusician }) => {
                     return
                 } else {
                     return isMusician === true ?
-                        <ItemMusician key={id} data={item} />
+                        <ItemMusician
+                            setScrollToTop={setScrollToTop}
+                            key={id} data={item} />
                         :
-                        <ItemVendor key={id} data={item} />
+                        <ItemVendor
+                            setScrollToTop={setScrollToTop}
+                            key={id}
+                            data={item} />
                 }
             }
             )}

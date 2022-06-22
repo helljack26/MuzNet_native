@@ -28,7 +28,7 @@ const {
 } = style;
 
 
-const ItemMusician = ({ data, isDisableBottomMargin }) => {
+const ItemMusician = ({ data, isDisableBottomMargin, setScrollToTop }) => {
     if (data === undefined) return null
 
     const navigation = useNavigation();
@@ -61,12 +61,17 @@ const ItemMusician = ({ data, isDisableBottomMargin }) => {
             style={{
                 marginBottom: isDisableBottomMargin === true ? 0 : 8,
             }}
-            onPress={() => navigation.navigate('ContractorStack', {
-                screen: 'MusicianCardScreen',
-                params: {
-                    musicianId: id,
+            onPress={() => {
+                setScrollToTop !== undefined && setScrollToTop(true)
+                navigation.navigate('ContractorStack', {
+                    screen: 'MusicianCardScreen',
+                    params: {
+                        musicianId: id,
+                    }
                 }
-            })}
+                )
+            }
+            }
         >
             {/* Rate */}
             <RateBlock reviewData={userReview} screenType={'list'} />

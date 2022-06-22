@@ -38,6 +38,7 @@ const CardImageSlider = ({ cardImages, isResetSlider, fullscreenImgState, setFul
             setInitialContentOffset(0)
         }
     }, [fullscreenImgState.initialSlide]);
+
     // Reset image state if press on similar item
     useEffect(() => {
         if (routeParams) {

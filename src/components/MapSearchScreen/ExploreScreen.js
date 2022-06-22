@@ -27,7 +27,6 @@ const {
 } = IMAGES;
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
-import { getUserLocation } from '@/components/helpers/getUserLocation'
 
 import { mapStandardStyle } from './mapData';
 

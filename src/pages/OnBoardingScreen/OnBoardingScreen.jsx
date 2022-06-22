@@ -70,10 +70,10 @@ const OnBoardingScreen = () => {
         const unsubscribe = navigation.addListener('focus', () => {
             // navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
             navigation.navigate(
-                'ContractorStack', {
-                screen: 'MusicianCardScreen',
+                'MusicianStack', {
+                screen: 'ContractorAdsCardScreen',
                 params: {
-                    musicianId: 5404541,
+                    adsId: 8518582,
                 }
             });
         });

@@ -46,6 +46,9 @@ border-color: #eaeaea41;
 border-width: 1px;
 border-style: solid;
 `;
+const CardMainInfo = styled.View`
+width: 100%;
+`;
 const CardInfoRow = styled.View`
 display: flex;
 justify-content: space-between;
@@ -56,23 +59,34 @@ const CardLocation = styled.View`
 display: flex;
 align-items: center;
 flex-direction: row;
+margin-bottom: 8px;
 `;
 const CardLocationText = styled(M.PlainText17)`
 margin-left: 5px;
-color: ${C.sBlack};
+color: #717171;
 `;
-const CardTitle = styled(M.Title28)`
-margin-top: 8px;
-margin-bottom: 10px;
+const CardTitle = styled(M.Title24)`
 font-family: ${F.extraBold};
 `;
+const CardInfoDate = styled.View`
+display: flex;
+align-items: center;
+flex-direction: row;
+`;
+const CardInfoDateText = styled(M.PlainText17)`
+margin-left: 5px;
+color: #717171;
+`;
 const GenreBlock = styled.View`
+margin-top: 10px;
 width: 100%;
 display: flex;
 flex-wrap: wrap;
 align-items: center;
 justify-content: flex-start;
 flex-direction: row;
+margin-bottom: 19px;
+
 `;
 const Genre = styled.View`
 border-color: ${C.black};
@@ -93,7 +107,9 @@ const GenreText = styled(M.MediumText13)`
 
 `;
 const DescriptionContainer = styled.View`
-margin-top: 19px;
+`;
+const DescriptionContainerTitle = styled(M.TitleBold17)`
+margin-bottom: 7px;
 `;
 const DescriptionContainerText = styled(M.MediumText17)`
 color: ${C.cyanGray};
@@ -142,6 +158,7 @@ width: 100%;
 display: flex;
 align-items: center;
 flex-direction: row;
+margin-bottom: 24px;
 `;
 const WarningBlockText = styled(M.PlainText13)`
 margin-left: 10px;
@@ -201,14 +218,18 @@ export const style = {
 
     // Card info
     CardInfo: CardInfo,
+    CardMainInfo: CardMainInfo,
     CardInfoRow: CardInfoRow,
     CardLocation: CardLocation,
     CardLocationText: CardLocationText,
     CardTitle: CardTitle,
+    CardInfoDate: CardInfoDate,
+    CardInfoDateText: CardInfoDateText,
     GenreBlock: GenreBlock,
     Genre: Genre,
     GenreText: GenreText,
     DescriptionContainer: DescriptionContainer,
+    DescriptionContainerTitle: DescriptionContainerTitle,
     DescriptionContainerText: DescriptionContainerText,
     ShowDescriptionButton: ShowDescriptionButton,
     ShowDescriptionButtonText: ShowDescriptionButtonText,

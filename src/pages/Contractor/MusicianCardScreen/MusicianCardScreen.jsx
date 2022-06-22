@@ -25,29 +25,23 @@ const MusicianCardScreen = () => {
     const musicianData = apiMocks.MusicianMockApi.find((musician) => musician.id === Number(musicianId) && musician);
 
     return (
-        <>
-            <SafeAreaView
-                style={{
-                    flex: 1,
-                }}
-            >
-                <StatusBar
-                    barStyle={'light-content'}
-                    hidden={false}
-                    backgroundColor="transparent"
-                    translucent={true}
-                />
-                <Container>
-                    <CardScreen
-                        isMusician={true}
-                        data={musicianData}
-                    />
-
-                </Container>
-            </SafeAreaView>
-
-        </>
-
+        <SafeAreaView
+            style={{
+                flex: 1,
+            }}
+        >
+            <StatusBar
+                barStyle={'light-content'}
+                hidden={false}
+                backgroundColor="transparent"
+                translucent={true}
+            />
+            <CardScreen
+                isMusician={true}
+                data={musicianData}
+                routeId={musicianId}
+            />
+        </SafeAreaView>
     )
 }
 

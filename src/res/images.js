@@ -37,8 +37,10 @@ import ModalWrongIcon from '../../assets/icon/modal_wrong.svg'
 import CalendarIcon from '../../assets/icon/calendar_icon.svg'
 import PriceRangeBgIcon from '../../assets/icon/range_slider_bg.svg'
 import MapUserLocationIcon from '../../assets/icon/map_userLocation_icon.svg'
+import MapAdBlackLocationIcon from '../../assets/icon/map_black_adLocation_icon.svg'
 import ShareWhiteIcon from '../../assets/icon/share_white_icon.svg'
 import WarningGrayIcon from '../../assets/icon/warning_gray_icon.svg'
+import ClockGrayIcon from '../../assets/icon/clock_gray_icon.svg'
 // Main screen
 import FilterIcon from '../../assets/icon/filter_icon.svg'
 import RateStarIcon from '../../assets/icon/rate_star_icon.svg'
@@ -105,8 +107,10 @@ const IMAGES = {
     ModalWrongIcon: ModalWrongIcon,
     CalendarIcon: CalendarIcon,
     MapUserLocationIcon: MapUserLocationIcon,
+    MapAdBlackLocationIcon: MapAdBlackLocationIcon,
     ShareWhiteIcon: ShareWhiteIcon,
     WarningGrayIcon: WarningGrayIcon,
+    ClockGrayIcon: ClockGrayIcon,
     // Arrows
     GoBackIcon: GoBackIcon,
     GoBackWhiteIcon: GoBackWhiteIcon,

@@ -54,7 +54,13 @@ const MediaViewAllBtn = styled(M.BorderBtn)`
 const MediaViewAllBtnText = styled(M.BorderBtnText)`
 
 `;
-
+const CardBorder = styled.View`
+margin: 24px 0px;
+height: 1px;
+border-radius: 2px;
+background-color: ${C.gray};
+opacity: 0.2;
+`;
 export const style = {
     MediaContainer: MediaContainer,
     MediaBlock: MediaBlock,
@@ -66,4 +72,5 @@ export const style = {
     MediaContainerTitle: MediaContainerTitle,
     MediaViewAllBtn: MediaViewAllBtn,
     MediaViewAllBtnText: MediaViewAllBtnText,
+    CardBorder: CardBorder,
 }

@@ -1,7 +1,7 @@
 export const ContractorAdsMockApi =
     [
         {
-            id: 5404541,
+            id: 8518582,
             adImage: [
                 require('../../../assets/Mock/vendors/vendor1.png'),
                 require('../../../assets/Mock/vendors/vendor2.png'),
@@ -10,6 +10,11 @@ export const ContractorAdsMockApi =
             costPerHour: 100,
             costPerHourCurrency: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
+            adEventTime: {
+                eventStart: 1661486400000,
+                eventEnd: 1661544000000,
+
+            },
             adTitle: "Aloft Asheville ",
             adLocation: "Victoria, Ballarat",
             adAddress: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
@@ -20,6 +25,7 @@ export const ContractorAdsMockApi =
                 longitudeDelta: 0.040142817690068,
             },
             willingToTravel: true,
+            adTypeOfMusician: ['Band', 'Musician'],
             adSkills: {
                 singByEar: true,
                 playByEar: true,
@@ -69,7 +75,7 @@ export const ContractorAdsMockApi =
         },
 
         {
-            id: 5404541,
+            id: 1855674,
             adImage: [
                 require('../../../assets/Mock/vendors/vendor3.png'),
                 require('../../../assets/Mock/vendors/vendor1.png'),
@@ -78,6 +84,11 @@ export const ContractorAdsMockApi =
             costPerHour: 150,
             costPerHourCurrency: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
+            adEventTime: {
+                eventStart: 1661533200000,
+                eventEnd: 1661544000000,
+
+            },
             adTitle: "Le Bernandin",
             adLocation: "Victoria, Ballarat",
             adAddress: "1632 Spruce Street, Berkeley, CA 94709 Berkeley California United States",
@@ -88,6 +99,7 @@ export const ContractorAdsMockApi =
                 longitudeDelta: 0.040142817690068,
             },
             willingToTravel: true,
+            adTypeOfMusician: ['Band', 'Musician'],
             adSkills: {
                 singByEar: true,
                 playByEar: true,
@@ -136,7 +148,7 @@ export const ContractorAdsMockApi =
             ]
         },
         {
-            id: 5404541,
+            id: 1145663,
             adImage: [
                 require('../../../assets/Mock/vendors/vendor3.png'),
                 require('../../../assets/Mock/vendors/vendor1.png'),
@@ -145,6 +157,11 @@ export const ContractorAdsMockApi =
             costPerHour: 350,
             costPerHourCurrency: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
+            adEventTime: {
+                eventStart: 1661533200000,
+                eventEnd: 1661544000000,
+
+            },
             adTitle: "Paris",
             adLocation: "Victoria, Ballarat",
             adAddress: "1523 Grant Street, Berkeley, CA 94703 Berkeley California United States",
@@ -155,6 +172,7 @@ export const ContractorAdsMockApi =
                 longitudeDelta: 0.040142817690068,
             },
             willingToTravel: true,
+            adTypeOfMusician: ['Band', 'Musician'],
             adSkills: {
                 singByEar: true,
                 playByEar: true,
@@ -203,7 +221,7 @@ export const ContractorAdsMockApi =
             ]
         },
         {
-            id: 5404541,
+            id: 9536559,
             adImage: [
                 require('../../../assets/Mock/vendors/vendor2.png'),
                 require('../../../assets/Mock/vendors/vendor1.png'),
@@ -212,6 +230,11 @@ export const ContractorAdsMockApi =
             costPerHour: 150,
             costPerHourCurrency: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
+            adEventTime: {
+                eventStart: 1661533200000,
+                eventEnd: 1661544000000,
+
+            },
             adTitle: "Downtown Aloft Asheville ",
             adLocation: "Victoria, Ballarat",
             adAddress: "1632 Spruce Street, Berkeley, CA 94709 Berkeley California United States",
@@ -222,6 +245,7 @@ export const ContractorAdsMockApi =
                 longitudeDelta: 0.040142817690068,
             },
             willingToTravel: true,
+            adTypeOfMusician: ['Band', 'Musician'],
             adSkills: {
                 singByEar: true,
                 playByEar: true,
@@ -270,7 +294,7 @@ export const ContractorAdsMockApi =
             ]
         },
         {
-            id: 5404541,
+            id: 3521040,
             adImage: [
                 require('../../../assets/Mock/vendors/vendor1.png'),
                 require('../../../assets/Mock/vendors/vendor2.png'),
@@ -279,6 +303,11 @@ export const ContractorAdsMockApi =
             costPerHour: 100,
             costPerHourCurrency: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
+            adEventTime: {
+                eventStart: 1661533200000,
+                eventEnd: 1661544000000,
+
+            },
             adTitle: "Aloft Asheville ",
             adLocation: "Victoria, Ballarat",
             adAddress: "Colburn Park Trail, Green Bay, WI 54304, США",
@@ -289,6 +318,7 @@ export const ContractorAdsMockApi =
                 longitudeDelta: 0.040142817690068,
             },
             willingToTravel: true,
+            adTypeOfMusician: ['Band', 'Musician'],
             adSkills: {
                 singByEar: true,
                 playByEar: true,
@@ -337,7 +367,7 @@ export const ContractorAdsMockApi =
             ]
         },
         {
-            id: 5404541,
+            id: 6569061,
             adImage: [
                 require('../../../assets/Mock/vendors/vendor2.png'),
                 require('../../../assets/Mock/vendors/vendor1.png'),
@@ -346,6 +376,11 @@ export const ContractorAdsMockApi =
             costPerHour: 150,
             costPerHourCurrency: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
+            adEventTime: {
+                eventStart: 1661533200000,
+                eventEnd: 1661544000000,
+
+            },
             adTitle: "Downtown Aloft Asheville ",
             adLocation: "Victoria, Ballarat",
             adAddress: "1443 Milvia Street, Berkeley, CA 94709 Berkeley California United States",
@@ -356,6 +391,7 @@ export const ContractorAdsMockApi =
                 longitudeDelta: 0.040142817690068,
             },
             willingToTravel: true,
+            adTypeOfMusician: ['Band', 'Musician'],
             adSkills: {
                 singByEar: true,
                 playByEar: true,
