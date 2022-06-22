@@ -22,7 +22,6 @@ import F from '@/res/fonts'
 // Images
 import IMAGES from '@/res/images'
 const {
-
     MapUserLocationIcon
 } = IMAGES;
 // Helpers

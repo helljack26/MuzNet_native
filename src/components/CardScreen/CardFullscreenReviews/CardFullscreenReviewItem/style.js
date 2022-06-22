@@ -4,16 +4,12 @@ import C from '@/res/colors'
 import { M } from '@/res/mixin'
 
 const ItemContainer = styled.View`
-border-radius: 6px;
-border-color: ${C.lightGray};
-border-width: 1px;
-border-style: solid;
-padding: 16px;
+border-bottom-color: ${C.lightGray};
+border-bottom-width: 1px;
+padding: 24px 0px;
 display: flex;
 flex-direction: column;
 width: 100%;
-/* height: 100%; */
-max-height: 183px;
 `;
 const ItemInfo = styled.View`
 display: flex;
@@ -22,8 +18,8 @@ flex-direction: row;
 `;
 const ItemImageBlock = styled.View`
 border-radius: 6px;
-width: 40px;
-height: 40px;
+width: 48px;
+height: 48px;
 overflow: hidden;
 `;
 const ItemImage = styled.Image`
@@ -35,20 +31,19 @@ const ItemInfoBlock = styled.View`
 display: flex;
 flex-direction: column;
 margin-left: 12px;
+padding-right: 100px;
 `;
 const ItemInfoName = styled(M.TitleBold17)`
-padding-bottom: 2px;
+padding-bottom: 5px;
 `;
 const ItemInfoDate = styled(M.PlainText13)`
 color: ${C.sBlack};
 `;
 const ItemReviewBlock = styled.View`
 padding-top: 10px;
-height: 100%;
 `;
 const ItemReviewText = styled(M.PlainText14)`
 padding-top: 4px;
-padding-bottom: 7px;
 `;
 const ItemReviewReadMoreTextDots = styled(M.TitleBold15)`
 
@@ -57,6 +52,17 @@ const ItemReviewReadMoreText = styled(M.TitleBold15)`
 text-decoration: underline;
 `;
 
+const ItemInfoRate = styled.View`
+display: flex;
+align-items: center;
+flex-direction: row;
+position: absolute;
+top: 0px;
+right: 0px;
+`;
+const ItemInfoRateText = styled(M.PlainText17)`
+margin-left: 6px;
+`;
 
 export const style = {
     ItemContainer: ItemContainer,
@@ -71,4 +77,6 @@ export const style = {
     ItemReviewText: ItemReviewText,
     ItemReviewReadMoreTextDots: ItemReviewReadMoreTextDots,
     ItemReviewReadMoreText: ItemReviewReadMoreText,
+    ItemInfoRate: ItemInfoRate,
+    ItemInfoRateText: ItemInfoRateText,
 }

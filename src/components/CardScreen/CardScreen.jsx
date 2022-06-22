@@ -6,6 +6,7 @@ import Collapsible from 'react-native-collapsible';
 import RateBlock from "@/components/RateBlock";
 import CardImageSlider from './CardImageSlider'
 import CardFullscreenImageSlider from './CardFullscreenImageSlider'
+import CardFullscreenReviews from './CardFullscreenReviews'
 import CardMediaImage from './CardMediaImage'
 import CardLocationBlock from './CardLocationBlock'
 import CardReviewsList from './CardReviewsList'
@@ -105,7 +106,7 @@ const CardScreen = ({ isMusician, data, routeId }) => {
     const [showMoreDescription, setShowMoreDescription] = useState(true);
 
     // Review block
-    const [fullscreenReviewState, setFullscreenReviewState] = useState(false);
+    const [fullscreenReviewState, setFullscreenReviewState] = useState({ isOpen: false, initialReview: 0, });
 
     // Reset state on focus
     useEffect(() => {
@@ -159,6 +160,14 @@ const CardScreen = ({ isMusician, data, routeId }) => {
                     cardImages={cardImages}
                     fullscreenImgState={fullscreenImgState}
                     setFullscreenImgState={setFullscreenImgState}
+                />
+            }
+            {/* Fullscreen review */}
+            {fullscreenReviewState.isOpen === true &&
+                <CardFullscreenReviews
+                    cardReviews={cardReviews}
+                    fullscreenReviewState={fullscreenReviewState}
+                    setFullscreenReviewState={setFullscreenReviewState}
                 />
             }
             <CardContainerScrollView

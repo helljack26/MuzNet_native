@@ -19,7 +19,7 @@ margin-left: -16px;
 margin-right: -16px;
 padding-left: 16px;
 `;
-const SliderScrollViewItem = styled.ScrollView`
+const SliderScrollViewItem = styled.TouchableOpacity`
 border-radius: 6px;
 margin: 0px 4px;
 `;
@@ -46,6 +46,9 @@ const CardReviewsList = ({ cardReviews, fullscreenReviewState, setFullscreenRevi
                     const isLast = key === cardReviews.length - 1
                     return (
                         <SliderScrollViewItem
+                            onPress={() => {
+                                setFullscreenReviewState({ isOpen: true, initialReview: key, })
+                            }}
                             key={key}
                             style={{
                                 width: CARD_WIDTH - 20,
@@ -59,7 +62,7 @@ const CardReviewsList = ({ cardReviews, fullscreenReviewState, setFullscreenRevi
             </SliderScrollView>
 
             <ReviewViewAllBtn
-            // onPress={() => { setFullscreenImgState({ isOpen: true, initialSlide: 0, }) }}
+                onPress={() => { setFullscreenReviewState({ isOpen: true, initialReview: 0, }) }}
             >
                 <ReviewViewAllBtnText>
                     View All

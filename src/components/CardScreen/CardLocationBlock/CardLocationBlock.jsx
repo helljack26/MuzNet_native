@@ -55,13 +55,12 @@ const CardLocationBlock = ({ cardAddress, cardCoords }) => {
             Our location
         </MediaContainerTitle>
 
-
         <MediaContainerBlock
             onPress={() => {
                 const lat = cardCoords.latitude
                 const lng = cardCoords.longitude
                 const scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
-                const url = scheme + `${lat},${lng}`;
+                const url = scheme + `${lat},${lng}?q=${cardAddress}`;
                 Linking.openURL(url);
             }}
         >
