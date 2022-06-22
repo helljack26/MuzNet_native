@@ -48,7 +48,7 @@ const CardFullscreenReviews = ({ cardReviews, fullscreenReviewState, setFullscre
     };
 
     useEffect(() => {
-        if (fullscreenReviewState.isOpen === true) {
+        if (fullscreenReviewState.isOpen === true && fullscreenReviewState.isViewAll === false) {
             setTimeout(() => {
                 setScrollToIndex(fullscreenReviewState.initialReview)
                 scrollHandler()

@@ -11,6 +11,7 @@ import CardMediaImage from './CardMediaImage'
 import CardLocationBlock from './CardLocationBlock'
 import CardReviewsList from './CardReviewsList'
 import CardSimilarList from './CardSimilarList'
+import CardSendMessage from './CardSendMessage'
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
@@ -106,7 +107,10 @@ const CardScreen = ({ isMusician, data, routeId }) => {
     const [showMoreDescription, setShowMoreDescription] = useState(true);
 
     // Review block
-    const [fullscreenReviewState, setFullscreenReviewState] = useState({ isOpen: false, initialReview: 0, });
+    const [fullscreenReviewState, setFullscreenReviewState] = useState({ isOpen: false, initialReview: 0, isViewAll: false, });
+
+    // Send message state
+    const [isOpenSendMessage, setOpenSendMessage] = useState(true)
 
     // Reset state on focus
     useEffect(() => {
@@ -117,7 +121,7 @@ const CardScreen = ({ isMusician, data, routeId }) => {
         return unsubscribe;
     }, [navigation]);
 
-    // Scroll top
+    // Scroll top when press on similar
     const scrollViewRef = useRef(null)
     const [isScrollToTop, setScrollToTop] = useState(false);
     const scrollTop = () => { if (scrollViewRef.current) { setTimeout(() => { scrollViewRef.current.scrollTo({ y: 0, animated: false }) }, 20); } }
@@ -170,6 +174,16 @@ const CardScreen = ({ isMusician, data, routeId }) => {
                     setFullscreenReviewState={setFullscreenReviewState}
                 />
             }
+            {/* Send message */}
+            {isOpenSendMessage === true &&
+                <CardSendMessage
+                    receiverId={data.id}
+                    receiverName={cardTitle}
+                    isMusician={isMusicianTrue}
+                    setOpenSendMessage={setOpenSendMessage}
+                />
+            }
+
             <CardContainerScrollView
                 showsVerticalScrollIndicator={false}
                 horizontal={false}
@@ -433,7 +447,9 @@ const CardScreen = ({ isMusician, data, routeId }) => {
                         <PricePerHourText> / hour</PricePerHourText>
                     </ContainerPerHour>
                     <ButtonSubmit
-                    // onPress={handleSubmit(onSubmit)} 
+                        onPress={() => {
+                            setOpenSendMessage(true)
+                        }}
                     >
                         <ButtonSubmitText>
                             {isMusician ?

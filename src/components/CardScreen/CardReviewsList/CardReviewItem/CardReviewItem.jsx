@@ -1,4 +1,7 @@
 import React from "react";
+// Images
+import IMAGES from '@/res/images'
+const { RateStarIcon } = IMAGES;
 // Styles
 import { style } from './style'
 const {
@@ -14,12 +17,15 @@ const {
     ItemReviewText,
     ItemReviewReadMoreTextDots,
     ItemReviewReadMoreText,
+    ItemInfoRate,
+    ItemInfoRateText,
 } = style;
 
 const CardReviewItem = ({ reviewData }) => {
     if (reviewData === undefined) return null
 
     const {
+        reviewRate,
         reviewDate,
         reviewWritter,
         reviewerAvatar,
@@ -57,6 +63,13 @@ const CardReviewItem = ({ reviewData }) => {
                         {isDay}
                     </ItemInfoDate>
                 </ItemInfoBlock>
+
+                <ItemInfoRate>
+                    <RateStarIcon width={14} height={13} />
+                    <ItemInfoRateText>
+                        {reviewRate}.0
+                    </ItemInfoRateText>
+                </ItemInfoRate>
             </ItemInfo>
 
             {/* Review text */}

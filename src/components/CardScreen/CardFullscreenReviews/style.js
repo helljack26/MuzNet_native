@@ -37,6 +37,7 @@ width: 100%;
 height: 100%;
 display: flex;
 flex-direction: column;
+padding-top: 10px;
 padding-bottom: 80px;
 `;
 const ReviewListItem = styled.View`

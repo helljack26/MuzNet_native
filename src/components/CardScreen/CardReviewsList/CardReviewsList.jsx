@@ -47,7 +47,7 @@ const CardReviewsList = ({ cardReviews, fullscreenReviewState, setFullscreenRevi
                     return (
                         <SliderScrollViewItem
                             onPress={() => {
-                                setFullscreenReviewState({ isOpen: true, initialReview: key, })
+                                setFullscreenReviewState({ isOpen: true, initialReview: key, isViewAll: false, })
                             }}
                             key={key}
                             style={{
@@ -62,7 +62,7 @@ const CardReviewsList = ({ cardReviews, fullscreenReviewState, setFullscreenRevi
             </SliderScrollView>
 
             <ReviewViewAllBtn
-                onPress={() => { setFullscreenReviewState({ isOpen: true, initialReview: 0, }) }}
+                onPress={() => { setFullscreenReviewState({ isOpen: true, initialReview: 0, isViewAll: true, }) }}
             >
                 <ReviewViewAllBtnText>
                     View All

@@ -56,7 +56,17 @@ const ItemReviewReadMoreTextDots = styled(M.TitleBold15)`
 const ItemReviewReadMoreText = styled(M.TitleBold15)`
 text-decoration: underline;
 `;
-
+const ItemInfoRate = styled.View`
+display: flex;
+align-items: center;
+flex-direction: row;
+position: absolute;
+top: 0px;
+right: 0px;
+`;
+const ItemInfoRateText = styled(M.PlainText15)`
+margin-left: 6px;
+`;
 
 export const style = {
     ItemContainer: ItemContainer,
@@ -71,4 +81,6 @@ export const style = {
     ItemReviewText: ItemReviewText,
     ItemReviewReadMoreTextDots: ItemReviewReadMoreTextDots,
     ItemReviewReadMoreText: ItemReviewReadMoreText,
+    ItemInfoRate: ItemInfoRate,
+    ItemInfoRateText: ItemInfoRateText,
 }
