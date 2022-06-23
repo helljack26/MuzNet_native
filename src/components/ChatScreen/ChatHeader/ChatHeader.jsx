@@ -7,6 +7,7 @@ import C from '@/res/colors'
 import { style } from './style'
 const {
     Header,
+    HeaderRow,
     HeaderWhiteBlock,
     HeaderClose,
     HeaderUserName,
@@ -16,7 +17,6 @@ const {
     HeaderOptions,
     HeaderOptionsDots,
 } = style;
-
 // Store
 import { observer } from 'mobx-react-lite';
 
@@ -24,26 +24,29 @@ const ChatHeader = observer(({ chatUserName, chatUserImg }) => {
 
     return (
         <>
-            <HeaderWhiteBlock></HeaderWhiteBlock>
             <Header>
-                <HeaderClose>
-                    <GoBack />
-                </HeaderClose>
+                <HeaderWhiteBlock></HeaderWhiteBlock>
+                <HeaderRow>
+                    <HeaderClose>
+                        <GoBack />
+                    </HeaderClose>
 
-                <HeaderUser>
-                    <HeaderUserImgBlock>
-                        <HeaderUserImg source={chatUserImg} resizeMode={'cover'} />
-                    </HeaderUserImgBlock>
-                    <HeaderUserName>
-                        {chatUserName}
-                    </HeaderUserName>
-                </HeaderUser>
+                    <HeaderUser>
+                        <HeaderUserImgBlock>
+                            <HeaderUserImg source={chatUserImg} resizeMode={'cover'} />
+                        </HeaderUserImgBlock>
+                        <HeaderUserName>
+                            {chatUserName}
+                        </HeaderUserName>
+                    </HeaderUser>
 
-                <HeaderOptions>
-                    <HeaderOptionsDots></HeaderOptionsDots>
-                    <HeaderOptionsDots></HeaderOptionsDots>
-                    <HeaderOptionsDots></HeaderOptionsDots>
-                </HeaderOptions>
+                    <HeaderOptions>
+                        <HeaderOptionsDots></HeaderOptionsDots>
+                        <HeaderOptionsDots></HeaderOptionsDots>
+                        <HeaderOptionsDots></HeaderOptionsDots>
+                    </HeaderOptions>
+                </HeaderRow>
+
             </Header>
         </>
 

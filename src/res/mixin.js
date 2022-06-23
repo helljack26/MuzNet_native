@@ -174,6 +174,12 @@ font-family: ${F.medium};
 color: ${C.black};
 line-height: 19px;
 `
+const MediumText14 = styled.Text`
+font-size: 14px;
+font-family: ${F.medium};
+color: ${C.black};
+line-height: 18px;
+`
 const MediumText13 = styled.Text`
 font-size: 13px;
 font-family: ${F.medium};
@@ -275,6 +281,7 @@ export const M = {
     MediumText20: MediumText20,
     MediumText17: MediumText17,
     MediumText15: MediumText15,
+    MediumText14: MediumText14,
     MediumText13: MediumText13,
     MediumText12: MediumText12,
     ErrorMessage: ErrorMessage,

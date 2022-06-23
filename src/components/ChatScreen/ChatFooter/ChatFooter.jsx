@@ -39,7 +39,7 @@ const ChatFooter = observer(({ messageText, onChangeMessageText, setSendMessage,
     // Attach
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
-        let result = await ImagePicker.launchImageLibraryAsync({
+        let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             quality: 1,
@@ -55,52 +55,46 @@ const ChatFooter = observer(({ messageText, onChangeMessageText, setSendMessage,
     const inputWidth = windowWidth - 117
     // Is send message
     const isSendMessage = messageText.length > 0
+
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={{
-                flex: 1,
-                width: '100%',
-            }}
+
+        <SearchInputContainer
+            isKeyboardOpen={isKeyboardOpen}
         >
-            <SearchInputContainer
-                isKeyboardOpen={isKeyboardOpen}
+            <SearchInputBlock
+                style={{
+                    width: windowWidth - 32,
+                    borderColor: inputFocus1,
+                }}
             >
-                <SearchInputBlock
+                <AttachIconBlock onPress={pickImage}>
+                    <MessageAttachGrayIcon width={19} height={20} />
+                </AttachIconBlock>
+
+                <SearchInput
+                    cursorColor={C.inputCursor}
+                    selectionColor={C.lightGray}
+                    placeholder={'Write your message here'}
+                    keyboardType="default"
+                    value={messageText}
+                    multiline={true}
+                    onChangeText={onChangeMessageText}
+                    onFocus={() => { setInputFocus1(C.black) }}
+                    onBlur={() => { setInputFocus1(C.lightGray) }}
                     style={{
-                        width: windowWidth - 32,
-                        borderColor: inputFocus1,
+                        width: inputWidth,
+                        textAlignVertical: 'bottom'
                     }}
-                >
-                    <AttachIconBlock onPress={pickImage}>
-                        <MessageAttachGrayIcon width={19} height={20} />
-                    </AttachIconBlock>
+                />
 
-                    <SearchInput
-                        cursorColor={C.inputCursor}
-                        selectionColor={C.lightGray}
-                        placeholder={'Write your message here'}
-                        keyboardType="default"
-                        value={messageText}
-                        multiline={true}
-                        onChangeText={onChangeMessageText}
-                        onFocus={() => { setInputFocus1(C.black) }}
-                        onBlur={() => { setInputFocus1(C.lightGray) }}
-                        style={{
-                            width: inputWidth,
-                            textAlignVertical: 'bottom'
-                        }}
-                    />
-
-                    {/* Send message button */}
-                    <SendMessageButton onPress={() => { isSendMessage === true && setSendMessage(true) }}>
-                        <SendMessageIconBlock>
-                            <SendMessageIcon width={15} height={15} />
-                        </SendMessageIconBlock>
-                    </SendMessageButton>
-                </SearchInputBlock>
-            </SearchInputContainer>
-        </KeyboardAvoidingView>
+                {/* Send message button */}
+                <SendMessageButton onPress={() => { isSendMessage === true && setSendMessage(true) }}>
+                    <SendMessageIconBlock>
+                        <SendMessageIcon width={15} height={15} />
+                    </SendMessageIconBlock>
+                </SendMessageButton>
+            </SearchInputBlock>
+        </SearchInputContainer>
     );
 })
 

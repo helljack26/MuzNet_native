@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
 import ChatHeader from './ChatHeader'
+import ChatMessagesContractor from './ChatMessagesContractor'
 import ChatFooter from './ChatFooter'
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
@@ -27,7 +28,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 padding-bottom: 20px;
-background-color: #F2F3F9;
+background-color: ${C.white};
 `;
 
 const ChatScreen = observer(({ isContractor }) => {
@@ -36,49 +37,79 @@ const ChatScreen = observer(({ isContractor }) => {
     const navigation = useNavigation();
 
     const route = useRoute();
-
     const chatUserId = route.params.chatUserId
+    // Header
     const chatUserName = 'Leo Ferguson'
     const chatUserImg = require('../../../assets/Mock/Georgia.png')
-    // useEffect(() => {
-    //     const unsubscribe = navigation.addListener('focus', () => {
-    //         setList(route.name);
-    //     });
-    //     return unsubscribe;
-    // }, [navigation]);
 
     const isKeyboardOpen = isKeyboardShown()
     const { windowHeight, windowWidth } = getWindowDimension()
 
+    // Attachment state
     const [messageAttachment, setMessageAttachment] = useState(null);
+    // Message state
     const [messageText, onChangeMessageText] = useState('');
 
     const [isSendMessage, setSendMessage] = useState(false);
+
+    const [newMessage, setNewMessage] = useState({
+        messageText: '',
+        messageAttachment: '',
+    });
+
     useEffect(() => {
         if (isSendMessage === true) {
+            setNewMessage({
+                messageText: messageText,
+                messageAttachment: '',
+            })
             onChangeMessageText('')
             setSendMessage(false)
         }
     }, [isSendMessage]);
+
+    useEffect(() => {
+        if (messageAttachment) {
+            console.log("🚀 ~ file: ChatScreen.jsx ~ line 73 ~ useEffect ~ messageAttachment", messageAttachment)
+            setNewMessage({
+                messageText: messageText,
+                messageAttachment: '',
+            })
+        }
+    }, [messageAttachment]);
+
+
     return (
-        <TouchableWithoutFeedback
-            onPress={() => Keyboard.dismiss()}>
-            <Content
+
+        <Content
+            style={{
+                width: windowWidth,
+                height: '100%',
+            }}
+        >
+            <ChatHeader chatUserName={chatUserName} chatUserImg={chatUserImg} />
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={{
-                    width: windowWidth,
-                    height: windowHeight,
+                    flex: 1,
+                    width: '100%',
                 }}
             >
-                <ChatHeader chatUserName={chatUserName} chatUserImg={chatUserImg} />
-
+                {isContractor === true ?
+                    <ChatMessagesContractor newMessage={newMessage} isSendMessage={isSendMessage} />
+                    :
+                    null
+                }
                 <ChatFooter
                     messageText={messageText}
                     onChangeMessageText={onChangeMessageText}
                     setSendMessage={setSendMessage}
                     setMessageAttachment={setMessageAttachment}
                 />
-            </Content>
-        </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+
+        </Content>
+
 
     )
 })

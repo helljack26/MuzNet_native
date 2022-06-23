@@ -9,15 +9,17 @@ width: 100%;
 position: absolute;
 left: 0px;
 bottom: 0px;
+right: 0px;
 background-color: ${C.white};
 padding: 0px 16px;
 padding-top: 16px;
-padding-bottom: ${props => props.isKeyboardOpen === true ? 16 + 'px' : 60 + 'px'};
-right: 0px;
+padding-bottom: ${props => props.isKeyboardOpen === true ? 16 + 'px' : 40 + 'px'};
+z-index: 999;
 `;
 const SearchInputBlock = styled.View`
 /* width: 100%; */
 min-height: 48px;
+max-height: 200px;
 border-radius: 6px;
 overflow: hidden;
 border-color: ${C.lightGray};
@@ -38,16 +40,13 @@ font-family: ${F.medium};
 color: ${C.black};
 `;
 const AttachIconBlock = styled.TouchableOpacity`
-/* position: absolute;
-bottom: 16px;
-left: 11px; */
 width: 40px;
 height: 48px;
 display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: row;
-z-index: 999;
+
 `;
 const SendMessageButton = styled.TouchableOpacity`
 width: 40px;

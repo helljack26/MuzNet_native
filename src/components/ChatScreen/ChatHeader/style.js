@@ -5,17 +5,30 @@ import { M } from '@/res/mixin'
 
 const Header = styled.View`
 width: 100%;
-height: 72px;
+height: 116px;
 display: flex;
-flex-direction: row;
-align-items: center;
+flex-direction: column;
+justify-content: flex-end;
 padding: 0px 16px;
+padding-bottom: 20px;
 background-color: ${C.white};
+z-index: 999;
+position: absolute;
+top: 0px;
+left: 0px;
+right: 0px;
 `;
 const HeaderWhiteBlock = styled.View`
 width: 100%;
 height: 44px;
 background-color: ${C.white};
+`;
+const HeaderRow = styled.View`
+width: 100%;
+height: 32px;
+background-color: ${C.white};
+display: flex;
+flex-direction: row;
 `;
 const HeaderClose = styled.View`
 display: flex;
@@ -56,8 +69,8 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 position: absolute;
-top: 24px;
-right:16px;
+top: 4px;
+right:5px;
 `;
 const HeaderOptionsDots = styled.View`
 width: 4px;
@@ -68,6 +81,7 @@ margin-top: 3px;
 `;
 export const style = {
     Header: Header,
+    HeaderRow: HeaderRow,
     HeaderWhiteBlock: HeaderWhiteBlock,
     HeaderClose: HeaderClose,
     HeaderUserName: HeaderUserName,
