@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 // Icons
 import IMAGES from '@/res/images'
@@ -61,7 +61,14 @@ display: flex;
 align-items: center;
 flex-direction: column;
 width: 20%;
-opacity: ${props => props.isActive === true ? 1 : 0.2};
+opacity:0.2;
+`;
+const TapbarItemActive = styled.View`
+padding-top: 16px;
+display: flex;
+align-items: center;
+flex-direction: column;
+width: 20%;
 `;
 const ActiveDot = styled.View`
 display: flex;
@@ -75,8 +82,11 @@ background-color: ${C.black};
 `;
 
 const TapbarMenu = ({ isShowKeyboard }) => {
-    const route = useRoute();
+    const navigation = useNavigation();
 
+    const route = useRoute();
+    const routeName = route.name
+    console.log("🚀 ~ file: TapbarMenu.jsx ~ line 89 ~ TapbarMenu ~ routeName", routeName)
     const isKeyboardOpen = isKeyboardShown()
 
     return (
@@ -84,21 +94,35 @@ const TapbarMenu = ({ isShowKeyboard }) => {
             isKeyboardOpen={isShowKeyboard !== undefined ? isShowKeyboard : isKeyboardOpen}
         >
             {TapbarMenuContent.map((item, id) => {
-                const isContractor = route.name.slice(0, 10) === 'Contractor' ? 10 : 8
+                const isContractor = routeName.slice(0, 10) === 'Contractor'
+                const navigationPrefix = isContractor === true ? 'Contractor' : 'Musician'
 
-                const cleanRoute = route.name.slice(isContractor, route.name.length)
-
+                const isContractorSlice = isContractor ? 10 : 8
+                const cleanRoute = routeName.slice(isContractorSlice, routeName.length)
                 const isSearch = cleanRoute === 'ListSearchScreen' ? 'WelcomeScreen' : cleanRoute
-
                 const isActive = isSearch === item.screenName
-                return <TapbarItem
-                    isActive={isActive}
-                    key={id}>
-                    {/* Icon */}
-                    {item.icon}
-
-                    {isActive === true && <ActiveDot></ActiveDot>}
-                </TapbarItem>
+                return (isActive === true ?
+                    <TapbarItemActive key={id}     >
+                        {/* Icon */}
+                        {item.icon}
+                        <ActiveDot></ActiveDot>
+                    </TapbarItemActive>
+                    :
+                    <TapbarItem
+                        onPress={() => {
+                            let isOneTap = 0
+                            if (isOneTap === 0 && !isActive) {
+                                isOneTap = 1
+                                navigation.push(`${navigationPrefix}Stack`, { screen: `${navigationPrefix}${item.screenName}` });
+                            }
+                        }}
+                        isActive={isActive}
+                        key={id}
+                    >
+                        {/* Icon */}
+                        {item.icon}
+                    </TapbarItem>
+                )
 
             })}
         </TapbarBlock>

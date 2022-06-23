@@ -40,7 +40,18 @@ import MapUserLocationIcon from '../../assets/icon/map_userLocation_icon.svg'
 import MapAdBlackLocationIcon from '../../assets/icon/map_black_adLocation_icon.svg'
 import ShareWhiteIcon from '../../assets/icon/share_white_icon.svg'
 import WarningGrayIcon from '../../assets/icon/warning_gray_icon.svg'
+import WarningBlackIcon from '../../assets/icon/warning_black_icon.svg'
 import ClockGrayIcon from '../../assets/icon/clock_gray_icon.svg'
+import MessegeAttachGrayIcon from '../../assets/icon/attach_gray_icon.svg'
+import SendMessageIcon from '../../assets/icon/send_message_icon.svg'
+import LockGrayIcon from '../../assets/icon/lock_gray_icon.svg'
+import AddCrossIcon from '../../assets/icon/add_cross_icon.svg'
+// Bank logo
+import VisaBankIcon from '../../assets/icon/visa_icon.svg'
+import MasterCardBankIcon from '../../assets/icon/masterCard_icon.svg'
+import PayPalBankIcon from '../../assets/icon/paypal_icon.svg'
+import AmericanExpressBankIcon from '../../assets/icon/americanExpress_icon.svg'
+
 // Main screen
 import FilterIcon from '../../assets/icon/filter_icon.svg'
 import RateStarIcon from '../../assets/icon/rate_star_icon.svg'
@@ -110,7 +121,17 @@ const IMAGES = {
     MapAdBlackLocationIcon: MapAdBlackLocationIcon,
     ShareWhiteIcon: ShareWhiteIcon,
     WarningGrayIcon: WarningGrayIcon,
+    WarningBlackIcon: WarningBlackIcon,
     ClockGrayIcon: ClockGrayIcon,
+    MessegeAttachGrayIcon: MessegeAttachGrayIcon,
+    SendMessageIcon: SendMessageIcon,
+    LockGrayIcon: LockGrayIcon,
+    AddCrossIcon: AddCrossIcon,
+    // Bank
+    VisaBankIcon: VisaBankIcon,
+    MasterCardBankIcon: MasterCardBankIcon,
+    PayPalBankIcon: PayPalBankIcon,
+    AmericanExpressBankIcon: AmericanExpressBankIcon,
     // Arrows
     GoBackIcon: GoBackIcon,
     GoBackWhiteIcon: GoBackWhiteIcon,

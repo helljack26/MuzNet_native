@@ -59,7 +59,6 @@ color: ${C.black};
 border-width: 1px;
 border-style: solid;
 border-radius: 6px;
-/* height: 144px; */
 `;
 const ButtonSubmit = styled(M.BlackBtn)`
 position: absolute;

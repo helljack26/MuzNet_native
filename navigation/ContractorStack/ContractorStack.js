@@ -5,6 +5,8 @@ import ContractorWelcomeScreen from '../../src/pages/Contractor/ContractorWelcom
 import ContractorListSearchScreen from '../../src/pages/Contractor/ContractorListSearchScreen';
 import ContractorMapSearchScreen from '../../src/pages/Contractor/ContractorMapSearchScreen';
 import MusicianCardScreen from '../../src/pages/Contractor/MusicianCardScreen';
+import ContractorMessagesScreen from '../../src/pages/Contractor/ContractorMessagesScreen';
+import ContractorChatScreen from '../../src/pages/Contractor/ContractorChatScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,11 +19,21 @@ export default function ContractorStack() {
                 headerShown: false,
             })}
         >
-            <Stack.Screen name="ContractorWelcomeScreen" component={ContractorWelcomeScreen} />
+            <Stack.Screen
+                options={{
+                    transitionConfig: () => ({
+                        transitionSpec: {
+                            duration: 0,
+                            timing: Animated.timing,
+                            easing: Easing.step0,
+                        },
+                    }),
+                }}
+                name="ContractorWelcomeScreen" component={ContractorWelcomeScreen} />
             <Stack.Screen name="ContractorListSearchScreen" component={ContractorListSearchScreen} />
             <Stack.Screen name="ContractorMapSearchScreen" component={ContractorMapSearchScreen} />
             <Stack.Screen name="MusicianCardScreen" component={MusicianCardScreen} />
-
-
+            <Stack.Screen name="ContractorMessagesScreen" component={ContractorMessagesScreen} />
+            <Stack.Screen name="ContractorChatScreen" component={ContractorChatScreen} />
         </Stack.Navigator>)
 }

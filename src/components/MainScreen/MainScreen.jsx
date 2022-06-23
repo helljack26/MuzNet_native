@@ -48,6 +48,7 @@ const {
 const MainScreen = observer(({ stackName, screenMapName, screenListName, screenCardName, screenTitle }) => {
     const { musicianList, vendorList, setList } = useSearchApiStore();
 
+
     const navigation = useNavigation();
 
     const route = useRoute();

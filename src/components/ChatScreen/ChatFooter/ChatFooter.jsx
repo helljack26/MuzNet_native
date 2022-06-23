@@ -26,7 +26,7 @@ const {
 import { observer } from 'mobx-react-lite';
 import { useSearchApiStore } from '@/stores/SearchApi';
 
-const ListSearchInput = observer(({ searchText, isContractor, onChangeSearchText, isMinOne, initialFocusInput }) => {
+const ChatFooter = observer(({ searchText, isContractor, onChangeSearchText, isMinOne, initialFocusInput }) => {
     const navigation = useNavigation();
     const route = useRoute();
 
@@ -71,4 +71,4 @@ const ListSearchInput = observer(({ searchText, isContractor, onChangeSearchText
     );
 })
 
-export default ListSearchInput;
+export default ChatFooter;

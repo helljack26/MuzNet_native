@@ -110,7 +110,7 @@ const CardScreen = ({ isMusician, data, routeId }) => {
     const [fullscreenReviewState, setFullscreenReviewState] = useState({ isOpen: false, initialReview: 0, isViewAll: false, });
 
     // Send message state
-    const [isOpenSendMessage, setOpenSendMessage] = useState(true)
+    const [isOpenSendMessage, setOpenSendMessage] = useState(false)
 
     // Reset state on focus
     useEffect(() => {

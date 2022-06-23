@@ -120,6 +120,12 @@ font-family: ${F.bold};
 color: ${C.black};
 line-height: 19px;
 `
+const TitleBold10 = styled.Text`
+font-size: 10px;
+font-family: ${F.bold};
+color: ${C.black};
+line-height: 13px;
+`
 const PlainText17 = styled.Text`
 font-size: 17px;
 font-family: ${F.regular};
@@ -143,6 +149,12 @@ font-size: 13px;
 font-family: ${F.regular};
 color: ${C.black};
 line-height: 16px;
+`
+const PlainText12 = styled.Text`
+font-size: 12px;
+font-family: ${F.regular};
+color: ${C.black};
+line-height: 15px;
 `
 const MediumText20 = styled.Text`
 font-size: 20px;
@@ -254,10 +266,12 @@ export const M = {
     TitleBold17: TitleBold17,
     TitleBold16: TitleBold16,
     TitleBold15: TitleBold15,
+    TitleBold10: TitleBold10,
     PlainText17: PlainText17,
     PlainText15: PlainText15,
     PlainText14: PlainText14,
     PlainText13: PlainText13,
+    PlainText12: PlainText12,
     MediumText20: MediumText20,
     MediumText17: MediumText17,
     MediumText15: MediumText15,

@@ -41,15 +41,12 @@ const {
 } = style;
 
 const CardSendMessage = ({ receiverId, receiverName, isMusician, setOpenSendMessage }) => {
-    const navigation = useNavigation();
     const { windowHeight, windowWidth } = getWindowDimension()
 
     const { control, handleSubmit, resetField,
         formState: { errors } } = useForm({
             defaultValues: { userMessage: '' }
         });
-
-    const isKeyboardOpen = isKeyboardShown()
 
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
 
@@ -58,7 +55,7 @@ const CardSendMessage = ({ receiverId, receiverName, isMusician, setOpenSendMess
         // Clear input value
         resetField('userMessage');
         Keyboard.dismiss()
-        navigation.navigate('Chat', { screen: 'ForgetPasswordScreen' })
+        // navigation.navigate('Chat', { screen: 'ForgetPasswordScreen' })
         return
     };
 
@@ -96,7 +93,7 @@ const CardSendMessage = ({ receiverId, receiverName, isMusician, setOpenSendMess
 
                 {/* Form */}
                 <FormBlock >
-                    {/* Email or Name */}
+                    {/* User message */}
                     <Controller
                         control={control}
                         rules={{
@@ -113,7 +110,7 @@ const CardSendMessage = ({ receiverId, receiverName, isMusician, setOpenSendMess
                                     <FormInput
                                         selectionColor={C.lightGray}
                                         multiline={true}
-                                        numberOfLines={4}
+                                        numberOfLines={5}
                                         placeholder={'Write your message'}
                                         placeholderTextColor={C.gray}
                                         cursorColor={C.inputCursor}
