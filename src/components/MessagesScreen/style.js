@@ -17,11 +17,11 @@ const AdsContainer = styled.View`
 width: 100%;
 `;
 const MessagesContainer = styled.View`
-/* margin-top: 16px; */
+margin-top: 16px;
 `;
 const MessagesTitle = styled(M.TitleBold20)`
 margin-bottom: 16px;
-margin-top : ${props => props.isPrevious === true ? 24 + 'px' : 16 + 'px'};
+
 `;
 const MessagesBlock = styled.View`
 

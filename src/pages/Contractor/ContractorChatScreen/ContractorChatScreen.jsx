@@ -18,7 +18,7 @@ const Container = styled.View`
 height: 100%;
 width: 100%;
 background-color: ${C.white};
-padding-bottom: 82px;
+
 `;
 
 const ContractorChatScreen = () => {

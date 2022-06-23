@@ -42,7 +42,7 @@ import ShareWhiteIcon from '../../assets/icon/share_white_icon.svg'
 import WarningGrayIcon from '../../assets/icon/warning_gray_icon.svg'
 import WarningBlackIcon from '../../assets/icon/warning_black_icon.svg'
 import ClockGrayIcon from '../../assets/icon/clock_gray_icon.svg'
-import MessegeAttachGrayIcon from '../../assets/icon/attach_gray_icon.svg'
+import MessageAttachGrayIcon from '../../assets/icon/attach_gray_icon.svg'
 import SendMessageIcon from '../../assets/icon/send_message_icon.svg'
 import LockGrayIcon from '../../assets/icon/lock_gray_icon.svg'
 import AddCrossIcon from '../../assets/icon/add_cross_icon.svg'
@@ -123,7 +123,7 @@ const IMAGES = {
     WarningGrayIcon: WarningGrayIcon,
     WarningBlackIcon: WarningBlackIcon,
     ClockGrayIcon: ClockGrayIcon,
-    MessegeAttachGrayIcon: MessegeAttachGrayIcon,
+    MessageAttachGrayIcon: MessageAttachGrayIcon,
     SendMessageIcon: SendMessageIcon,
     LockGrayIcon: LockGrayIcon,
     AddCrossIcon: AddCrossIcon,

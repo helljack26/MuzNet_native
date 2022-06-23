@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
@@ -11,7 +12,6 @@ import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 // Store
 import { observer } from 'mobx-react-lite';
 import { useSearchApiStore } from '@/stores/SearchApi';
-import C from '@/res/colors'
 
 // Images
 import IMAGES from '@/res/images'
@@ -19,11 +19,16 @@ const {
     MapShape
 } = IMAGES;
 // Styles
-import { style } from './style'
-const {
-    Content,
+import styled from 'styled-components/native';
+import C from '@/res/colors'
 
-} = style;
+const Content = styled.View`
+display: flex;
+flex-direction: column;
+align-items: center;
+padding-bottom: 20px;
+background-color: #F2F3F9;
+`;
 
 const ChatScreen = observer(({ isContractor }) => {
     const { musicianList, vendorList, setList } = useSearchApiStore();
@@ -45,17 +50,36 @@ const ChatScreen = observer(({ isContractor }) => {
     const isKeyboardOpen = isKeyboardShown()
     const { windowHeight, windowWidth } = getWindowDimension()
 
-    const [searchText, onChangeSearchText] = useState('');
+    const [messageAttachment, setMessageAttachment] = useState(null);
+    const [messageText, onChangeMessageText] = useState('');
 
+    const [isSendMessage, setSendMessage] = useState(false);
+    useEffect(() => {
+        if (isSendMessage === true) {
+            onChangeMessageText('')
+            setSendMessage(false)
+        }
+    }, [isSendMessage]);
     return (
-        <Content
-            style={{
-                width: windowWidth,
-                height: windowHeight,
-            }}
-        >
-            <ChatHeader chatUserName={chatUserName} chatUserImg={chatUserImg} />
-        </Content>
+        <TouchableWithoutFeedback
+            onPress={() => Keyboard.dismiss()}>
+            <Content
+                style={{
+                    width: windowWidth,
+                    height: windowHeight,
+                }}
+            >
+                <ChatHeader chatUserName={chatUserName} chatUserImg={chatUserImg} />
+
+                <ChatFooter
+                    messageText={messageText}
+                    onChangeMessageText={onChangeMessageText}
+                    setSendMessage={setSendMessage}
+                    setMessageAttachment={setMessageAttachment}
+                />
+            </Content>
+        </TouchableWithoutFeedback>
+
     )
 })
 

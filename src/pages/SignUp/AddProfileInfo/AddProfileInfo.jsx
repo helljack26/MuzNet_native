@@ -809,9 +809,7 @@ const AddProfileInfo = () => {
 
                         {/* =========== Last tab with inputs  =========== */}
                         {typeOfForm &&
-                            <UserMainInfoContainer
-
-                            >
+                            <UserMainInfoContainer>
                                 {/* User Avatar */}
                                 <UserAvatarBlock>
                                     {/* Avatar upload from user */}

@@ -4,38 +4,64 @@ import C from '@/res/colors'
 import { M } from '@/res/mixin'
 
 // Search input
-const SearchInputBlock = styled.View`
+const SearchInputContainer = styled.View`
 width: 100%;
-
-`;
-const SearchIconBlock = styled.View`
 position: absolute;
-top: 13px;
-left: 10px;
-width: 14px;
-height: 14px;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: row;
-z-index: 999;
-`;
-const SearchRemoveIconBlock = styled.TouchableOpacity`
-position: absolute;
-top: 0px;
+left: 0px;
 bottom: 0px;
+background-color: ${C.white};
+padding: 0px 16px;
+padding-top: 16px;
+padding-bottom: ${props => props.isKeyboardOpen === true ? 16 + 'px' : 60 + 'px'};
 right: 0px;
+`;
+const SearchInputBlock = styled.View`
+/* width: 100%; */
+min-height: 48px;
+border-radius: 6px;
+overflow: hidden;
+border-color: ${C.lightGray};
+border-width: 1px;
+border-style: solid;
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+flex-direction: row;
+`;
+const SearchInput = styled.TextInput`
+width: 100%;
+height: 100%;
+padding-top: 8px;
+padding-bottom: 14px;
+font-size: 15px;
+font-family: ${F.medium};
+color: ${C.black};
+`;
+const AttachIconBlock = styled.TouchableOpacity`
+/* position: absolute;
+bottom: 16px;
+left: 11px; */
 width: 40px;
-height: 40px;
+height: 48px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+z-index: 999;
+`;
+const SendMessageButton = styled.TouchableOpacity`
+width: 40px;
+height: 48px;
+margin-right: 8px;
 z-index: 999;
 display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: row;
 `;
-const SearchRemoveIcon = styled.View`
-width: 28px;
-height: 28px;
+const SendMessageIconBlock = styled.View`
+width: 32px;
+height: 32px;
 border-radius: 6px;
 background-color: ${C.black};
 display: flex;
@@ -43,25 +69,14 @@ justify-content: center;
 align-items: center;
 flex-direction: row;
 `;
-const SearchInput = styled.TextInput`
-width: 100%;
-height: 40px;
-background-color: ${C.backGray};
-border-radius: 6px;
-padding-left: 32px;
-padding-right: 42px;
-font-size: 15px;
-font-family: ${F.medium};
-color: ${C.black};
-
-`;
 
 
 export const style = {
     // Search input
     SearchInputBlock: SearchInputBlock,
+    SearchInputContainer: SearchInputContainer,
     SearchInput: SearchInput,
-    SearchIconBlock: SearchIconBlock,
-    SearchRemoveIcon: SearchRemoveIcon,
-    SearchRemoveIconBlock: SearchRemoveIconBlock,
+    AttachIconBlock: AttachIconBlock,
+    SendMessageButton: SendMessageButton,
+    SendMessageIconBlock: SendMessageIconBlock,
 }

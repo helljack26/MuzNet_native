@@ -50,8 +50,7 @@ margin-left: 12px;
 `;
 const HeaderOptions = styled.TouchableOpacity`
 width: 24px;
-height: 24px;
-padding-top: -5px;
+height: 27px;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -65,7 +64,7 @@ width: 4px;
 height: 4px;
 background-color: ${C.black};
 border-radius: 2px;
-margin-top: 5px;
+margin-top: 3px;
 `;
 export const style = {
     Header: Header,

@@ -61,10 +61,6 @@ const MessagesScreen = observer(({ stackName, chatScreenName }) => {
 
             {/* New message  */}
             <MessagesContainer>
-                <MessagesTitle>
-                    New
-                </MessagesTitle>
-
                 {/* Messages list */}
                 <MessagesBlock>
 
@@ -111,6 +107,7 @@ const MessagesScreen = observer(({ stackName, chatScreenName }) => {
                             12:32
                         </MessagesItemDate>
                     </MessagesItem>
+
                     <MessagesItem
                         onPress={() => {
                             navigation.navigate(stackName, {
@@ -156,9 +153,6 @@ const MessagesScreen = observer(({ stackName, chatScreenName }) => {
                     </MessagesItem>
                 </MessagesBlock>
 
-                <MessagesTitle isPrevious={true}>
-                    Previous
-                </MessagesTitle>
             </MessagesContainer>
 
             {/* Old message  */}
