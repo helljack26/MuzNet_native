@@ -7,6 +7,7 @@ const DropBlock = styled.View`
 margin: 0px 16px;
 margin-bottom: 24px;
 margin-top: 11px;
+z-index: 1010;
 `;
 const Drop = styled.Pressable`
 width: 100%;
@@ -37,7 +38,7 @@ border-radius: 6px;
 
 const OptionText = styled.Text`
 font-family: ${F.regular};
-color: ${props => props.isHeader === true ? C.sBlack : C.sBlack};
+color: ${props => props.isPlaceholder === true ? C.sBlack : C.black};
 font-size: 17px;
 `;
 

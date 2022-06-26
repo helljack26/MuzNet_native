@@ -11,6 +11,7 @@ background-color: ${C.white};
 border-top-left-radius: 16px;
 border-top-right-radius: 16px;
 overflow: hidden;
+/* z-index: 1000; */
 `;
 
 const Header = styled.View`
@@ -42,7 +43,7 @@ line-height: 30px;
 const FilterBlock = styled.ScrollView`
 width: 100%;
 height: 100%;
-padding-bottom: 125px;
+
 `;
 const CheckboxBlock = styled.View`
 width: 100%;
@@ -58,46 +59,113 @@ margin-bottom: 24px;
 const ContentBlock = styled.View`
 display: flex;
 align-items: flex-start;
-justify-content: space-between;
+justify-content: center;
 flex-direction: row;
 margin-top: 16px;
-margin-top: 16px;
-padding: 0px 10px;
 padding-top: 7px;
-width: 100%;
+/* width: 100%; */
 /* height : ${props => props.isKeyboardOpen === true ? 116 + 'px' : 146 + 'px'}; */
-height : 146px;
+height : 166px;
 position: absolute;
 left:0;
 bottom:0;
 background-color: ${C.white};
-border-color: ${C.lightGray};
-border-width: 1px;
+border-top-color: ${C.lightGray};
+border-top-width: 1px;
 `;
 const ContentBlockRow = styled.View`
 display: flex;
 flex-direction: row;
+justify-content: space-between;
 width: 100%;
+padding: 0px 16px;
 `;
-
 const ButtonSubmit = styled(M.BlackBtn)`
-width: 60%;
-`;
 
+`;
 const ButtonSubmitText = styled(M.BlackBtnText)`
 
 `;
-const ContainerLink = styled.TouchableOpacity`
+const ContainerLink = styled.View`
 width: 40%;
 display: flex;
 justify-content: center;
 align-items: center;
-flex-direction: row;
-margin-left: -10px;
+flex-direction: column;
+margin-left: -5px;
 `;
-const ContainerLinkText = styled(M.PlainText17)`
+const ContainerPrice = styled(M.Title24)`
 
 `;
+const ContainerHour = styled(M.PlainText17)`
+
+`;
+
+const FormInputPricePerHourBlock = styled.View`
+width: 100%;
+z-index: 0;
+border-style: solid;
+border-radius: 6px;
+height:48px;
+padding-left: 16px;
+padding-top: ${props => props.inputLabel === true ? 17 + 'px' : 0 + 'px'};
+padding-right: ${props => props.isPassword === true ? 50 + 'px' : 16 + 'px'};
+z-index: -1;
+position: absolute;
+left: 0px;
+bottom: 0px;
+right: 0px;
+display: flex;
+align-items: center;
+flex-direction: row;
+`;
+const FormInputPricePerHourText = styled.Text`
+margin-top: 12px;
+font-size: 13px;
+font-family: ${F.regular};
+font-size: 17px;
+`;
+const AddInfoBlock = styled.View`
+width: 100%;
+`;
+const AddInfoContainer = styled.View`
+border-radius: 6px;
+overflow: hidden;
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+flex-direction: row;
+`;
+const AddInfoInput = styled.TextInput`
+width: 100%;
+font-size: 17px;
+padding: 16px 16px;
+font-family: ${F.regular};
+color: ${C.black};
+border-radius: 6px;
+`;
+const SecurePaymentMessage = styled.Pressable`
+background-color: ${C.backGray};
+border-radius: 6px;
+margin: 0px 16px;
+margin-bottom: 200px;
+padding: 16px 16px;
+padding-right: 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-direction: row;
+`;
+const SecurePaymentMessageText = styled(M.MediumText13)`
+color: ${C.sBlack};
+margin-left: 10px;
+`;
+const SecurePaymentMessageReadMoreText = styled(M.TitleBold15)`
+text-decoration: underline;
+font-size: 13px;
+margin-left: 5px;
+`;
+
 export const style = {
     FilterContainer: FilterContainer,
     Header: Header,
@@ -109,7 +177,18 @@ export const style = {
     ContentBlock: ContentBlock,
     ContentBlockRow: ContentBlockRow,
     ContainerLink: ContainerLink,
-    ContainerLinkText: ContainerLinkText,
+    ContainerPrice: ContainerPrice,
+    ContainerHour: ContainerHour,
     ButtonSubmit: ButtonSubmit,
     ButtonSubmitText: ButtonSubmitText,
+    FormInputPricePerHourBlock: FormInputPricePerHourBlock,
+    FormInputPricePerHourText: FormInputPricePerHourText,
+
+    AddInfoBlock: AddInfoBlock,
+    AddInfoContainer: AddInfoContainer,
+    AddInfoInput: AddInfoInput,
+
+    SecurePaymentMessage: SecurePaymentMessage,
+    SecurePaymentMessageText: SecurePaymentMessageText,
+    SecurePaymentMessageReadMoreText: SecurePaymentMessageReadMoreText,
 }

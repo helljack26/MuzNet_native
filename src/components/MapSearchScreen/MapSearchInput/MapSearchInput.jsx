@@ -20,9 +20,6 @@ const {
 import { style } from './style'
 const {
     // Search input
-    SearchInputBlock,
-    SearchInput,
-    SearchIconBlock,
     SearchRemoveIcon,
     SearchRemoveIconBlock,
     OpacityBg,
@@ -41,7 +38,6 @@ const {
 import { observer } from 'mobx-react-lite';
 import { toJS } from "mobx";
 
-import { useSearchApiStore } from '@/stores/SearchApi';
 import { useLocationAutocompleteApiStore } from '@/stores/LocationAutocompleteApi';
 import { useMapSearchApiStore } from '@/stores/MapSearchApi';
 
@@ -198,7 +194,6 @@ const MapSearchInput = observer(({ stackName, searchText, toWelcomeScreenHash, o
                         {jsLocationList.map((item, key) => {
                             const isFirst = key === 0
                             return (item !== undefined && <Item
-
                                 style={{
                                     backgroundColor: isFirst === true ? C.lightGray : C.white,
                                 }}

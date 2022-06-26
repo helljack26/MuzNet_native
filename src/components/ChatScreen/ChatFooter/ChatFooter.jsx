@@ -1,7 +1,5 @@
 import React from "react";
-import { useState, useRef, useEffect } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
 // Helpers
@@ -30,11 +28,13 @@ const {
 
 // Store
 import { observer } from 'mobx-react-lite';
-import { useSearchApiStore } from '@/stores/SearchApi';
+import { useChatAttachmentStore } from '@/stores/ChatAttachmentStore';
 
 const ChatFooter = observer(({ messageText, onChangeMessageText, setSendMessage, setMessageAttachment }) => {
     const isKeyboardOpen = isKeyboardShown()
     const { windowHeight, windowWidth } = getWindowDimension()
+
+    const { isOpenChatAttachment, setOpenChatAttachment } = useChatAttachmentStore();
 
     // Attach
     const pickImage = async () => {
@@ -58,16 +58,16 @@ const ChatFooter = observer(({ messageText, onChangeMessageText, setSendMessage,
 
     return (
 
-        <SearchInputContainer
-            isKeyboardOpen={isKeyboardOpen}
-        >
+        <SearchInputContainer isKeyboardOpen={isKeyboardOpen}>
             <SearchInputBlock
                 style={{
                     width: windowWidth - 32,
                     borderColor: inputFocus1,
                 }}
             >
-                <AttachIconBlock onPress={pickImage}>
+                <AttachIconBlock onPress={() => {
+                    setOpenChatAttachment(true)
+                }}>
                     <MessageAttachGrayIcon width={19} height={20} />
                 </AttachIconBlock>
 

@@ -195,6 +195,7 @@ const SearchFilters = observer(({ isContractor, isForMap }) => {
                         setFilterLocation={getChosenLocation}
                         isResetAll={isResetAll}
                         isCloseAllDropdown={isCloseAllDropdown}
+                        placeholderText={'Any location'}
                     />
 
                     {/* Willing checbox */}
@@ -213,6 +214,7 @@ const SearchFilters = observer(({ isContractor, isForMap }) => {
                         setCalendarOpen={setCalendarOpen}
                         isResetAll={isResetAll}
                         isCloseAllDropdown={isCloseAllDropdown}
+                        placeholderText={'Any date'}
                     />
                     {/* Price range slider */}
                     <PriceRangeSlider

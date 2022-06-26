@@ -17,7 +17,6 @@ padding-bottom: ${props => props.isKeyboardOpen === true ? 16 + 'px' : 40 + 'px'
 z-index: 999;
 `;
 const SearchInputBlock = styled.View`
-/* width: 100%; */
 min-height: 48px;
 max-height: 200px;
 border-radius: 6px;
@@ -46,7 +45,6 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: row;
-
 `;
 const SendMessageButton = styled.TouchableOpacity`
 width: 40px;
@@ -68,7 +66,6 @@ justify-content: center;
 align-items: center;
 flex-direction: row;
 `;
-
 
 export const style = {
     // Search input

@@ -1,19 +1,13 @@
 import React from 'react';
 import { KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
-
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import C from '@/res/colors'
 import F from '@/res/fonts'
 
 import { S } from '@/res/strings'
-
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
-import { useNavigation } from '@react-navigation/native';
-
 // Images
 import IMAGES from '@/res/images'
 const {

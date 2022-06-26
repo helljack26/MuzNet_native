@@ -121,39 +121,6 @@ class MapSearchApi {
             return this.resetState()
         }
     }
-
-    searchInList(searchString, route) {
-        const compareLetterNumber = searchString.length
-        if (route === 'ContractorMapSearchScreen') {
-            const newLocalData = apiMocks.MusicianMockApi.map((item, id) => {
-                const slicedItem = item.userFullName.slice(0, compareLetterNumber).toLowerCase()
-                if (slicedItem.includes(searchString.toLowerCase())) {
-                    return item
-                } else {
-                    return
-                }
-            })
-            this.resetState()
-            const removeAllUndefined = newLocalData.filter((el) => el !== undefined);
-            this.musicianMapData = removeAllUndefined.length !== 0 ? removeAllUndefined : apiMocks.MusicianMockApi
-            if (removeAllUndefined.length === 0) {
-                this.nothingWasFound = true
-            } else {
-                this.nothingWasFound = false
-            }
-        }
-        if (route === 'MusicianMapSearchScMapData') {
-            const newLocalData = apiMocks.ContractorAdsMockApi.map((item) => {
-                const slicedItem = item.adTitle.slice(0, compareLetterNumber).toLowerCase()
-                if (slicedItem.includes(searchString.toLowerCase())) {
-                    return item
-                }
-            })
-            this.resetState()
-            const removeAllUndefined = newLocalData.filter((el) => el !== undefined);
-            this.vendorMapData = removeAllUndefined.length !== 0 ? removeAllUndefined : apiMocks.ContractorAdsMockApi
-        }
-    }
 }
 
 const MapSearchApiStore = new MapSearchApi();

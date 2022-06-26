@@ -34,7 +34,7 @@
       },
       "config": {
         "googleMaps": { "apiKey": "AIzaSyCOfhQtULzDYDGE5NnZu7PMGySCWtXA6Fw" }   
-     },
+    },
       "package": "com.helljack.myapp"
     },
     "web": {

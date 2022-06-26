@@ -196,7 +196,6 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
-
 `;
 const UserAvatarButtonText = styled.Text`
 margin-top: 12px;

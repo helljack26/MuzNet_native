@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
     StyleSheet,
-    Text,
     LogBox,
     View,
-    ScrollView,
     Animated,
-    Image,
     TouchableOpacity,
     Dimensions,
     Platform,

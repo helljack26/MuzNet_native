@@ -7,6 +7,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import ChatHeader from './ChatHeader'
 import ChatMessagesContractor from './ChatMessagesContractor'
 import ChatFooter from './ChatFooter'
+import ChatAttachment from './ChatAttachment'
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
@@ -32,17 +33,14 @@ background-color: ${C.white};
 `;
 
 const ChatScreen = observer(({ isContractor }) => {
-    const { musicianList, vendorList, setList } = useSearchApiStore();
 
     const navigation = useNavigation();
-
     const route = useRoute();
-    const chatUserId = route.params.chatUserId
+    // const chatUserId = route.params.chatUserId
     // Header
     const chatUserName = 'Leo Ferguson'
     const chatUserImg = require('../../../assets/Mock/Georgia.png')
 
-    const isKeyboardOpen = isKeyboardShown()
     const { windowHeight, windowWidth } = getWindowDimension()
 
     // Attachment state
@@ -70,17 +68,14 @@ const ChatScreen = observer(({ isContractor }) => {
 
     useEffect(() => {
         if (messageAttachment) {
-            console.log("🚀 ~ file: ChatScreen.jsx ~ line 73 ~ useEffect ~ messageAttachment", messageAttachment)
             setNewMessage({
-                messageText: messageText,
-                messageAttachment: '',
+                messageText: '',
+                messageAttachment: messageAttachment,
             })
         }
     }, [messageAttachment]);
 
-
     return (
-
         <Content
             style={{
                 width: windowWidth,
@@ -108,6 +103,7 @@ const ChatScreen = observer(({ isContractor }) => {
                 />
             </KeyboardAvoidingView>
 
+            <ChatAttachment />
         </Content>
 
 

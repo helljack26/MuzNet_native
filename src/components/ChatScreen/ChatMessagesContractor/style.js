@@ -129,7 +129,6 @@ export const style = {
     MessageScrollBlock: MessageScrollBlock,
     MessageBlockInsideScroll: MessageBlockInsideScroll,
     MessageBlockDay: MessageBlockDay,
-
     Outcome: Outcome,
     OutcomeCol: OutcomeCol,
     OutcomeMessage: OutcomeMessage,

@@ -46,6 +46,7 @@ import MessageAttachGrayIcon from '../../assets/icon/attach_gray_icon.svg'
 import SendMessageIcon from '../../assets/icon/send_message_icon.svg'
 import LockGrayIcon from '../../assets/icon/lock_gray_icon.svg'
 import AddCrossIcon from '../../assets/icon/add_cross_icon.svg'
+import CameraGrayIcon from '../../assets/icon/camera_gray_icon.svg'
 // Bank logo
 import VisaBankIcon from '../../assets/icon/visa_icon.svg'
 import MasterCardBankIcon from '../../assets/icon/masterCard_icon.svg'
@@ -127,6 +128,7 @@ const IMAGES = {
     SendMessageIcon: SendMessageIcon,
     LockGrayIcon: LockGrayIcon,
     AddCrossIcon: AddCrossIcon,
+    CameraGrayIcon: CameraGrayIcon,
     // Bank
     VisaBankIcon: VisaBankIcon,
     MasterCardBankIcon: MasterCardBankIcon,

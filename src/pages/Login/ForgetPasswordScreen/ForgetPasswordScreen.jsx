@@ -174,60 +174,61 @@ const ForgetPasswordScreen = () => {
                 </ButtonsBlock>
 
                 {/* Form */}
-                {isEmailTab === true ? <FormBlock>
-                    <FormText>
-                        Please, enter your email address and you
-                        will receive a link to create a new password
-                    </FormText>
+                {isEmailTab === true ?
+                    <FormBlock>
+                        <FormText>
+                            Please, enter your email address and you
+                            will receive a link to create a new password
+                        </FormText>
 
-                    {/* Email or Name */}
-                    <Controller
-                        control={control}
-                        rules={{
-                            required: S.emailNotValid,
-                            pattern: S.emailValidationPattern,
-                        }}
-                        render={({ field: { onChange, onBlur, value } }) => (
-                            <FormInputBlock
-                                style={{
-                                    marginBottom: errors.resetEmail ? 28 : 13,
-                                }}
-                            >
-                                <FormInputContainer>
-                                    <FormInput
-                                        inputLabel={inputEmailLabel}
-                                        selectionColor={C.lightGray}
-                                        placeholder={'Enter your email'}
-                                        cursorColor={C.inputCursor}
-                                        onFocus={() => { setInputFocus2(C.black) }}
-                                        onBlur={() => {
-                                            onBlur
-                                            setInputFocus2(C.lightGray)
-                                        }}
-                                        onChangeText={onChange}
-                                        value={value}
-                                        style={{
-                                            borderColor: errors.resetEmail ? C.red : inputFocus2,
-                                            borderWidth: errors.resetEmail ? 2 : 1,
-                                            color: errors.resetEmail ? C.red : C.black,
-                                        }}
-                                    />
-                                    {errors.resetEmail && <ShowPasswordIconButton>
-                                        <ErrorIcon width={20} height={20} />
-                                    </ShowPasswordIconButton>
-                                    }
-                                </FormInputContainer>
+                        {/* Email or Name */}
+                        <Controller
+                            control={control}
+                            rules={{
+                                required: S.emailNotValid,
+                                pattern: S.emailValidationPattern,
+                            }}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <FormInputBlock
+                                    style={{
+                                        marginBottom: errors.resetEmail ? 28 : 13,
+                                    }}
+                                >
+                                    <FormInputContainer>
+                                        <FormInput
+                                            inputLabel={inputEmailLabel}
+                                            selectionColor={C.lightGray}
+                                            placeholder={'Enter your email'}
+                                            cursorColor={C.inputCursor}
+                                            onFocus={() => { setInputFocus2(C.black) }}
+                                            onBlur={() => {
+                                                onBlur
+                                                setInputFocus2(C.lightGray)
+                                            }}
+                                            onChangeText={onChange}
+                                            value={value}
+                                            style={{
+                                                borderColor: errors.resetEmail ? C.red : inputFocus2,
+                                                borderWidth: errors.resetEmail ? 2 : 1,
+                                                color: errors.resetEmail ? C.red : C.black,
+                                            }}
+                                        />
+                                        {errors.resetEmail && <ShowPasswordIconButton>
+                                            <ErrorIcon width={20} height={20} />
+                                        </ShowPasswordIconButton>
+                                        }
+                                    </FormInputContainer>
 
-                                <FormInputLabel isError={errors.resetEmail} inputLabel={inputEmailLabel}>Your email</FormInputLabel>
+                                    <FormInputLabel isError={errors.resetEmail} inputLabel={inputEmailLabel}>Your email</FormInputLabel>
 
-                                {errors.resetEmail?.type === 'minLength' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
-                                {errors.resetEmail?.type === 'pattern' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
-                                {errors.resetEmail && <ErrorMessage>{errors.resetEmail.message}</ErrorMessage>}
-                            </FormInputBlock>
-                        )}
-                        name="resetEmail"
-                    />
-                </FormBlock>
+                                    {errors.resetEmail?.type === 'minLength' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
+                                    {errors.resetEmail?.type === 'pattern' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
+                                    {errors.resetEmail && <ErrorMessage>{errors.resetEmail.message}</ErrorMessage>}
+                                </FormInputBlock>
+                            )}
+                            name="resetEmail"
+                        />
+                    </FormBlock>
                     :
                     <FormBlock>
                         <FormText>

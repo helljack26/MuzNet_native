@@ -32,7 +32,7 @@ const {
 
 // Store
 import { observer } from 'mobx-react-lite';
-import { useSearchApiStore } from '@/stores/SearchApi';
+import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 import C from "@/res/colors";
 
 const chatMock = [
@@ -77,37 +77,7 @@ const chatMock = [
         messageTime: '12:34',
         writterImage: require('../../../../assets/Mock/Kate1.jpg'),
         messageText: 'Yes, a live music show will cost $30 per hour, would it suit you?',
-    },
-    // {
-    //     messageType: 'outcome',
-    //     messageTime: '12:02',
-    //     writterImage: require('../../../../assets/Mock/Georgia.png'),
-    //     messageText: 'Hi Leo! We would like to arrange with you to perform at our wedding, are you free on March 26th?',
-    // },
-    // {
-    //     messageType: 'income',
-    //     messageTime: '12:05',
-    //     writterImage: require('../../../../assets/Mock/Kate1.jpg'),
-    //     messageText: 'Hi Robert! Yes, I am available 26th, how long will your event last?',
-    // },
-    // {
-    //     messageType: 'outcome',
-    //     messageTime: '12:15',
-    //     writterImage: require('../../../../assets/Mock/Georgia.png'),
-    //     messageText: 'Great, we would like to book you for 2 hours, from 7 PM to 9 PM, is it convenient for you?',
-    // },
-    // {
-    //     messageType: 'outcome',
-    //     messageTime: '12:15',
-    //     writterImage: require('../../../../assets/Mock/Georgia.png'),
-    //     messageText: 'Also, we would like you to sing to live music. Can you take the instrument with you?',
-    // },
-    // {
-    //     messageType: 'income',
-    //     messageTime: '12:34',
-    //     writterImage: require('../../../../assets/Mock/Kate1.jpg'),
-    //     messageText: 'Yes, a live music show will cost $30 per hour, would it suit you?',
-    // },
+    }
 ]
 
 const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
@@ -116,7 +86,7 @@ const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
     const isKeyboardOpen = isKeyboardShown()
 
-    const { isOpenFilters, setOpenFilters } = useSearchApiStore();
+    const { isOpenCreateOffer, setOpenCreateOffer } = useOfferToMusicianApiStore();
 
     const [localMessageState, setLocalMessageState] = useState([]);
 
@@ -186,7 +156,7 @@ const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
             {/* Filters button */}
             <CreateOfferButton
                 onPress={() => {
-                    setOpenFilters(true)
+                    setOpenCreateOffer(true)
                 }}
             >
                 <CreateOfferButtonText>
@@ -211,8 +181,6 @@ const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
                         }}
                     >
                         {/* TODO сделать добавление нового сообщения от пользователя, плюс сделать вывод фотографии */}
-                        {/* TODO сделать стор для логики офера, отредактировать его под макет,  */}
-                        {/* TODO сделать что бы сообщения групировались */}
                         <MessageBlockDay>
                             Today
                         </MessageBlockDay>

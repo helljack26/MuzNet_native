@@ -1,8 +1,6 @@
 import React from 'react';
-import { Keyboard, StatusBar, Image } from 'react-native';
-import { useState, useEffect } from 'react';
-
-
+import { StatusBar, Image } from 'react-native';
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
@@ -26,7 +24,6 @@ width: 100%;
 background-color: ${C.white};
 `;
 
-
 const ContractorMapSearchScreen = () => {
     const navigation = useNavigation();
 
@@ -35,8 +32,6 @@ const ContractorMapSearchScreen = () => {
     const isKeyboardOpen = isKeyboardShown()
 
     const [isModalOpen, setModalOpen] = useState(true);
-
-
     return (
         <>
             <StatusBar
@@ -45,25 +40,30 @@ const ContractorMapSearchScreen = () => {
                 backgroundColor="#f0f0f0ad"
                 translucent={true}
             />
-            {isModalOpen === true && <ModalWindow
-                modalPic={<Image source={IMAGES.GifMapSearch}
-                    style={{
-                        width: '120%',
-                        height: '120%',
-                    }}
-                    resizeMode={'cover'} width={'100%'} height={'100%'} />}
-                title={'Perfomer finder'}
-                advice={'This is an approximate location of the performer. Contact directly to find out more'}
-                setOpen={setModalOpen}
-                btnText={'Accept'}
-            />
+            {isModalOpen === true &&
+                <ModalWindow
+                    modalPic={
+                        <Image source={IMAGES.GifMapSearch}
+                            style={{
+                                width: '120%',
+                                height: '120%',
+                            }}
+                            resizeMode={'cover'} width={'100%'} height={'100%'}
+                        />
+                    }
+                    title={'Perfomer finder'}
+                    advice={'This is an approximate location of the performer. Contact directly to find out more'}
+                    setOpen={setModalOpen}
+                    btnText={'Accept'}
+                />
             }
 
             <Block
                 style={{
                     width: windowWidth,
                     height: windowHeight,
-                }}>
+                }}
+            >
                 <Container
                     isKeyboardOpen={isKeyboardOpen}
                 >

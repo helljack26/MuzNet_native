@@ -15,7 +15,7 @@ class LocationAutocompleteApi {
     }
 
     setLocationList({ inputValue, type }) {
-        const isFullAddress = type !== 'full' ? '&types=cities' : '&types=geocode'
+        const isFullAddress = '&types=address'
         const iosMapApiKey = 'AIzaSyD-DV5jVOuC7XYA4ZlXATAQLCnyjs5wdC4'
         const androidMapApiKey = apiKey.geocodingApiKey
         const GOOGLE_PACES_API_BASE_URL = 'https://maps.googleapis.com/maps/api/place'

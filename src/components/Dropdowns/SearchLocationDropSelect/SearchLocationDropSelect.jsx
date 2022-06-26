@@ -36,7 +36,7 @@ import { observer } from 'mobx-react-lite';
 import { toJS } from "mobx";
 import { useLocationAutocompleteApiStore } from '@/stores/LocationAutocompleteApi';
 
-const SearchLocationDropSelect = observer(({ isResetAll, isCloseAllDropdown, setFilterLocation }) => {
+const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, isCloseAllDropdown, setFilterLocation, placeholderText }) => {
     // Store
     const { locationList, setLocationList } = useLocationAutocompleteApiStore();
     const jsLocationList = toJS(locationList)
@@ -50,6 +50,17 @@ const SearchLocationDropSelect = observer(({ isResetAll, isCloseAllDropdown, set
     const [isShiftInputLocationLabel, setShiftInputLocationLabel] = useState(false);
 
     const [isOpenDropList, setOpenDropList] = useState(false);
+
+    useEffect(() => {
+        if (setParentShowOpenDrop !== undefined) {
+            if (isOpenDropList === true) {
+                setParentShowOpenDrop(true)
+            } else {
+                setParentShowOpenDrop(false)
+            }
+        }
+
+    }, [isOpenDropList]);
 
     useEffect(() => {
         if (jsLocationList.length > 0) {
@@ -88,16 +99,35 @@ const SearchLocationDropSelect = observer(({ isResetAll, isCloseAllDropdown, set
             })
             onChangeSearchText('')
             setSelectedLocation('')
+            setFilterLocation('')
             setShiftInputLocationLabel(false)
             setOpenDropList(false)
         }
     }, [isResetAll]);
+
+
+    const onPressEnter = () => {
+        if (jsLocationList.length > 0) {
+            setLocationList([])
+            const item = jsLocationList[0]
+            onChangeSearchText(item)
+            setSelectedLocation(item)
+            setFilterLocation(item)
+            Keyboard.dismiss()
+        } else {
+            onChangeSearchText('')
+            Keyboard.dismiss()
+        }
+    }
+
     useEffect(() => {
         if (isCloseAllDropdown === true) {
-            setOpenDropList(false)
+            onChangeSearchText('')
+
+            Keyboard.dismiss()
+
         }
     }, [isCloseAllDropdown]);
-
     return (
 
         <Container>
@@ -113,10 +143,11 @@ const SearchLocationDropSelect = observer(({ isResetAll, isCloseAllDropdown, set
                     }}
                 >
                     <FormInput
+                        onSubmitEditing={() => onPressEnter()}
                         inputLabel={isShiftInputLocationLabel}
                         selectionColor={C.lightGray}
                         placeholderTextColor={C.sBlack}
-                        placeholder={'Any location'}
+                        placeholder={placeholderText}
                         cursorColor={C.inputCursor}
                         onFocus={() => { setInputFocus1(C.black) }}
                         onBlur={() => { setInputFocus1(C.lightGray) }}
@@ -151,7 +182,12 @@ const SearchLocationDropSelect = observer(({ isResetAll, isCloseAllDropdown, set
             >
                 <ChosenBlock>
                     {jsLocationList.map((item, key) => {
-                        return (item !== undefined && <Item key={key}
+                        const isFirst = key === 0
+                        return (item !== undefined && <Item
+                            style={{
+                                backgroundColor: isFirst === true ? C.lightGray : C.white,
+                            }}
+                            key={key}
                             onPress={() => {
                                 onChangeSearchText(item)
                                 setSelectedLocation(item)

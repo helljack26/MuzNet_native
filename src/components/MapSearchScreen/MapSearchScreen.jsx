@@ -1,43 +1,21 @@
 import React from 'react';
-
 import { useState, useEffect } from 'react';
-
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
 import MapSearchInput from './MapSearchInput'
-import AdsList from '@/components/AdsList'
 import ExploreScreen from './ExploreScreen'
-
-// Helpers
-import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 // Store
 import { observer } from 'mobx-react-lite';
 import { useSearchApiStore } from '@/stores/SearchApi';
-import C from '@/res/colors'
-
-
-// Images
-import IMAGES from '@/res/images'
-const {
-
-    MapShape
-} = IMAGES;
 // Styles
 import { style } from './style'
 const {
     Content,
-    Header,
-    ContentTitle,
-
-    // Ads
     AdsContainer,
-    AdsContainerHeader,
-    AdsContainerHeaderTitle,
-
 } = style;
 
 const MapSearchScreen = observer(({ stackName }) => {
-    const { musicianList, vendorList, setList, searchInList, nothingWasFound, setNothingWasFound } = useSearchApiStore();
+    const { setList, searchInList, setNothingWasFound } = useSearchApiStore();
 
     const navigation = useNavigation();
 
@@ -83,7 +61,6 @@ const MapSearchScreen = observer(({ stackName }) => {
     const isContractor = stackName === 'ContractorStack'
 
     const isToContractorWelcomeHash = isContractor ? 'ContractorWelcomeScreen' : 'MusicianWelcomeScreen'
-    const isContractorData = isContractor ? musicianList : vendorList
 
     return (
         <>

@@ -43,10 +43,9 @@ const customDayHeaderStylesCallback = ({ dayOfWeek, month, year }) => {
         };
     }
 }
-const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, setCalendarOpen }) => {
+const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, setCalendarOpen, placeholderText }) => {
     const [placeholder, setPlaceholder] = useState('');
-    const mainHeader = placeholder || 'Any date'
-
+    const mainHeader = placeholder || placeholderText
     const [isOpen, setIsOpen] = useState(false);
 
     const calendarRef = useRef();
@@ -103,7 +102,7 @@ const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, set
                     }} >
                     {/* Label */}
                     <FormInputLabel inputLabel={placeholder.length > 0}>Date</FormInputLabel>
-                    <OptionText >
+                    <OptionText isPlaceholder={placeholder.length === 0}>
                         {mainHeader}
                     </OptionText>
                     <ArrowBlock

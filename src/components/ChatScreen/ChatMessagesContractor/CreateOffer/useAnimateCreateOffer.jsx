@@ -5,7 +5,7 @@ import { Animated, Easing } from 'react-native';
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
-export const useAnimateBottomFilters = ({ isOpenFilters }) => {
+export const useAnimateCreateOffer = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     const animate_state = {
@@ -23,13 +23,7 @@ export const useAnimateBottomFilters = ({ isOpenFilters }) => {
         }).start()
         setIsOpen(boolean)
     }
-    // Set list
-    useEffect(() => {
-        if (isOpenFilters === true) {
-            onPress(true)
-        }
 
-    }, [isOpenFilters]);
     const inputRange = Object.values(animate_state)
     const height = value.interpolate({ inputRange, outputRange: ['0%', '90%'] })
 

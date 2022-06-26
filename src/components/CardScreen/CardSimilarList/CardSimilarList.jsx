@@ -9,11 +9,6 @@ import { M } from '@/res/mixin'
 
 const SimilarListContainer = styled.View`
 width: 100%;
-
-`;
-const SimilarItem = styled.TouchableOpacity`
-width: 100%;
-height: 100%;
 `;
 const SimilarListTitle = styled(M.TitleBold20)`
 margin-bottom: 16px;

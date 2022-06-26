@@ -1,27 +1,30 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, Keyboard, View } from 'react-native';
+import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
+import { useForm, Controller } from "react-hook-form";
 // Components
-import DropSelect from '@/components/Dropdowns/DropSelect'
-import SearchInputDropSelect from '@/components/Dropdowns/SearchInputDropSelect'
-import SearchLocationDropSelect from '@/components/Dropdowns/SearchLocationDropSelect'
 import DropSelectCalendar from '@/components/Dropdowns/DropSelectCalendar'
-import CheckBoxWithText from '@/components/Buttons/CheckBoxWithText'
+import TimePeriodPicker from '@/components/TimePeriodPicker'
+import SearchLocationDropSelect from '@/components/Dropdowns/SearchLocationDropSelect'
+import DropFlagSelect from '@/pages/SignUp/SignUpScreen/DropFlagSelect'
 
 // Helpers
+import MaskInput from 'react-native-mask-input';
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
-import { useAnimateBottomFilters } from './useAnimateBottomFilters';
+import { useAnimateCreateOffer } from './useAnimateCreateOffer';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+import { addDotForNumber } from '@/components/helpers/addDotForNumber'
 // Images
 import IMAGES from '@/res/images'
 const {
     CrossBlackIcon,
+    LockGrayIcon,
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
+import F from '@/res/fonts'
 import { S } from '@/res/strings'
-
 // Styles
 import { style } from './style'
 const {
@@ -30,105 +33,201 @@ const {
     HeaderClose,
     HeaderTitle,
     FilterBlock,
-    CheckboxBlock,
-    CheckboxBlockTitle,
     ContentBlock,
     ContentBlockRow,
     ContainerLink,
-    ContainerLinkText,
+    ContainerPrice,
+    ContainerHour,
     ButtonSubmit,
     ButtonSubmitText,
+    FormInputPricePerHourBlock,
+    FormInputPricePerHourText,
+    AddInfoBlock,
+    AddInfoContainer,
+    AddInfoInput,
+    SecurePaymentMessage,
+    SecurePaymentMessageText,
+    SecurePaymentMessageReadMoreText,
 } = style;
-
+// Mixins
+import { M } from '@/res/mixin'
+const {
+    FormInput,
+    ErrorMessage,
+    FormInputBlock,
+    FormInputLabel,
+    FormInputContainer,
+    FormInputContainerPhone,
+} = M;
 // Store
 import { observer } from 'mobx-react-lite';
-import { useSearchApiStore } from '@/stores/SearchApi';
-import { useMapSearchApiStore } from '@/stores/MapSearchApi';
+import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 
-const CreateOffer = observer(({ isContractor, isForMap }) => {
+const CreateOffer = observer(() => {
+    // Form 
+    const { control, handleSubmit, resetField, setError, watch, clearErrors,
+        formState: { dirtyFields, errors } } = useForm({
+            defaultValues: {
+                offerDate: '',
+                offerStartTime: '',
+                offerEndTime: '',
+                offerLocation: '',
+                offerPricePerHour: '',
+                offerPhoneNumber: '',
+                offerAdditionalInfo: '',
+            }
+        });
+
     const route = useRoute();
-    const storeApi = isForMap === true ? useMapSearchApiStore() : useSearchApiStore()
 
-    const { isOpenFilters, setOpenFilters } = storeApi;
+    const { isOpenCreateOffer, setOpenCreateOffer } = useOfferToMusicianApiStore();
+
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
-    const { onPress, height } = useAnimateBottomFilters({ isOpenFilters })
+    const { onPress, height } = useAnimateCreateOffer()
+    useEffect(() => {
+        if (isOpenCreateOffer === true) {
+            onPress(true)
+        }
+    }, [isOpenCreateOffer]);
 
-    // Sort by
-    const [isOpen, setIsOpen] = useState(false);
-    const [sortType, setSortType] = useState(null);
-    const toggling = (state) => setIsOpen(state);
-    const onPositionSelect = value => () => { setSortType(value); setIsOpen(false); };
 
-    // Genres Search 
-    const [chosenGenres, getChosenGenres] = useState([]);
-    // Instruments Search 
-    const [chosenInstrument, getChosenInstrument] = useState([]);
-    // Get location
-    const [chosenLocation, getChosenLocation] = useState();
     // Calendar
     const [isCalendarOpen, setCalendarOpen] = useState(false);
     const [chosenDate, getChosenDate] = useState('');
-
-    const [priceRange, getPriceRange] = useState({
-        minPrice: '',
-        maxPrice: ''
+    //Time range 
+    const [timeRange, setTimeRange] = useState({
+        startTime: {
+            milliseconds: '',
+            string: '',
+        },
+        endTime: {
+            milliseconds: '',
+            string: '',
+        },
+        duration: 0,
     });
-
-    // Checkbox state
-    const [isWillingToTravel, setWillingToTravel] = useState(false);
-
-    const [isSingByEar, setSingByEar] = useState(false);
-    const [isPlayByEar, setPlayByEar] = useState(false);
-    const [isReadSheetMusic, setReadSheetMusic] = useState(false);
-
+    // Get location
+    const [chosenLocation, getChosenLocation] = useState();
+    const [isOpenLocationDropList, setOpenLocationDropList] = useState(false);
+    // Price per hour
+    const [inputFocus7, setInputFocus7] = useState(C.lightGray);
+    const [pricePerHourLabel, setPricePerHourLabel] = useState(false);
+    const [pricePerHourInput, setPricePerHourInput] = useState('');
+    // Phone number
+    const [phone, setPhone] = useState('');
+    const [inputFocus1, setInputFocus1] = useState(C.lightGray);
+    const [inputPhoneLabel, setInputPhoneLabel] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [flagType, setPositionType] = useState({ icon: '', phonePattern: [], });
     useEffect(() => {
-        // console.log("🚀 ~ file: CreateOffer.jsx ~ line 58 ~ useEffect ~ chosenLocation", isCalendarOpen)
-    }, [chosenDate, priceRange, isCalendarOpen]);
+        if (flagType) {
+            setPhone('')
+        }
+    }, [flagType]);
 
-    const [isResetAll, setResetAll] = useState(false);
-    const clearAllFilters = () => {
-        // For components set reset
-        setResetAll(true)
-        Keyboard.dismiss()
-        // Components reset 
-        setIsOpen(false)
-        setSortType(null)
-        getChosenGenres(null)
-        getChosenInstrument(null)
-        getChosenLocation(null)
-        getChosenDate(null)
-        getPriceRange({
-            minPrice: '',
-            maxPrice: ''
-        })
-        // Checkboxes
-        setWillingToTravel(false)
-        setSingByEar(false)
-        setPlayByEar(false)
-        setReadSheetMusic(false)
+    const toggling = (state) => setIsOpen(state);
+    const onFlagSelect = value => () => { setPositionType(value); setIsOpen(false); };
+    // Add additional info
+    const [inputFocus2, setInputFocus2] = useState(C.lightGray);
+    const [additionalHeight, setAdditionalHeight] = useState(48);
+    const additionalMessageWatch = watch('offerAdditionalInfo');
 
-        // Set reset to default
-        setTimeout(() => {
-            setResetAll(false)
-        }, 0);
-    }
+    // Set shifting input label
+    useEffect(() => {
+        if (dirtyFields.offerPhoneNumber === undefined) {
+            setInputPhoneLabel(false)
+        }
+        if (dirtyFields.offerPhoneNumber === true) {
+            setInputPhoneLabel(true)
+        }
+        if (dirtyFields.offerPricePerHour === undefined) {
+            setPricePerHourLabel(false)
+        }
+        if (dirtyFields.offerPricePerHour === true) {
+            setPricePerHourLabel(true)
+        }
+    }, [dirtyFields.offerPricePerHour, dirtyFields.offerPhoneNumber]);
+
     const [isCloseAllDropdown, setCloseAllDropdown] = useState(false);
     useEffect(() => {
         if (isCloseAllDropdown === true) {
-            toggling(false)
             // Set reset to default
             setTimeout(() => {
                 setCloseAllDropdown(false)
             }, 0);
         }
     }, [isCloseAllDropdown]);
+
+    // Is show price in footer
+    const [isPriceInFooter, setPriceInFooter] = useState(false);
+    useEffect(() => {
+        const isTimeSelected = timeRange.endTime.milliseconds > 0
+        const isPricePerHour = pricePerHourInput.length > 0
+
+        if (isTimeSelected && isPricePerHour) {
+            setPriceInFooter(true)
+        } else {
+            setPriceInFooter(false)
+        }
+    }, [timeRange, pricePerHourInput]);
+    // Is show submit button
+    const [isShowSubmitButton, setShowSubmitButton] = useState(false);
+    useEffect(() => {
+        const isDateSelected = chosenDate > 0
+        const isTimeSelected = timeRange.endTime.milliseconds > 0
+        const isLocationSelected = chosenLocation !== undefined
+        const isPricePerHour = pricePerHourInput.length > 0
+        const isPhoneNumber = phone.length === 17 && !errors.offerPhoneNumber
+        const isAdditionalMessage = additionalMessageWatch.length > 10 && !errors.offerAdditionalInfo
+
+        if (isDateSelected && isTimeSelected && isLocationSelected && isPricePerHour && isPhoneNumber && isAdditionalMessage) {
+            setShowSubmitButton(true)
+        } else {
+            setShowSubmitButton(false)
+        }
+    }, [chosenDate, timeRange, chosenLocation, pricePerHourInput, phone, additionalMessageWatch]);
+
+    const [isResetAll, setResetAll] = useState(false);
+    const clearAllFilters = () => {
+        // For components set reset
+        // setResetAll(true)
+        Keyboard.dismiss()
+        // Components reset
+        getChosenDate(null)
+
+        // Set reset to default
+        // setTimeout(() => {
+        //     setResetAll(false)
+        // }, 0);
+    }
+
+    const onSubmit = (data) => {
+        // const 
+        const newOffer = {
+            offerDate: chosenDate,
+            offerStartTime: timeRange.startTime,
+            offerEndTime: timeRange.endTime,
+            offerDuration: timeRange.duration,
+            offerTotalMoney: timeRange.duration * data.offerPricePerHour,
+            offerLocation: chosenLocation,
+            offerPricePerHour: data.offerPricePerHour,
+            offerPhoneNumber: data.offerPhoneNumber,
+            offerAdditionalInfo: data.offerAdditionalInfo,
+        }
+
+        console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", newOffer)
+        // Clear input value
+        Keyboard.dismiss()
+        // navigation.navigate('ContractorStack', { screen: 'OfferPreviewScreen' })
+        return
+    };
+
     return (
         <Animated.View style={{
             zIndex: 1000,
             height,
-            // maxHeight: windowHeight - 50,
             // height: '90%',
             width: windowWidth,
             justifyContent: 'center',
@@ -138,14 +237,14 @@ const CreateOffer = observer(({ isContractor, isForMap }) => {
             right: 0,
         }}
         >
-
             <FilterContainer
                 style={{ elevation: 100 }}>
+
                 {/* Header */}
-                <Header>
+                <Header Header >
                     <HeaderClose
                         onPress={() => {
-                            setOpenFilters(false)
+                            setOpenCreateOffer(false)
                             onPress(false)
                             setCloseAllDropdown(true)
                         }}
@@ -154,121 +253,279 @@ const CreateOffer = observer(({ isContractor, isForMap }) => {
                     </HeaderClose>
 
                     <HeaderTitle>
-                        Sort and filter
+                        Create offer
                     </HeaderTitle>
                 </Header>
-                {/* Sort and filters */}
-                <FilterBlock
+                <FilterBlock keyboardShouldPersistTaps={'handled'}>
 
-                    keyboardShouldPersistTaps={'handled'}
-                >
-                    <DropSelect
-                        selectedValue={sortType}
-                        toggling={toggling}
-                        isOpen={isOpen}
-                        onSelect={onPositionSelect}
-                        dropHeader={S.SortByOptions.dropHeader}
-                        dropOptions={S.SortByOptions.dropOptions}
+                    {/* Set date */}
+                    <View style={{ marginBottom: -12, }}>
+                        <DropSelectCalendar
+                            setFilterDate={getChosenDate}
+                            setCalendarOpen={setCalendarOpen}
+                            isResetAll={isResetAll}
+                            isCloseAllDropdown={isCloseAllDropdown}
+                            placeholderText={'Date'}
+                        />
+                    </View>
+
+                    {/* Set time */}
+                    <TimePeriodPicker
                         isResetAll={isResetAll}
+                        setTimeRange={setTimeRange}
                     />
-                    {/* Search music genre */}
-                    <SearchInputDropSelect
-                        dataForChoose={S.Genres}
-                        alreadyChosenInstrument={chosenGenres}
-                        searchPlaceholder={'Choose music genres'}
-                        getChosenData={getChosenGenres}
-                        isResetAll={isResetAll}
-                        isCloseAllDropdown={isCloseAllDropdown}
-                    />
-                    {/* Search music genre */}
-                    <SearchInputDropSelect
-                        dataForChoose={S.Instruments}
-                        alreadyChosenInstrument={chosenInstrument}
-                        searchPlaceholder={'Choose instruments'}
-                        getChosenData={getChosenInstrument}
-                        isResetAll={isResetAll}
-                        isCloseAllDropdown={isCloseAllDropdown}
-                    />
-                    {/* Search music genre */}
+
+                    {/* Opacity bg that show if calendar or location open and close it on press */}
+                    {(isCalendarOpen === true || isOpenLocationDropList === true) &&
+                        <Pressable style={{ width: '100%', height: '100%', backgroundColor: C.opacity20white, position: 'absolute', top: 0, left: 0, bottom: 0, right: 0, zIndex: 999, }}
+                            onPress={() => { setCloseAllDropdown(true) }}     >
+                        </Pressable>}
+
+                    {/* Set location */}
                     <SearchLocationDropSelect
+                        setParentShowOpenDrop={setOpenLocationDropList}
                         setFilterLocation={getChosenLocation}
                         isResetAll={isResetAll}
                         isCloseAllDropdown={isCloseAllDropdown}
+                        placeholderText={'Location'}
                     />
 
-                    {/* Willing checbox */}
+                    {/* Price per hour */}
+                    <Controller
+                        control={control}
+                        render={({ field: { onChange, onBlur } }) => (
+                            <View style={{ marginHorizontal: 16, }}>
+                                <FormInputBlock>
+                                    <FormInputContainerPhone>
+                                        <MaskInput
+                                            maxLength={5}
+                                            cursorColor={C.inputCursor}
+                                            onFocus={() => { setInputFocus7(C.black) }}
+                                            onBlur={() => {
+                                                onBlur
+                                                setInputFocus7(C.lightGray)
+                                            }}
+                                            keyboardType='numeric'
+                                            style={{
+                                                width: '100%',
+                                                flex: 1,
+                                                height: 48,
+                                                paddingLeft: pricePerHourInput.length > 0 ? 30 : 16,
+                                                borderRadius: 6,
+                                                borderColor: inputFocus7,
+                                                fontSize: 17,
+                                                fontFamily: F.regular,
+                                                paddingTop: pricePerHourLabel === true ? 13 : 0,
+                                                borderWidth: errors.offerPricePerHour ? 2 : 1,
+                                                color: 'transparent',
+                                            }}
+                                            placeholderTextColor={'transparent'}
+                                            value={pricePerHourInput}
+                                            onChangeText={(masked) => {
+                                                onChange(masked)
+                                                setPricePerHourInput(masked);
+                                            }}
+                                            placeholder={'Price'}
+                                            mask={S.perHourMaskPattern}
+                                        />
+                                        <FormInputPricePerHourBlock>
+                                            <FormInputPricePerHourText
+                                                style={{
+                                                    top: pricePerHourInput.length > 0 ? 1 : -7,
+                                                    color: pricePerHourInput.length > 0 ? C.black : C.placeholder,
+                                                }}>
+                                                {pricePerHourInput.length > 0 ? `$ ${addDotForNumber(pricePerHourInput)}/hour` : 'Price'}</FormInputPricePerHourText>
+                                        </FormInputPricePerHourBlock>
+                                    </FormInputContainerPhone>
+                                    <FormInputLabel inputLabel={pricePerHourLabel}>Price</FormInputLabel>
 
-                    <CheckboxBlock isWilling={true}>
-                        <CheckBoxWithText
-                            checkboxState={isWillingToTravel}
-                            setCheckboxState={setWillingToTravel}
-                            checkboxTitle={'Willing to travel interstate for gigs'}
-                        />
-                    </CheckboxBlock>
-
-                    {/* Search music genre */}
-                    <DropSelectCalendar
-                        setFilterDate={getChosenDate}
-                        setCalendarOpen={setCalendarOpen}
-                        isResetAll={isResetAll}
-                        isCloseAllDropdown={isCloseAllDropdown}
+                                </FormInputBlock>
+                            </View>
+                        )}
+                        name="offerPricePerHour"
                     />
 
+                    {/* Phone number */}
+                    <Controller
+                        control={control}
+                        rules={{
+                            required: true,
+                            minLength: 17
+                        }}
+                        render={({ field: { onChange, onBlur } }) => (
+                            <View style={{ marginHorizontal: 16, }}>
+                                <FormInputBlock
+                                    style={{ marginBottom: errors.offerPhoneNumber ? 32 : 13 }
+                                    }
+                                >
+                                    <FormInputContainerPhone>
+                                        <DropFlagSelect
+                                            inputFocus1={inputFocus1}
+                                            isError={errors.offerPhoneNumber}
+                                            selectedValue={flagType} toggling={toggling} isOpen={isOpen} onSelect={onFlagSelect} />
 
-                    {/* Skills Checkbox */}
-                    <CheckboxBlock>
-                        <CheckboxBlockTitle>Skills:</CheckboxBlockTitle>
+                                        <MaskInput
+                                            cursorColor={C.inputCursor}
+                                            onFocus={() => { setInputFocus1(C.black) }}
+                                            onBlur={() => {
+                                                onBlur
+                                                setInputFocus1(C.lightGray)
+                                            }}
+                                            keyboardType='phone-pad'
+                                            maxLength={17}
+                                            style={{
+                                                width: '100%',
+                                                flex: 1,
+                                                height: 48,
+                                                paddingLeft: 8,
+                                                borderWidth: 1,
+                                                borderLeftWidth: 0,
+                                                borderTopRightRadius: 6,
+                                                borderBottomRightRadius: 6,
+                                                borderColor: inputFocus1,
+                                                fontSize: 17,
+                                                fontFamily: F.regular,
+                                                color: C.black,
+                                                paddingTop: inputPhoneLabel === true ? 13 : 0,
+                                                borderColor: errors.offerPhoneNumber ? C.red : inputFocus1,
+                                                borderWidth: errors.offerPhoneNumber ? 2 : 1,
+                                                color: errors.offerPhoneNumber ? C.red : C.black,
+                                            }}
+                                            placeholder={'Phone number'}
+                                            placeholderTextColor={C.placeholder}
+                                            value={phone}
+                                            onChangeText={(masked, unmasked) => {
+                                                onChange(masked)
+                                                setPhone(masked);
+                                            }}
+                                            mask={flagType.phonePattern.length > 0 ? flagType.phonePattern[0] :
+                                                ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
+                                            }
+                                        />
+                                        {/* {errors.offerPhoneNumber && <ShowPasswordIconButton>
+                                            <ErrorIcon width={20} height={20} />
+                                        </ShowPasswordIconButton>
+                                        } */}
+                                    </FormInputContainerPhone>
+                                    <FormInputLabel
+                                        style={{ marginLeft: 60 }}
+                                        isError={errors.offerPhoneNumber} inputLabel={inputPhoneLabel}>Phone number</FormInputLabel>
 
-                        {/* Sing by ear */}
-                        <CheckBoxWithText
-                            checkboxState={isSingByEar}
-                            setCheckboxState={setSingByEar}
-                            checkboxTitle={'Sing by ear'}
+                                    {/* {errors.offerPhoneNumber?.type === 'required' && <ErrorMessage
+                                        style={{ marginLeft: 78 }}
+                                    >{S.inputRequired}</ErrorMessage>}
+                                    {errors.offerPhoneNumber?.type === 'minLength' && <ErrorMessage
+                                        style={{ marginLeft: 78 }}
+                                    >{S.phoneNumberNotValid}</ErrorMessage>} */}
+
+                                </FormInputBlock>
+                            </View>
+                        )}
+                        name="offerPhoneNumber"
+                    />
+
+                    {/*Add additional information*/}
+                    <KeyboardAvoidingView
+                        behavior={Platform.OS === "ios" ? "padding" : "height"}
+                        style={{ flex: 1 }}
+                    >
+                        <Controller
+                            control={control}
+                            rules={{
+                                required: S.emailNotValid,
+                                minLength: 10
+                            }}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <AddInfoBlock>
+                                    <AddInfoContainer
+                                        style={{
+                                            marginBottom: errors.offerAdditionalInfo ? 32 : 13,
+                                            marginHorizontal: 16,
+                                        }}
+                                    >
+                                        <AddInfoInput
+                                            selectionColor={C.lightGray}
+                                            multiline={true}
+                                            numberOfLines={5}
+                                            placeholder={'Add additional information'}
+                                            placeholderTextColor={C.placeholder}
+                                            cursorColor={C.inputCursor}
+                                            onFocus={() => { setInputFocus2(C.black) }}
+                                            onBlur={() => {
+                                                onBlur
+                                                setInputFocus2(C.lightGray)
+                                            }}
+                                            onContentSizeChange={e => setAdditionalHeight(e.nativeEvent.contentSize.height)}
+                                            onChangeText={onChange}
+                                            value={value}
+                                            style={{
+                                                height: additionalHeight,
+                                                borderColor: errors.offerAdditionalInfo ? C.red : inputFocus2,
+                                                borderWidth: errors.offerAdditionalInfo ? 2 : 1,
+                                                color: errors.offerAdditionalInfo ? C.red : C.black,
+                                                textAlignVertical: 'top'
+                                            }}
+                                        />
+                                        {errors.offerAdditionalInfo?.type === 'minLength' && <ErrorMessage>Minimal message length 10 characters</ErrorMessage>}
+                                        {errors.offerAdditionalInfo?.type === 'required' && <ErrorMessage>Required field</ErrorMessage>}
+                                    </AddInfoContainer>
+                                </AddInfoBlock>
+                            )}
+                            name="offerAdditionalInfo"
                         />
+                    </KeyboardAvoidingView>
 
-                        {/* Play By ear */}
-                        <CheckBoxWithText
-                            checkboxState={isPlayByEar}
-                            setCheckboxState={setPlayByEar}
-                            checkboxTitle={'Play By ear'}
-                        />
+                    {/* Secure message */}
+                    <SecurePaymentMessage>
+                        <LockGrayIcon width={22} height={27} />
+                        <SecurePaymentMessageText>
+                            We use a secure payment system that holds funds in a secured intermediary trust account until the performance take place <SecurePaymentMessageReadMoreText>Learn more</SecurePaymentMessageReadMoreText>
+                        </SecurePaymentMessageText>
+                    </SecurePaymentMessage>
 
-                        {/* Read sheet music */}
-                        <CheckBoxWithText
-                            checkboxState={isReadSheetMusic}
-                            setCheckboxState={setReadSheetMusic}
-                            checkboxTitle={'Read sheet music'}
-                        />
-                    </CheckboxBlock>
-
+                    {/* Empty block if open keyboard */}
+                    <View
+                        style={{
+                            marginBottom: isKeyboardOpen === true ? 200 : 0,
+                        }}
+                    >
+                    </View>
                 </FilterBlock>
 
-                <ContentBlock isKeyboardOpen={isKeyboardOpen}>
+                {/* Footer block */}
+                <ContentBlock
+                    style={{
+                        width: windowWidth,
+                    }}
+                    isKeyboardOpen={isKeyboardOpen}>
                     <ContentBlockRow>
-
-                        <ContainerLink
-                            onPress={() => {
-                                clearAllFilters()
-                            }}
-                        >
-                            <ContainerLinkText>Clear all</ContainerLinkText>
-                        </ContainerLink>
+                        {isPriceInFooter &&
+                            <ContainerLink>
+                                <ContainerPrice>${pricePerHourInput * timeRange.duration}</ContainerPrice>
+                                <ContainerHour>for {timeRange.duration} hours</ContainerHour>
+                            </ContainerLink>
+                        }
                         <ButtonSubmit
-                        // onPress={handleSubmit(onSubmit)} 
+                            activeOpacity={isShowSubmitButton ? 0.2 : 1}
+                            style={{
+                                width: isPriceInFooter ? '60%' : '100%',
+                                backgroundColor: isShowSubmitButton ? C.black : C.gray,
+                            }}
+                            onPress={isShowSubmitButton && handleSubmit(onSubmit)}
                         >
-                            <ButtonSubmitText>
-                                {isContractor ?
-                                    'Show Perfomers' :
-                                    'Show Ads'
-                                }
+                            <ButtonSubmitText
+                                style={{
+                                    color: isShowSubmitButton ? C.white : C.sBlack,
+                                }}
+                            >
+                                Pay
                             </ButtonSubmitText>
                         </ButtonSubmit>
                     </ContentBlockRow>
                 </ContentBlock>
             </FilterContainer>
 
-
-        </Animated.View>
+        </Animated.View >
     )
 })
 
