@@ -40,16 +40,16 @@ const {
 import { observer } from 'mobx-react-lite';
 import { useChatAttachmentStore } from '@/stores/ChatAttachmentStore';
 import { useCameraStore } from '@/stores/CameraStore';
-const CameraCustom = observer(({ setOpenCamera }) => {
+const CameraCustom = observer(({ setOpenCamera, setShowOpacityBgMargin }) => {
     const route = useRoute();
     const { windowHeight, windowWidth } = getWindowDimension()
 
     const cameraRef = useRef();
     // Store
-    const { setCameraImage } = useChatAttachmentStore()
+    const { setCameraImage, pickImageFromGalery, setSendAttached, isSendAttached, setOpenChatAttachment } = useChatAttachmentStore()
     // Camera store
     const {
-        currentImage,
+        cameraImage,
         hasPermission,
         cameraType,
         isPreview,
@@ -58,16 +58,21 @@ const CameraCustom = observer(({ setOpenCamera }) => {
         cancelPreview,
         handleCameraType,
         takePicture,
-        pickImage
     } = useCameraStore();
 
-
     useEffect(() => {
-        if (currentImageFromGalery !== undefined) {
-            console.log('кайфуша');
-            setCameraImage(currentImageFromGalery)
+        if (isSendAttached === true) {
+            setOpenCamera(false)
         }
-    }, [currentImageFromGalery]);
+    }, [isSendAttached]);
+
+    // useEffect(() => {
+    //     if (currentImageFromGalery !== undefined) {
+    //         console.log("🚀 ~ file: CameraCustom.jsx ~ line 67 ~ useEffect ~ currentImageFromGalery", currentImageFromGalery)
+    //         console.log('кайфуша');
+    //         setCameraImage(currentImageFromGalery)
+    //     }
+    // }, [currentImageFromGalery]);
     return (
         <CameraContainer
             style={{
@@ -79,8 +84,8 @@ const CameraCustom = observer(({ setOpenCamera }) => {
                 {/* Gallery button */}
                 <CloseButton
                     onPress={() => {
-
                         if (!isPreview) {
+                            setShowOpacityBgMargin(false)
                             setOpenCamera(false)
                         } else {
                             cancelPreview(cameraRef)
@@ -104,7 +109,7 @@ const CameraCustom = observer(({ setOpenCamera }) => {
             {/* Camera control */}
             {!isPreview && <CameraButtons>
                 {/* Gallery button */}
-                <SecondaryButton onPress={() => pickImage()}>
+                <SecondaryButton onPress={() => pickImageFromGalery()}>
                     <GaleryWhiteIcon width={18} height={18} />
                 </SecondaryButton>
 
@@ -124,9 +129,12 @@ const CameraCustom = observer(({ setOpenCamera }) => {
 
                 <SendPhoto
                     onPress={() => {
-                        setCameraImage(currentImage)
+                        setCameraImage(cameraImage)
                         cancelPreview(cameraRef)
                         setOpenCamera(false)
+                        setSendAttached(true)
+                        setOpenChatAttachment(false)
+                        setShowOpacityBgMargin(false)
                     }}
                 >
                     <SendPhotoText>

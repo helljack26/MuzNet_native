@@ -20,6 +20,8 @@
       "**/*"
     ],
     "ios": {
+      "usesIcloudStorage": true,
+
       "supportsTablet": true,
         "bundleIdentifier": "com.helljack.myapp",
         "config": {
@@ -42,6 +44,7 @@
     },
         "plugins": [
           "react-native-email-link",
+          "expo-document-picker",
       [
         "expo-image-picker",
         {

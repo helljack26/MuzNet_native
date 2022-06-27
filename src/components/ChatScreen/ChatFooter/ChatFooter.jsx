@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { Keyboard, Easing, Pressable } from 'react-native';
 
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
@@ -36,20 +37,6 @@ const ChatFooter = observer(({ messageText, onChangeMessageText, setSendMessage,
 
     const { isOpenChatAttachment, setOpenChatAttachment } = useChatAttachmentStore();
 
-    // Attach
-    const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
-        let result = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            quality: 1,
-        });
-
-        if (!result.cancelled) {
-            setMessageAttachment(result.uri);
-            setSendMessage(true)
-        }
-    };
     // Message Input
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
     const inputWidth = windowWidth - 117
@@ -67,6 +54,7 @@ const ChatFooter = observer(({ messageText, onChangeMessageText, setSendMessage,
             >
                 <AttachIconBlock onPress={() => {
                     setOpenChatAttachment(true)
+                    Keyboard.dismiss()
                 }}>
                     <MessageAttachGrayIcon width={19} height={20} />
                 </AttachIconBlock>

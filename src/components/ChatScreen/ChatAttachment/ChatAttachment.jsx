@@ -18,7 +18,8 @@ import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import IMAGES from '@/res/images'
 const {
     CameraGrayIcon,
-    GaleryIcon,
+    GaleryBlackIcon,
+    CloudBlackIcon,
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
@@ -29,8 +30,8 @@ import { style } from './style'
 const {
     AttachContainer,
     Header,
-    AttachCameraRollBlock,
-    AttachFileBlock,
+    ClosePanBlock,
+    ClosePan,
     ButtonsBlock,
     Button,
     ButtonText,
@@ -44,19 +45,14 @@ import { useChatAttachmentStore } from '@/stores/ChatAttachmentStore';
 import { useCameraStore } from '@/stores/CameraStore';
 
 const ChatAttachment = observer(() => {
+    const navigation = useNavigation();
     const route = useRoute();
     const { windowHeight, windowWidth } = getWindowDimension()
     // Store
-    const { isOpenChatAttachment, setOpenChatAttachment } = useChatAttachmentStore();
+    const { isOpenChatAttachment, setOpenChatAttachment, setAttachedFile, isSendAttached, pickImageFromGalery, setCameraImage } = useChatAttachmentStore();
+
     // Camera store
-    const {
-        hasPermission,
-        cameraType,
-        getPermissionAsync,
-        handleCameraType,
-        takePicture,
-        pickImage
-    } = useCameraStore();
+    const { hasPermission, getPermissionAsync } = useCameraStore();
 
     const [isOpenCamera, setOpenCamera] = useState(false);
     useEffect(() => {
@@ -66,36 +62,43 @@ const ChatAttachment = observer(() => {
             setOpenCamera(false)
         }
     }, [hasPermission]);
+
     // Animate attachment
     const { onPress, height } = useAnimateAttachment()
 
-    const [isShowOpacityBg, setShowOpacityBg] = useState(true);
-    const [isShowOpacityBgMargin, setShowOpacityBgMargin] = useState(true);
+    const [isShowOpacityBgMargin, setShowOpacityBgMargin] = useState(false);
 
     useEffect(() => {
-        if (isOpenChatAttachment === true) {
+        if (isOpenChatAttachment === true && isSendAttached === false) {
             onPress(true)
-            setShowOpacityBg(true)
             setTimeout(() => {
                 setShowOpacityBgMargin(true)
             }, 400);
         }
-        // if (isOpenChatAttachment === false) {
-        //     setShowOpacityBg(false)
-        //     setShowOpacityBgMargin(false)
-        // }
-    }, [isOpenChatAttachment]);
+        if (isSendAttached === true && isOpenChatAttachment === false) {
+            onPress(false)
+            setShowOpacityBgMargin(false)
+        }
+    }, [isOpenChatAttachment, isSendAttached]);
 
     const isKeyboardOpen = isKeyboardShown()
 
-    const [isCameraRoll, setCameraRollTab] = useState(true);
-
-    const cameraRollItemWidth = windowWidth / 4
-
     return (
-        <Animated.View style={[styles.container, { width: windowWidth }]} >
+        <Animated.View style={{
+            width: windowWidth,
+            height,
+            zIndex: 1000,
+            justifyContent: 'center',
+            alignItems: 'flex-end',
+            justifyContent: 'flex-end',
+            position: "absolute",
+            marginTop: -50,
+            left: 0,
+            bottom: 0,
+            right: 0,
+        }} >
             {/* Opacity bg */}
-            {isShowOpacityBg && <Pressable
+            <Pressable
                 style={{
                     height: windowHeight,
                     width: windowWidth,
@@ -110,66 +113,52 @@ const ChatAttachment = observer(() => {
                 onPress={() => {
                     onPress(false)
                     setOpenChatAttachment(false)
+                    setShowOpacityBgMargin(false)
                 }}
             >
-            </Pressable>}
+            </Pressable>
 
             {/* Camera */}
-            {isOpenCamera === true && <CameraCustom setOpenCamera={setOpenCamera} />}
+            {isOpenCamera === true && <CameraCustom setShowOpacityBgMargin={setShowOpacityBgMargin} setOpenCamera={setOpenCamera} />}
 
             {/* Attach container */}
             <AttachContainer>
-                {/* Header */}
-                <Header isCameraRoll={isCameraRoll}>
-                    {/* Switch buttons */}
-                    <ButtonsBlock>
-                        <Button
-                            onPress={() => { setCameraRollTab(true) }}
-                            isActive={isCameraRoll}
-                        >
-                            <ButtonText isActive={isCameraRoll}>Photo or Video</ButtonText>
-                        </Button>
+                <ClosePanBlock
+                    onPress={() => {
+                        onPress(false)
+                        setShowOpacityBgMargin(false)
+                        setOpenChatAttachment(false)
+                    }}
 
-                        <Button
-                            onPress={() => { setCameraRollTab(false) }}
-                            isActive={!isCameraRoll}
-                        >
-                            <ButtonText isActive={!isCameraRoll}>File</ButtonText>
-                        </Button>
-                    </ButtonsBlock>
+                ><ClosePan></ClosePan></ClosePanBlock>
 
-                </Header>
-
-                {isCameraRoll === true ?
-                    <AttachCameraRollBlock
-                        style={{
-                            width: windowWidth,
+                {/* Switch buttons */}
+                <ButtonsBlock>
+                    <Button
+                        onPress={() => {
+                            if (hasPermission) {
+                                setOpenCamera(true)
+                            }
+                            getPermissionAsync()
                         }}
                     >
-                        <AttachCameraOpenBtn
-                            onPress={() => {
-                                if (hasPermission) {
-                                    setOpenCamera(true)
-                                }
-                                getPermissionAsync()
-                            }}
-                            style={{
-                                width: cameraRollItemWidth - 1,
-                                height: cameraRollItemWidth,
-                                marginHorizontal: 0.5,
-                                marginBottom: 1,
-                            }}
-                        >
-                            <CameraGrayIcon width={29} height={23} />
-                            <AttachCameraOpenBtnText>Camera</AttachCameraOpenBtnText>
-                        </AttachCameraOpenBtn>
+                        <CameraGrayIcon width={20} height={18} />
+                        <ButtonText>Camera</ButtonText>
+                    </Button>
 
-                    </AttachCameraRollBlock>
-                    :
-                    <AttachFileBlock>
+                    <Button
+                        onPress={() => { pickImageFromGalery() }}
+                    >
+                        <GaleryBlackIcon width={18} height={18} />
+                        <ButtonText>Gallery</ButtonText>
+                    </Button>
 
-                    </AttachFileBlock>
-                }
+                    <Button onPress={() => { setAttachedFile() }}>
+                        <CloudBlackIcon width={18} height={18} />
+
+                        <ButtonText>Files</ButtonText>
+                    </Button>
+                </ButtonsBlock>
             </AttachContainer>
 
 
@@ -181,14 +170,6 @@ export default ChatAttachment;
 
 const styles = StyleSheet.create({
     container: {
-        zIndex: 1000,
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        position: "absolute",
-        marginTop: -50,
-        left: 0,
-        bottom: 0,
-        right: 0,
+
     },
 })

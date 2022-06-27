@@ -1,51 +1,106 @@
 import React from 'react';
 import {
     PermissionsAndroid,
-    Platformn
+    Platform
 } from "react-native";
 import { makeAutoObservable, action, runInAction, observable } from 'mobx';
 import { apiMocks } from '@/api/mock/apiMocks'
+import * as DocumentPicker from 'expo-document-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 class ChatAttachment {
-    attachedFile = {
-        cameraPhoto: {},
-        photo: {},
-        video: {},
-        file: {},
-    }
-
+    cameraPhoto = ''
+    video = ''
+    file = {}
+    cameraRoll = []
+    isSendAttached = false
     isOpenChatAttachment = false
 
     constructor() {
         makeAutoObservable(this, {
-            attachedFile: observable,
+            cameraPhoto: observable,
+            video: observable,
+            file: observable,
             isOpenChatAttachment: observable,
-
+            isSendAttached: observable,
+            cameraRoll: observable,
             setOpenChatAttachment: action.bound,
+            setSendAttached: action.bound,
             setCameraImage: action.bound,
-            setCameraRoll: action.bound,
-            resetState: action.bound,
             setAttachedFile: action.bound,
+            setCameraRoll: action.bound,
         })
     }
 
+    setSendAttached(boolean) {
+        this.isSendAttached = boolean
+    }
     setOpenChatAttachment(boolean) {
         this.isOpenChatAttachment = boolean
     }
-    setCameraImage(source) {
-        this.attachedFile.cameraPhoto = source
-        console.log("🚀 ~ file: ChatAttachmentStore.js ~ line 37 ~ ChatAttachment ~ setCameraImage ~  this.attachedFile", this.attachedFile)
-    }
-
-    resetState() {
+    setCameraImage = async (source) => {
+        this.file = {}
+        this.cameraPhoto = source
 
     }
+    setAttachedFile = async () => {
+        const result = await DocumentPicker.getDocumentAsync({
+            type: ["application/pdf"],
+        });
 
-    setAttachedFile(file) {
-        console.log("🚀 ~ file: ChatAttachmentStore.js ~ line 35 ~ ChatAttachmentStore ~ setAttachedFile ~ offer", offer)
+        runInAction(() => {
+            this.cameraPhoto = ''
+            this.file = {
+                fileName: result.name,
+                uri: result.uri,
+            },
+
+                this.setSendAttached(true)
+            this.setOpenChatAttachment(false)
+
+        })
     }
-    setCameraRoll() {
 
+    pickImageFromGalery = async () => {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
+        });
+
+        runInAction(() => {
+            this.cameraPhoto = ''
+            this.cameraPhoto = result.uri
+            this.setOpenChatAttachment(false)
+            this.setSendAttached(true)
+
+            // if (result.type === 'video') {
+            //     // this.setCameraImage({
+            //     //     type: result.type,
+            //     //     uri: result.uri,
+            //     //     duration: result.duration !== undefined ? result.duration : null
+            //     // })
+            //     this.setOpenChatAttachment(false)
+            //     this.setSendAttached(true)
+            // } else {
+            //     this.setCameraImage(result.uri)
+            //     this.setOpenChatAttachment(false)
+            //     this.setSendAttached(true)
+            // }
+        })
+    }
+
+    setCameraRoll = async () => {
+        // TODO для социалки начала забора последних снимков
+        // const { granted } = await MediaLibrary.requestPermissionsAsync();
+        // if (granted) {
+        //     const results = await MediaLibrary.getAssetsAsync({
+        //         sortBy: 'creationTime',
+        //         first: 5,
+        //     });
+        //     const cameraRoll = results.
+        //     console.log("🚀 ~ file: ChatAttachmentStore.js ~ line 42 ~ ChatAttachment ~ setCameraRoll= ~ result", results)
+        // }
     }
 }
 

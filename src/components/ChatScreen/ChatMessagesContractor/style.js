@@ -42,6 +42,12 @@ left: 0px;
 right: 0px;
 bottom: 0px;
 `;
+const MessageImageBlock = styled.View`
+max-width: 240px;
+overflow: hidden;
+border-radius: 6px;
+max-height: 100%;
+`;
 const MessageBlockInsideScroll = styled.View`
 display: flex;
 justify-content: flex-end;
@@ -96,6 +102,15 @@ max-width:243px;
 border-radius: 12px;
 border-bottom-right-radius: 0px;
 `;
+const OutcomeMessageFile = styled.View`
+display: flex;
+flex-direction: row;
+`;
+const OutcomeMessageFileText = styled(M.MediumText14)`
+color: ${C.white};
+margin-left: 8px;
+padding-right: 22px;
+`;
 const OutcomeMessageText = styled(M.MediumText14)`
 color: ${C.white};
 `;
@@ -126,12 +141,15 @@ export const style = {
     CreateOfferButton: CreateOfferButton,
     CreateOfferButtonText: CreateOfferButtonText,
     MessageBlock: MessageBlock,
+    MessageImageBlock: MessageImageBlock,
     MessageScrollBlock: MessageScrollBlock,
     MessageBlockInsideScroll: MessageBlockInsideScroll,
     MessageBlockDay: MessageBlockDay,
     Outcome: Outcome,
     OutcomeCol: OutcomeCol,
     OutcomeMessage: OutcomeMessage,
+    OutcomeMessageFile: OutcomeMessageFile,
+    OutcomeMessageFileText: OutcomeMessageFileText,
     OutcomeMessageText: OutcomeMessageText,
     Income: Income,
     IncomeCol: IncomeCol,

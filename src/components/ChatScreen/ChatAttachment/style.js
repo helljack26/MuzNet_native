@@ -5,24 +5,20 @@ import { M } from '@/res/mixin'
 
 const AttachContainer = styled.View`
 width: 100%;
-height: 45%;
 background-color: ${C.white};
 border-top-left-radius: 16px;
 border-top-right-radius: 16px;
 overflow: hidden;
-position: absolute;
-left: 0px;
-bottom: 0px;
-right: 0px;
+display: flex;
+align-items: flex-end;
+flex-direction: row;
 `;
-
 const Header = styled.View`
 width: 100%;
 display: flex;
+align-items: center;
 flex-direction: row;
 padding: 16px;
-border-bottom-color: ${props => props.isCameraRoll === true ? 'transparent' : C.lightGray};
-border-bottom-width: 1px;
 `;
 const ButtonsBlock = styled.View`
 display: flex;
@@ -30,27 +26,47 @@ justify-content: space-between;
 align-items: center;
 flex-direction: row;
 width: 100%;
-height: 40px;
-padding: 4px;
-border-radius: 6px;
-border-color: ${C.lightGray};
-border-width: 1px;
-border-style: solid;
+height: 200px;
+margin-bottom: 30px;
+padding: 0px 20px;
+`;
+const ClosePanBlock = styled.TouchableOpacity`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+width: 100%;
+height: 20px;
+position: absolute;
+padding-top: 12px;
+padding-bottom: 12px;
+top: 0px;
+left: 0px;
+right: 0px;
+`;
+const ClosePan = styled.View`
+width: 72px;
+height: 5px;
+border-radius: 4px;
+background-color: ${C.backGray};
 `;
 const Button = styled.TouchableOpacity`
-width: 48.5%;
-height: 100%;
-background-color: ${props => props.isActive === true ? C.black : C.white};
+width: 28%;
+height: 62px;
+background-color: ${C.backGray};
 display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
 border-radius: 6px;
+border-color: #e6e6e6;
+border-width: 1px;
+border-style: solid;
 `;
 const ButtonText = styled(M.MediumText14)`
 font-family: ${F.bold};
-color: ${props => props.isActive === true ? C.white : C.black};
-padding-left: 8px;
+color: ${C.black};
+margin-top: 4px;
 `;
 const AttachCameraRollBlock = styled.ScrollView`
 width: 100%;
@@ -74,6 +90,8 @@ export const style = {
     AttachContainer: AttachContainer,
     Header: Header,
     ButtonsBlock: ButtonsBlock,
+    ClosePanBlock: ClosePanBlock,
+    ClosePan: ClosePan,
     Button: Button,
     ButtonText: ButtonText,
     AttachCameraRollBlock: AttachCameraRollBlock,

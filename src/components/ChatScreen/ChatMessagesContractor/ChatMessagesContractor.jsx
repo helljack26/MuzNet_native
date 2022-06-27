@@ -2,9 +2,17 @@ import React from "react";
 import { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { Image } from 'react-native';
+
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+import { formatAMPM } from '@/components/helpers/formatAMPM';
+// Images
+import IMAGES from '@/res/images'
+const {
+    FileWhiteIcon
+} = IMAGES;
 // Styles
 import { style } from './style'
 const {
@@ -12,12 +20,15 @@ const {
     CreateOfferButton,
     CreateOfferButtonText,
     MessageBlock,
+    MessageImageBlock,
     MessageScrollBlock,
     MessageBlockInsideScroll,
     MessageBlockDay,
     Outcome,
     OutcomeCol,
     OutcomeMessage,
+    OutcomeMessageFile,
+    OutcomeMessageFileText,
     OutcomeMessageText,
     // Income
     Income,
@@ -33,69 +44,96 @@ const {
 // Store
 import { observer } from 'mobx-react-lite';
 import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
+import { useChatAttachmentStore } from '@/stores/ChatAttachmentStore';
+
 import C from "@/res/colors";
 
 const chatMock = [
     {
         messageType: 'outcome',
-        messageTime: '12:02',
+        messageTime: '12:02 pm',
         writterImage: require('../../../../assets/Mock/Georgia.png'),
         messageText: 'Hi Leo! We would like to arrange with you to perform at our wedding, are you free on March 26th?',
     },
     {
         messageType: 'income',
-        messageTime: '12:05',
+        messageTime: '12:05 pm',
         writterImage: require('../../../../assets/Mock/Kate1.jpg'),
         messageText: 'Hi Robert! Yes, I am available 26th, how long will your event last?',
     },
     {
         messageType: 'outcome',
-        messageTime: '12:15',
+        messageTime: '12:15 pm',
         writterImage: require('../../../../assets/Mock/Georgia.png'),
         messageText: 'Great, we would like to book you for 2 hours, from 7 PM to 9 PM, is it convenient for you?',
     },
     {
         messageType: 'outcome',
-        messageTime: '12:15',
+        messageTime: '12:15 pm',
         writterImage: require('../../../../assets/Mock/Georgia.png'),
         messageText: 'Also, we would like you to sing to live music. Can you take the instrument with you?',
     },
     {
         messageType: 'income',
-        messageTime: '12:34',
+        messageTime: '12:34 pm',
         writterImage: require('../../../../assets/Mock/Kate1.jpg'),
         messageText: 'Yes, a live music show will cost $30 per hour, would it suit you?',
     },
     {
         messageType: 'income',
-        messageTime: '12:34',
+        messageTime: '12:34 pm',
         writterImage: require('../../../../assets/Mock/Kate1.jpg'),
         messageText: 'Yes, a live music show will cost $30 per hour, would it suit you?',
     },
     {
         messageType: 'income',
-        messageTime: '12:34',
+        messageTime: '12:34 pm',
         writterImage: require('../../../../assets/Mock/Kate1.jpg'),
         messageText: 'Yes, a live music show will cost $30 per hour, would it suit you?',
     }
 ]
-
+const isEmpty = (obj) => {
+    for (let key in obj) {
+        // если тело цикла начнет выполняться - значит в объекте есть свойства
+        return false;
+    }
+    return true;
+}
 const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
     const navigation = useNavigation();
     const route = useRoute();
     const { windowHeight, windowWidth } = getWindowDimension()
     const isKeyboardOpen = isKeyboardShown()
 
+    // Scroll top when press on similar
+    const scrollViewRef = useRef(null)
+
+    const [isScrollToBottom, setScrollToBottom] = useState(true);
+    const scrollBottom = () => {
+        if (scrollViewRef.current && scrollViewRef != null) {
+            setTimeout(() => {
+                scrollViewRef.current.scrollTo({
+                    y: 100000000,
+                    animated: false
+                })
+            }, 20);
+        }
+    }
+    // Create offer store
     const { isOpenCreateOffer, setOpenCreateOffer } = useOfferToMusicianApiStore();
+    // Attachment store
+    const { cameraPhoto, file, isSendAttached, setSendAttached } = useChatAttachmentStore();
 
     const [localMessageState, setLocalMessageState] = useState([]);
-
-    // Set new message
+    // Time
+    const now = new Date(Date.now())
+    const { strTime } = formatAMPM(now)
+    // Set new text message
     useEffect(() => {
         if (newMessage) {
             const newTextMessage = {
                 messageType: 'outcome',
-                messageTime: '12:40',
+                messageTime: strTime,
                 writterImage: require('../../../../assets/Mock/Georgia.png'),
                 messageText: newMessage.messageText,
                 // messageText: newMessage.messageAttachment,
@@ -109,21 +147,46 @@ const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
         }
     }, [newMessage]);
 
-    // Scroll top when press on similar
-    const scrollViewRef = useRef(null)
-
-    const [isScrollToBottom, setScrollToBottom] = useState(true);
-
-    const scrollBottom = () => {
-        if (scrollViewRef.current) {
+    // Set new image message
+    useEffect(() => {
+        if (cameraPhoto !== undefined && isSendAttached === true) {
+            const newImageMessage = {
+                messageType: 'outcome',
+                messageTime: strTime,
+                writterImage: require('../../../../assets/Mock/Georgia.png'),
+                messageImageUri: cameraPhoto,
+            }
+            setLocalMessageState([...localMessageState, newImageMessage])
+            // Scroll when new message
+            scrollBottom()
             setTimeout(() => {
-                scrollViewRef.current.scrollTo({
-                    y: 100000000,
-                    animated: false
-                })
+                setScrollToBottom(false)
+                setSendAttached(false)
             }, 20);
         }
-    }
+    }, [isSendAttached, cameraPhoto]);
+
+    // Set new file message
+    useEffect(() => {
+
+        if (!isEmpty(file) && isSendAttached === true) {
+            const newImageMessage = {
+                messageType: 'outcome',
+                messageTime: strTime,
+                writterImage: require('../../../../assets/Mock/Georgia.png'),
+                fileName: file.fileName,
+            }
+            setLocalMessageState([...localMessageState, newImageMessage])
+            // Scroll when new message
+            scrollBottom()
+            setTimeout(() => {
+                setScrollToBottom(false)
+                setSendAttached(false)
+            }, 20);
+        }
+    }, [isSendAttached, file]);
+
+    // Scroll to bottom
     useEffect(() => {
         if (isScrollToBottom === true) {
             scrollBottom()
@@ -150,7 +213,6 @@ const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
         <MessagesContainer
             style={{
                 width: windowWidth,
-                // height: windowHeight,
             }}
         >
             {/* Filters button */}
@@ -180,7 +242,6 @@ const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
                             paddingBottom: isKeyboardOpen === true ? 106 : 126,
                         }}
                     >
-                        {/* TODO сделать добавление нового сообщения от пользователя, плюс сделать вывод фотографии */}
                         <MessageBlockDay>
                             Today
                         </MessageBlockDay>
@@ -195,7 +256,6 @@ const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
                                     isInGroup = false
                                 }
                             }
-
                             // const isGroup = 
                             return (message.messageType === 'outcome' ?
                                 <Outcome
@@ -210,9 +270,30 @@ const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
                                                 marginRight: isInGroup ? 32 : 0,
                                             }}
                                         >
-                                            <OutcomeMessageText>
-                                                {message.messageText}
-                                            </OutcomeMessageText>
+                                            {message.messageImageUri !== undefined ?
+                                                <MessageImageBlock>
+                                                    <Image
+                                                        source={{ uri: message.messageImageUri }}
+                                                        style={{
+                                                            width: 240,
+                                                            height: 240 + 240 / 3,
+                                                        }}
+                                                        resizeMode={'contain'} />
+                                                </MessageImageBlock>
+                                                :
+                                                message.fileName !== undefined ?
+                                                    <OutcomeMessageFile>
+                                                        <FileWhiteIcon width={20} height={20} />
+                                                        <OutcomeMessageFileText>
+                                                            {message.fileName}
+                                                        </OutcomeMessageFileText>
+                                                    </OutcomeMessageFile>
+                                                    :
+                                                    <OutcomeMessageText>
+                                                        {message.messageText}
+                                                    </OutcomeMessageText>
+                                            }
+
                                         </OutcomeMessage>
                                         {!isInGroup && <MessageTime>
                                             {message.messageTime}
@@ -223,6 +304,7 @@ const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
                                         <UserImg source={message.writterImage} resizeMode={'cover'} />
                                     </UserImgBlock>}
                                 </Outcome>
+
                                 :
                                 <Income
                                     style={{

@@ -13,16 +13,14 @@ class NativeCamera {
     hasPermission = null
     isPreview = false
     cameraType = Camera.Constants.Type.back
-    currentImage = ''
-    currentImageFromGalery = ''
+    cameraImage = ''
 
     constructor() {
         makeAutoObservable(this, {
             hasPermission: observable,
             isPreview: observable,
             cameraType: observable,
-            currentImage: observable,
-            currentImageFromGalery: observable,
+            cameraImage: observable,
 
             getPermissionAsync: action.bound,
             handleCameraType: action.bound,
@@ -52,39 +50,48 @@ class NativeCamera {
 
     takePicture = async (cameraRef) => {
         if (cameraRef.current) {
-            const options = { quality: 0.5, base64: true, skipProcessing: true };
+            const options = { quality: 1 };
             const data = await cameraRef.current.takePictureAsync(options);
 
             const source = data.uri;
             if (source) {
-
                 await cameraRef.current.pausePreview();
+
                 runInAction(() => {
                     this.isPreview = true
-                    this.currentImage = ''
-                    this.currentImage = source
+                    this.cameraImage = ''
+                    this.cameraImage = source
                 })
             }
         }
     }
+
     cancelPreview = async (cameraRef) => {
         await cameraRef.current.resumePreview();
         runInAction(() => {
             this.isPreview = false
-            this.currentImage = ''
+            this.cameraImage = ''
         })
     };
 
     pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             quality: 1,
         });
+
         runInAction(() => {
-            this.currentImage = ''
-            this.currentImageFromGalery = ''
-            this.currentImageFromGalery = result.uri
+            this.cameraImage = ''
+            if (result.type === 'video') {
+                this.cameraImage = {
+                    type: result.type,
+                    uri: result.uri,
+                    duration: result.duration !== undefined ? result.duration : null
+                }
+            } else {
+                this.cameraImage = result.uri
+            }
         })
     }
 }
