@@ -1,55 +1,97 @@
 import React from 'react';
-import {
-    PermissionsAndroid,
-    Platformn
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Platform, } from 'react-native';
+import { Camera } from 'expo-camera';
+import * as Permissions from 'expo-permissions';
+import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+
 import { makeAutoObservable, action, runInAction, observable } from 'mobx';
 import { apiMocks } from '@/api/mock/apiMocks'
 
-class ChatAttachment {
-    attachedFile = {
-        cameraPhoto: {},
-        photo: {},
-        video: {},
-        file: {},
-    }
-
-    isOpenChatAttachment = false
+import { useChatAttachmentStore } from '@/stores/ChatAttachmentStore';
+class NativeCamera {
+    hasPermission = null
+    isPreview = false
+    cameraType = Camera.Constants.Type.back
+    currentImage = ''
+    currentImageFromGalery = ''
 
     constructor() {
         makeAutoObservable(this, {
-            attachedFile: observable,
-            isOpenChatAttachment: observable,
+            hasPermission: observable,
+            isPreview: observable,
+            cameraType: observable,
+            currentImage: observable,
+            currentImageFromGalery: observable,
 
-            setOpenChatAttachment: action.bound,
-            setCameraRoll: action.bound,
-            resetState: action.bound,
-            setAttachedFile: action.bound,
+            getPermissionAsync: action.bound,
+            handleCameraType: action.bound,
+            takePicture: action.bound,
+            cancelPreview: action.bound,
+            pickImage: action.bound,
+        })
+    }
+    getPermissionAsync = async () => {
+        // Camera Permission
+        const { status } = await Camera.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+            alert('Sorry, we need camera roll permissions to make this work!');
+        }
+
+        runInAction(() => {
+            this.hasPermission = status === 'granted'
         })
     }
 
-    setOpenChatAttachment(boolean) {
-        this.isOpenChatAttachment = boolean
+    // это при нажатии на кнопку сменить камеру
+    handleCameraType = () => {
+        this.cameraType = this.cameraType === Camera.Constants.Type.back
+            ? Camera.Constants.Type.front
+            : Camera.Constants.Type.back
     }
 
-    resetState() {
+    takePicture = async (cameraRef) => {
+        if (cameraRef.current) {
+            const options = { quality: 0.5, base64: true, skipProcessing: true };
+            const data = await cameraRef.current.takePictureAsync(options);
 
-    }
+            const source = data.uri;
+            if (source) {
 
-    setAttachedFile(file) {
-        console.log("🚀 ~ file: ChatAttachmentStore.js ~ line 35 ~ ChatAttachmentStore ~ setAttachedFile ~ offer", offer)
+                await cameraRef.current.pausePreview();
+                runInAction(() => {
+                    this.isPreview = true
+                    this.currentImage = ''
+                    this.currentImage = source
+                })
+            }
+        }
     }
-    setCameraRoll() {
-        (async () => {
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            setHasPermission(status === 'granted');
-        })();
+    cancelPreview = async (cameraRef) => {
+        await cameraRef.current.resumePreview();
+        runInAction(() => {
+            this.isPreview = false
+            this.currentImage = ''
+        })
+    };
+
+    pickImage = async () => {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
+        });
+        runInAction(() => {
+            this.currentImage = ''
+            this.currentImageFromGalery = ''
+            this.currentImageFromGalery = result.uri
+        })
     }
 }
 
-const ChatAttachmentStore = new ChatAttachment();
+const CameraStore = new NativeCamera();
 
-export const ChatAttachmentStoreContext = React.createContext(ChatAttachmentStore);
-export const useChatAttachmentStore = () => React.useContext(ChatAttachmentStoreContext)
+export const CameraStoreContext = React.createContext(CameraStore);
+export const useCameraStore = () => React.useContext(CameraStoreContext)
 
 

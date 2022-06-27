@@ -22,6 +22,7 @@ class ChatAttachment {
             isOpenChatAttachment: observable,
 
             setOpenChatAttachment: action.bound,
+            setCameraImage: action.bound,
             setCameraRoll: action.bound,
             resetState: action.bound,
             setAttachedFile: action.bound,
@@ -30,6 +31,10 @@ class ChatAttachment {
 
     setOpenChatAttachment(boolean) {
         this.isOpenChatAttachment = boolean
+    }
+    setCameraImage(source) {
+        this.attachedFile.cameraPhoto = source
+        console.log("🚀 ~ file: ChatAttachmentStore.js ~ line 37 ~ ChatAttachment ~ setCameraImage ~  this.attachedFile", this.attachedFile)
     }
 
     resetState() {
@@ -40,10 +45,7 @@ class ChatAttachment {
         console.log("🚀 ~ file: ChatAttachmentStore.js ~ line 35 ~ ChatAttachmentStore ~ setAttachedFile ~ offer", offer)
     }
     setCameraRoll() {
-        (async () => {
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            setHasPermission(status === 'granted');
-        })();
+
     }
 }
 

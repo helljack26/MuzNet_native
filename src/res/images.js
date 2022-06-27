@@ -30,6 +30,7 @@ import SearchIcon from '../../assets/icon/search_icon.svg'
 import SearchBigIcon from '../../assets/icon/search_big_icon.svg'
 import CrossBlackIcon from '../../assets/icon/cross_black_icon.svg'
 import CrossGrayIcon from '../../assets/icon/cross_gray_icon.svg'
+import CrossWhiteIcon from '../../assets/icon/cross_white_icon.svg'
 import CheckBlackIcon from '../../assets/icon/check_black_icon.svg'
 import CheckBlackFilledIcon from '../../assets/icon/check_black_filled_icon.svg'
 import CheckRoundBlackIcon from '../../assets/icon/check_round_black_icon.svg'
@@ -47,6 +48,9 @@ import SendMessageIcon from '../../assets/icon/send_message_icon.svg'
 import LockGrayIcon from '../../assets/icon/lock_gray_icon.svg'
 import AddCrossIcon from '../../assets/icon/add_cross_icon.svg'
 import CameraGrayIcon from '../../assets/icon/camera_gray_icon.svg'
+import GaleryBlackIcon from '../../assets/icon/galery_black_icon.svg'
+import GaleryWhiteIcon from '../../assets/icon/galery_white_icon.svg'
+import ChangeCameraTypeIcon from '../../assets/icon/change_cameraType_icon.svg'
 // Bank logo
 import VisaBankIcon from '../../assets/icon/visa_icon.svg'
 import MasterCardBankIcon from '../../assets/icon/masterCard_icon.svg'
@@ -113,6 +117,7 @@ const IMAGES = {
     SearchBigIcon: SearchBigIcon,
     CrossBlackIcon: CrossBlackIcon,
     CrossGrayIcon: CrossGrayIcon,
+    CrossWhiteIcon: CrossWhiteIcon,
     CheckBlackIcon: CheckBlackIcon,
     CheckBlackFilledIcon: CheckBlackFilledIcon,
     CheckRoundBlackIcon: CheckRoundBlackIcon,
@@ -129,6 +134,9 @@ const IMAGES = {
     LockGrayIcon: LockGrayIcon,
     AddCrossIcon: AddCrossIcon,
     CameraGrayIcon: CameraGrayIcon,
+    GaleryBlackIcon: GaleryBlackIcon,
+    GaleryWhiteIcon: GaleryWhiteIcon,
+    ChangeCameraTypeIcon: ChangeCameraTypeIcon,
     // Bank
     VisaBankIcon: VisaBankIcon,
     MasterCardBankIcon: MasterCardBankIcon,

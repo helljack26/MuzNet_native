@@ -1,25 +1,24 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, Keyboard, Easing, Pressable, StyleSheet, Platform } from 'react-native';
-import { useForm, Controller } from "react-hook-form";
+import { StyleSheet, Text, View, TouchableOpacity, Platform, Animated, Keyboard, Easing, Pressable } from 'react-native';
+// Camera
+import { Camera } from 'expo-camera';
+import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+
 // Components
-import DropSelectCalendar from '@/components/Dropdowns/DropSelectCalendar'
-import TimePeriodPicker from '@/components/TimePeriodPicker'
-import SearchLocationDropSelect from '@/components/Dropdowns/SearchLocationDropSelect'
-import DropFlagSelect from '@/pages/SignUp/SignUpScreen/DropFlagSelect'
+import CameraCustom from '@/components/CameraCustom'
 
 // Helpers
-import MaskInput from 'react-native-mask-input';
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateAttachment } from './useAnimateAttachment';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-import { addDotForNumber } from '@/components/helpers/addDotForNumber'
+
 // Images
 import IMAGES from '@/res/images'
 const {
     CameraGrayIcon,
-    LockGrayIcon,
+    GaleryIcon,
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
@@ -42,12 +41,31 @@ const {
 // Store
 import { observer } from 'mobx-react-lite';
 import { useChatAttachmentStore } from '@/stores/ChatAttachmentStore';
+import { useCameraStore } from '@/stores/CameraStore';
 
 const ChatAttachment = observer(() => {
     const route = useRoute();
     const { windowHeight, windowWidth } = getWindowDimension()
     // Store
     const { isOpenChatAttachment, setOpenChatAttachment } = useChatAttachmentStore();
+    // Camera store
+    const {
+        hasPermission,
+        cameraType,
+        getPermissionAsync,
+        handleCameraType,
+        takePicture,
+        pickImage
+    } = useCameraStore();
+
+    const [isOpenCamera, setOpenCamera] = useState(false);
+    useEffect(() => {
+        if (hasPermission === true) {
+            setOpenCamera(true)
+        } else {
+            setOpenCamera(false)
+        }
+    }, [hasPermission]);
     // Animate attachment
     const { onPress, height } = useAnimateAttachment()
 
@@ -70,7 +88,7 @@ const ChatAttachment = observer(() => {
 
     const isKeyboardOpen = isKeyboardShown()
 
-    const [isCameraRoll, setCameraRoll] = useState(true);
+    const [isCameraRoll, setCameraRollTab] = useState(true);
 
     const cameraRollItemWidth = windowWidth / 4
 
@@ -96,22 +114,24 @@ const ChatAttachment = observer(() => {
             >
             </Pressable>}
 
+            {/* Camera */}
+            {isOpenCamera === true && <CameraCustom setOpenCamera={setOpenCamera} />}
+
             {/* Attach container */}
             <AttachContainer>
-
                 {/* Header */}
                 <Header isCameraRoll={isCameraRoll}>
                     {/* Switch buttons */}
                     <ButtonsBlock>
                         <Button
-                            onPress={() => { setCameraRoll(true) }}
+                            onPress={() => { setCameraRollTab(true) }}
                             isActive={isCameraRoll}
                         >
                             <ButtonText isActive={isCameraRoll}>Photo or Video</ButtonText>
                         </Button>
 
                         <Button
-                            onPress={() => { setCameraRoll(false) }}
+                            onPress={() => { setCameraRollTab(false) }}
                             isActive={!isCameraRoll}
                         >
                             <ButtonText isActive={!isCameraRoll}>File</ButtonText>
@@ -122,14 +142,17 @@ const ChatAttachment = observer(() => {
 
                 {isCameraRoll === true ?
                     <AttachCameraRollBlock
-                        onPress={() => {
-
-                        }}
                         style={{
                             width: windowWidth,
                         }}
                     >
                         <AttachCameraOpenBtn
+                            onPress={() => {
+                                if (hasPermission) {
+                                    setOpenCamera(true)
+                                }
+                                getPermissionAsync()
+                            }}
                             style={{
                                 width: cameraRollItemWidth - 1,
                                 height: cameraRollItemWidth,
