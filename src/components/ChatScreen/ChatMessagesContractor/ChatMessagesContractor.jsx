@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useRef } from 'react';
 import { useEffect } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
 
 // Helpers
@@ -35,7 +35,6 @@ const {
     IncomeCol,
     IncomeMessage,
     IncomeMessageText,
-
     MessageTime,
     UserImgBlock,
     UserImg
@@ -99,9 +98,9 @@ const isEmpty = (obj) => {
     }
     return true;
 }
-const ChatMessagesContractor = observer(({ newMessage, isSendMessage }) => {
+const ChatMessagesContractor = observer(({ newMessage }) => {
     const navigation = useNavigation();
-    const route = useRoute();
+
     const { windowHeight, windowWidth } = getWindowDimension()
     const isKeyboardOpen = isKeyboardShown()
 

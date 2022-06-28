@@ -65,7 +65,10 @@ const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, set
         // For parent filters
         setCalendarOpen(false)
         setPlaceholder(placeholderString)
-        setFilterDate(millisecondForFilter)
+        setFilterDate({
+            milliseconds: millisecondForFilter,
+            string: placeholderString,
+        })
     };
 
     // If resetAll

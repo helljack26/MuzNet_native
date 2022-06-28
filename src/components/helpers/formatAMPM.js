@@ -5,7 +5,7 @@ export const formatAMPM = (date) => {
     hours = hours % 12;
     hours = !hours ? 12 : hours < 10 ? '0' + hours : hours;
     minutes = minutes < 10 ? '0' + minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
+    var strTime = hours + ':' + minutes + '' + ampm;
 
     const hoursInMs = date.getHours() * 3600000
     const minutesInMs = minutes * 60000

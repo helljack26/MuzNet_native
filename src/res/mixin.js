@@ -86,7 +86,7 @@ line-height: 30px;
 `
 const Title20 = styled.Text`
 font-size: 20px;
-font-family: ${F.extraBlack};
+font-family: ${F.bold};
 color: ${C.black};
 line-height: 25px;
 `

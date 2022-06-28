@@ -1,12 +1,20 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { useState, useEffect } from 'react';
+
+import { StatusBar, Image } from 'react-native';
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 // Components
+import ModalWindow from '@/components/ModalWindow'
 import ChatScreen from '@/components/ChatScreen'
 import CreateOffer from '@/components/ChatScreen/ChatMessagesContractor/CreateOffer'
-
+import OfferPreview from '@/components/ChatScreen/ChatMessagesContractor/OfferPreview'
+// Images
+import IMAGES from '@/res/images'
+const {
+    ModalWrongIcon
+} = IMAGES;
 // Styles
 import styled from 'styled-components/native';
 import C from '@/res/colors'
@@ -19,8 +27,27 @@ width: 100%;
 background-color: ${C.white};
 `;
 
-const ContractorChatScreen = () => {
+// Store
+import { observer } from 'mobx-react-lite';
+import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
+
+const ContractorChatScreen = observer(() => {
     const { windowHeight, windowWidth } = getWindowDimension()
+
+    const { isPaySuccesful, isOpenOfferPreview, setPaySucessful } = useOfferToMusicianApiStore();
+    const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+
+    const [isWrongModalOpen, setWrongModalOpen] = useState(false);
+
+    useEffect(() => {
+        if (isPaySuccesful === true) {
+            setSuccessModalOpen(true)
+        } else {
+            setSuccessModalOpen(false)
+        }
+    }, [isPaySuccesful]);
+
+
 
     return (
         <>
@@ -39,11 +66,34 @@ const ContractorChatScreen = () => {
                 <ChatScreen isContractor={true} />
 
                 <CreateOffer />
+                <OfferPreview />
+
+                {isSuccessModalOpen === true && <ModalWindow
+                    modalPic={<Image source={IMAGES.GifSuccessCheck}
+                        style={{
+                            width: '120%',
+                            height: '120%',
+                        }}
+                        resizeMode={'cover'} width={'100%'} height={'100%'} />
+                    }
+                    title={'Your payment was successful'}
+                    advice={'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
+                    setOpen={setPaySucessful}
+                    btnText={'Great!'}
+                />}
+
+                {isWrongModalOpen === true && <ModalWindow
+                    modalPic={<ModalWrongIcon width={80} height={80} />}
+                    title={'Something went wrong'}
+                    advice={'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
+                    setOpen={setWrongModalOpen}
+                    btnText={'Try Again!'}
+                />}
             </Container>
 
         </>
 
     )
-}
+})
 
 export default ContractorChatScreen;

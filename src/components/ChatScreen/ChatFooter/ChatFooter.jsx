@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from 'react';
-import * as ImagePicker from 'expo-image-picker';
-import { Keyboard, Easing, Pressable } from 'react-native';
+import { Keyboard } from 'react-native';
 
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
@@ -35,7 +34,7 @@ const ChatFooter = observer(({ messageText, onChangeMessageText, setSendMessage,
     const isKeyboardOpen = isKeyboardShown()
     const { windowHeight, windowWidth } = getWindowDimension()
 
-    const { isOpenChatAttachment, setOpenChatAttachment } = useChatAttachmentStore();
+    const { setOpenChatAttachment } = useChatAttachmentStore();
 
     // Message Input
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
@@ -44,7 +43,6 @@ const ChatFooter = observer(({ messageText, onChangeMessageText, setSendMessage,
     const isSendMessage = messageText.length > 0
 
     return (
-
         <SearchInputContainer isKeyboardOpen={isKeyboardOpen}>
             <SearchInputBlock
                 style={{

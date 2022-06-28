@@ -53,6 +53,7 @@ import GaleryWhiteIcon from '../../assets/icon/galery_white_icon.svg'
 import ChangeCameraTypeIcon from '../../assets/icon/change_cameraType_icon.svg'
 import CloudBlackIcon from '../../assets/icon/cloud_black_icon.svg'
 import FileWhiteIcon from '../../assets/icon/file_white_icon.svg'
+import AddPaymentMethodBg from '../../assets/icon/add_payment_method_icon.svg'
 // Bank logo
 import VisaBankIcon from '../../assets/icon/visa_icon.svg'
 import MasterCardBankIcon from '../../assets/icon/masterCard_icon.svg'
@@ -141,11 +142,12 @@ const IMAGES = {
     ChangeCameraTypeIcon: ChangeCameraTypeIcon,
     CloudBlackIcon: CloudBlackIcon,
     FileWhiteIcon: FileWhiteIcon,
+    AddPaymentMethodBg: require('../../assets/icon/add_payment_method_bg.png'),
     // Bank
+    AmericanExpressBankIcon: AmericanExpressBankIcon,
+    PayPalBankIcon: PayPalBankIcon,
     VisaBankIcon: VisaBankIcon,
     MasterCardBankIcon: MasterCardBankIcon,
-    PayPalBankIcon: PayPalBankIcon,
-    AmericanExpressBankIcon: AmericanExpressBankIcon,
     // Arrows
     GoBackIcon: GoBackIcon,
     GoBackWhiteIcon: GoBackWhiteIcon,

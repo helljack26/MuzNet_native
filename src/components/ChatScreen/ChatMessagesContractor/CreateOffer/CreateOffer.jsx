@@ -15,6 +15,7 @@ import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateCreateOffer } from './useAnimateCreateOffer';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { addDotForNumber } from '@/components/helpers/addDotForNumber'
+import { dateConverter } from '@/components/helpers/dateConverter'
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -64,6 +65,8 @@ import { observer } from 'mobx-react-lite';
 import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 
 const CreateOffer = observer(() => {
+    const navigation = useNavigation();
+
     // Form 
     const { control, handleSubmit, resetField, setError, watch, clearErrors,
         formState: { dirtyFields, errors } } = useForm({
@@ -80,7 +83,7 @@ const CreateOffer = observer(() => {
 
     const route = useRoute();
 
-    const { isOpenCreateOffer, setOpenCreateOffer } = useOfferToMusicianApiStore();
+    const { isOpenCreateOffer, setOpenCreateOffer, setOpenOfferPreview, setOfferDetails, isPaySuccesful } = useOfferToMusicianApiStore();
 
     const isKeyboardOpen = isKeyboardShown()
 
@@ -92,10 +95,12 @@ const CreateOffer = observer(() => {
         }
     }, [isOpenCreateOffer]);
 
-
     // Calendar
     const [isCalendarOpen, setCalendarOpen] = useState(false);
-    const [chosenDate, getChosenDate] = useState('');
+    const [chosenDate, getChosenDate] = useState({
+        milliseconds: '',
+        string: '',
+    });
     //Time range 
     const [timeRange, setTimeRange] = useState({
         startTime: {
@@ -175,12 +180,12 @@ const CreateOffer = observer(() => {
     // Is show submit button
     const [isShowSubmitButton, setShowSubmitButton] = useState(false);
     useEffect(() => {
-        const isDateSelected = chosenDate > 0
+        const isDateSelected = chosenDate.milliseconds > 0
         const isTimeSelected = timeRange.endTime.milliseconds > 0
         const isLocationSelected = chosenLocation !== undefined
         const isPricePerHour = pricePerHourInput.length > 0
         const isPhoneNumber = phone.length === 17 && !errors.offerPhoneNumber
-        const isAdditionalMessage = additionalMessageWatch.length > 10 && !errors.offerAdditionalInfo
+        const isAdditionalMessage = additionalMessageWatch.length > 0 && !errors.offerAdditionalInfo
 
         if (isDateSelected && isTimeSelected && isLocationSelected && isPricePerHour && isPhoneNumber && isAdditionalMessage) {
             setShowSubmitButton(true)
@@ -192,31 +197,62 @@ const CreateOffer = observer(() => {
     const [isResetAll, setResetAll] = useState(false);
     const clearAllFilters = () => {
         // For components set reset
-        // setResetAll(true)
+        setResetAll(true)
         Keyboard.dismiss()
         // Components reset
-        getChosenDate(null)
-
+        resetField('offerDate')
+        resetField('offerStartTime')
+        resetField('offerEndTime')
+        resetField('offerLocation')
+        resetField('offerPricePerHour')
+        resetField('offerPhoneNumber')
+        resetField('offerAdditionalInfo')
+        getChosenLocation('')
+        setPricePerHourInput('')
+        setPhone('')
+        getChosenDate({
+            milliseconds: '',
+            string: ''
+        })
+        setTimeRange({
+            startTime: {
+                milliseconds: '',
+                string: '',
+            },
+            endTime: {
+                milliseconds: '',
+                string: '',
+            },
+            duration: 0,
+        })
         // Set reset to default
-        // setTimeout(() => {
-        //     setResetAll(false)
-        // }, 0);
+        setTimeout(() => {
+            setResetAll(false)
+        }, 0);
     }
+    // Clear all if payment successful
+    useEffect(() => {
+        if (isPaySuccesful === true) {
+            clearAllFilters()
+            onPress(false)
+        }
+    }, [isPaySuccesful]);
 
     const onSubmit = (data) => {
-        // const 
         const newOffer = {
             offerDate: chosenDate,
             offerStartTime: timeRange.startTime,
             offerEndTime: timeRange.endTime,
             offerDuration: timeRange.duration,
-            offerTotalMoney: timeRange.duration * data.offerPricePerHour,
+            offerTotalMoney: timeRange.duration * pricePerHourInput,
             offerLocation: chosenLocation,
-            offerPricePerHour: data.offerPricePerHour,
-            offerPhoneNumber: data.offerPhoneNumber,
-            offerAdditionalInfo: data.offerAdditionalInfo,
+            offerPricePerHour: pricePerHourInput,
+            offerPhoneNumber: phone,
+            offerAdditionalInfo: additionalMessageWatch,
         }
+        setOfferDetails(newOffer)
 
+        setOpenOfferPreview(true)
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", newOffer)
         // Clear input value
         Keyboard.dismiss()
@@ -256,6 +292,7 @@ const CreateOffer = observer(() => {
                         Create offer
                     </HeaderTitle>
                 </Header>
+
                 <FilterBlock keyboardShouldPersistTaps={'handled'}>
 
                     {/* Set date */}
@@ -402,22 +439,21 @@ const CreateOffer = observer(() => {
                                                 ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
                                             }
                                         />
-                                        {/* {errors.offerPhoneNumber && <ShowPasswordIconButton>
+                                        {errors.offerPhoneNumber && <ShowPasswordIconButton>
                                             <ErrorIcon width={20} height={20} />
                                         </ShowPasswordIconButton>
-                                        } */}
+                                        }
                                     </FormInputContainerPhone>
                                     <FormInputLabel
                                         style={{ marginLeft: 60 }}
                                         isError={errors.offerPhoneNumber} inputLabel={inputPhoneLabel}>Phone number</FormInputLabel>
 
-                                    {/* {errors.offerPhoneNumber?.type === 'required' && <ErrorMessage
+                                    {errors.offerPhoneNumber?.type === 'required' && <ErrorMessage
                                         style={{ marginLeft: 78 }}
                                     >{S.inputRequired}</ErrorMessage>}
                                     {errors.offerPhoneNumber?.type === 'minLength' && <ErrorMessage
                                         style={{ marginLeft: 78 }}
-                                    >{S.phoneNumberNotValid}</ErrorMessage>} */}
-
+                                    >{S.phoneNumberNotValid}</ErrorMessage>}
                                 </FormInputBlock>
                             </View>
                         )}
@@ -433,7 +469,6 @@ const CreateOffer = observer(() => {
                             control={control}
                             rules={{
                                 required: S.emailNotValid,
-                                minLength: 10
                             }}
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <AddInfoBlock>
@@ -466,7 +501,6 @@ const CreateOffer = observer(() => {
                                                 textAlignVertical: 'top'
                                             }}
                                         />
-                                        {errors.offerAdditionalInfo?.type === 'minLength' && <ErrorMessage>Minimal message length 10 characters</ErrorMessage>}
                                         {errors.offerAdditionalInfo?.type === 'required' && <ErrorMessage>Required field</ErrorMessage>}
                                     </AddInfoContainer>
                                 </AddInfoBlock>
@@ -505,22 +539,35 @@ const CreateOffer = observer(() => {
                                 <ContainerHour>for {timeRange.duration} hours</ContainerHour>
                             </ContainerLink>
                         }
-                        <ButtonSubmit
-                            activeOpacity={isShowSubmitButton ? 0.2 : 1}
+                        {isShowSubmitButton ? <ButtonSubmit
                             style={{
                                 width: isPriceInFooter ? '60%' : '100%',
-                                backgroundColor: isShowSubmitButton ? C.black : C.gray,
+                                backgroundColor: C.black,
                             }}
-                            onPress={isShowSubmitButton && handleSubmit(onSubmit)}
+                            onPress={handleSubmit(onSubmit)}
                         >
-                            <ButtonSubmitText
-                                style={{
-                                    color: isShowSubmitButton ? C.white : C.sBlack,
-                                }}
-                            >
+                            <ButtonSubmitText style={{ color: C.white }}>
                                 Pay
                             </ButtonSubmitText>
                         </ButtonSubmit>
+                            :
+                            <ButtonSubmit
+                                activeOpacity={0.2}
+                                style={{
+                                    width: isPriceInFooter ? '60%' : '100%',
+                                    backgroundColor: C.gray,
+                                }}
+                            >
+                                <ButtonSubmitText
+                                    style={{
+                                        color: C.sBlack,
+                                    }}
+                                >
+                                    Pay
+                                </ButtonSubmitText>
+                            </ButtonSubmit>
+                        }
+
                     </ContentBlockRow>
                 </ContentBlock>
             </FilterContainer>

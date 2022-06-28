@@ -24,7 +24,7 @@ const {
 } = style;
 
 
-const TimePeriodPicker = ({ setTimeRange }) => {
+const TimePeriodPicker = ({ setTimeRange, isResetAll }) => {
     const [isOpenStartTimePicker, setOpenStartTimePicker] = useState(false);
     const [isOpenEndTimePicker, setOpenEndTimePicker] = useState(false);
 
@@ -108,11 +108,27 @@ const TimePeriodPicker = ({ setTimeRange }) => {
                 setShowError(false)
                 setOfferDuration(hoursCount)
                 setToOfferTimeState()
-            } else {
+            } else if (!isResetAll) {
                 setShowError(true)
             }
         }
     }, [startTimeMs, endTimeMs, offerDuration]);
+
+    useEffect(() => {
+        if (isResetAll === true) {
+            setOfferDuration(0)
+            setOpenStartTimePicker(false)
+            setOpenEndTimePicker(false)
+            setStartTime('')
+            setEndTime('')
+            setStartTimePlaceholder()
+            setEndTimePlaceholder()
+            setCanSetStartTimePlaceholder(false)
+            setCanSetEndTimePlaceholder(false)
+            setStartTimeMs('')
+            setEndTimeMs('')
+        }
+    }, [isResetAll]);
 
     const isShiftStartTime = startTimePlaceholder !== undefined
     const isShiftEndTime = endTimePlaceholder !== undefined

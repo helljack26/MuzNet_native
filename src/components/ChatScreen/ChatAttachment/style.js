@@ -13,6 +13,14 @@ display: flex;
 align-items: flex-end;
 flex-direction: row;
 `;
+const OpacityBg = styled.Pressable`
+ position: absolute;
+ left: 0px;
+ bottom: 0px;
+ right: 0px;
+background-color: ${C.black};
+opacity: 0.5;
+`;
 const Header = styled.View`
 width: 100%;
 display: flex;
@@ -89,6 +97,7 @@ margin-top: 4px;
 export const style = {
     AttachContainer: AttachContainer,
     Header: Header,
+    OpacityBg: OpacityBg,
     ButtonsBlock: ButtonsBlock,
     ClosePanBlock: ClosePanBlock,
     ClosePan: ClosePan,

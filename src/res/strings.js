@@ -5,6 +5,8 @@ export const S = {
     emailValidationPattern: /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
     userNamePattern: /^[aA-zZ\s аА-яЯ\s \d]+$/,
     phoneMaskPattern: ['+', /\d/, ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
+    bankCardMaskPattern: [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/],
+    bankCardExpiryDateMaskPattern: [/\d/, /\d/, '/', /\d/, /\d/],
 
     // Input error message
     emailNotValid: 'Invalid email address',

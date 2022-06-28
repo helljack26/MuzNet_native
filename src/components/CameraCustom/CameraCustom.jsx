@@ -1,17 +1,9 @@
 import React from 'react';
-import { useState, useEffect, useRef } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { StyleSheet, Text, View, TouchableOpacity, Platform, Animated, Keyboard, Easing, Pressable } from 'react-native';
+import { useEffect, useRef } from 'react';
 // Camera
 import { Camera } from 'expo-camera';
-import { FontAwesome, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-
-// Components
-
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -19,10 +11,6 @@ const {
     ChangeCameraTypeIcon,
     GaleryWhiteIcon,
 } = IMAGES;
-// Variables
-import C from '@/res/colors'
-import F from '@/res/fonts'
-import { S } from '@/res/strings'
 // Styles
 import { style } from './style'
 const {
@@ -41,7 +29,6 @@ import { observer } from 'mobx-react-lite';
 import { useChatAttachmentStore } from '@/stores/ChatAttachmentStore';
 import { useCameraStore } from '@/stores/CameraStore';
 const CameraCustom = observer(({ setOpenCamera, setShowOpacityBgMargin }) => {
-    const route = useRoute();
     const { windowHeight, windowWidth } = getWindowDimension()
 
     const cameraRef = useRef();
@@ -50,11 +37,8 @@ const CameraCustom = observer(({ setOpenCamera, setShowOpacityBgMargin }) => {
     // Camera store
     const {
         cameraImage,
-        hasPermission,
         cameraType,
         isPreview,
-        getPermissionAsync,
-        currentImageFromGalery,
         cancelPreview,
         handleCameraType,
         takePicture,
@@ -66,13 +50,6 @@ const CameraCustom = observer(({ setOpenCamera, setShowOpacityBgMargin }) => {
         }
     }, [isSendAttached]);
 
-    // useEffect(() => {
-    //     if (currentImageFromGalery !== undefined) {
-    //         console.log("🚀 ~ file: CameraCustom.jsx ~ line 67 ~ useEffect ~ currentImageFromGalery", currentImageFromGalery)
-    //         console.log('кайфуша');
-    //         setCameraImage(currentImageFromGalery)
-    //     }
-    // }, [currentImageFromGalery]);
     return (
         <CameraContainer
             style={{
@@ -91,7 +68,6 @@ const CameraCustom = observer(({ setOpenCamera, setShowOpacityBgMargin }) => {
                             cancelPreview(cameraRef)
                         }
                     }
-
                     }>
                     <CrossWhiteIcon width={14} height={14} />
                 </CloseButton>
