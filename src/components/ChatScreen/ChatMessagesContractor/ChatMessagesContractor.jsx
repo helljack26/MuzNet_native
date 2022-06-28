@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Image } from 'react-native';
+import { Image, Keyboard } from 'react-native';
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
@@ -217,7 +217,11 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
             {/* Filters button */}
             <CreateOfferButton
                 onPress={() => {
-                    setOpenCreateOffer(true)
+                    const timeOutDuration = isKeyboardOpen ? 450 : 0
+                    isKeyboardOpen && Keyboard.dismiss()
+                    setTimeout(() => {
+                        setOpenCreateOffer(true)
+                    }, timeOutDuration);
                 }}
             >
                 <CreateOfferButtonText>

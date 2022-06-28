@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useRef } from 'react';
+import { BackHandler } from 'react-native';
 // Camera
 import { Camera } from 'expo-camera';
 // Helpers
@@ -28,7 +29,7 @@ const {
 import { observer } from 'mobx-react-lite';
 import { useChatAttachmentStore } from '@/stores/ChatAttachmentStore';
 import { useCameraStore } from '@/stores/CameraStore';
-const CameraCustom = observer(({ setOpenCamera, setShowOpacityBgMargin }) => {
+const CameraCustom = observer(({ isOpenCamera, setOpenCamera, setShowOpacityBgMargin }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
     const cameraRef = useRef();

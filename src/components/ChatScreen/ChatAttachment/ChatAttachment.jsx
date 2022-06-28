@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Animated } from 'react-native';
+import { Animated, BackHandler } from 'react-native';
 // Components
 import CameraCustom from '@/components/CameraCustom'
 // Helpers
@@ -65,6 +65,19 @@ const ChatAttachment = observer(() => {
         }
     }, [isOpenChatAttachment, isSendAttached]);
 
+    useEffect(() => {
+        if (isOpenCamera === true) {
+
+            const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+                setOpenCamera(false)
+                return true
+            })
+            return () => {
+                backHandler.remove()
+            }
+        }
+
+    }, [isOpenCamera])
     return (
         <Animated.View style={{
             width: windowWidth,
@@ -95,7 +108,7 @@ const ChatAttachment = observer(() => {
             </OpacityBg>
 
             {/* Camera */}
-            {isOpenCamera === true && <CameraCustom setShowOpacityBgMargin={setShowOpacityBgMargin} setOpenCamera={setOpenCamera} />}
+            {isOpenCamera === true && <CameraCustom isOpenCamera={isOpenCamera} setShowOpacityBgMargin={setShowOpacityBgMargin} setOpenCamera={setOpenCamera} />}
 
             {/* Attach container */}
             <AttachContainer>

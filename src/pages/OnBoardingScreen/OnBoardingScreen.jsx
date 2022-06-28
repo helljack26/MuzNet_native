@@ -66,26 +66,26 @@ const OnBoardingScreen = () => {
     const text = OnboardingContent[screenNumber].text
     const offsetLeft = OnboardingContent[screenNumber].thumbOffsetLeft
 
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            // navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
-            navigation.navigate('ContractorStack', {
-                screen: 'ContractorChatScreen',
-                params: {
-                    chatUserId: 1216515
-                }
-            });
-            // navigation.navigate(
-            //     'MusicianStack', {
-            //     screen: 'ContractorAdsCardScreen',
-            //     params: {
-            //         adsId: 8518582,
-            //     }
-            // });
-        });
+    // useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //         // navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
+    //         navigation.navigate('ContractorStack', {
+    //             screen: 'ContractorChatScreen',
+    //             params: {
+    //                 chatUserId: 1216515
+    //             }
+    //         });
+    //         // navigation.navigate(
+    //         //     'MusicianStack', {
+    //         //     screen: 'ContractorAdsCardScreen',
+    //         //     params: {
+    //         //         adsId: 8518582,
+    //         //     }
+    //         // });
+    //     });
 
-        return unsubscribe;
-    }, [navigation]);
+    //     return unsubscribe;
+    // }, [navigation]);
 
     return (
         <>

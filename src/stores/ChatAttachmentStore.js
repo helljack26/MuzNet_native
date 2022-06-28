@@ -49,16 +49,21 @@ class ChatAttachment {
         });
 
         runInAction(() => {
-            this.cameraPhoto = ''
-            this.file = {
-                fileName: result.name,
-                uri: result.uri,
-            },
+            if (result.type !== 'cancel') {
+                this.cameraPhoto = ''
+                this.file = {
+                    fileName: result.name,
+                    uri: result.uri,
+                },
+                    this.setSendAttached(true)
+                this.setOpenChatAttachment(false)
+            } else {
+                this.setSendAttached(false)
+                this.setOpenChatAttachment(false)
+            }
 
-                this.setSendAttached(true)
-            this.setOpenChatAttachment(false)
-
-        })
+        }
+        )
     }
 
     pickImageFromGalery = async () => {
@@ -69,10 +74,17 @@ class ChatAttachment {
         });
 
         runInAction(() => {
-            this.cameraPhoto = ''
-            this.cameraPhoto = result.uri
-            this.setOpenChatAttachment(false)
-            this.setSendAttached(true)
+            if (!result.cancelled) {
+
+                this.cameraPhoto = ''
+                this.cameraPhoto = result.uri
+                this.setOpenChatAttachment(false)
+                this.setSendAttached(true)
+            } else {
+                this.setOpenChatAttachment(false)
+                this.setSendAttached(false)
+
+            }
 
             // if (result.type === 'video') {
             //     // this.setCameraImage({
