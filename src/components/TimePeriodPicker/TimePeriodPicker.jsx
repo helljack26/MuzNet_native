@@ -24,7 +24,9 @@ const {
 } = style;
 
 
-const TimePeriodPicker = ({ setTimeRange, isResetAll }) => {
+const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholder, existedEndTimePlaceholder, existedDuration }) => {
+    const navigation = useNavigation();
+
     const [isOpenStartTimePicker, setOpenStartTimePicker] = useState(false);
     const [isOpenEndTimePicker, setOpenEndTimePicker] = useState(false);
 
@@ -37,13 +39,17 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll }) => {
     const [isCanSetStartTimePlaceholder, setCanSetStartTimePlaceholder] = useState(false);
     const [isCanSetEndTimePlaceholder, setCanSetEndTimePlaceholder] = useState(false);
 
+    const [isExisted, setExisted] = useState(false);
+
     // Time picker
     const onStartTimeSelected = (event, value) => {
         setOpenStartTimePicker(false)
         if (event?.type === 'dismissed') {
+            setExisted(false)
             setStartTime(startTime);
             return;
         }
+        setExisted(false)
         setStartTime(value);
         setCanSetStartTimePlaceholder(true)
     };
@@ -51,26 +57,30 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll }) => {
     const onEndTimeSelected = (event, value) => {
         setOpenEndTimePicker(false)
         if (event?.type === 'dismissed') {
+            setExisted(false)
             setEndTime(endTime);
             return;
         }
+        setExisted(false)
         setEndTime(value);
         setCanSetEndTimePlaceholder(true)
     };
 
     const [startTimeMs, setStartTimeMs] = useState();
     const [endTimeMs, setEndTimeMs] = useState();
+    // 
 
     useEffect(() => {
-        if (startTime && isCanSetStartTimePlaceholder === true) {
+        if (startTime && isCanSetStartTimePlaceholder === true && isExisted === false) {
             const { timeInMsFrom, strTime } = formatAMPM(startTime)
+
             setStartTimePlaceholder(strTime)
             setStartTimeMs(timeInMsFrom)
         }
     }, [startTime, isCanSetStartTimePlaceholder]);
 
     useEffect(() => {
-        if (endTime && isCanSetEndTimePlaceholder === true) {
+        if (endTime && isCanSetEndTimePlaceholder === true && isExisted === false) {
             const { timeInMsFrom, strTime } = formatAMPM(endTime)
             setEndTimePlaceholder(strTime)
             setEndTimeMs(timeInMsFrom)
@@ -78,7 +88,23 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll }) => {
     }, [endTime, isCanSetEndTimePlaceholder]);
 
     const [offerDuration, setOfferDuration] = useState(0);
+    // Set placeholder for offer edit
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            if (existedStartTimePlaceholder !== undefined && existedEndTimePlaceholder !== undefined && existedDuration !== undefined) {
+                setExisted(true)
+                setStartTimePlaceholder(existedStartTimePlaceholder.string)
+                setEndTimePlaceholder(existedEndTimePlaceholder.string)
+                setStartTimeMs(existedStartTimePlaceholder.milliseconds)
+                setEndTimeMs(existedEndTimePlaceholder.milliseconds)
+                setCanSetStartTimePlaceholder(true)
+                setCanSetEndTimePlaceholder(true)
+                setOfferDuration(existedDuration)
+            }
+        });
 
+        return unsubscribe;
+    }, [navigation]);
     const setToOfferTimeState = () => {
         return setTimeRange({
             startTime: {

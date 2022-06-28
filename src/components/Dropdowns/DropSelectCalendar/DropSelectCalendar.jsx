@@ -2,7 +2,10 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, View, Keyboard } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
 import { TouchableOpacity } from 'react-native';
-
+import {
+    useNavigation
+    // , useRoute 
+} from '@react-navigation/native';
 import F from '@/res/fonts'
 import C from '@/res/colors'
 
@@ -43,7 +46,9 @@ const customDayHeaderStylesCallback = ({ dayOfWeek, month, year }) => {
         };
     }
 }
-const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, setCalendarOpen, placeholderText }) => {
+const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, setCalendarOpen, placeholderText, isExistedDate }) => {
+    const navigation = useNavigation();
+
     const [placeholder, setPlaceholder] = useState('');
     const mainHeader = placeholder || placeholderText
     const [isOpen, setIsOpen] = useState(false);
@@ -70,6 +75,20 @@ const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, set
             string: placeholderString,
         })
     };
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            if (isExistedDate !== undefined) {
+                setPlaceholder(isExistedDate.string)
+                setFilterDate({
+                    milliseconds: isExistedDate.milliseconds,
+                    string: isExistedDate.string,
+                })
+            }
+        });
+
+        return unsubscribe;
+    }, [navigation]);
 
     // If resetAll
     useEffect(() => {

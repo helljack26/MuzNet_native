@@ -10,6 +10,7 @@ const C = {
 
     white: '#FEFEFE',
     opacity20white: '#ffffff4c',
+    opacity50white: '#00000088',
     red: '#F43B3B',
     green: '#3AC946',
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Keyboard } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown';
 import C from '@/res/colors'
 
@@ -36,7 +36,8 @@ import { observer } from 'mobx-react-lite';
 import { toJS } from "mobx";
 import { useLocationAutocompleteApiStore } from '@/stores/LocationAutocompleteApi';
 
-const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, isCloseAllDropdown, setFilterLocation, placeholderText }) => {
+const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, isCloseAllDropdown, setFilterLocation, placeholderText, existedLocation }) => {
+    const navigation = useNavigation();
     // Store
     const { locationList, setLocationList } = useLocationAutocompleteApiStore();
     const jsLocationList = toJS(locationList)
@@ -49,7 +50,18 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
     const [isShiftInputLocationLabel, setShiftInputLocationLabel] = useState(false);
 
-    const [isOpenDropList, setOpenDropList] = useState(false);
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            if (existedLocation !== undefined) {
+                setSelectedLocation(existedLocation)
+                onChangeSearchText(existedLocation)
+                setFilterLocation(existedLocation)
+            }
+        });
+        return unsubscribe;
+    }, [navigation]);
+
+    const [isOpenDropList, setOpenDropList] = useState(false)
 
     useEffect(() => {
         if (setParentShowOpenDrop !== undefined) {

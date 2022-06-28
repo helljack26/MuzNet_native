@@ -5,29 +5,48 @@ import {
 } from "react-native";
 import { makeAutoObservable, action, runInAction, observable } from 'mobx';
 import { apiMocks } from '@/api/mock/apiMocks'
-
+// offerDetails = {
+//     offerAdditionalInfo:'', 
+//             offerDate: {
+//         milliseconds: '',
+//         string: '',
+//     },
+//     offerDuration: 0,
+//     offerStartTime: {
+//         milliseconds: '',
+//         string: '',
+//     },
+//     offerEndTime: {
+//         milliseconds: '',
+//         string: "",
+//     },
+//     offerLocation: '',
+//     offerPhoneNumber: '',
+//     offerPricePerHour: '',
+//     offerTotalMoney: 0,
+// }
 class OfferToMusicianApi {
     offerDetails = {
         offerAdditionalInfo: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
         offerDate: {
-            milliseconds: '',
+            milliseconds: 55800000,
             string: 'Wednesday, Jun 29',
         },
-        offerDuration: 5,
+        offerDuration: 3,
         offerStartTime: {
             milliseconds: 55800000,
             string: "03:30pm",
         },
         offerEndTime: {
             milliseconds: 73800000,
-            string: "08:30pm",
+            string: "06:30pm",
         },
         offerLocation: 'Jefferson Avenue, Buffalo, NY, USA',
         offerPhoneNumber: '+1 (465) 656-5665',
-        offerPricePerHour: '666',
-        offerTotalMoney: 3330,
+        offerPricePerHour: 100,
+        offerTotalMoney: 300,
     }
-    isSendOffer = true
+    isSendOffer = false
     isOpenCreateOffer = false
     isOpenOfferPreview = false
     isOpenPaymentDetails = false

@@ -90,15 +90,33 @@ const chatMock = [
         messageTime: '12:34 pm',
         writterImage: require('../../../../assets/Mock/Kate1.jpg'),
         messageText: 'Yes, a live music show will cost $30 per hour, would it suit you?',
-    }
+    },
+    {
+        messageType: 'outcome',
+        isOffer: true,
+        offerDetails: {
+            offerAdditionalInfo: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            offerDate: {
+                milliseconds: '',
+                string: 'Wednesday, Jun 29',
+            },
+            offerDuration: 3,
+            offerStartTime: {
+                milliseconds: 55800000,
+                string: "03:30pm",
+            },
+            offerEndTime: {
+                milliseconds: 73800000,
+                string: "06:30pm",
+            },
+            offerLocation: 'Jefferson Avenue, Buffalo, NY, USA',
+            offerPhoneNumber: '+1 (465) 656-5665',
+            offerPricePerHour: 100,
+            offerTotalMoney: 300,
+        },
+    },
 ]
-const isEmpty = (obj) => {
-    for (let key in obj) {
-        // если тело цикла начнет выполняться - значит в объекте есть свойства
-        return false;
-    }
-    return true;
-}
+
 const ChatMessagesContractor = observer(({ newMessage }) => {
     const navigation = useNavigation();
 
@@ -166,6 +184,25 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
         }
     }, [isSendAttached, cameraPhoto]);
 
+    // Set new file message
+    useEffect(() => {
+        if (file !== undefined && isSendAttached === true) {
+            const newImageMessage = {
+                messageType: 'outcome',
+                messageTime: strTime,
+                writterImage: require('../../../../assets/Mock/Georgia.png'),
+                fileName: file.fileName,
+            }
+            setLocalMessageState([...localMessageState, newImageMessage])
+            // Scroll when new message
+            scrollBottom()
+            setTimeout(() => {
+                setScrollToBottom(false)
+                setSendAttached(false)
+            }, 20);
+        }
+    }, [isSendAttached, file]);
+
     // Set new offer message
     useEffect(() => {
         if (offerDetails.offerDate !== undefined && isSendOffer === true) {
@@ -207,6 +244,12 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
         return unsubscribe;
     }, [navigation]);
 
+    const [isExistOffer, setExistOffer] = useState(false);
+    useEffect(() => {
+        if (offerDetails.offerDate.string !== undefined) {
+            setExistOffer(true)
+        }
+    }, [offerDetails.offerDate.string]);
     return (
         <MessagesContainer
             style={{
@@ -214,7 +257,7 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
             }}
         >
             {/* Filters button */}
-            <CreateOfferButton
+            {!isExistOffer && <CreateOfferButton
                 onPress={() => {
                     const timeOutDuration = isKeyboardOpen ? 450 : 0
                     isKeyboardOpen && Keyboard.dismiss()
@@ -227,6 +270,7 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
                     Create offer
                 </CreateOfferButtonText>
             </CreateOfferButton>
+            }
 
             <MessageBlock
                 style={{

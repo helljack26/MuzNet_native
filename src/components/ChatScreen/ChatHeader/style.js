@@ -12,7 +12,7 @@ justify-content: flex-end;
 padding: 0px 16px;
 padding-bottom: 20px;
 background-color: ${C.white};
-z-index: 999;
+z-index: 2000;
 position: absolute;
 top: 0px;
 left: 0px;

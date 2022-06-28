@@ -17,7 +17,7 @@ border-radius: 12px;
 display: flex;
 align-items: center;
 flex-direction: column;
-margin: 20px 16px;
+margin: 16px 16px;
 `;
 const OfferDetails = styled.View`
 `;

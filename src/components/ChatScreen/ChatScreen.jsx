@@ -5,16 +5,13 @@ import { Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform } fr
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
 import ChatHeader from './ChatHeader'
+import OfferDetailsHeaderSheat from './ChatMessagesContractor/OfferDetailsHeaderSheat'
 import ChatMessagesContractor from './ChatMessagesContractor'
 import ChatFooter from './ChatFooter'
 import ChatAttachment from './ChatAttachment'
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
-// Store
-import { observer } from 'mobx-react-lite';
-import { useSearchApiStore } from '@/stores/SearchApi';
-
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -31,8 +28,20 @@ align-items: center;
 padding-bottom: 20px;
 background-color: ${C.white};
 `;
+// Store
+import { observer } from 'mobx-react-lite';
+import { useSearchApiStore } from '@/stores/SearchApi';
+import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 
 const ChatScreen = observer(({ isContractor }) => {
+    const { offerDetails } = useOfferToMusicianApiStore();
+
+    const [isExistOffer, setExistOffer] = useState(false);
+    useEffect(() => {
+        if (offerDetails.offerDate.string !== undefined && isContractor === true) {
+            setExistOffer(true)
+        }
+    }, [offerDetails.offerDate.string, isContractor]);
 
     const navigation = useNavigation();
     const route = useRoute();
@@ -82,7 +91,10 @@ const ChatScreen = observer(({ isContractor }) => {
                 height: '100%',
             }}
         >
+            <OfferDetailsHeaderSheat />
             <ChatHeader chatUserName={chatUserName} chatUserImg={chatUserImg} />
+
+
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={{
