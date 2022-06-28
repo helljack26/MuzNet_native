@@ -3,7 +3,6 @@ import F from '@/res/fonts'
 import C from '@/res/colors'
 import { M } from '@/res/mixin'
 
-
 const FilterContainer = styled.View`
 width: 100%;
 background-color: ${C.white};

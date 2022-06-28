@@ -59,7 +59,7 @@ const OfferPreview = observer(() => {
 
     const route = useRoute();
 
-    const { offerDetails, isOpenOfferPreview, setOpenOfferPreview, setOpenCreateOffer, setPaySucessful } = useOfferToMusicianApiStore();
+    const { offerDetails, isOpenOfferPreview, setOpenOfferPreview, setOpenCreateOffer, setPaySucessful, setSendOffer } = useOfferToMusicianApiStore();
 
     const {
         offerAdditionalInfo,
@@ -91,6 +91,7 @@ const OfferPreview = observer(() => {
         setOpenCreateOffer(false)
         setOpenOfferPreview(false)
         setPaySucessful(true)
+        setSendOffer(true)
         onPress(false)
     };
 

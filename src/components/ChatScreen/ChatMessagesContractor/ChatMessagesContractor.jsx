@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Image, Keyboard } from 'react-native';
 
+import OfferMessage from '../OfferMessage'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
@@ -119,7 +120,7 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
         }
     }
     // Create offer store
-    const { isOpenCreateOffer, setOpenCreateOffer } = useOfferToMusicianApiStore();
+    const { offerDetails, isSendOffer, setSendOffer, setOpenCreateOffer } = useOfferToMusicianApiStore();
     // Attachment store
     const { cameraPhoto, file, isSendAttached, setSendAttached } = useChatAttachmentStore();
 
@@ -165,25 +166,23 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
         }
     }, [isSendAttached, cameraPhoto]);
 
-    // Set new file message
+    // Set new offer message
     useEffect(() => {
-
-        if (!isEmpty(file) && isSendAttached === true) {
+        if (offerDetails.offerDate !== undefined && isSendOffer === true) {
             const newImageMessage = {
                 messageType: 'outcome',
-                messageTime: strTime,
-                writterImage: require('../../../../assets/Mock/Georgia.png'),
-                fileName: file.fileName,
+                isOffer: true,
+                offerDetails: offerDetails,
             }
             setLocalMessageState([...localMessageState, newImageMessage])
             // Scroll when new message
             scrollBottom()
             setTimeout(() => {
                 setScrollToBottom(false)
-                setSendAttached(false)
+                setSendOffer(false)
             }, 20);
         }
-    }, [isSendAttached, file]);
+    }, [isSendOffer, offerDetails.offerDate]);
 
     // Scroll to bottom
     useEffect(() => {
@@ -259,57 +258,59 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
                                     isInGroup = false
                                 }
                             }
-                            // const isGroup = 
-                            return (message.messageType === 'outcome' ?
-                                <Outcome
-                                    style={{
-                                        marginBottom: isInGroup ? 8 : 16,
-                                    }}
-                                    key={id}>
-                                    <OutcomeCol>
-                                        <OutcomeMessage
-                                            style={{
-                                                borderBottomRightRadius: isInGroup ? 12 : 0,
-                                                marginRight: isInGroup ? 32 : 0,
-                                            }}
-                                        >
-                                            {message.messageImageUri !== undefined ?
-                                                <MessageImageBlock>
-                                                    <Image
-                                                        source={{ uri: message.messageImageUri }}
-                                                        style={{
-                                                            width: 240,
-                                                            height: 240 + 240 / 3,
-                                                        }}
-                                                        resizeMode={'contain'} />
-                                                </MessageImageBlock>
-                                                :
-                                                message.fileName !== undefined ?
-                                                    <OutcomeMessageFile>
-                                                        <FileWhiteIcon width={20} height={20} />
-                                                        <OutcomeMessageFileText>
-                                                            {message.fileName}
-                                                        </OutcomeMessageFileText>
-                                                    </OutcomeMessageFile>
+                            if (message.messageType === 'outcome') {
+                                if (message.isOffer === true) {
+                                    return <OfferMessage key={id} offerDetails={message.offerDetails} />
+                                } else {
+                                    return <Outcome
+                                        style={{
+                                            marginBottom: isInGroup ? 8 : 16,
+                                        }}
+                                        key={id}>
+                                        <OutcomeCol>
+                                            <OutcomeMessage
+                                                style={{
+                                                    borderBottomRightRadius: isInGroup ? 12 : 0,
+                                                    marginRight: isInGroup ? 32 : 0,
+                                                }}
+                                            >
+                                                {message.messageImageUri !== undefined ?
+                                                    <MessageImageBlock>
+                                                        <Image
+                                                            source={{ uri: message.messageImageUri }}
+                                                            style={{
+                                                                width: 240,
+                                                                height: 240 + 240 / 3,
+                                                            }}
+                                                            resizeMode={'contain'} />
+                                                    </MessageImageBlock>
                                                     :
-                                                    <OutcomeMessageText>
-                                                        {message.messageText}
-                                                    </OutcomeMessageText>
-                                            }
+                                                    message.fileName !== undefined ?
+                                                        <OutcomeMessageFile>
+                                                            <FileWhiteIcon width={20} height={20} />
+                                                            <OutcomeMessageFileText>
+                                                                {message.fileName}
+                                                            </OutcomeMessageFileText>
+                                                        </OutcomeMessageFile>
+                                                        :
+                                                        <OutcomeMessageText>
+                                                            {message.messageText}
+                                                        </OutcomeMessageText>
+                                                }
 
-                                        </OutcomeMessage>
-                                        {!isInGroup && <MessageTime>
-                                            {message.messageTime}
-                                        </MessageTime>}
-                                    </OutcomeCol>
+                                            </OutcomeMessage>
+                                            {!isInGroup && <MessageTime>
+                                                {message.messageTime}
+                                            </MessageTime>}
+                                        </OutcomeCol>
 
-                                    {!isInGroup && <UserImgBlock>
-                                        <UserImg source={message.writterImage} resizeMode={'cover'} />
-                                    </UserImgBlock>}
-                                </Outcome>
-
-                                :
-                                <Income
+                                        {!isInGroup && <UserImgBlock>
+                                            <UserImg source={message.writterImage} resizeMode={'cover'} />
+                                        </UserImgBlock>}
+                                    </Outcome>
+                                }
+                            } else {
+                                return (<Income
                                     style={{
                                         marginBottom: isInGroup ? 8 : 16,
                                     }}
@@ -333,7 +334,9 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
                                         </MessageTime>}
                                     </IncomeCol>
                                 </Income>
-                            )
+                                )
+                            }
+
                         })}
                     </MessageBlockInsideScroll>
 

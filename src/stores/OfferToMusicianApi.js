@@ -8,17 +8,26 @@ import { apiMocks } from '@/api/mock/apiMocks'
 
 class OfferToMusicianApi {
     offerDetails = {
-        offerAdditionalInfo: '',
-        offerDate: '',
-        offerDuration: '',
-        offerStartTime: '',
-        offerEndTime: '',
-        offerLocation: '',
-        offerPhoneNumber: '',
-        offerPricePerHour: '',
-        offerTotalMoney: '',
+        offerAdditionalInfo: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+        offerDate: {
+            milliseconds: '',
+            string: 'Wednesday, Jun 29',
+        },
+        offerDuration: 5,
+        offerStartTime: {
+            milliseconds: 55800000,
+            string: "03:30pm",
+        },
+        offerEndTime: {
+            milliseconds: 73800000,
+            string: "08:30pm",
+        },
+        offerLocation: 'Jefferson Avenue, Buffalo, NY, USA',
+        offerPhoneNumber: '+1 (465) 656-5665',
+        offerPricePerHour: '666',
+        offerTotalMoney: 3330,
     }
-
+    isSendOffer = true
     isOpenCreateOffer = false
     isOpenOfferPreview = false
     isOpenPaymentDetails = false
@@ -29,6 +38,7 @@ class OfferToMusicianApi {
     constructor() {
         makeAutoObservable(this, {
             offerDetails: observable,
+            isSendOffer: observable,
             paymentDetails: observable,
             isOpenCreateOffer: observable,
             isOpenOfferPreview: observable,
@@ -37,6 +47,7 @@ class OfferToMusicianApi {
             isPayError: observable,
 
             setOpenCreateOffer: action.bound,
+            setSendOffer: action.bound,
             setOpenOfferPreview: action.bound,
             setOpenPaymentDetails: action.bound,
             setPaymentDetails: action.bound,
@@ -49,6 +60,10 @@ class OfferToMusicianApi {
 
     setOpenCreateOffer(boolean) {
         this.isOpenCreateOffer = boolean
+    }
+
+    setSendOffer(boolean) {
+        this.isSendOffer = boolean
     }
 
     setOpenOfferPreview(boolean) {
