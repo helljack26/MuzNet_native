@@ -6,6 +6,7 @@ import MusicianListSearchScreen from '../../src/pages/Musician/MusicianListSearc
 import MusicianMapSearchScreen from '../../src/pages/Musician/MusicianMapSearchScreen';
 import ContractorAdsCardScreen from '../../src/pages/Musician/ContractorAdsCardScreen';
 import MusicianMessagesScreen from '../../src/pages/Musician/MusicianMessagesScreen';
+import MusicianChatScreen from '../../src/pages/Musician/MusicianChatScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ export default function MusicianStack() {
             <Stack.Screen name="MusicianMapSearchScreen" component={MusicianMapSearchScreen} />
             <Stack.Screen name="ContractorAdsCardScreen" component={ContractorAdsCardScreen} />
             <Stack.Screen name="MusicianMessagesScreen" component={MusicianMessagesScreen} />
+            <Stack.Screen name="MusicianChatScreen" component={MusicianChatScreen} />
 
         </Stack.Navigator>)
 }

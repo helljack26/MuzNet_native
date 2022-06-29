@@ -49,7 +49,7 @@ flex-shrink:1;
 const OfferStatus = styled.View`
 width: 100%;
 height: 40px;
-margin-top: 10px;
+margin-top: 20px;
 border-radius: 6px;
 background-color: ${C.backGray};
 display: flex;
@@ -58,6 +58,31 @@ align-items: center;
 flex-direction: row;
 `;
 const OfferStatusText = styled(M.MediumText15)`
+
+`;
+const OfferButtons = styled.View`
+width: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-direction: row;
+margin-top: 20px;
+`;
+const OfferAccept = styled(M.BlackBtn)`
+width: 48.5%;
+height: 40px;
+`;
+const OfferAcceptText = styled(M.BlackBtnText)`
+font-size: 15px;
+line-height: 18px;
+`;
+const OfferDecline = styled(M.BorderBtn)`
+width: 48.5%;
+height:40px;
+`;
+const OfferDeclineText = styled(M.BorderBtnText)`
+font-size: 15px;
+line-height: 18px;
 
 `;
 
@@ -72,4 +97,10 @@ export const style = {
     OfferLiValue: OfferLiValue,
     OfferStatus: OfferStatus,
     OfferStatusText: OfferStatusText,
+
+    OfferButtons: OfferButtons,
+    OfferAccept: OfferAccept,
+    OfferAcceptText: OfferAcceptText,
+    OfferDecline: OfferDecline,
+    OfferDeclineText: OfferDeclineText,
 }

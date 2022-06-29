@@ -14,7 +14,7 @@ top: -50px;
 left: 0px;
 bottom: 0px;
 right: 0px;
-z-index: 1500;
+z-index: 2100;
 `;
 const CameraButtons = styled.View`
 display: flex;

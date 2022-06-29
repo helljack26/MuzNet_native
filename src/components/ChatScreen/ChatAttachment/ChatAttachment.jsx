@@ -82,7 +82,7 @@ const ChatAttachment = observer(() => {
         <Animated.View style={{
             width: windowWidth,
             height,
-            zIndex: 1000,
+            zIndex: 2000,
             justifyContent: 'center',
             alignItems: 'flex-end',
             justifyContent: 'flex-end',

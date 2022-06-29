@@ -367,7 +367,7 @@ const OfferDetailsHeaderSheat = observer(() => {
 
             <Animated.View
                 style={{
-                    zIndex: 1500,
+                    zIndex: 1000,
                     height,
                     backgroundColor: C.opacity50white,
                     width: windowWidth,

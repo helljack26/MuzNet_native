@@ -8,6 +8,7 @@ import ChatHeader from './ChatHeader'
 import ChatSharedFiles from './ChatSharedFiles'
 import OfferDetailsHeaderSheat from './ChatMessagesContractor/OfferDetailsHeaderSheat'
 import ChatMessagesContractor from './ChatMessagesContractor'
+import ChatMessagesMusician from './ChatMessagesMusician'
 import ChatFooter from './ChatFooter'
 import ChatAttachment from './ChatAttachment'
 import BlockUserPopup from './BlockUserPopup'
@@ -32,7 +33,6 @@ background-color: ${C.white};
 `;
 // Store
 import { observer } from 'mobx-react-lite';
-import { useSearchApiStore } from '@/stores/SearchApi';
 import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 
 const ChatScreen = observer(({ isContractor }) => {
@@ -45,8 +45,8 @@ const ChatScreen = observer(({ isContractor }) => {
         }
     }, [offerDetails.offerDate.string, isContractor]);
 
-    const navigation = useNavigation();
-    const route = useRoute();
+    // const navigation = useNavigation();
+    // const route = useRoute();
     // const chatUserId = route.params.chatUserId
     // Header
     const chatUserName = 'Leo Ferguson'
@@ -98,7 +98,12 @@ const ChatScreen = observer(({ isContractor }) => {
                 height: '100%',
             }}
         >
-            <OfferDetailsHeaderSheat />
+
+            {/* Chat attachment popup */}
+            <ChatAttachment />
+
+            {isContractor && <OfferDetailsHeaderSheat />}
+
             <ChatHeader
                 setOpenSharedScreen={setOpenSharedScreen}
                 setOpenBlockUserPopup={setOpenBlockUserPopup}
@@ -113,11 +118,10 @@ const ChatScreen = observer(({ isContractor }) => {
                     width: '100%',
                 }}
             >
-                {isContractor === true ?
-                    <ChatMessagesContractor newMessage={newMessage} isSendMessage={isSendMessage} />
-                    :
-                    null
-                }
+
+                {/* Chat */}
+                <ChatMessagesContractor newMessage={newMessage} isContractor={isContractor} isSendMessage={isSendMessage} />
+
                 <ChatFooter
                     messageText={messageText}
                     onChangeMessageText={onChangeMessageText}
@@ -126,8 +130,7 @@ const ChatScreen = observer(({ isContractor }) => {
                 />
             </KeyboardAvoidingView>
 
-            {/* Chat attachment popup */}
-            <ChatAttachment />
+
 
             {/* Block user popup */}
             {isOpenBlockUserPopup && <BlockUserPopup

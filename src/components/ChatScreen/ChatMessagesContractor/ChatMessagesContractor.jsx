@@ -118,7 +118,7 @@ const chatMock = [
     },
 ]
 
-const ChatMessagesContractor = observer(({ newMessage }) => {
+const ChatMessagesContractor = observer(({ newMessage, isContractor }) => {
     const navigation = useNavigation();
 
     const { windowHeight, windowWidth } = getWindowDimension()
@@ -257,8 +257,8 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
                 width: windowWidth,
             }}
         >
-            {/* Filters button */}
-            {!isExistOffer && <CreateOfferButton
+            {/* Offer button */}
+            {(!isExistOffer && isContractor === true) && <CreateOfferButton
                 onPress={() => {
                     const timeOutDuration = isKeyboardOpen ? 450 : 0
                     isKeyboardOpen && Keyboard.dismiss()
@@ -285,7 +285,7 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
                 >
                     <MessageBlockInsideScroll
                         style={{
-                            paddingTop: isKeyboardOpen === true ? 505 : 230,
+                            paddingTop: isContractor ? isKeyboardOpen === true ? 505 : 230 : isKeyboardOpen === true ? 445 : 170,
                             paddingBottom: isKeyboardOpen === true ? 106 : 126,
                         }}
                     >
@@ -307,7 +307,7 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
                                 if (message.isOffer === true) {
 
                                     return <View key={id}>
-                                        <OfferMessage offerDetails={message.offerDetails} />
+                                        <OfferMessage offerDetails={message.offerDetails} isContractor={isContractor} />
                                         <OfferLinkToMyDeals />
                                     </View>
                                 } else {

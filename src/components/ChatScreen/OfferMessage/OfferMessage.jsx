@@ -23,9 +23,14 @@ const {
     OfferLiValue,
     OfferStatus,
     OfferStatusText,
+    OfferButtons,
+    OfferAccept,
+    OfferAcceptText,
+    OfferDecline,
+    OfferDeclineText,
 } = style;
 
-const OfferMessage = ({ offerDetails }) => {
+const OfferMessage = ({ offerDetails, isContractor }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
     const {
         offerAdditionalInfo,
@@ -54,15 +59,15 @@ const OfferMessage = ({ offerDetails }) => {
     const isPhoneNumberString = offerPhoneNumber !== undefined && offerPhoneNumber
 
     const isAdditionalString = offerAdditionalInfo !== undefined && offerAdditionalInfo
-
+    // Contractor
     const [offerStatus, setOfferStatus] = useState('Waiting for the answer');
-
     useEffect(() => {
         setTimeout(() => {
             setOfferStatus('Offer accepted')
         }, 5000);
     }, []);
-
+    // Musician buttons
+    const [isAccepted, setAccepted] = useState();
     return (
         <ModalWindowBlock
             style={{
@@ -125,12 +130,42 @@ const OfferMessage = ({ offerDetails }) => {
                     </OfferLi>
 
 
-                    <OfferStatus>
+                    {isContractor && <OfferStatus>
                         <OfferStatusText>
                             {offerStatus}
                         </OfferStatusText>
                     </OfferStatus>
+                    }
+                    {!isContractor && (isAccepted === undefined ?
+                        <OfferButtons>
+                            <OfferAccept
+                                onPress={() => {
+                                    setAccepted(true)
+                                }}
+                            >
+                                <OfferAcceptText>
+                                    Accept offer
+                                </OfferAcceptText>
+                            </OfferAccept>
 
+                            <OfferDecline
+                                onPress={() => {
+                                    setAccepted(false)
+                                }}
+                            >
+                                <OfferDeclineText>
+                                    Decline offer
+                                </OfferDeclineText>
+                            </OfferDecline>
+
+                        </OfferButtons>
+                        :
+                        <OfferStatus>
+                            <OfferStatusText>
+                                {(isAccepted === true && isAccepted !== undefined) ? 'Offer accepted' : 'Offer declined'}
+                            </OfferStatusText>
+                        </OfferStatus>)
+                    }
                 </OfferDetailsBlock>
 
             </OfferDetails>
