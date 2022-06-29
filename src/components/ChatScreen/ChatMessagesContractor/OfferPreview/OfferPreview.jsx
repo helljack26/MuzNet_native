@@ -88,7 +88,7 @@ const OfferPreview = observer(() => {
     const [isShowSubmitButton, setShowSubmitButton] = useState(false);
 
     const onSubmit = () => {
-        setOpenCreateOffer(false)
+        // setOpenCreateOffer(false)
         setOpenOfferPreview(false)
         setPaySucessful(true)
         setSendOffer(true)

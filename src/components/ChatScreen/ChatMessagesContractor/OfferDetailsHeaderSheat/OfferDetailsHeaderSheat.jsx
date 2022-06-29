@@ -7,7 +7,7 @@ import { useForm, Controller } from "react-hook-form";
 import DropSelectCalendar from '@/components/Dropdowns/DropSelectCalendar'
 import TimePeriodPicker from '@/components/TimePeriodPicker'
 import SearchLocationDropSelect from '@/components/Dropdowns/SearchLocationDropSelect'
-import DropFlagSelect from '@/pages/SignUp/SignUpScreen/DropFlagSelect'
+import BottomConfirmPopup from '@/components/BottomConfirmPopup'
 
 // Helpers
 import MaskInput from 'react-native-mask-input';
@@ -43,34 +43,21 @@ const {
     FooterMinimalIcon,
     FilterContainer,
     Header,
-    HeaderClose,
-    HeaderTitle,
     FilterBlock,
     ContentBlock,
     ContentBlockRow,
-    ContainerLink,
-    ContainerPrice,
-    ContainerHour,
     ButtonSubmit,
     ButtonSubmitText,
     FormInputPricePerHourBlock,
     FormInputPricePerHourText,
-    AddInfoBlock,
-    AddInfoContainer,
-    AddInfoInput,
-    SecurePaymentMessage,
-    SecurePaymentMessageText,
-    SecurePaymentMessageReadMoreText,
 } = style;
 // Mixins
 import { M } from '@/res/mixin'
 const {
-    FormInput,
     ErrorMessage,
     FormInputBlock,
     FormInputLabel,
     ShowPasswordIconButton,
-    FormInputContainer,
     FormInputContainerPhone,
 } = M;
 // Store
@@ -97,7 +84,7 @@ const OfferDetailsHeaderSheat = observer(() => {
     const route = useRoute();
     const isKeyboardOpen = isKeyboardShown()
 
-    const { offerDetails, setOpenCreateOffer, setOpenOfferPreview, setOfferDetails, isPaySuccesful } = useOfferToMusicianApiStore();
+    const { offerDetails, setOpenOfferPreview, setOfferDetails, isPaySuccesful } = useOfferToMusicianApiStore();
     const {
         offerAdditionalInfo,
         offerDate,
@@ -106,7 +93,6 @@ const OfferDetailsHeaderSheat = observer(() => {
         offerEndTime,
         offerLocation,
         offerPricePerHour,
-        offerTotalMoney,
         offerPhoneNumber,
     } = offerDetails;
 
@@ -115,12 +101,9 @@ const OfferDetailsHeaderSheat = observer(() => {
     const isTimeStartString = offerStartTime.string !== undefined && offerStartTime.string
     const isTimeEndString = offerEndTime.string !== undefined && offerEndTime.string
     const isDurationString = offerDuration !== undefined && offerDuration
-    const timeString = `${isTimeStartString}-${isTimeEndString} (${isDurationString} hours)`
 
     const isLocationString = offerLocation !== undefined && offerLocation
 
-    const isTotalPriceString = offerTotalMoney !== undefined && offerTotalMoney
-    const isPricePerHourString = offerPricePerHour !== undefined && offerPricePerHour
 
     const isPhoneNumberString = offerPhoneNumber !== undefined && offerPhoneNumber
 
@@ -262,7 +245,7 @@ const OfferDetailsHeaderSheat = observer(() => {
         offerPhoneNumber,
         isSomeFieldChange
     ]);
-
+    // Reset state
     const [isResetAll, setResetAll] = useState(false);
     const clearAllFilters = () => {
         // For components set reset
@@ -299,6 +282,7 @@ const OfferDetailsHeaderSheat = observer(() => {
             setResetAll(false)
         }, 0);
     }
+
     // Clear all if payment successful
     useEffect(() => {
         if (isPaySuccesful === true) {
@@ -307,9 +291,7 @@ const OfferDetailsHeaderSheat = observer(() => {
         }
     }, [isPaySuccesful]);
 
-    const [containerTop, setContainerTop] = useState(0);
     const [showHeaderArrow, setShowHeaderArrow] = useState(true);
-
     useEffect(() => {
         if (isShowAllDetails === true) {
             setShowHeaderArrow(false)
@@ -321,6 +303,10 @@ const OfferDetailsHeaderSheat = observer(() => {
 
         }
     }, [isShowAllDetails]);
+
+    // Confirm new offer window state
+    const [isOpenConfirmWindow, setOpenConfirmWindow] = useState(false);
+    const [isConfirm, setConfirm] = useState(false);
 
     const onSubmit = (data) => {
         const newOffer = {
@@ -334,20 +320,21 @@ const OfferDetailsHeaderSheat = observer(() => {
             offerPhoneNumber: phone,
             offerAdditionalInfo: offerAdditionalInfo,
         }
-        setOfferDetails(newOffer)
-
-        setOpenOfferPreview(true)
-        console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", newOffer)
-        // Clear input value
         Keyboard.dismiss()
+        setOfferDetails(newOffer)
+        setOpenOfferPreview(true)
+        // Clear input value
         // navigation.navigate('ContractorStack', { screen: 'OfferPreviewScreen' })
-        return
     };
+    useEffect(() => {
+        if (isConfirm === true) {
+            onSubmit()
+        }
+    }, [isConfirm]);
 
     const minimalHeaderDate = `${isDateString}, ${isTimeStartString}`
     return (
         <>
-
             <HeaderMinimal
                 style={{
                     zIndex: 1510,
@@ -383,7 +370,6 @@ const OfferDetailsHeaderSheat = observer(() => {
                     zIndex: 1500,
                     height,
                     backgroundColor: C.opacity50white,
-                    // height: windowHeight,
                     width: windowWidth,
                     justifyContent: 'flex-start',
                     position: "absolute",
@@ -591,7 +577,9 @@ const OfferDetailsHeaderSheat = observer(() => {
                                     width: '100%',
                                     backgroundColor: C.white,
                                 }}
-                                onPress={handleSubmit(onSubmit)}
+                                onPress={() => {
+                                    setOpenConfirmWindow(true)
+                                }}
                             >
                                 <ButtonSubmitText style={{ color: C.black }}>
                                     Create New Offer
@@ -648,6 +636,16 @@ const OfferDetailsHeaderSheat = observer(() => {
                 </FilterContainer>
 
             </Animated.View >
+
+            {/* Confirm popup */}
+            {isOpenConfirmWindow && <BottomConfirmPopup
+                isOpenBottomPopup={isOpenConfirmWindow}
+                setOpenBottomPopup={setOpenConfirmWindow}
+                setConfirm={setConfirm}
+                onSubmit={onSubmit}
+                confirmBtnText={'Create new offer'}
+                popupMainText={'Creating a new offer will delete the current one. You can read the refund policy here? '}
+            />}
         </>
 
     )

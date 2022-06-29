@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { StatusBar, TouchableOpacity } from 'react-native';
-import {
-    useNavigation
-    // , useRoute 
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 // Images
 import IMAGES from '@/res/images'

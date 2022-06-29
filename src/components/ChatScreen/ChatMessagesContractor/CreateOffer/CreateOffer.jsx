@@ -232,7 +232,7 @@ const CreateOffer = observer(() => {
     }
     // Clear all if payment successful
     useEffect(() => {
-        if (isPaySuccesful === true) {
+        if (isPaySuccesful === true && isOpenCreateOffer === true) {
             clearAllFilters()
             onPress(false)
         }

@@ -38,7 +38,14 @@ const ChoosePaymentMethod = observer(({ setShowSubmitButton }) => {
     const { isOpenPaymentDetails, setOpenPaymentDetails, paymentDetails } = useOfferToMusicianApiStore();
 
     // Local state
-    const [localPaymentMethods, setLocalPaymentMethods] = useState([]);
+    const [localPaymentMethods, setLocalPaymentMethods] = useState([{
+
+        cardCvvCode: 696,
+        cardExpiryDate: "04/29",
+        cardNumber: "5555 6666 7777 8888",
+        cardZipCode: "67646",
+        nameOnCard: "John Dou",
+    }]);
     const [localPaymentMethodActiveId, setLocalPaymentMethodActiveId] = useState();
     function isEmpty(obj) {
         return Object.keys(obj).length === 0;
@@ -55,7 +62,7 @@ const ChoosePaymentMethod = observer(({ setShowSubmitButton }) => {
             {localPaymentMethods.length > 0 && localPaymentMethods.map((payment, id) => {
                 const isActive = id === localPaymentMethodActiveId
                 const lastFourDigitOfNumber = payment.cardNumber.slice(-4, payment.cardNumber.length)
-                // console.log("🚀 ~ file: ChoosePaymentMethod.jsx ~ line 78 ~ {localPaymentMethods.length>0&&localPaymentMethods.map ~ lastFourDigitOfNumber", lastFourDigitOfNumber)
+
                 return (
                     <SelectItem
                         key={id}

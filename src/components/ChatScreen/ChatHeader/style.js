@@ -34,8 +34,7 @@ const HeaderClose = styled.View`
 display: flex;
 align-items: center;
 flex-direction: row;
-width: 24px;
-height: 30px;
+width: 30px;
 background-color: ${C.opacity20white};
 border-radius: 6px;
 margin-left: 5px;

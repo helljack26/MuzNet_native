@@ -2,9 +2,10 @@ import React from "react";
 import { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Image, Keyboard } from 'react-native';
+import { Image, Keyboard, View } from 'react-native';
 
 import OfferMessage from '../OfferMessage'
+import OfferLinkToMyDeals from '../OfferLinkToMyDeals'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
@@ -304,7 +305,11 @@ const ChatMessagesContractor = observer(({ newMessage }) => {
                             }
                             if (message.messageType === 'outcome') {
                                 if (message.isOffer === true) {
-                                    return <OfferMessage key={id} offerDetails={message.offerDetails} />
+
+                                    return <View key={id}>
+                                        <OfferMessage offerDetails={message.offerDetails} />
+                                        <OfferLinkToMyDeals />
+                                    </View>
                                 } else {
                                     return <Outcome
                                         style={{
