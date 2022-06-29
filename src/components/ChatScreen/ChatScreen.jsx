@@ -5,10 +5,12 @@ import { Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform } fr
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
 import ChatHeader from './ChatHeader'
+import ChatSharedFiles from './ChatSharedFiles'
 import OfferDetailsHeaderSheat from './ChatMessagesContractor/OfferDetailsHeaderSheat'
 import ChatMessagesContractor from './ChatMessagesContractor'
 import ChatFooter from './ChatFooter'
 import ChatAttachment from './ChatAttachment'
+import BlockUserPopup from './BlockUserPopup'
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
@@ -84,6 +86,11 @@ const ChatScreen = observer(({ isContractor }) => {
         }
     }, [messageAttachment]);
 
+    // Confirm new offer window state
+    const [isOpenBlockUserPopup, setOpenBlockUserPopup] = useState(false);
+    const [isConfirm, setConfirm] = useState(false);
+
+    const [isOpenSharedScreen, setOpenSharedScreen] = useState(false);
     return (
         <Content
             style={{
@@ -92,8 +99,12 @@ const ChatScreen = observer(({ isContractor }) => {
             }}
         >
             <OfferDetailsHeaderSheat />
-            <ChatHeader chatUserName={chatUserName} chatUserImg={chatUserImg} />
-
+            <ChatHeader
+                setOpenSharedScreen={setOpenSharedScreen}
+                setOpenBlockUserPopup={setOpenBlockUserPopup}
+                chatUserName={chatUserName}
+                chatUserImg={chatUserImg}
+            />
 
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -115,10 +126,25 @@ const ChatScreen = observer(({ isContractor }) => {
                 />
             </KeyboardAvoidingView>
 
+            {/* Chat attachment popup */}
             <ChatAttachment />
+
+            {/* Block user popup */}
+            {isOpenBlockUserPopup && <BlockUserPopup
+                isOpenBottomPopup={isOpenBlockUserPopup}
+                setOpenBottomPopup={setOpenBlockUserPopup}
+                setConfirm={setConfirm}
+            />}
+
+            {/* Shared files */}
+            <ChatSharedFiles
+                chatUserName={chatUserName}
+                chatUserImg={chatUserImg}
+                isOpenSharedScreen={isOpenSharedScreen}
+                setOpenSharedScreen={setOpenSharedScreen}
+                setOpenBlockUserPopup={setOpenBlockUserPopup}
+            />
         </Content>
-
-
     )
 })
 

@@ -642,7 +642,6 @@ const OfferDetailsHeaderSheat = observer(() => {
                 isOpenBottomPopup={isOpenConfirmWindow}
                 setOpenBottomPopup={setOpenConfirmWindow}
                 setConfirm={setConfirm}
-                onSubmit={onSubmit}
                 confirmBtnText={'Create new offer'}
                 popupMainText={'Creating a new offer will delete the current one. You can read the refund policy here? '}
             />}

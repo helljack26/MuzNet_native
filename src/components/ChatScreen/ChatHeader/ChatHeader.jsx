@@ -20,36 +20,41 @@ const {
 // Store
 import { observer } from 'mobx-react-lite';
 
-const ChatHeader = observer(({ chatUserName, chatUserImg }) => {
+const ChatHeader = observer(({ chatUserName, chatUserImg, setOpenBlockUserPopup, setOpenSharedScreen }) => {
 
     return (
-        <>
-            <Header>
-                <HeaderWhiteBlock></HeaderWhiteBlock>
-                <HeaderRow>
-                    <HeaderClose>
-                        <GoBack />
-                    </HeaderClose>
+        <Header>
+            <HeaderWhiteBlock></HeaderWhiteBlock>
+            <HeaderRow>
+                <HeaderClose>
+                    <GoBack />
+                </HeaderClose>
 
-                    <HeaderUser>
-                        <HeaderUserImgBlock>
-                            <HeaderUserImg source={chatUserImg} resizeMode={'cover'} />
-                        </HeaderUserImgBlock>
-                        <HeaderUserName>
-                            {chatUserName}
-                        </HeaderUserName>
-                    </HeaderUser>
+                <HeaderUser
+                    onPress={() => {
+                        setOpenSharedScreen(true)
+                    }}
+                >
+                    <HeaderUserImgBlock>
+                        <HeaderUserImg source={chatUserImg} resizeMode={'cover'} />
+                    </HeaderUserImgBlock>
+                    <HeaderUserName>
+                        {chatUserName}
+                    </HeaderUserName>
+                </HeaderUser>
 
-                    <HeaderOptions>
-                        <HeaderOptionsDots></HeaderOptionsDots>
-                        <HeaderOptionsDots></HeaderOptionsDots>
-                        <HeaderOptionsDots></HeaderOptionsDots>
-                    </HeaderOptions>
-                </HeaderRow>
+                <HeaderOptions
+                    onPress={() => {
+                        setOpenBlockUserPopup(true)
+                    }}
+                >
+                    <HeaderOptionsDots></HeaderOptionsDots>
+                    <HeaderOptionsDots></HeaderOptionsDots>
+                    <HeaderOptionsDots></HeaderOptionsDots>
+                </HeaderOptions>
+            </HeaderRow>
 
-            </Header>
-        </>
-
+        </Header>
     );
 })
 

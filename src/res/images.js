@@ -166,6 +166,16 @@ const IMAGES = {
     PriceRangeBgIcon: PriceRangeBgIcon,
 
     // Mock artist
+    sharedImages: [
+        require('../../assets/Mock/chat_shared/shared_1.png'),
+        require('../../assets/Mock/chat_shared/shared_2.png'),
+        require('../../assets/Mock/chat_shared/shared_3.png'),
+        require('../../assets/Mock/chat_shared/shared_4.png'),
+        require('../../assets/Mock/chat_shared/shared_5.png'),
+        require('../../assets/Mock/chat_shared/shared_6.png'),
+        require('../../assets/Mock/chat_shared/shared_7.png'),
+        require('../../assets/Mock/chat_shared/shared_8.png'),
+    ]
 }
 
 export default IMAGES;

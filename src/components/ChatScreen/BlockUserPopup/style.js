@@ -5,10 +5,8 @@ import { M } from '@/res/mixin'
 
 const AttachContainer = styled.View`
 width: 100%;
-height: 320px;
-padding: 0px 16px;
-padding-top: 45px;
-padding-bottom: 55px;
+height: 200px;
+padding: 12px 16px;
 background-color: ${C.white};
 border-top-left-radius: 16px;
 border-top-right-radius: 16px;
@@ -16,6 +14,10 @@ overflow: hidden;
 display: flex;
 align-items: center;
 flex-direction: column;
+position: absolute;
+ left: 0px;
+ bottom: 0px;
+ right: 0px;
 `;
 const AttachContainerText = styled(M.PlainText20)`
 margin-bottom: 15px;
@@ -61,14 +63,13 @@ flex-direction: row;
 `;
 const Button = styled(M.BorderBtn)`
 margin-top: 8px;
+border-width: 0px;
+background-color: ${C.backGray};
 `;
-const ButtonText = styled(M.BorderBtnText)`
-
+const ButtonText = styled(M.PlainText20)`
+color: #FF2E2E;
 `;
-const ButtonCancel = styled(M.BlackBtn)`
-
-`;
-const ButtonCancelText = styled(M.BlackBtnText)`
+const ButtonCancelText = styled(M.PlainText20)`
 
 `;
 
@@ -98,7 +99,6 @@ export const style = {
     CloseButton: CloseButton,
     Button: Button,
     ButtonText: ButtonText,
-    ButtonCancel: ButtonCancel,
     ButtonCancelText: ButtonCancelText,
     AttachCameraRollBlock: AttachCameraRollBlock,
     AttachFileBlock: AttachFileBlock,

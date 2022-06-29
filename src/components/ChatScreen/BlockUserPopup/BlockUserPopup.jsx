@@ -17,19 +17,16 @@ import C from '@/res/colors'
 import { style } from './style'
 const {
     AttachContainer,
-    ClosePanBlock,
-    ClosePan,
     CloseButton,
     OpacityBg,
     ButtonsBlock,
     Button,
     ButtonText,
-    ButtonCancel,
     ButtonCancelText,
     AttachContainerText,
 } = style;
 
-const BlockUserPopup = ({ isOpenBottomPopup, setOpenBottomPopup, onSubmit, setConfirm, confirmBtnText, popupMainText }) => {
+const BlockUserPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
     // Animate attachment
@@ -39,11 +36,8 @@ const BlockUserPopup = ({ isOpenBottomPopup, setOpenBottomPopup, onSubmit, setCo
     useEffect(() => {
         if (isOpenBottomPopup === true) {
             Keyboard.dismiss()
-
             onPress(true)
-            setTimeout(() => {
-                setShowOpacityBgMargin(true)
-            }, 400);
+            setShowOpacityBgMargin(true)
         }
 
     }, [isOpenBottomPopup]);
@@ -80,32 +74,9 @@ const BlockUserPopup = ({ isOpenBottomPopup, setOpenBottomPopup, onSubmit, setCo
 
             {/* Attach container */}
             <AttachContainer>
-                <CloseButton
-                    onPress={() => {
-                        onPress(false)
-                        setOpenBottomPopup(false)
-                        setConfirm(false)
-                        setShowOpacityBgMargin(false)
-                    }}  >
-                    <CrossBlackIcon width={14} height={14} />
-                </CloseButton>
-
-                <AttachContainerText>
-                    {popupMainText}
-                </AttachContainerText>
-
                 {/* Buttons */}
                 <ButtonsBlock>
-                    <ButtonCancel
-                        onPress={() => {
-                            onPress(false)
-                            setOpenBottomPopup(false)
-                            setConfirm(false)
-                            setShowOpacityBgMargin(false)
-                        }}
-                    >
-                        <ButtonCancelText>Cancel</ButtonCancelText>
-                    </ButtonCancel>
+
                     <Button
                         onPress={() => {
                             setConfirm(true)
@@ -114,9 +85,19 @@ const BlockUserPopup = ({ isOpenBottomPopup, setOpenBottomPopup, onSubmit, setCo
                             setShowOpacityBgMargin(false)
                         }}
                     >
-                        <ButtonText>{confirmBtnText}</ButtonText>
+                        <ButtonText>Block User</ButtonText>
                     </Button>
 
+                    <Button
+                        onPress={() => {
+                            onPress(false)
+                            setOpenBottomPopup(false)
+                            setConfirm(false)
+                            setShowOpacityBgMargin(false)
+                        }}
+                    >
+                        <ButtonCancelText>Cancel</ButtonCancelText>
+                    </Button>
                 </ButtonsBlock>
             </AttachContainer>
 
