@@ -42,7 +42,7 @@ justify-content: space-between;
 align-items: center;
 flex-direction: column;
 width: 100%;
-margin-bottom: 30px;
+margin-bottom: 60px;
 `;
 const CloseButton = styled.TouchableOpacity`
 width: 42px;

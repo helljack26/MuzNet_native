@@ -1,26 +1,18 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
-import { useForm, Controller } from "react-hook-form";
+import { Animated, BackHandler } from 'react-native';
 // Components
 import ChoosePaymentMethod from '@/components/ChoosePaymentMethod'
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-import { addDotForNumber } from '@/components/helpers/addDotForNumber'
 // Images
 import IMAGES from '@/res/images'
 const {
     GoBackIcon,
-    LockGrayIcon,
 } = IMAGES;
-// Variables
-import C from '@/res/colors'
-import F from '@/res/fonts'
-import { S } from '@/res/strings'
+
 // Styles
 import { style } from './style'
 const {
@@ -58,6 +50,19 @@ const ChatSharedFiles = observer(({ chatUserName, chatUserImg, isOpenSharedScree
             onPress(true)
         }
     }, [isOpenSharedScreen]);
+
+    useEffect(() => {
+        if (isOpenSharedScreen === true) {
+            const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+                setOpenSharedScreen(false)
+                setOpenBlockUserPopup(false)
+                return true
+            })
+            return () => {
+                backHandler.remove()
+            }
+        }
+    }, [])
 
     const imageBlockSize = (windowWidth - 53) / 4
 

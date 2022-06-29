@@ -66,17 +66,14 @@ const OnBoardingScreen = () => {
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             // navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
-            // navigation.navigate('ContractorStack', {
-            //     screen: 'ContractorChatScreen',
-            //     params: {
-            //         chatUserId: 1216515
-            //     }
-            // });
-            navigation.navigate(
-                'MusicianStack', {
-                screen: 'MusicianMessagesScreen',
-
+            navigation.navigate('ContractorStack', {
+                screen: 'ContractorAccountScreen',
             });
+            // navigation.navigate(
+            //     'MusicianStack', {
+            //     screen: 'MusicianMessagesScreen',
+
+            // });
         });
 
         return unsubscribe;

@@ -25,7 +25,7 @@ export const useAnimateAttachment = () => {
     }
 
     const inputRange = Object.values(animate_state)
-    const height = value.interpolate({ inputRange, outputRange: ['0%', '100%'] })
+    const height = value.interpolate({ inputRange, outputRange: [0, 320] })
 
     return { height, onPress }
 }

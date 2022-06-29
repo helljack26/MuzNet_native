@@ -35,6 +35,7 @@ const BlockUserPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm }) =
 
     useEffect(() => {
         if (isOpenBottomPopup === true) {
+            console.log("🚀 ~ file: BlockUserPopup.jsx ~ line 38 ~ useEffect ~ isOpenBottomPopup", isOpenBottomPopup)
             Keyboard.dismiss()
             onPress(true)
             setShowOpacityBgMargin(true)
@@ -43,25 +44,12 @@ const BlockUserPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm }) =
     }, [isOpenBottomPopup]);
 
     return (
-        <Animated.View style={{
-            width: windowWidth,
-            height,
-            zIndex: 3000,
-            justifyContent: 'center',
-            alignItems: 'flex-end',
-            justifyContent: 'flex-end',
-            position: "absolute",
-            marginTop: -50,
-            left: 0,
-            bottom: 0,
-            right: 0,
-        }} >
-            {/* Opacity bg */}
-            <OpacityBg
+        <>
+            {isOpenBottomPopup && <OpacityBg
                 style={{
                     height: windowHeight,
                     width: windowWidth,
-                    top: isShowOpacityBgMargin ? -50 : 0,
+                    zIndex: 2900,
                 }}
                 onPress={() => {
                     onPress(false)
@@ -70,10 +58,32 @@ const BlockUserPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm }) =
                     setShowOpacityBgMargin(false)
                 }}
             >
-            </OpacityBg>
+            </OpacityBg>}
 
-            {/* Attach container */}
-            <AttachContainer>
+            <Animated.View style={{
+                width: windowWidth,
+                // height: windowHeight,
+                height,
+                zIndex: 3000,
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                justifyContent: 'flex-start',
+                position: "absolute",
+                flex: 1,
+                flexDirection: 'column',
+                backgroundColor: C.white,
+                borderTopLeftRadius: 12,
+                borderTopRightRadius: 12,
+                paddingHorizontal: 16,
+                overflow: 'hidden',
+                left: 0,
+                bottom: 0,
+                right: 0,
+            }} >
+
+
+                {/* Attach container */}
+
                 {/* Buttons */}
                 <ButtonsBlock>
 
@@ -99,10 +109,11 @@ const BlockUserPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm }) =
                         <ButtonCancelText>Cancel</ButtonCancelText>
                     </Button>
                 </ButtonsBlock>
-            </AttachContainer>
 
 
-        </Animated.View >
+
+            </Animated.View >
+        </>
     )
 }
 

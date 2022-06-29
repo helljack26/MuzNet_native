@@ -49,37 +49,44 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
     }, [isOpenBottomPopup]);
 
     return (
-        <Animated.View style={{
-            width: windowWidth,
-            height,
-            zIndex: 3000,
-            justifyContent: 'center',
-            alignItems: 'flex-end',
-            justifyContent: 'flex-end',
-            position: "absolute",
-            marginTop: -50,
-            left: 0,
-            bottom: 0,
-            right: 0,
-        }} >
-            {/* Opacity bg */}
-            <OpacityBg
+        <>
+            {isOpenBottomPopup && <OpacityBg
                 style={{
                     height: windowHeight,
                     width: windowWidth,
-                    top: isShowOpacityBgMargin ? -50 : 0,
+                    zIndex: 2000,
                 }}
                 onPress={() => {
                     onPress(false)
                     setOpenBottomPopup(false)
-                    setConfirm(false)
                     setShowOpacityBgMargin(false)
                 }}
             >
-            </OpacityBg>
+            </OpacityBg>}
+            <Animated.View style={{
+                height,
+                width: windowWidth,
 
-            {/* Attach container */}
-            <AttachContainer>
+                zIndex: 2000,
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                justifyContent: 'flex-end',
+                position: "absolute",
+                flex: 1,
+                flexDirection: 'column',
+                alignItems: 'center',
+                backgroundColor: C.white,
+                borderTopLeftRadius: 12,
+                borderTopRightRadius: 12,
+                overflow: 'hidden',
+                paddingHorizontal: 16,
+                left: 0,
+                bottom: 0,
+                right: 0,
+            }} >
+
+                {/* Attach container */}
+
                 <CloseButton
                     onPress={() => {
                         onPress(false)
@@ -118,10 +125,10 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
                     </Button>
 
                 </ButtonsBlock>
-            </AttachContainer>
 
 
-        </Animated.View >
+            </Animated.View >
+        </>
     )
 }
 

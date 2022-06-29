@@ -8,7 +8,6 @@ import ChatHeader from './ChatHeader'
 import ChatSharedFiles from './ChatSharedFiles'
 import OfferDetailsHeaderSheat from './ChatMessagesContractor/OfferDetailsHeaderSheat'
 import ChatMessagesContractor from './ChatMessagesContractor'
-import ChatMessagesMusician from './ChatMessagesMusician'
 import ChatFooter from './ChatFooter'
 import ChatAttachment from './ChatAttachment'
 import BlockUserPopup from './BlockUserPopup'
@@ -130,14 +129,12 @@ const ChatScreen = observer(({ isContractor }) => {
                 />
             </KeyboardAvoidingView>
 
-
-
             {/* Block user popup */}
-            {isOpenBlockUserPopup && <BlockUserPopup
+            <BlockUserPopup
                 isOpenBottomPopup={isOpenBlockUserPopup}
                 setOpenBottomPopup={setOpenBlockUserPopup}
                 setConfirm={setConfirm}
-            />}
+            />
 
             {/* Shared files */}
             <ChatSharedFiles

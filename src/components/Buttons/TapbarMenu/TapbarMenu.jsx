@@ -30,7 +30,7 @@ const TapbarMenuContent = [
         icon: <CommunityTapbarIcon height={20} />
     },
     {
-        screenName: 'ProfileScreen',
+        screenName: 'AccountScreen',
         icon: <ProfileTapbarIcon width={20} height={20} />
     }
 ]

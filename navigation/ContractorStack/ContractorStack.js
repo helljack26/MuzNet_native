@@ -7,6 +7,7 @@ import ContractorMapSearchScreen from '../../src/pages/Contractor/ContractorMapS
 import MusicianCardScreen from '../../src/pages/Contractor/MusicianCardScreen';
 import ContractorMessagesScreen from '../../src/pages/Contractor/ContractorMessagesScreen';
 import ContractorChatScreen from '../../src/pages/Contractor/ContractorChatScreen';
+import ContractorAccountScreen from '../../src/pages/Contractor/ContractorAccountScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,5 +36,6 @@ export default function ContractorStack() {
             <Stack.Screen name="MusicianCardScreen" component={MusicianCardScreen} />
             <Stack.Screen name="ContractorMessagesScreen" component={ContractorMessagesScreen} />
             <Stack.Screen name="ContractorChatScreen" component={ContractorChatScreen} />
+            <Stack.Screen name="ContractorAccountScreen" component={ContractorAccountScreen} />
         </Stack.Navigator>)
 }

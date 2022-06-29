@@ -14,6 +14,9 @@ import UsaIcon from '../../assets/icon/countries_flag/flag_USA.svg'
 // Social
 import FacebookIcon from '../../assets/icon/social/fb_icon.svg'
 import GoogleIcon from '../../assets/icon/social/google_icon.svg'
+import InstagramIcon from '../../assets/icon/social/instagram_icon.svg'
+import LinkedinIcon from '../../assets/icon/social/linkedin_icon.svg'
+import TwitterIcon from '../../assets/icon/social/twitter_icon.svg'
 import MailIcon from '../../assets/icon/social/mail_icon.svg'
 import PhoneIcon from '../../assets/icon/phone_icon.svg'
 // Icon
@@ -54,6 +57,7 @@ import ChangeCameraTypeIcon from '../../assets/icon/change_cameraType_icon.svg'
 import CloudBlackIcon from '../../assets/icon/cloud_black_icon.svg'
 import FileWhiteIcon from '../../assets/icon/file_white_icon.svg'
 import OfferHeaderRoundedShapeBg from '../../assets/icon/offer_header_rounded_shape.svg'
+import CopyGrayIcon from '../../assets/icon/copy_gray_icon.svg'
 // Bank logo
 import VisaBankIcon from '../../assets/icon/visa_icon.svg'
 import MasterCardBankIcon from '../../assets/icon/masterCard_icon.svg'
@@ -102,12 +106,17 @@ const IMAGES = {
     JamaicaIcon: JamaicaIcon,
     UnitedKingdomIcon: UnitedKingdomIcon,
     UsaIcon: UsaIcon,
-    // Icon
-    PlainLogo: PlainLogo,
-    ArrowIcon: ArrowIcon,
+    // Social
     FacebookIcon: FacebookIcon,
     GoogleIcon: GoogleIcon,
     MailIcon: MailIcon,
+    InstagramIcon: InstagramIcon,
+    LinkedinIcon: LinkedinIcon,
+    TwitterIcon: TwitterIcon,
+
+    // Icon
+    PlainLogo: PlainLogo,
+    ArrowIcon: ArrowIcon,
     ShowPassIcon: ShowPassIcon,
     ShowPassActiveIcon: ShowPassActiveIcon,
     ErrorIcon: ErrorIcon,
@@ -144,6 +153,7 @@ const IMAGES = {
     FileWhiteIcon: FileWhiteIcon,
     OfferHeaderRoundedShapeBg: OfferHeaderRoundedShapeBg,
     AddPaymentMethodBg: require('../../assets/icon/add_payment_method_bg.png'),
+    CopyGrayIcon: CopyGrayIcon,
     // Bank
     AmericanExpressBankIcon: AmericanExpressBankIcon,
     PayPalBankIcon: PayPalBankIcon,
