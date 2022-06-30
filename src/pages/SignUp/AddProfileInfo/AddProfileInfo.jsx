@@ -87,131 +87,10 @@ const {
     UserAvatarButtonText,
 } = style;
 
-const SignUpContentContractor = [
-    {
-        tabNumber: 1,
-        fullNumber: 4,
-        title: 'Welcome to MuzNet!',
-        text: 'Please, pick a username',
-        progressWidth: 15
-    },
-    {
-        tabNumber: 2,
-        fullNumber: 4,
-        title: 'Welcome to MuzNet!',
-        text: 'Select profile type according to your needs',
-        progressWidth: 32
-    },
-    {
-        tabNumber: 3,
-        fullNumber: 4,
-        title: 'Welcome to MuzNet!',
-        text: 'Select profile position',
-        progressWidth: 60
-    },
-    {
-        tabNumber: 4,
-        fullNumber: 4,
-        title: 'Welcome to MuzNet!',
-        text: 'Lets add profile information',
-        progressWidth: 100
-    },
-]
-const SignUpContentMusician = [
-    {
-        tabNumber: 1,
-        fullNumber: 6,
-        title: 'Welcome to MuzNet!',
-        text: 'Please, pick a username',
-        progressWidth: 15
-    },
-    {
-        tabNumber: 2,
-        fullNumber: 6,
-        title: 'Welcome to MuzNet!',
-        text: 'Select profile type according to your needs',
-        progressWidth: 32
-    },
-    {
-        tabNumber: 3,
-        fullNumber: 6,
-        title: 'Welcome to MuzNet!',
-        text: 'Select profile type according to your needs',
-        progressWidth: 50
-    },
-    {
-        tabNumber: 4,
-        fullNumber: 6,
-        title: 'Welcome to MuzNet!',
-        text: 'Please choose your musical instrument',
-        progressWidth: 65
-    },
-    {
-        tabNumber: 5,
-        fullNumber: 6,
-        title: 'Welcome to MuzNet!',
-        text: 'Please choose your music genres',
-        progressWidth: 85
-    },
-    {
-        tabNumber: 6,
-        fullNumber: 6,
-        title: 'Welcome to MuzNet!',
-        text: 'Lets add profile information',
-        progressWidth: 100
-    },
-]
-const SignUpContentBand = [
-    {
-        tabNumber: 1,
-        fullNumber: 7,
-        title: 'Welcome to MuzNet!',
-        text: 'Please, pick a username',
-        progressWidth: 14
-    },
-    {
-        tabNumber: 2,
-        fullNumber: 7,
-        title: 'Welcome to MuzNet!',
-        text: 'Select profile type according to your needs',
-        progressWidth: 28
-    },
-    {
-        tabNumber: 3,
-        fullNumber: 7,
-        title: 'Welcome to MuzNet!',
-        text: 'Select profile type according to your needs',
-        progressWidth: 42
-    },
-    {
-        tabNumber: 4,
-        fullNumber: 7,
-        title: 'Welcome to MuzNet!',
-        text: 'Please, choose group members',
-        progressWidth: 56
-    },
-    {
-        tabNumber: 5,
-        fullNumber: 7,
-        title: 'Welcome to MuzNet!',
-        text: 'Please choose your musical instrument',
-        progressWidth: 70
-    },
-    {
-        tabNumber: 6,
-        fullNumber: 7,
-        title: 'Welcome to MuzNet!',
-        text: 'Please choose your music genres',
-        progressWidth: 84
-    },
-    {
-        tabNumber: 7,
-        fullNumber: 7,
-        title: 'Welcome to MuzNet!',
-        text: 'Lets add profile information',
-        progressWidth: 100
-    },
-]
+// Sign up flow content
+const SignUpContentContractor = S.SignUpContentContractor
+const SignUpContentMusician = S.SignUpContentMusician
+const SignUpContentBand = S.SignUpContentBand
 
 
 const AddProfileInfo = () => {
@@ -251,8 +130,9 @@ const AddProfileInfo = () => {
     const { control, handleSubmit, resetField, setError, watch, clearErrors,
         formState: { dirtyFields, errors } } = useForm({
             defaultValues: {
+                userNickName: '',
                 userName: '',
-                userFullName: '',
+                userSurName: '',
                 userDescription: '',
                 userEmail: '',
                 userLocation: '',
@@ -268,7 +148,7 @@ const AddProfileInfo = () => {
 
     // Tab 1 Name
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
-    const watchUserName = watch("userName");
+    const watchUserName = watch("userNickName");
 
     const [isNameExist, setIsNameExist] = useState();
     const [isListenNameInput, setIsListenNameInput] = useState(false);
@@ -279,13 +159,13 @@ const AddProfileInfo = () => {
     useEffect(() => {
         if (watchUserName.length > 1) {
             if (isExist === undefined) {
-                clearErrors('userName');
+                clearErrors('userNickName');
                 setIsNameExist(false)
                 setInputFocus1(C.green)
                 setIsDisableButton(false)
             }
             if (isExist !== undefined) {
-                setError('userName', { type: 'value', message: S.userNameExistError });
+                setError('userNickName', { type: 'value', message: S.userNameExistError });
                 setIsNameExist(true)
                 setIsDisableButton(true)
             }
@@ -294,7 +174,7 @@ const AddProfileInfo = () => {
             setIsListenNameInput(true)
         }
         if (watchUserName.length <= 1 && isListenNameInput) {
-            setError('userName', { type: 'value', message: 'Minimum 2 characters' });
+            setError('userNickName', { type: 'value', message: 'Minimum 2 characters' });
             setIsNameExist(true)
             setIsDisableButton(true)
         }
@@ -346,13 +226,15 @@ const AddProfileInfo = () => {
     };
     // Full name input
     const [inputFocus2, setInputFocus2] = useState(C.lightGray);
+    const [inputFocus8, setInputFocus8] = useState(C.lightGray);
     const [inputFocus3, setInputFocus3] = useState(C.lightGray);
     const [inputFocus4, setInputFocus4] = useState(C.lightGray);
     const [inputFocus5, setInputFocus5] = useState(C.lightGray);
     const [inputFocus6, setInputFocus6] = useState(C.lightGray);
     const [inputFocus7, setInputFocus7] = useState(C.lightGray);
 
-    const [inputFullNameLabel, setInputFullNameLabel] = useState(false);
+    const [inputNameLabel, setInputNameLabel] = useState(false);
+    const [inputSurNameLabel, setInputSurNameLabel] = useState(false);
     const [inputDescriptionLabel, setInputDescriptionLabel] = useState(false);
     const [inputEmailLabel, setInputEmailLabel] = useState(false);
     const [inputLocationLabel, setInputLocationLabel] = useState(false);
@@ -369,11 +251,17 @@ const AddProfileInfo = () => {
     const [isReadSheetMusic, setReadSheetMusic] = useState(false);
     // Set shifting input label
     useEffect(() => {
-        if (dirtyFields.userFullName === undefined) {
-            setInputFullNameLabel(false)
+        if (dirtyFields.userName === undefined) {
+            setInputNameLabel(false)
         }
-        if (dirtyFields.userFullName !== undefined) {
-            setInputFullNameLabel(true)
+        if (dirtyFields.userName !== undefined) {
+            setInputNameLabel(true)
+        }
+        if (dirtyFields.userSurName === undefined) {
+            setInputSurNameLabel(false)
+        }
+        if (dirtyFields.userSurName !== undefined) {
+            setInputSurNameLabel(true)
         }
 
         if (dirtyFields.userDescription === undefined) {
@@ -410,7 +298,8 @@ const AddProfileInfo = () => {
             setPricePerHourLabel(true)
         }
     }, [
-        dirtyFields.userFullName,
+        dirtyFields.userName,
+        dirtyFields.userSurName,
         dirtyFields.userDescription,
         dirtyFields.userEmail,
         dirtyFields.userLocation,
@@ -448,9 +337,10 @@ const AddProfileInfo = () => {
         const contractorData = {
             userType: S.Contractor,
             contractorPosition: userContractorPosition,
+            userNickName: data.userNickName,
+            userAvatar: [userAvatar],
             userName: data.userName,
-            userAvatar: userAvatar,
-            userFullName: data.userFullName,
+            userSurName: data.userSurName,
             userDescription: data.userDescription,
             userEmail: data.userEmail,
             userLocation: data.userLocation,
@@ -458,38 +348,45 @@ const AddProfileInfo = () => {
         }
         const musicianOrSingerData = {
             userType: S.Musician,
-            userMusiciaType: musicianType,
+            userNickName: data.userNickName,
+            userAvatar: [userAvatar],
             userName: data.userName,
-            userAvatar: userAvatar,
-            userMusicalInstrument: userMusicalInstrument,
-            userGenres: userGenres,
-            userFullName: data.userFullName,
+            userSurName: data.userSurName,
             userDescription: data.userDescription,
             userEmail: data.userEmail,
             userLocation: data.userLocation,
+
+            userMusicalInstrument: userMusicalInstrument,
+            userMusiciaType: musicianType,
+            userGenres: userGenres,
             willingToTravel: data.willingToTravel,
             userPricePerHour: pricePerHourInput,
-            singByEar: data.singByEar,
-            playByEar: data.playByEar,
-            readSheetMusic: data.readSheetMusic,
+            userSkills: {
+                singByEar: data.singByEar,
+                playByEar: data.playByEar,
+                readSheetMusic: data.readSheetMusic,
+            }
         }
         const bandData = {
-            userName: data.userName,
+            userNickName: data.userNickName,
             userType: S.Musician,
             userMusiciaType: S.Band,
             userBandMembers: userBandMember,
             userMusicalInstrument: userMusicalInstrument,
             userGenres: userGenres,
-            userAvatar: userAvatar,
-            userFullName: data.userFullName,
+            userAvatar: [userAvatar],
+            userName: data.userName,
+            userSurName: data.userSurName,
             userDescription: data.userDescription,
             userEmail: data.userEmail,
             userLocation: data.userLocation,
             willingToTravel: data.willingToTravel,
             userPricePerHour: pricePerHourInput,
-            singByEar: data.singByEar,
-            playByEar: data.playByEar,
-            readSheetMusic: data.readSheetMusic,
+            userSkills: {
+                singByEar: data.singByEar,
+                playByEar: data.playByEar,
+                readSheetMusic: data.readSheetMusic,
+            }
         }
         const defineData = userType === S.Contractor ? contractorData : musicianType !== S.Band ? musicianOrSingerData : bandData
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", defineData)
@@ -498,9 +395,10 @@ const AddProfileInfo = () => {
         setPositionType(null)
         setMusicianType(null)
 
-        resetField('userName')
+        resetField('userNickName')
         setNewAvatar(null)
-        resetField('userFullName')
+        resetField('userName')
+        resetField('userSurName')
         resetField('userDescription')
         resetField('userEmail')
         resetField('userLocation')
@@ -525,7 +423,7 @@ const AddProfileInfo = () => {
                     setScreenNumber(1)
                     setIsListenNameInput(true)
                 }
-                if (watchUserName.length < 1) { setError('userName', { type: 'value', message: 'Minimum 2 characters' }); }
+                if (watchUserName.length < 1) { setError('userNickName', { type: 'value', message: 'Minimum 2 characters' }); }
                 break;
             case 2:
                 setScreenNumber(2)
@@ -559,6 +457,7 @@ const AddProfileInfo = () => {
         }
         return
     };
+
     // Musician and singer condition
     const isMusicianOrSinger = musicianType === S.Singer || musicianType === S.Musician
     const isBand = musicianType === S.Band
@@ -652,7 +551,6 @@ const AddProfileInfo = () => {
 
                     </TabNumberIndication>
 
-
                     {/* Pregress bar */}
                     <ProgressBar>
                         <ProgressBarLine progressWidth={progressWidth}>
@@ -696,7 +594,7 @@ const AddProfileInfo = () => {
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <FormInputBlock
                                     style={{
-                                        marginBottom: errors.userName ? 40 : 13,
+                                        marginBottom: errors.userNickName ? 40 : 13,
                                     }}
                                 >
                                     <FormInputContainer>
@@ -712,12 +610,12 @@ const AddProfileInfo = () => {
                                             onChangeText={onChange}
                                             value={value}
                                             style={{
-                                                borderColor: errors.userName ? C.red : inputFocus1,
-                                                borderWidth: errors.userName ? 2 : 1,
-                                                color: errors.userName ? C.red : C.black,
+                                                borderColor: errors.userNickName ? C.red : inputFocus1,
+                                                borderWidth: errors.userNickName ? 2 : 1,
+                                                color: errors.userNickName ? C.red : C.black,
                                             }}
                                         />
-                                        {errors.userName && <ShowPasswordIconButton>
+                                        {errors.userNickName && <ShowPasswordIconButton>
                                             <ErrorIcon width={20} height={20} />
                                         </ShowPasswordIconButton>
                                         }
@@ -728,10 +626,10 @@ const AddProfileInfo = () => {
 
                                     </FormInputContainer>
 
-                                    {errors.userName && <ErrorMessage>{errors.userName.message}</ErrorMessage>}
+                                    {errors.userNickName && <ErrorMessage>{errors.userNickName.message}</ErrorMessage>}
                                 </FormInputBlock>
                             )}
-                            name="userName"
+                            name="userNickName"
                         />
                         }
 
@@ -834,7 +732,7 @@ const AddProfileInfo = () => {
                                     }
                                 </UserAvatarBlock>
 
-                                {/* User Name  */}
+                                {/* User Name */}
                                 <Controller
                                     control={control}
                                     rules={{
@@ -844,12 +742,12 @@ const AddProfileInfo = () => {
                                     render={({ field: { onChange, onBlur, value } }) => (
                                         <FormInputBlock
                                             style={{
-                                                marginBottom: errors.userFullName?.type === 'required' ? 35 : (errors.userFullName?.type === 'pattern' ? 60 : 13),
+                                                marginBottom: errors.userName?.type === 'required' ? 35 : (errors.userName?.type === 'pattern' ? 60 : 13),
                                             }}
                                         >
                                             <FormInputContainer>
                                                 <FormInput
-                                                    inputLabel={inputFullNameLabel}
+                                                    inputLabel={inputNameLabel}
                                                     selectionColor={C.lightGray}
                                                     placeholder={'Enter your name'}
                                                     cursorColor={C.inputCursor}
@@ -861,25 +759,73 @@ const AddProfileInfo = () => {
                                                     onChangeText={onChange}
                                                     value={value}
                                                     style={{
-                                                        borderColor: errors.userFullName ? C.red : inputFocus2,
-                                                        borderWidth: errors.userFullName ? 2 : 1,
-                                                        color: errors.userFullName ? C.red : C.black,
+                                                        borderColor: errors.userName ? C.red : inputFocus2,
+                                                        borderWidth: errors.userName ? 2 : 1,
+                                                        color: errors.userName ? C.red : C.black,
                                                     }}
                                                 />
-                                                {errors.userFullName && <ShowPasswordIconButton>
+                                                {errors.userName && <ShowPasswordIconButton>
                                                     <ErrorIcon width={20} height={20} />
                                                 </ShowPasswordIconButton>
                                                 }
 
                                             </FormInputContainer>
-                                            <FormInputLabel isError={errors.userFullName} inputLabel={inputFullNameLabel}>Name</FormInputLabel>
+                                            <FormInputLabel isError={errors.userName} inputLabel={inputNameLabel}>Name</FormInputLabel>
 
-                                            {errors.userFullName?.type === 'pattern' && <ErrorMessage >{S.userNameSymbolExclude}</ErrorMessage>}
-                                            {errors.userFullName?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+                                            {errors.userName?.type === 'pattern' && <ErrorMessage >{S.userNameSymbolExclude}</ErrorMessage>}
+                                            {errors.userName?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
 
                                         </FormInputBlock>
                                     )}
-                                    name="userFullName"
+                                    name="userName"
+                                />
+
+                                {/* User Surname  */}
+                                <Controller
+                                    control={control}
+                                    rules={{
+                                        required: S.userNameExistError,
+                                        pattern: S.userNamePattern
+                                    }}
+                                    render={({ field: { onChange, onBlur, value } }) => (
+                                        <FormInputBlock
+                                            style={{
+                                                marginBottom: errors.userSurName?.type === 'required' ? 35 : (errors.userSurName?.type === 'pattern' ? 60 : 13),
+                                            }}
+                                        >
+                                            <FormInputContainer>
+                                                <FormInput
+                                                    inputLabel={inputSurNameLabel}
+                                                    selectionColor={C.lightGray}
+                                                    placeholder={'Enter your surname'}
+                                                    cursorColor={C.inputCursor}
+                                                    onFocus={() => { setInputFocus8(C.black) }}
+                                                    onBlur={() => {
+                                                        onBlur
+                                                        setInputFocus8(C.lightGray)
+                                                    }}
+                                                    onChangeText={onChange}
+                                                    value={value}
+                                                    style={{
+                                                        borderColor: errors.userSurName ? C.red : inputFocus8,
+                                                        borderWidth: errors.userSurName ? 2 : 1,
+                                                        color: errors.userSurName ? C.red : C.black,
+                                                    }}
+                                                />
+                                                {errors.userSurName && <ShowPasswordIconButton>
+                                                    <ErrorIcon width={20} height={20} />
+                                                </ShowPasswordIconButton>
+                                                }
+
+                                            </FormInputContainer>
+                                            <FormInputLabel isError={errors.userSurName} inputLabel={inputSurNameLabel}>Surname</FormInputLabel>
+
+                                            {errors.userSurName?.type === 'pattern' && <ErrorMessage >{S.userNameSymbolExclude}</ErrorMessage>}
+                                            {errors.userSurName?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+
+                                        </FormInputBlock>
+                                    )}
+                                    name="userSurName"
                                 />
 
                                 {/* User Description  */}

@@ -3369,10 +3369,10 @@
   dependencies:
     "expo-json-utils" "~0.2.0"
 
-"expo-media-library@^14.0.0":
-  "integrity" "sha512-rbrFSLxpmhKqvWivjpMXhAOu0D0sRhu2UNc+SJntXJwsLYx7Mzh9N8pk2kU7iLTPR2YYfxOGW7HyFj18+OB6QQ=="
-  "resolved" "https://registry.npmjs.org/expo-media-library/-/expo-media-library-14.0.0.tgz"
-  "version" "14.0.0"
+"expo-media-library@^14.0.1":
+  "integrity" "sha512-a7NGFxZvns81y0fRZJsBROXFWKtyEMaodw+x32IPNhKLUAn+X1ggfBS8FbNpUs3bA4ZvhjFQBn59dxPfcHHxEg=="
+  "resolved" "https://registry.npmjs.org/expo-media-library/-/expo-media-library-14.0.1.tgz"
+  "version" "14.0.1"
   dependencies:
     "@expo/config-plugins" "^4.0.2"
 
@@ -3395,10 +3395,10 @@
     "compare-versions" "^3.4.0"
     "invariant" "^2.2.4"
 
-"expo-permissions@^13.1.0":
-  "integrity" "sha512-f3ngERaoeAw8236xyvw4gS89Fxd4fU2soKXQn0JPXwiDGmIXO+lIJNH3psNvAebj4DfmyQtGW4AS1itG83GHaQ=="
-  "resolved" "https://registry.npmjs.org/expo-permissions/-/expo-permissions-13.1.0.tgz"
-  "version" "13.1.0"
+"expo-permissions@^13.1.1":
+  "integrity" "sha512-vo2sDlxDJE+THLhUO7G8kMHYnNJoMvYjurFNRvHjEvZAUvFmRgulejr8HlzCpb820brXNg+QWalZCtyA5oQkqg=="
+  "resolved" "https://registry.npmjs.org/expo-permissions/-/expo-permissions-13.1.1.tgz"
+  "version" "13.1.1"
 
 "expo-splash-screen@~0.14.0", "expo-splash-screen@~0.14.1":
   "integrity" "sha512-X25D/0E2AWEFGgDWIVXZ5Bl7FhYk7TgVhEWvplBqrDY7G7vg5l1aoH6PelOQINWPsa1dcRyA7REdN2ltO+0LAw=="
@@ -3418,14 +3418,14 @@
   "resolved" "https://registry.npmjs.org/expo-structured-headers/-/expo-structured-headers-2.1.1.tgz"
   "version" "2.1.1"
 
-"expo-task-manager@^10.1.0":
-  "integrity" "sha512-IqkJBOz8pF5jYE4Do5QkH6rNUvfio4HegeLfgqSTL44T+YSfmCgvucp/Ho2+B68EQR4gxQioKtgHVfArRva5sg=="
-  "resolved" "https://registry.npmjs.org/expo-task-manager/-/expo-task-manager-10.1.0.tgz"
-  "version" "10.1.0"
+"expo-task-manager@^10.1.1":
+  "integrity" "sha512-qnI0TFOFjnc16NFlQ/sYMpkUAFt9U0ju76HJlrJbQw1j3wydkfG+WT/63tYnVxpCUwCx0nUdWRJZETVC18/fjQ=="
+  "resolved" "https://registry.npmjs.org/expo-task-manager/-/expo-task-manager-10.1.1.tgz"
+  "version" "10.1.1"
   dependencies:
     "@expo/config-plugins" "^4.0.2"
     "unimodules-app-loader" "~3.0.0"
-    "unimodules-task-manager-interface" "7.1.0"
+    "unimodules-task-manager-interface" "7.1.1"
 
 "expo-updates-interface@~0.5.0":
   "integrity" "sha512-RLvC69o1BkhHP6hNaWiIvSiTgXABB9v4HnoietoXKFHlAyxlQCupy6ki164KpZNrOS/PFJ2WWqZOvKfiyDVO+w=="
@@ -7088,10 +7088,10 @@
   "resolved" "https://registry.npmjs.org/unimodules-task-manager-interface/-/unimodules-task-manager-interface-7.1.1.tgz"
   "version" "7.1.1"
 
-"unimodules-task-manager-interface@7.1.0":
-  "integrity" "sha512-Iu6naIWWNWB69zFO6njRYj1GcfqAFnaK0hBub2zU6vvUu5A+YibZfXm5MTMq3zKfDeHrvEgVzUQszSbkjurinA=="
-  "resolved" "https://registry.npmjs.org/unimodules-task-manager-interface/-/unimodules-task-manager-interface-7.1.0.tgz"
-  "version" "7.1.0"
+"unimodules-task-manager-interface@7.1.1":
+  "integrity" "sha512-vvtxJO3O6fJXvSc9qvgB2FS9xJk2nWG4NOvwCMmTmfblmvzGPFcTheOKzV7Z1dvjlqTZZ+TDqd5XOGa+0+NXVA=="
+  "resolved" "https://registry.npmjs.org/unimodules-task-manager-interface/-/unimodules-task-manager-interface-7.1.1.tgz"
+  "version" "7.1.1"
 
 "union-value@^1.0.0":
   "integrity" "sha512-tJfXmxMeWYnczCVs7XAEvIV7ieppALdyepWMkHkwciRpZraG/xwT+s2JN8+pr1+8jCRf80FFzvr+MpQeeoF4Xg=="

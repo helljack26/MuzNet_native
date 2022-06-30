@@ -78,7 +78,8 @@ left: 16px;
 bottom: 15px;
 `;
 const LogOutButtonText = styled(M.PlainText17)`
-color: ${C.gray};
+color: ${C.cyanGray};
+
 `;
 
 export const style = {

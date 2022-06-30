@@ -78,7 +78,6 @@ class OfferToMusicianApi {
     }
 
     setOpenCreateOffer(boolean) {
-        console.log('ну нахуя?');
         this.isOpenCreateOffer = boolean
     }
 

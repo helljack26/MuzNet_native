@@ -215,7 +215,6 @@ padding-top: ${props => props.inputLabel === true ? 17 + 'px' : 0 + 'px'};
 padding-right: ${props => props.isPassword === true ? 50 + 'px' : 16 + 'px'};
 z-index: -1;
 position: absolute;
-
 left: 0px;
 bottom: 0px;
 right: 0px;
@@ -228,8 +227,8 @@ margin-top: 12px;
 font-size: 13px;
 font-family: ${F.regular};
 font-size: 17px;
-
 `;
+
 export const style = {
     Container: Container,
     Header: Header,

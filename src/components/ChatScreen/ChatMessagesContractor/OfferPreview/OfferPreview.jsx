@@ -120,7 +120,6 @@ const OfferPreview = observer(() => {
             right: 0,
         }}
         >
-
             <FilterContainer
                 style={{
                     height: windowHeight,

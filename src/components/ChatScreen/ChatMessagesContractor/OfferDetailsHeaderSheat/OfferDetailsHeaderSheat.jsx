@@ -180,13 +180,13 @@ const OfferDetailsHeaderSheat = observer(() => {
         if (dirtyFields.offerPhoneNumber === undefined) {
             setInputPhoneLabel(false)
         }
-        if (dirtyFields.offerPhoneNumber === true) {
+        if (dirtyFields.offerPhoneNumber !== undefined) {
             setInputPhoneLabel(true)
         }
         if (dirtyFields.offerPricePerHour === undefined) {
             setPricePerHourLabel(false)
         }
-        if (dirtyFields.offerPricePerHour === true) {
+        if (dirtyFields.offerPricePerHour !== undefined) {
             setPricePerHourLabel(true)
         }
     }, [dirtyFields.offerPricePerHour, dirtyFields.offerPhoneNumber]);

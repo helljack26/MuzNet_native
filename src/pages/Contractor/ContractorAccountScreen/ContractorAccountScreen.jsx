@@ -38,9 +38,7 @@ const ContractorAccountScreen = () => {
             />
 
             {/* Image */}
-            <Container
-                isKeyboardOpen={isKeyboardOpen}
-            >
+            <Container isKeyboardOpen={isKeyboardOpen} >
 
                 <AccountIntroScreen
                     stackName={'ContractorStack'}

@@ -3,14 +3,14 @@ import { useState, useEffect } from 'react';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
+import PersonalInformation from './PersonalInformation';
+
 import InviteFriendsPopup from './InviteFriendsPopup'
 
 // Helpers
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
-// Store
-import { observer } from 'mobx-react-lite';
-import C from '@/res/colors'
+
 
 // Images
 import IMAGES from '@/res/images'
@@ -20,6 +20,8 @@ const {
 } = IMAGES;
 // Styles
 import { style } from './style'
+import C from '@/res/colors'
+import { S } from '@/res/strings'
 const {
     Container,
     Content,
@@ -39,8 +41,13 @@ const {
     LogOutButtonText,
 } = style;
 
+// Store
+import { observer } from 'mobx-react-lite';
+import { useAccountApiStore } from '@/stores/AccountApi';
+
 const AccountIntroScreen = observer(({ stackName, isContractor }) => {
     const navigation = useNavigation();
+    const { setOpenTabs } = useAccountApiStore();
 
     const userImage = require('../../../assets/Mock/Georgia.png')
     const userName = 'Annie'
@@ -51,6 +58,8 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
     // Invite friends popup state
     const [isOpenInviteFriendsBlock, setOpenInviteFriendsBlock] = useState(false);
 
+    const tabsLink = isContractor === true ? S.AccountTabs.contractorTabs : S.AccountTabs.musicianTabs
+
     return (
         <Container
             style={{
@@ -58,7 +67,6 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                 height: windowHeight,
             }}
         >
-
             <Content
                 style={{
                     width: windowWidth,
@@ -78,81 +86,29 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
 
                 {/* Link list */}
                 <AccountLinkList>
-                    <AccountLink>
-                        <AccountLinkText>
-                            Personal Information
-                        </AccountLinkText>
+                    {tabsLink.map((tabName, id) => {
+                        if (tabName === 'My Ads' && !isContractor) return null
+                        return <AccountLink
+                            onPress={() => {
+                                setOpenTabs({
+                                    tabName: tabName,
+                                    isOpen: true
+                                })
+                            }}
+                            key={id}>
+                            <AccountLinkText>{tabName}</AccountLinkText>
 
-                        <AccountLinkIcon>
-                            <GoBackIcon width={9} height={16} />
-                        </AccountLinkIcon>
-                    </AccountLink>
-
-                    <AccountLink>
-                        <AccountLinkText>
-                            Payments and Payouts
-                        </AccountLinkText>
-
-                        <AccountLinkIcon>
-                            <GoBackIcon width={9} height={16} />
-                        </AccountLinkIcon>
-                    </AccountLink>
-
-                    <AccountLink>
-                        <AccountLinkText>
-                            Change Password
-                        </AccountLinkText>
-
-                        <AccountLinkIcon>
-                            <GoBackIcon width={9} height={16} />
-                        </AccountLinkIcon>
-                    </AccountLink>
-
-                    <AccountLink>
-                        <AccountLinkText>
-                            Notification
-                        </AccountLinkText>
-
-                        <AccountLinkIcon>
-                            <GoBackIcon width={9} height={16} />
-                        </AccountLinkIcon>
-                    </AccountLink>
-
-                    {isContractor === true && <AccountLink>
-                        <AccountLinkText>
-                            My Ads
-                        </AccountLinkText>
-
-                        <AccountLinkIcon>
-                            <GoBackIcon width={9} height={16} />
-                        </AccountLinkIcon>
-                    </AccountLink>}
-
-                    <AccountLink
-                        style={{
-                            borderBottomWidth: 0,
-                        }}
-                    >
-                        <AccountLinkText>
-                            Terms of Service
-                        </AccountLinkText>
-
-                        <AccountLinkIcon>
-                            <GoBackIcon width={9} height={16} />
-                        </AccountLinkIcon>
-                    </AccountLink>
+                            <AccountLinkIcon>
+                                <GoBackIcon width={9} height={16} />
+                            </AccountLinkIcon>
+                        </AccountLink>
+                    })}
 
                 </AccountLinkList>
 
                 {/* Invite friends popup */}
-                <InviteFriendsButton
-                    onPress={() => {
-                        setOpenInviteFriendsBlock(true)
-                    }}
-                >
-                    <InviteFriendsButtonText>
-                        Invite Friends
-                    </InviteFriendsButtonText>
+                <InviteFriendsButton onPress={() => { setOpenInviteFriendsBlock(true) }}  >
+                    <InviteFriendsButtonText>Invite Friends</InviteFriendsButtonText>
                 </InviteFriendsButton>
 
                 {/* Log out */}
@@ -163,14 +119,16 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                 </LogOutButton>
             </Content>
 
-            {/* Confirm popup */}
+            {/* Invite friends popup */}
             <InviteFriendsPopup
                 isOpenBottomPopup={isOpenInviteFriendsBlock}
                 setOpenBottomPopup={setOpenInviteFriendsBlock}
             />
 
-        </Container>
+            {/* Accounts tabs */}
+            <PersonalInformation isContractor={isContractor} />
 
+        </Container>
     )
 })
 

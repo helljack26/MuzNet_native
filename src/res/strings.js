@@ -32,6 +32,24 @@ export const S = {
             'Most Popular'
         ]
     },
+    // Account tabs
+    AccountTabs: {
+        contractorTabs: [
+            "Personal Information",
+            "Payments and Payouts",
+            "Change Password",
+            "Notification",
+            "My Ads",
+            "Terms of Service",
+        ],
+        musicianTabs: [
+            "Personal Information",
+            "Payments and Payouts",
+            "Change Password",
+            "Notification",
+            "Terms of Service",
+        ],
+    },
     // Sign up
     PositionOptions: {
         dropHeader: 'Choose your position',
@@ -114,6 +132,131 @@ export const S = {
         "Keyboard player",
         "Violinist",
         "Singer",
+    ],
+    SignUpContentContractor: [
+        {
+            tabNumber: 1,
+            fullNumber: 4,
+            title: 'Welcome to MuzNet!',
+            text: 'Please, pick a username',
+            progressWidth: 15
+        },
+        {
+            tabNumber: 2,
+            fullNumber: 4,
+            title: 'Welcome to MuzNet!',
+            text: 'Select profile type according to your needs',
+            progressWidth: 32
+        },
+        {
+            tabNumber: 3,
+            fullNumber: 4,
+            title: 'Welcome to MuzNet!',
+            text: 'Select profile position',
+            progressWidth: 60
+        },
+        {
+            tabNumber: 4,
+            fullNumber: 4,
+            title: 'Welcome to MuzNet!',
+            text: 'Lets add profile information',
+            progressWidth: 100
+        },
+    ],
+    SignUpContentMusician: [
+        {
+            tabNumber: 1,
+            fullNumber: 6,
+            title: 'Welcome to MuzNet!',
+            text: 'Please, pick a username',
+            progressWidth: 15
+        },
+        {
+            tabNumber: 2,
+            fullNumber: 6,
+            title: 'Welcome to MuzNet!',
+            text: 'Select profile type according to your needs',
+            progressWidth: 32
+        },
+        {
+            tabNumber: 3,
+            fullNumber: 6,
+            title: 'Welcome to MuzNet!',
+            text: 'Select profile type according to your needs',
+            progressWidth: 50
+        },
+        {
+            tabNumber: 4,
+            fullNumber: 6,
+            title: 'Welcome to MuzNet!',
+            text: 'Please choose your musical instrument',
+            progressWidth: 65
+        },
+        {
+            tabNumber: 5,
+            fullNumber: 6,
+            title: 'Welcome to MuzNet!',
+            text: 'Please choose your music genres',
+            progressWidth: 85
+        },
+        {
+            tabNumber: 6,
+            fullNumber: 6,
+            title: 'Welcome to MuzNet!',
+            text: 'Lets add profile information',
+            progressWidth: 100
+        },
+    ],
+    SignUpContentBand: [
+        {
+            tabNumber: 1,
+            fullNumber: 7,
+            title: 'Welcome to MuzNet!',
+            text: 'Please, pick a username',
+            progressWidth: 14
+        },
+        {
+            tabNumber: 2,
+            fullNumber: 7,
+            title: 'Welcome to MuzNet!',
+            text: 'Select profile type according to your needs',
+            progressWidth: 28
+        },
+        {
+            tabNumber: 3,
+            fullNumber: 7,
+            title: 'Welcome to MuzNet!',
+            text: 'Select profile type according to your needs',
+            progressWidth: 42
+        },
+        {
+            tabNumber: 4,
+            fullNumber: 7,
+            title: 'Welcome to MuzNet!',
+            text: 'Please, choose group members',
+            progressWidth: 56
+        },
+        {
+            tabNumber: 5,
+            fullNumber: 7,
+            title: 'Welcome to MuzNet!',
+            text: 'Please choose your musical instrument',
+            progressWidth: 70
+        },
+        {
+            tabNumber: 6,
+            fullNumber: 7,
+            title: 'Welcome to MuzNet!',
+            text: 'Please choose your music genres',
+            progressWidth: 84
+        },
+        {
+            tabNumber: 7,
+            fullNumber: 7,
+            title: 'Welcome to MuzNet!',
+            text: 'Lets add profile information',
+            progressWidth: 100
+        },
     ]
 
 }

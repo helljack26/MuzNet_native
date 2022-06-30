@@ -494,10 +494,10 @@ const CreateOffer = observer(() => {
                                             onChangeText={onChange}
                                             value={value}
                                             style={{
-                                                height: additionalHeight,
                                                 borderColor: errors.offerAdditionalInfo ? C.red : inputFocus2,
                                                 borderWidth: errors.offerAdditionalInfo ? 2 : 1,
                                                 color: errors.offerAdditionalInfo ? C.red : C.black,
+                                                height: additionalHeight,
                                                 textAlignVertical: 'top'
                                             }}
                                         />
