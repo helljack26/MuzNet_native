@@ -175,22 +175,20 @@ const SearchFilters = observer(({ isContractor, isForMap }) => {
                     {/* Search music genre */}
                     <SearchInputDropSelect
                         dataForChoose={S.Genres}
-                        alreadyChosenInstrument={chosenGenres}
                         searchPlaceholder={'Choose music genres'}
                         getChosenData={getChosenGenres}
                         isResetAll={isResetAll}
                         isCloseAllDropdown={isCloseAllDropdown}
                     />
-                    {/* Search music genre */}
+                    {/* Search instruments */}
                     <SearchInputDropSelect
                         dataForChoose={S.Instruments}
-                        alreadyChosenInstrument={chosenInstrument}
                         searchPlaceholder={'Choose instruments'}
                         getChosenData={getChosenInstrument}
                         isResetAll={isResetAll}
                         isCloseAllDropdown={isCloseAllDropdown}
                     />
-                    {/* Search music genre */}
+                    {/* Search location */}
                     <SearchLocationDropSelect
                         setFilterLocation={getChosenLocation}
                         isResetAll={isResetAll}
@@ -199,7 +197,6 @@ const SearchFilters = observer(({ isContractor, isForMap }) => {
                     />
 
                     {/* Willing checbox */}
-
                     <CheckboxBlock isWilling={true}>
                         <CheckBoxWithText
                             checkboxState={isWillingToTravel}

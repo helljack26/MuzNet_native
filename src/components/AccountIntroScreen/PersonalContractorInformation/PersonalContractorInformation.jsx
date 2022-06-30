@@ -99,7 +99,7 @@ const PersonalContractorInformation = observer(() => {
     }, [isOpenPersonalInfoTab]);
     const contractorAccountData = contractorAccountDataApi[0]
 
-    const userAvatar = contractorAccountData.userAvatar
+    const userAvatar = contractorAccountData.userAvatar[0]
 
     const userNameFromStore = contractorAccountData.userName
     const userSurNameFromStore = contractorAccountData.userSurName
@@ -108,9 +108,12 @@ const PersonalContractorInformation = observer(() => {
     const userPhoneNumberFromStore = contractorAccountData.userPhoneNumber
     const userLocationFromStore = contractorAccountData.userLocation
     const userAddressFromStore = contractorAccountData.userAddress
+    // Local user images state
+    const [newUserImages, setNewUserImages] = useState([]);
 
     useEffect(() => {
         if (contractorAccountData) {
+            setNewUserImages(userAvatar)
             setValue("userName", userNameFromStore);
             setValue("userSurName", userSurNameFromStore);
             setValue("userDescription", userDescriptionFromStore);
@@ -131,9 +134,12 @@ const PersonalContractorInformation = observer(() => {
             aspect: [1, 1],
             quality: 1,
         });
-
+        const newImage = {
+            uri: result.uri
+        }
         if (!result.cancelled) {
             setNewAvatar(result.uri);
+            setNewUserImages(newImage);
         }
     };
 
@@ -143,8 +149,6 @@ const PersonalContractorInformation = observer(() => {
     const userEmailWatch = watch('userEmail')
     const userPhoneNumberWatch = watch('userPhoneNumber')
     const userLocationWatch = watch('userLocation')
-    const userAddressWatch = watch('userAddress')
-    const userNickNameWatch = watch('userNickName')
 
     // Full name input
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
@@ -153,8 +157,6 @@ const PersonalContractorInformation = observer(() => {
     const [inputFocus3, setInputFocus3] = useState(C.lightGray);
     const [inputFocus4, setInputFocus4] = useState(C.lightGray);
     const [inputFocus5, setInputFocus5] = useState(C.lightGray);
-    const [inputFocus6, setInputFocus6] = useState(C.lightGray);
-    const [inputFocus7, setInputFocus7] = useState(C.lightGray);
 
     // Shift label state
     const [inputNameLabel, setInputNameLabel] = useState(false);
@@ -165,7 +167,6 @@ const PersonalContractorInformation = observer(() => {
     const [inputEmailLabel, setInputEmailLabel] = useState(false);
     const [inputPhoneLabel, setInputPhoneLabel] = useState(false);
     const [inputLocationLabel, setInputLocationLabel] = useState(false);
-    const [inputAddressLabel, setInputAddressLabel] = useState(false);
 
     // Phone number
     const [phone, setPhone] = useState('');
@@ -190,6 +191,7 @@ const PersonalContractorInformation = observer(() => {
     }, [errors, isSomeFieldChange]);
 
     useEffect(() => {
+        const isChangedUserAvatar = userNameWatch !== userNameFromStore
         const isChangedUserNameWatch = userNameWatch !== userNameFromStore
         const isChangedUserSurNameWatch = userSurNameWatch !== userSurNameFromStore
         const isChangedUserDescriptionWatch = userDescriptionWatch !== userDescriptionFromStore
@@ -261,14 +263,6 @@ const PersonalContractorInformation = observer(() => {
         if (dirtyFields.userLocation !== undefined || userLocationWatch) {
             setInputLocationLabel(true)
         }
-
-        // if (dirtyFields.userAddress === undefined || !userAddressWatch) {
-        //     setInputAddressLabel(false)
-        // }
-        // if (dirtyFields.userAddress !== undefined || userAddressWatch) {
-        //     setInputAddressLabel(true)
-        // }
-
     }, [
         userNameWatch,
         userSurNameWatch,
@@ -276,7 +270,7 @@ const PersonalContractorInformation = observer(() => {
         userEmailWatch,
         userPhoneNumberWatch,
         userLocationWatch,
-        // userAddressWatch,
+
         dirtyFields.userName,
         dirtyFields.userSurName,
         dirtyFields.userDescription,
@@ -298,6 +292,7 @@ const PersonalContractorInformation = observer(() => {
             set(contractorAccountDataApi[0], "userPhoneNumber", data.userPhoneNumber)
             set(contractorAccountDataApi[0], "userLocation", data.userLocation)
         })
+        console.log("🚀 ~ file: PersonalContractorInformation.jsx ~ line 287 ~ runInAction ~ contractorAccountDataApi[0]", contractorAccountDataApi[0])
         return
     };
     // Confirm delete account

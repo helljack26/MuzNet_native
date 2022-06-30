@@ -10,7 +10,6 @@ padding-top: 68px;
 overflow: hidden;
 `;
 const FormScrollView = styled.ScrollView`
-padding: 0px 16px;
 padding-bottom: 80px;
 `;
 
@@ -172,7 +171,5 @@ export const style = {
     ContentBlockRow: ContentBlockRow,
     ButtonSubmit: ButtonSubmit,
     ButtonSubmitText: ButtonSubmitText,
-
-
 
 }

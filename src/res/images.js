@@ -72,6 +72,7 @@ import MapPointIcon from '../../assets/icon/map_point_icon.svg'
 import HeartActiveIcon from '../../assets/icon/heart_active_icon.svg'
 import HeartDefaultIcon from '../../assets/icon/heart_default_icon.svg'
 import TrashIcon from '../../assets/icon/trash_icon.svg'
+import TrashWhiteIcon from '../../assets/icon/trash_white_icon.svg'
 
 // Arrows
 import GoBackIcon from '../../assets/icon/goBack_icon.svg'
@@ -173,6 +174,7 @@ const IMAGES = {
     HeartActiveIcon: HeartActiveIcon,
     HeartDefaultIcon: HeartDefaultIcon,
     TrashIcon: TrashIcon,
+    TrashWhiteIcon: TrashWhiteIcon,
     PriceRangeBgIcon: PriceRangeBgIcon,
 
     // Mock artist

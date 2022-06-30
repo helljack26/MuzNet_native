@@ -14,19 +14,24 @@ class AccountApi {
         userNickName: 'Annie96',
         userName: 'Annie',
         userSurName: 'Smith',
-        userAvatar: require('../../assets/Mock/Georgia.png'),
+        userAvatar: [require('../../assets/Mock/Georgia.png')],
         userDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
         userEmail: 'user1@gmail.com',
         userPhoneNumber: '+1 000 753 6735',
         userLocation: 'Victoria, Ballarat',
     }]
-    musicianAccountData = {
-        userType: 'Contractor',
-        userMusicianType: "Band",
-        userNickName: 'Annie96',
-        userName: 'Annie',
-        userSurName: 'Smith',
-        userAvatar: require('../../assets/Mock/Georgia.png'),
+    musicianAccountDataApi = [{
+        userType: 'Musician',
+        userMusicianType: "Musician",
+        userNickName: 'Leo96',
+        userName: 'Leo',
+        userSurName: 'Balamut',
+        userAvatar: [
+            require('../../assets/Mock/Leo.png'),
+            require('../../assets/Mock/Kate1.jpg'),
+            require('../../assets/Mock/Blaze.png'),
+            require('../../assets/Mock/Kate3.jpg'),
+        ],
         userDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
         userEmail: 'user1@gmail.com',
         userLocation: 'Victoria, Ballarat',
@@ -34,13 +39,15 @@ class AccountApi {
         userPhoneNumber: '+1 000 753 6735',
         userGenres: ["Classical", "Jazz", "Pop",],
         userMusicalInstrument: ["Harp", "Piano"],
+        userPricePerHour: 100,
+        userPricePerHourCurrency: '$',
         willingToTravel: true,
         userSkills: {
             singByEar: true,
-            playByEar: true,
+            playByEar: false,
             readSheetMusic: true,
         },
-    }
+    }]
 
     isOpenPersonalInfoTab = false
     isOpenPaymentTab = false
@@ -53,6 +60,7 @@ class AccountApi {
     constructor() {
         makeAutoObservable(this, {
             contractorAccountDataApi: observable,
+            musicianAccountDataApi: observable,
             isOpenPersonalInfoTab: observable,
             isOpenPaymentTab: observable,
             isOpenChangePasswordTab: observable,

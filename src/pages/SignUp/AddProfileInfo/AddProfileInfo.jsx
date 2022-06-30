@@ -136,7 +136,6 @@ const AddProfileInfo = () => {
                 userDescription: '',
                 userEmail: '',
                 userLocation: '',
-                userAddress: '',
                 willingToTravel: '',
 
                 singByEar: '',
@@ -230,7 +229,6 @@ const AddProfileInfo = () => {
     const [inputFocus3, setInputFocus3] = useState(C.lightGray);
     const [inputFocus4, setInputFocus4] = useState(C.lightGray);
     const [inputFocus5, setInputFocus5] = useState(C.lightGray);
-    const [inputFocus6, setInputFocus6] = useState(C.lightGray);
     const [inputFocus7, setInputFocus7] = useState(C.lightGray);
 
     const [inputNameLabel, setInputNameLabel] = useState(false);
@@ -238,7 +236,6 @@ const AddProfileInfo = () => {
     const [inputDescriptionLabel, setInputDescriptionLabel] = useState(false);
     const [inputEmailLabel, setInputEmailLabel] = useState(false);
     const [inputLocationLabel, setInputLocationLabel] = useState(false);
-    const [inputAddressLabel, setInputAddressLabel] = useState(false);
     const [pricePerHourLabel, setPricePerHourLabel] = useState(false);
 
     const [pricePerHourInput, setPricePerHourInput] = useState('');
@@ -285,12 +282,6 @@ const AddProfileInfo = () => {
             setInputLocationLabel(true)
         }
 
-        if (dirtyFields.userAddress === undefined) {
-            setInputAddressLabel(false)
-        }
-        if (dirtyFields.userAddress !== undefined) {
-            setInputAddressLabel(true)
-        }
         if (dirtyFields.userPricePerHour === undefined) {
             setPricePerHourLabel(false)
         }
@@ -303,7 +294,6 @@ const AddProfileInfo = () => {
         dirtyFields.userDescription,
         dirtyFields.userEmail,
         dirtyFields.userLocation,
-        dirtyFields.userAddress,
         dirtyFields.userPricePerHour,
     ]);
     // Open modal window
@@ -344,7 +334,6 @@ const AddProfileInfo = () => {
             userDescription: data.userDescription,
             userEmail: data.userEmail,
             userLocation: data.userLocation,
-            userAddress: data.userAddress,
         }
         const musicianOrSingerData = {
             userType: S.Musician,
@@ -402,7 +391,6 @@ const AddProfileInfo = () => {
         resetField('userDescription')
         resetField('userEmail')
         resetField('userLocation')
-        resetField('userAddress')
         resetField('userPricePerHour')
         resetField('singByEar')
         resetField('playByEar')
@@ -945,41 +933,6 @@ const AddProfileInfo = () => {
                                     )}
                                     name="userLocation"
                                 />
-
-                                {/* User address  */}
-                                {userType === S.Contractor && <Controller
-                                    control={control}
-                                    rules={{
-                                        required: false,
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <FormInputBlock>
-                                            <FormInputContainer>
-                                                <FormInput
-                                                    inputLabel={inputAddressLabel}
-                                                    selectionColor={C.lightGray}
-                                                    placeholder={'Address'}
-                                                    cursorColor={C.inputCursor}
-                                                    onFocus={() => { setInputFocus6(C.black) }}
-                                                    onBlur={() => {
-                                                        onBlur
-                                                        setInputFocus6(C.lightGray)
-                                                    }}
-                                                    onChangeText={onChange}
-                                                    value={value}
-                                                    style={{
-                                                        borderColor: inputFocus6,
-                                                        borderWidth: 1,
-                                                        color: C.black,
-                                                    }}
-                                                />
-                                            </FormInputContainer>
-                                            <FormInputLabel inputLabel={inputAddressLabel}>Address</FormInputLabel>
-
-                                        </FormInputBlock>
-                                    )}
-                                    name="userAddress"
-                                />}
 
                                 {/* Willing to travel  */}
                                 {userType !== S.Contractor &&

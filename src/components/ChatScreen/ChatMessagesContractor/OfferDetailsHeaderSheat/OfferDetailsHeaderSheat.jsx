@@ -81,7 +81,7 @@ const OfferDetailsHeaderSheat = observer(() => {
         });
 
     const navigation = useNavigation();
-    const route = useRoute();
+
     const isKeyboardOpen = isKeyboardShown()
 
     const { offerDetails, setOpenOfferPreview, setOfferDetails, isPaySuccesful } = useOfferToMusicianApiStore();
@@ -103,7 +103,6 @@ const OfferDetailsHeaderSheat = observer(() => {
     const isDurationString = offerDuration !== undefined && offerDuration
 
     const isLocationString = offerLocation !== undefined && offerLocation
-
 
     const isPhoneNumberString = offerPhoneNumber !== undefined && offerPhoneNumber
 
@@ -149,15 +148,12 @@ const OfferDetailsHeaderSheat = observer(() => {
     const [inputPhoneLabel, setInputPhoneLabel] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [flagType, setPositionType] = useState({ icon: '', phonePattern: [], });
-    useEffect(() => {
-        if (flagType) {
-            setPhone('')
-        }
-    }, [flagType]);
+    // useEffect(() => {
+    //     if (flagType) {
+    //         setPhone('')
+    //     }
+    // }, [flagType]);
     // Set phone number is exist offer
-
-    const toggling = (state) => setIsOpen(state);
-    const onFlagSelect = value => () => { setPositionType(value); setIsOpen(false); };
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -490,7 +486,7 @@ const OfferDetailsHeaderSheat = observer(() => {
                                 <View style={{ marginHorizontal: 16, }}>
                                     <FormInputBlock
                                         style={{
-                                            marginBottom: errors.offerPhoneNumber ? 32 : (isOpen && !isKeyboardOpen) ? 140 : 13
+                                            marginBottom: errors.offerPhoneNumber ? 32 : !isKeyboardOpen ? 140 : 13
                                         }
                                         }
                                     >
@@ -528,7 +524,7 @@ const OfferDetailsHeaderSheat = observer(() => {
                                                     onChange(masked)
                                                     setPhone(masked);
                                                 }}
-                                                mask={flagType.phonePattern.length > 0 ? flagType.phonePattern[0] :
+                                                mask={
                                                     ['+', '1', ' ', '(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
                                                 }
                                             />

@@ -1,8 +1,6 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { Dimensions } from "react-native";
-
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 // Images
 import IMAGES from '@/res/images'
@@ -29,7 +27,7 @@ const {
     RemoveChosenItem,
 } = style;
 
-const SearchInputDropSelect = ({ isResetAll, isCloseAllDropdown, dataForChoose, searchPlaceholder, getChosenData }) => {
+const SearchInputDropSelect = ({ isResetAll, isCloseAllDropdown, dataForChoose, searchPlaceholder, getChosenData, alreadyChosenInstrument }) => {
     const window = Dimensions.get("window");
     const [dimensions, setDimensions] = useState({ window });
 
@@ -48,7 +46,9 @@ const SearchInputDropSelect = ({ isResetAll, isCloseAllDropdown, dataForChoose, 
     const [localChooseData, setLocalChooseData] = useState([]);
 
     const [init, setInit] = useState(0);
+
     useEffect(() => {
+
         if (init === 0) {
             setLocalChooseData(dataForChoose)
             setInit(1)
@@ -94,8 +94,6 @@ const SearchInputDropSelect = ({ isResetAll, isCloseAllDropdown, dataForChoose, 
             setInit(0)
         }
     }, [isResetAll]);
-    // If resetAll
-
 
     useEffect(() => {
         if (isCloseAllDropdown === true) {
@@ -133,6 +131,23 @@ const SearchInputDropSelect = ({ isResetAll, isCloseAllDropdown, dataForChoose, 
                 break;
         }
     }
+    useEffect(() => {
+        if (init === 1 && alreadyChosenInstrument.length > 0) {
+            for (let i = 0; i < alreadyChosenInstrument.length; i++) {
+                const element = alreadyChosenInstrument[i];
+                handler(
+                    {
+                        value: element,
+                        action: 'remove'
+                    }
+                )
+            }
+            setInit(2)
+            setChoosenBlock(alreadyChosenInstrument)
+            getChosenData(alreadyChosenInstrument)
+        }
+
+    }, [init, alreadyChosenInstrument]);
 
     const isShowDropdownList = (filteredChooseData.length > 0 && searchText.length > 0)
 
