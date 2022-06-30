@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
-import PersonalInformation from './PersonalInformation';
+import PersonalContractorInformation from './PersonalContractorInformation';
+import PersonalMusicianInformation from './PersonalMusicianInformation';
 
 import InviteFriendsPopup from './InviteFriendsPopup'
 
@@ -46,6 +47,7 @@ import { observer } from 'mobx-react-lite';
 import { useAccountApiStore } from '@/stores/AccountApi';
 
 const AccountIntroScreen = observer(({ stackName, isContractor }) => {
+    console.log("🚀 ~ file: AccountIntroScreen.jsx ~ line 50 ~ AccountIntroScreen ~ isContractor", isContractor)
     const navigation = useNavigation();
     const { setOpenTabs } = useAccountApiStore();
 
@@ -126,8 +128,11 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
             />
 
             {/* Accounts tabs */}
-            <PersonalInformation isContractor={isContractor} />
-
+            {isContractor === true ?
+                <PersonalContractorInformation />
+                :
+                <PersonalMusicianInformation />
+            }
         </Container>
     )
 })

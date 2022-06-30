@@ -3,11 +3,12 @@ import {
     PermissionsAndroid,
     Platformn
 } from "react-native";
-import { makeAutoObservable, action, runInAction, observable } from 'mobx';
+import { makeAutoObservable, action, runInAction, observable, set, get } from 'mobx';
 import { apiMocks } from '@/api/mock/apiMocks'
 
 class AccountApi {
-    contractorAccountData = {
+    contractorAccountDataApi = [{
+        id: 1,
         userType: 'Contractor',
         contractorPosition: 'Manager',
         userNickName: 'Annie96',
@@ -16,10 +17,9 @@ class AccountApi {
         userAvatar: require('../../assets/Mock/Georgia.png'),
         userDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
         userEmail: 'user1@gmail.com',
-        userLocation: 'Victoria, Ballarat',
-        userAddress: '40 Lydiard St N',
         userPhoneNumber: '+1 000 753 6735',
-    }
+        userLocation: 'Victoria, Ballarat',
+    }]
     musicianAccountData = {
         userType: 'Contractor',
         userMusicianType: "Band",
@@ -52,7 +52,7 @@ class AccountApi {
     paymentDetails = {}
     constructor() {
         makeAutoObservable(this, {
-            contractorAccountData: observable,
+            contractorAccountDataApi: observable,
             isOpenPersonalInfoTab: observable,
             isOpenPaymentTab: observable,
             isOpenChangePasswordTab: observable,
@@ -61,7 +61,15 @@ class AccountApi {
             isOpenTermsAndServicesTab: observable,
 
             setOpenTabs: action.bound,
+            changeContactorAccountData: action.bound,
         })
+    }
+
+    changeContactorAccountData({ updatedData, id }) {
+
+        set(contractorAccountDataApi, "userName", updatedData.userName);
+        console.log("🚀 ~ file: AccountApi.js ~ line 71 ~ AccountApi ~ changeContactorAccountData ~ contractorAccountDataApi", contractorAccountDataApi)
+
     }
 
     setOpenTabs({ tabName, isOpen }) {
@@ -97,9 +105,7 @@ class AccountApi {
         }
     }
 
-    resetState() {
 
-    }
 }
 
 const AccountApiStore = new AccountApi();

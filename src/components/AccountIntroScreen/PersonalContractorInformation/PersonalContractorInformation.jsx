@@ -20,7 +20,8 @@ import IMAGES from '@/res/images'
 const {
     GoBackIcon,
     LockGrayIcon,
-    EditIcon
+    EditIcon,
+    ErrorIcon,
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
@@ -62,19 +63,15 @@ const {
 } = M;
 // Store
 import { observer } from 'mobx-react-lite';
+import { runInAction, set } from 'mobx';
+
 import { useAccountApiStore } from '@/stores/AccountApi';
 
-const PersonalInformation = observer(({ isContractor }) => {
+const PersonalContractorInformation = observer(() => {
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
-    const { onPress, width } = useAnimateOfferPreview()
 
-    useEffect(() => {
-        if (isOpenPersonalInfoTab === true) {
-            onPress(true)
-        }
-    }, [isOpenPersonalInfoTab]);
     // Form 
     const { control, handleSubmit, resetField, setError, watch, clearErrors, setValue,
         formState: { dirtyFields, errors } } = useForm({
@@ -87,30 +84,33 @@ const PersonalInformation = observer(({ isContractor }) => {
                 userPhoneNumber: '',
                 userLocation: '',
                 userAddress: '',
-                willingToTravel: '',
-                singByEar: '',
-                playByEar: '',
-                readSheetMusic: '',
-                userPricePerHour: '',
             }
         });
+
     // Store
-    const { contractorAccountData, musicianAccountData, isOpenPersonalInfoTab, setOpenTabs } = useAccountApiStore();
+    const { contractorAccountDataApi, isOpenPersonalInfoTab, setOpenTabs, changeContactorAccountData } = useAccountApiStore();
 
-    const AccountData = isContractor ? contractorAccountData : musicianAccountData
-
-    const userAvatar = AccountData.userAvatar !== undefined && AccountData.userAvatar
-
-    const userNameFromStore = AccountData.userName !== undefined && AccountData.userName
-    const userSurNameFromStore = AccountData.userSurName !== undefined && AccountData.userSurName
-    const userDescriptionFromStore = AccountData.userDescription !== undefined && AccountData.userDescription
-    const userEmailFromStore = AccountData.userEmail !== undefined && AccountData.userEmail
-    const userLocationFromStore = AccountData.userLocation !== undefined && AccountData.userLocation
-    const userAddressFromStore = AccountData.userAddress !== undefined && AccountData.userAddress
-    const userPhoneNumberFromStore = AccountData.userPhoneNumber !== undefined && AccountData.userPhoneNumber
+    const { onPress, width } = useAnimateOfferPreview()
 
     useEffect(() => {
-        if (contractorAccountData || musicianAccountData) {
+        if (isOpenPersonalInfoTab === true) {
+            onPress(true)
+        }
+    }, [isOpenPersonalInfoTab]);
+    const contractorAccountData = contractorAccountDataApi[0]
+
+    const userAvatar = contractorAccountData.userAvatar
+
+    const userNameFromStore = contractorAccountData.userName
+    const userSurNameFromStore = contractorAccountData.userSurName
+    const userDescriptionFromStore = contractorAccountData.userDescription
+    const userEmailFromStore = contractorAccountData.userEmail
+    const userPhoneNumberFromStore = contractorAccountData.userPhoneNumber
+    const userLocationFromStore = contractorAccountData.userLocation
+    const userAddressFromStore = contractorAccountData.userAddress
+
+    useEffect(() => {
+        if (contractorAccountData) {
             setValue("userName", userNameFromStore);
             setValue("userSurName", userSurNameFromStore);
             setValue("userDescription", userDescriptionFromStore);
@@ -119,9 +119,7 @@ const PersonalInformation = observer(({ isContractor }) => {
             setValue("userLocation", userLocationFromStore);
             setValue("userAddress", userAddressFromStore);
         }
-    }, [contractorAccountData, musicianAccountData]);
-
-
+    }, [contractorAccountData]);
 
     //New user image handler 
     const [newAvatar, setNewAvatar] = useState(null);
@@ -146,7 +144,6 @@ const PersonalInformation = observer(({ isContractor }) => {
     const userPhoneNumberWatch = watch('userPhoneNumber')
     const userLocationWatch = watch('userLocation')
     const userAddressWatch = watch('userAddress')
-    const userPricePerHourWatch = watch('userPricePerHour')
     const userNickNameWatch = watch('userNickName')
 
     // Full name input
@@ -169,22 +166,57 @@ const PersonalInformation = observer(({ isContractor }) => {
     const [inputPhoneLabel, setInputPhoneLabel] = useState(false);
     const [inputLocationLabel, setInputLocationLabel] = useState(false);
     const [inputAddressLabel, setInputAddressLabel] = useState(false);
-    const [pricePerHourLabel, setPricePerHourLabel] = useState(false);
 
-    const [pricePerHourInput, setPricePerHourInput] = useState('');
     // Phone number
     const [phone, setPhone] = useState('');
     useEffect(() => {
-        if (contractorAccountData || musicianAccountData) {
+        if (contractorAccountData) {
             setPhone(userPhoneNumberFromStore)
         }
-    }, [contractorAccountData, musicianAccountData]);
-    // Willing to travel interstate for gigs
-    const [isWillingToTravel, setWillingToTravel] = useState(false);
+    }, [contractorAccountData]);
 
-    const [isSingByEar, setSingByEar] = useState(false);
-    const [isPlayByEar, setPlayByEar] = useState(false);
-    const [isReadSheetMusic, setReadSheetMusic] = useState(false);
+
+    const [isShowSubmitButton, setShowSubmitButton] = useState(false);
+    const [isSomeFieldChange, setSomeFieldChange] = useState(false);
+    useEffect(() => {
+        function isEmpty(obj) {
+            return Object.keys(obj).length === 0;
+        }
+        if (isEmpty(errors) && isSomeFieldChange) {
+            setShowSubmitButton(true)
+        } else {
+            setShowSubmitButton(false)
+        }
+    }, [errors, isSomeFieldChange]);
+
+    useEffect(() => {
+        const isChangedUserNameWatch = userNameWatch !== userNameFromStore
+        const isChangedUserSurNameWatch = userSurNameWatch !== userSurNameFromStore
+        const isChangedUserDescriptionWatch = userDescriptionWatch !== userDescriptionFromStore
+        const isChangedUserEmailWatch = userEmailWatch !== userEmailFromStore
+        const isChangedUserPhoneNumberWatch = userPhoneNumberWatch !== userPhoneNumberFromStore
+        const isChangedUserLocationWatch = userLocationWatch !== userLocationFromStore
+
+        if (isChangedUserNameWatch || isChangedUserSurNameWatch || isChangedUserDescriptionWatch || isChangedUserEmailWatch || isChangedUserPhoneNumberWatch || isChangedUserLocationWatch) {
+            setSomeFieldChange(true)
+        } else {
+            setSomeFieldChange(false)
+        }
+    }, [
+        userNameFromStore,
+        userSurNameFromStore,
+        userDescriptionFromStore,
+        userEmailFromStore,
+        userPhoneNumberFromStore,
+        userLocationFromStore,
+        userNameWatch,
+        userSurNameWatch,
+        userDescriptionWatch,
+        userEmailWatch,
+        userPhoneNumberWatch,
+        userLocationWatch
+    ]);
+
 
     // Set shifting input label
     useEffect(() => {
@@ -230,19 +262,13 @@ const PersonalInformation = observer(({ isContractor }) => {
             setInputLocationLabel(true)
         }
 
-        if (dirtyFields.userAddress === undefined || !userAddressWatch) {
-            setInputAddressLabel(false)
-        }
-        if (dirtyFields.userAddress !== undefined || userAddressWatch) {
-            setInputAddressLabel(true)
-        }
+        // if (dirtyFields.userAddress === undefined || !userAddressWatch) {
+        //     setInputAddressLabel(false)
+        // }
+        // if (dirtyFields.userAddress !== undefined || userAddressWatch) {
+        //     setInputAddressLabel(true)
+        // }
 
-        if (dirtyFields.userPricePerHour === undefined || !userPricePerHourWatch) {
-            setPricePerHourLabel(false)
-        }
-        if (dirtyFields.userPricePerHour !== undefined || userPricePerHourWatch) {
-            setPricePerHourLabel(true)
-        }
     }, [
         userNameWatch,
         userSurNameWatch,
@@ -250,18 +276,30 @@ const PersonalInformation = observer(({ isContractor }) => {
         userEmailWatch,
         userPhoneNumberWatch,
         userLocationWatch,
-        userAddressWatch,
-        userPricePerHourWatch,
+        // userAddressWatch,
         dirtyFields.userName,
         dirtyFields.userSurName,
         dirtyFields.userDescription,
         dirtyFields.userEmail,
         dirtyFields.userLocation,
         dirtyFields.userAddress,
-        dirtyFields.userPricePerHour,
     ]);
 
+    // Submit
+    const onSubmit = (data) => {
+        const userLocalAvatar = newAvatar !== null ? newAvatar : userAvatar
 
+        runInAction(() => {
+            set(contractorAccountDataApi[0], "userAvatar", userLocalAvatar)
+            set(contractorAccountDataApi[0], "userName", data.userName)
+            set(contractorAccountDataApi[0], "userSurName", data.userSurName)
+            set(contractorAccountDataApi[0], "userDescription", data.userDescription)
+            set(contractorAccountDataApi[0], "userEmail", data.userEmail)
+            set(contractorAccountDataApi[0], "userPhoneNumber", data.userPhoneNumber)
+            set(contractorAccountDataApi[0], "userLocation", data.userLocation)
+        })
+        return
+    };
     // Confirm delete account
     const [isOpenConfirmWindow, setOpenConfirmWindow] = useState(false);
     const [isConfirmDelete, setConfirmDelete] = useState(false);
@@ -269,8 +307,8 @@ const PersonalInformation = observer(({ isContractor }) => {
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
-            width: windowWidth,
-            // width,
+            // width: windowWidth,
+            width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,
@@ -287,7 +325,7 @@ const PersonalInformation = observer(({ isContractor }) => {
 
                 {/* Header */}
                 <AccountsTabHeader tabName={'Personal Information'} setOpenTabs={setOpenTabs} onPress={onPress} />
-
+                {/* Form */}
                 <KeyboardAvoidingView
                     keyboardVerticalOffset={20}
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -503,7 +541,7 @@ const PersonalInformation = observer(({ isContractor }) => {
                             control={control}
                             rules={{
                                 required: true,
-                                minLength: 17
+                                minLength: userPhoneNumberFromStore !== userPhoneNumberWatch ? 17 : 15
                             }}
                             render={({ field: { onChange, onBlur } }) => (
                                 <View >
@@ -614,8 +652,9 @@ const PersonalInformation = observer(({ isContractor }) => {
                     </FormScrollView>
 
                 </KeyboardAvoidingView>
+
                 {/* Footer block */}
-                {!isContractor && <ContentBlock
+                {isShowSubmitButton && <ContentBlock
                     style={{
                         width: windowWidth,
                     }}
@@ -629,22 +668,14 @@ const PersonalInformation = observer(({ isContractor }) => {
                                 backgroundColor: C.black,
                             }}
 
-                            onPress={() => {
-
-                            }}
-
-                        >
-                            <ButtonSubmitText
-                                style={{
-                                    color: C.white,
-                                }}
-                            >
-                                Promote my ads
+                            onPress={handleSubmit(onSubmit)} >
+                            <ButtonSubmitText >
+                                Save changes
                             </ButtonSubmitText>
                         </ButtonSubmit>
                     </ContentBlockRow>
-                </ContentBlock>}
-
+                </ContentBlock>
+                }
 
             </FilterContainer>
 
@@ -660,5 +691,5 @@ const PersonalInformation = observer(({ isContractor }) => {
     )
 })
 
-export default PersonalInformation;
+export default PersonalContractorInformation;
 

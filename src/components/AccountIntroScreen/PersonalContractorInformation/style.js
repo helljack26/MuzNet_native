@@ -109,7 +109,7 @@ font-size: 17px;
 
 const LogOutButton = styled.TouchableOpacity`
 margin-top: 12px;
-margin-bottom: 80px;
+margin-bottom: 160px;
 `;
 const LogOutButtonText = styled(M.PlainText17)`
 color: ${C.cyanGray};
