@@ -65,7 +65,6 @@ const AccountLinkIcon = styled.View`
 transform: rotate(180deg);
 width: 24px;
 height: 24px;
-margin-right: 5px;
 display: flex;
 justify-content: center;
 align-items: center;

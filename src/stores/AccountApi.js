@@ -63,13 +63,15 @@ class AccountApi {
     isOpenChangePasswordTab = false
     isOpenNotificationTab = false
     isOpenMyAdsTab = false
-    isOpenTermOfServiceTab = false
+    isOpenTermOfServiceTab = true
 
     paymentDetails = {}
     constructor() {
         makeAutoObservable(this, {
             contractorAccountDataApi: observable,
             musicianAccountDataApi: observable,
+            userNotification: observable,
+
             isOpenPersonalInfoTab: observable,
             isOpenPaymentTab: observable,
             isOpenChangePasswordTab: observable,

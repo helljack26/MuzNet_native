@@ -74,9 +74,20 @@ const NotificationTab = observer(({ isOpenTab }) => {
             setNewProfileView(userNewProfileViewFromStore)
             setLoginAtteptOnAccount(userLoginAtteptOnAccountFromStore)
             setTransaction(userTransactionFromStore)
-
         }
     }, [userNotification]);
+
+    useEffect(() => {
+        runInAction(() => {
+            set(userNotification, "userNewReview", isNewReview)
+            set(userNotification, "userNewOffer", isNewOffer)
+            set(userNotification, "userNewMessage", isNewMessage)
+            set(userNotification, "userNewProfileView", isNewProfileView)
+            set(userNotification, "userLoginAtteptOnAccount", isLoginAtteptOnAccount)
+            set(userNotification, "userTransaction", isTransaction)
+        })
+    }, [isNewReview, isNewOffer, isNewMessage, isNewProfileView, isLoginAtteptOnAccount, isTransaction]);
+
 
     return (
         <Animated.View style={{

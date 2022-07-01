@@ -68,7 +68,6 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
         isOpenMyAdsTab,
         isOpenTermOfServiceTab
     } = useAccountApiStore();
-    console.log("🚀 ~ file: AccountIntroScreen.jsx ~ line 63 ~ AccountIntroScreen ~ isOpenNotificationTab", isOpenNotificationTab)
 
     const userImage = require('../../../assets/Mock/Georgia.png')
     const userName = 'Annie'
