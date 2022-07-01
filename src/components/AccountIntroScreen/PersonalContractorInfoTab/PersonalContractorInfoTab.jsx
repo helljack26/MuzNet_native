@@ -14,6 +14,7 @@ import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { compareTwoArrays } from '@/components/helpers/compareTwoArrays'
+import { backHandler } from '../backHandler'
 
 // Images
 import IMAGES from '@/res/images'
@@ -61,7 +62,7 @@ import { runInAction, set } from 'mobx';
 
 import { useAccountApiStore } from '@/stores/AccountApi';
 
-const PersonalContractorInfoTab = observer(() => {
+const PersonalContractorInfoTab = observer(({ isOpenTab }) => {
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
@@ -82,15 +83,20 @@ const PersonalContractorInfoTab = observer(() => {
         });
 
     // Store
-    const { contractorAccountDataApi, isOpenPersonalInfoTab, setOpenTabs } = useAccountApiStore();
+    const { contractorAccountDataApi, setOpenTabs } = useAccountApiStore();
 
     const { onPress, width } = useAnimateOfferPreview()
 
     useEffect(() => {
-        if (isOpenPersonalInfoTab === true) {
+        if (isOpenTab === true) {
             onPress(true)
         }
-    }, [isOpenPersonalInfoTab]);
+    }, [isOpenTab]);
+
+    // Handler for native back button
+    const tabNameToClose = 'Personal Info'
+    backHandler(onPress, setOpenTabs, tabNameToClose);
+
     const contractorAccountData = contractorAccountDataApi[0]
 
     const userAvatar = contractorAccountData.userAvatar
@@ -673,13 +679,13 @@ const PersonalContractorInfoTab = observer(() => {
             </FilterContainer>
 
             {/* Confirm popup */}
-            <BottomConfirmPopup
+            {isOpenConfirmWindow && <BottomConfirmPopup
                 isOpenBottomPopup={isOpenConfirmWindow}
                 setOpenBottomPopup={setOpenConfirmWindow}
                 setConfirm={setConfirmDelete}
                 confirmBtnText={'Delete Account'}
                 popupMainText={'Are you sure you want to delete your account? '}
-            />
+            />}
         </Animated.View >
     )
 })

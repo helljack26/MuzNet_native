@@ -10,6 +10,7 @@ import AccountsTabHeader from '../AccountsTabHeader'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+import { backHandler } from '../backHandler'
 
 // Variables
 import C from '@/res/colors'
@@ -57,6 +58,10 @@ const TermsOfServiceTab = observer(({ isOpenTab }) => {
             onPress(true)
         }
     }, [isOpenTab]);
+
+    // Handler for native back button
+    const tabNameToClose = 'Terms of Service'
+    backHandler(onPress, setOpenTabs, tabNameToClose);
 
     return (
         <Animated.View

@@ -8,7 +8,6 @@ import AccountsTabHeader from '../AccountsTabHeader'
 import SearchInputDropSelect from '@/components/Dropdowns/SearchInputDropSelect'
 import MediaImagePicker from '@/components/MediaImagePicker'
 import CheckBoxWithText from '@/components/Buttons/CheckBoxWithText'
-
 import BottomConfirmPopup from '@/components/BottomConfirmPopup'
 
 // Helpers
@@ -18,11 +17,11 @@ import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { addDotForNumber } from '@/components/helpers/addDotForNumber'
 import { compareTwoArrays } from '@/components/helpers/compareTwoArrays'
+import { backHandler } from '../backHandler'
+
 // Images
 import IMAGES from '@/res/images'
 const {
-    GoBackIcon,
-    LockGrayIcon,
     EditIcon,
     ErrorIcon,
 } = IMAGES;
@@ -49,7 +48,6 @@ const {
     FormInputPricePerHourText,
     CheckboxBlock,
     CheckboxBlockTitle,
-
     LogOutButton,
     LogOutButtonText,
     ContentBlock,
@@ -70,7 +68,7 @@ import { runInAction, set } from 'mobx';
 
 import { useAccountApiStore } from '@/stores/AccountApi';
 
-const PersonalMusicianInfoTab = observer(() => {
+const PersonalMusicianInfoTab = observer(({ isOpenTab }) => {
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
@@ -92,15 +90,21 @@ const PersonalMusicianInfoTab = observer(() => {
         });
 
     // Store
-    const { musicianAccountDataApi, isOpenPersonalInfoTab, setOpenTabs, changeContactorAccountData } = useAccountApiStore();
+    const { musicianAccountDataApi, setOpenTabs, changeContactorAccountData } = useAccountApiStore();
 
     const { onPress, width } = useAnimateOfferPreview()
 
     useEffect(() => {
-        if (isOpenPersonalInfoTab === true) {
+        if (isOpenTab === true) {
+            // Handler for native back button
+            const tabNameToClose = 'Personal Info'
+            backHandler(onPress, setOpenTabs, tabNameToClose);
             onPress(true)
         }
-    }, [isOpenPersonalInfoTab]);
+    }, [isOpenTab]);
+
+
+
     const contractorAccountData = musicianAccountDataApi[0]
 
     const userImagesFromStore = contractorAccountData.userAvatar
@@ -909,13 +913,13 @@ const PersonalMusicianInfoTab = observer(() => {
             </FilterContainer>
 
             {/* Confirm popup */}
-            <BottomConfirmPopup
+            {isOpenConfirmWindow && <BottomConfirmPopup
                 isOpenBottomPopup={isOpenConfirmWindow}
                 setOpenBottomPopup={setOpenConfirmWindow}
                 setConfirm={setConfirmDeleteAccount}
                 confirmBtnText={'Delete Account'}
                 popupMainText={'Are you sure you want to delete your account? '}
-            />
+            />}
         </Animated.View >
     )
 })

@@ -10,7 +10,12 @@ import AccountsTabHeader from '../AccountsTabHeader'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-
+import { backHandler } from '../backHandler'
+// Images
+import IMAGES from '@/res/images'
+const {
+    GoBackIcon
+} = IMAGES;
 // Variables
 import C from '@/res/colors'
 import F from '@/res/fonts'
@@ -34,27 +39,26 @@ import { runInAction, set } from 'mobx';
 import { useAccountApiStore } from '@/stores/AccountApi';
 
 const PaymentAndPayoutTab = observer(({ isOpenTab }) => {
-    const isKeyboardOpen = isKeyboardShown()
-
-    const { windowHeight, windowWidth } = getWindowDimension()
-
-    // Store
-    const { setOpenTabs } = useAccountApiStore();
-
     // Animation
     const { onPress, width } = useAnimateOfferPreview()
+
+    // Initial show tab 
     useEffect(() => {
         if (isOpenTab === true) {
             onPress(true)
         }
     }, [isOpenTab]);
 
-    // // Set shifting input label
-    // useEffect(() => {
+    // Store
+    const { setOpenTabs } = useAccountApiStore();
 
-    // }, [
+    // Handler for native back button
+    const tabNameToClose = 'Payments and Payouts'
+    backHandler(onPress, setOpenTabs, tabNameToClose);
 
-    // ]);
+    const isKeyboardOpen = isKeyboardShown()
+
+    const { windowHeight, windowWidth } = getWindowDimension()
 
     return (
         <Animated.View style={{
@@ -78,7 +82,23 @@ const PaymentAndPayoutTab = observer(({ isOpenTab }) => {
 
                 {/* Header */}
                 <AccountsTabHeader tabName={'Payments and Payouts'} setOpenTabs={setOpenTabs} onPress={onPress} />
-                {/* Form */}
+
+                {/* Link list */}
+                {/* <AccountLinkList>
+                    <AccountLink
+                        onPress={() => {
+
+                        }}
+                        key={id}>
+                        <AccountLinkText>Payment Methods</AccountLinkText>
+
+                        <AccountLinkIcon>
+                            <GoBackIcon width={9} height={16} />
+                        </AccountLinkIcon>
+                    </AccountLink>
+
+                </AccountLinkList> */}
+
 
             </FilterContainer>
 

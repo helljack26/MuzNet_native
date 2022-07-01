@@ -10,6 +10,7 @@ import SwitchToggle from "react-native-switch-toggle";
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+import { backHandler } from '../backHandler'
 
 // Variables
 import C from '@/res/colors'
@@ -35,7 +36,8 @@ import { runInAction, set } from 'mobx';
 import { useAccountApiStore } from '@/stores/AccountApi';
 
 const NotificationTab = observer(({ isOpenTab }) => {
-
+    // Store
+    const { userNotification, setOpenTabs } = useAccountApiStore();
     // Animation
     const { onPress, width } = useAnimateOfferPreview()
     useEffect(() => {
@@ -44,12 +46,16 @@ const NotificationTab = observer(({ isOpenTab }) => {
         }
     }, [isOpenTab]);
 
+
+    // Handler for native back button
+    const tabNameToClose = 'Notification'
+    backHandler(onPress, setOpenTabs, tabNameToClose);
+
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
 
-    // Store
-    const { userNotification, setOpenTabs } = useAccountApiStore();
+
 
 
     const [isNewReview, setNewReview] = useState(false);

@@ -63,7 +63,7 @@ class AccountApi {
     isOpenChangePasswordTab = false
     isOpenNotificationTab = false
     isOpenMyAdsTab = false
-    isOpenTermOfServiceTab = true
+    isOpenTermOfServiceTab = false
 
     paymentDetails = {}
     constructor() {
@@ -92,6 +92,7 @@ class AccountApi {
     }
 
     setOpenTabs({ tabName, isOpen }) {
+        console.log("🚀 ~ file: AccountApi.js ~ line 95 ~ AccountApi ~ setOpenTabs ~ tabName", tabName, isOpen)
         const action = isOpen
         switch (tabName) {
 

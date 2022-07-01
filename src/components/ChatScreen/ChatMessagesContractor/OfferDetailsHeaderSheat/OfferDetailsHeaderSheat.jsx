@@ -634,13 +634,13 @@ const OfferDetailsHeaderSheat = observer(() => {
             </Animated.View >
 
             {/* Confirm popup */}
-            <BottomConfirmPopup
+            {isOpenConfirmWindow && <BottomConfirmPopup
                 isOpenBottomPopup={isOpenConfirmWindow}
                 setOpenBottomPopup={setOpenConfirmWindow}
                 setConfirm={setConfirm}
                 confirmBtnText={'Create new offer'}
                 popupMainText={'Creating a new offer will delete the current one. You can read the refund policy here? '}
-            />
+            />}
         </>
 
     )

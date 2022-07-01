@@ -11,6 +11,7 @@ import AfterSubmitWindow from '@/components/AfterSubmitWindow'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+import { backHandler } from '../backHandler'
 
 // Images
 import IMAGES from '@/res/images'
@@ -51,6 +52,19 @@ import { useAccountApiStore } from '@/stores/AccountApi';
 
 const ChangePasswordTab = observer(() => {
     const isKeyboardOpen = isKeyboardShown()
+    // Store
+    const { isOpenChangePasswordTab, setOpenTabs } = useAccountApiStore();
+    // Animation
+    const { onPress, width } = useAnimateOfferPreview()
+    useEffect(() => {
+        if (isOpenChangePasswordTab === true) {
+            onPress(true)
+        }
+    }, [isOpenChangePasswordTab]);
+
+    // Handler for native back button
+    const tabNameToClose = 'Change Password'
+    backHandler(onPress, setOpenTabs, tabNameToClose);
 
     const { windowHeight, windowWidth } = getWindowDimension()
 
@@ -63,17 +77,6 @@ const ChangePasswordTab = observer(() => {
                 newPasswordRepeat: ''
             }
         });
-
-    // Store
-    const { isOpenChangePasswordTab, setOpenTabs } = useAccountApiStore();
-
-    // Animation
-    const { onPress, width } = useAnimateOfferPreview()
-    useEffect(() => {
-        if (isOpenChangePasswordTab === true) {
-            onPress(true)
-        }
-    }, [isOpenChangePasswordTab]);
 
     const [inputFocus, setInputFocus] = useState(C.lightGray);
     const [inputPasswordLabel, setInputPasswordLabel] = useState(false);

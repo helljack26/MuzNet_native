@@ -48,6 +48,33 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
 
     }, [isOpenBottomPopup]);
 
+
+    const [isHideAnimationTab, setHideAnimationTab] = useState(false);
+
+    useEffect(() => {
+        if (isHideAnimationTab === true) {
+            onPress(false)
+        }
+    }, [isHideAnimationTab])
+
+    const closePopup = () => {
+        setHideAnimationTab(true)
+        setShowOpacityBgMargin(false)
+        setTimeout(() => {
+            setOpenBottomPopup(false)
+        }, 600);
+    }
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            closePopup()
+            return true
+        })
+        return () => {
+            backHandler.remove()
+        }
+    }, [])
+
     return (
         <>
             {isOpenBottomPopup && <OpacityBg
@@ -57,9 +84,7 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
                     zIndex: 2000,
                 }}
                 onPress={() => {
-                    onPress(false)
-                    setOpenBottomPopup(false)
-                    setShowOpacityBgMargin(false)
+                    closePopup()
                 }}
             >
             </OpacityBg>}
@@ -89,10 +114,8 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
 
                 <CloseButton
                     onPress={() => {
-                        onPress(false)
-                        setOpenBottomPopup(false)
+                        closePopup()
                         setConfirm(false)
-                        setShowOpacityBgMargin(false)
                     }}  >
                     <CrossBlackIcon width={14} height={14} />
                 </CloseButton>
@@ -105,20 +128,16 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
                 <ButtonsBlock>
                     <ButtonCancel
                         onPress={() => {
-                            onPress(false)
-                            setOpenBottomPopup(false)
+                            closePopup()
                             setConfirm(false)
-                            setShowOpacityBgMargin(false)
                         }}
                     >
                         <ButtonCancelText>Cancel</ButtonCancelText>
                     </ButtonCancel>
                     <Button
                         onPress={() => {
+                            closePopup()
                             setConfirm(true)
-                            onPress(false)
-                            setOpenBottomPopup(false)
-                            setShowOpacityBgMargin(false)
                         }}
                     >
                         <ButtonText>{confirmBtnText}</ButtonText>

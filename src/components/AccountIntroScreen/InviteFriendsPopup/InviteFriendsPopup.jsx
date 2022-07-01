@@ -54,15 +54,30 @@ const InviteFriendsPopup = ({ isOpenBottomPopup, setOpenBottomPopup }) => {
 
     }, [isOpenBottomPopup]);
 
+    const [isHideAnimationTab, setHideAnimationTab] = useState(false);
+
     useEffect(() => {
-        if (isOpenBottomPopup === true) {
-            const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-                setOpenBottomPopup(false)
-                return true
-            })
-            return () => {
-                backHandler.remove()
-            }
+        if (isHideAnimationTab === true) {
+            onPress(false)
+        }
+    }, [isHideAnimationTab])
+
+    const closePopup = () => {
+        setHideAnimationTab(true)
+        setShowOpacityBgMargin(false)
+        setTimeout(() => {
+            setOpenBottomPopup(false)
+        }, 600);
+    }
+
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            closePopup()
+            return true
+        })
+        return () => {
+            backHandler.remove()
         }
     }, [])
 
@@ -85,19 +100,19 @@ const InviteFriendsPopup = ({ isOpenBottomPopup, setOpenBottomPopup }) => {
     const socialButtomWidth = (windowWidth - 67) / 5
     return (
         <>
-            {isOpenBottomPopup && <OpacityBg
-                style={{
-                    height: windowHeight,
-                    width: windowWidth,
-                    top: isShowOpacityBgMargin ? -50 : 0,
-                }}
-                onPress={() => {
-                    onPress(false)
-                    setOpenBottomPopup(false)
-                    setShowOpacityBgMargin(false)
-                }}
-            >
-            </OpacityBg>}
+            {/* Opacity bg */}
+            {isOpenBottomPopup &&
+                <OpacityBg
+                    style={{
+                        height: windowHeight,
+                        width: windowWidth,
+                        top: isShowOpacityBgMargin ? -50 : 0,
+                    }}
+                    onPress={() => {
+                        closePopup()
+                    }}
+                >
+                </OpacityBg>}
 
             <Animated.View style={{
                 width: windowWidth,
@@ -118,15 +133,11 @@ const InviteFriendsPopup = ({ isOpenBottomPopup, setOpenBottomPopup }) => {
                 left: 0,
                 bottom: 0,
                 right: 0,
-                // backgroundColor: C.opacity50white,
             }} >
-                {/* Opacity bg */}
                 {/* Attach container */}
                 <CloseButton
                     onPress={() => {
-                        onPress(false)
-                        setOpenBottomPopup(false)
-                        setShowOpacityBgMargin(false)
+                        closePopup()
                     }}  >
                     <CrossBlackIcon width={16} height={16} />
                 </CloseButton>

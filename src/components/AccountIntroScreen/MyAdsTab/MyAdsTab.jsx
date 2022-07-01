@@ -10,6 +10,7 @@ import AccountsTabHeader from '../AccountsTabHeader'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+import { backHandler } from '../backHandler'
 
 // Variables
 import C from '@/res/colors'
@@ -48,13 +49,9 @@ const MyAdsTab = observer(({ isOpenTab }) => {
             onPress(true)
         }
     }, [isOpenTab]);
-
-    // // Set shifting input label
-    // useEffect(() => {
-
-    // }, [
-
-    // ]);
+    // Handler for native back button
+    const tabNameToClose = 'My Ads'
+    backHandler(onPress, setOpenTabs, tabNameToClose);
 
     return (
         <Animated.View style={{

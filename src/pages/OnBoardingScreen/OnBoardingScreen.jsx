@@ -66,12 +66,12 @@ const OnBoardingScreen = () => {
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             // navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
-            navigation.navigate('MusicianStack', {
-                screen: 'MusicianAccountScreen',
-            });
-            // navigation.navigate('ContractorStack', {
-            //     screen: 'ContractorAccountScreen',
+            // navigation.navigate('MusicianStack', {
+            //     screen: 'MusicianAccountScreen',
             // });
+            navigation.navigate('ContractorStack', {
+                screen: 'ContractorAccountScreen',
+            });
             // navigation.navigate(
             //     'MusicianStack', {
             //     screen: 'MusicianMessagesScreen',

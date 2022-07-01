@@ -17,11 +17,9 @@ import InviteFriendsPopup from './InviteFriendsPopup'
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
-
 // Images
 import IMAGES from '@/res/images'
 const {
-
     GoBackIcon
 } = IMAGES;
 // Styles
@@ -60,9 +58,9 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
 
     const navigation = useNavigation();
     const {
+        isOpenPersonalInfoTab,
         setOpenTabs,
         isOpenNotificationTab,
-        isOpenPersonalInfoTab,
         isOpenPaymentTab,
         isOpenChangePasswordTab,
         isOpenMyAdsTab,
@@ -152,16 +150,18 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
             </Content>
 
             {/* Invite friends popup */}
-            <InviteFriendsPopup
+            {isOpenInviteFriendsBlock && <InviteFriendsPopup
                 isOpenBottomPopup={isOpenInviteFriendsBlock}
                 setOpenBottomPopup={setOpenInviteFriendsBlock}
-            />
+            />}
 
             {/* Personal info tab */}
-            {isContractor === true ?
-                <PersonalContractorInfoTab />
+            {isOpenPersonalInfoTab === true ? isContractor === true ?
+                <PersonalContractorInfoTab isOpenTab={isOpenPersonalInfoTab} />
                 :
-                <PersonalMusicianInfoTab />
+                <PersonalMusicianInfoTab isOpenTab={isOpenPersonalInfoTab} />
+                :
+                null
             }
 
             {/* Change password tab */}
