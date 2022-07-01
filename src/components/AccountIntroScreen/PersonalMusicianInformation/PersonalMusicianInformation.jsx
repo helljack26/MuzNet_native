@@ -117,7 +117,6 @@ const PersonalMusicianInformation = observer(() => {
     const userPricePerHourFromStore = contractorAccountData.userPricePerHour
     // Checkboxes
     const userWillingToTravelFromStore = contractorAccountData.willingToTravel
-    console.log("🚀 ~ file: PersonalMusicianInformation.jsx ~ line 120 ~ PersonalMusicianInformation ~ contractorAccountData.willingToTravel", contractorAccountData.willingToTravel)
     const userSingByEarFromStore = contractorAccountData.userSkills.singByEar
     const userPlayByEarFromStore = contractorAccountData.userSkills.playByEar
     const userReadSheetMusicFromStore = contractorAccountData.userSkills.readSheetMusic
@@ -244,15 +243,9 @@ const PersonalMusicianInformation = observer(() => {
         const isSameUserImages = compareTwoArrays(newUserImages, userImagesFromStore)
 
         const isChangedUserWillingToTravel = isWillingToTravel !== userWillingToTravelFromStore
-        console.log("🚀 ~ file: PersonalMusicianInformation.jsx ~ line 246 ~ useEffect ~ userWillingToTravelFromStore", userWillingToTravelFromStore)
-        console.log("🚀 ~ file: PersonalMusicianInformation.jsx ~ line 246 ~ useEffect ~ isWillingToTravel", isWillingToTravel)
-        // console.log("🚀 ~ file: PersonalMusicianInformation.jsx ~ line 246 ~ useEffect ~ isChangedUserWillingToTravel", isChangedUserWillingToTravel)
         const isChangedUserSingByEar = isSingByEar !== userSingByEarFromStore
-        // console.log("🚀 ~ file: PersonalMusicianInformation.jsx ~ line 248 ~ useEffect ~ isChangedUserSingByEar", isChangedUserSingByEar)
         const isChangedUserPlayByEar = isPlayByEar !== userPlayByEarFromStore
-        // console.log("🚀 ~ file: PersonalMusicianInformation.jsx ~ line 250 ~ useEffect ~ isChangedUserPlayByEar", isChangedUserPlayByEar)
         const isChangedUserReadSheetMusic = isReadSheetMusic !== userReadSheetMusicFromStore
-        // console.log("🚀 ~ file: PersonalMusicianInformation.jsx ~ line 252 ~ useEffect ~ isChangedUserReadSheetMusic", isChangedUserReadSheetMusic)
 
         if (isChangedUserNameWatch ||
             isChangedUserSurNameWatch ||
@@ -436,7 +429,7 @@ const PersonalMusicianInformation = observer(() => {
             <FilterContainer style={{ height: windowHeight, width: windowWidth, }}  >
 
                 {/* Header */}
-                <AccountsTabHeader tabName={'Personal information'} setOpenTabs={setOpenTabs} onPress={onPress} />
+                <AccountsTabHeader tabName={'Personal Info'} setOpenTabs={setOpenTabs} onPress={onPress} />
                 {/* Form */}
                 <KeyboardAvoidingView
                     keyboardVerticalOffset={20}

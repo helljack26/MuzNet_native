@@ -1,8 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, ScrollView, Keyboard, View, Pressable, KeyboardAvoidingView, Image, Platform } from 'react-native';
+import { Animated, View, KeyboardAvoidingView, Image, Platform } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 import * as ImagePicker from 'expo-image-picker';
 // Components
@@ -14,12 +13,11 @@ import MaskInput from 'react-native-mask-input';
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-import { addDotForNumber } from '@/components/helpers/addDotForNumber'
+import { compareTwoArrays } from '@/components/helpers/compareTwoArrays'
+
 // Images
 import IMAGES from '@/res/images'
 const {
-    GoBackIcon,
-    LockGrayIcon,
     EditIcon,
     ErrorIcon,
 } = IMAGES;
@@ -42,10 +40,6 @@ const {
     FormInputLabel,
     FormInput,
     FormTextInput,
-    FormInputPricePerHourBlock,
-    FormInputPricePerHourText,
-    CheckboxBlock,
-    CheckboxBlockTitle,
 
     LogOutButton,
     LogOutButtonText,
@@ -88,7 +82,7 @@ const PersonalContractorInformation = observer(() => {
         });
 
     // Store
-    const { contractorAccountDataApi, isOpenPersonalInfoTab, setOpenTabs, changeContactorAccountData } = useAccountApiStore();
+    const { contractorAccountDataApi, isOpenPersonalInfoTab, setOpenTabs } = useAccountApiStore();
 
     const { onPress, width } = useAnimateOfferPreview()
 
@@ -99,7 +93,7 @@ const PersonalContractorInformation = observer(() => {
     }, [isOpenPersonalInfoTab]);
     const contractorAccountData = contractorAccountDataApi[0]
 
-    const userAvatar = contractorAccountData.userAvatar[0]
+    const userAvatar = contractorAccountData.userAvatar
 
     const userNameFromStore = contractorAccountData.userName
     const userSurNameFromStore = contractorAccountData.userSurName
@@ -129,7 +123,7 @@ const PersonalContractorInformation = observer(() => {
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [1, 1],
             quality: 1,
@@ -137,9 +131,11 @@ const PersonalContractorInformation = observer(() => {
         const newImage = {
             uri: result.uri
         }
+        const [first, ...rest] = newUserImages;
+
         if (!result.cancelled) {
             setNewAvatar(result.uri);
-            setNewUserImages(newImage);
+            setNewUserImages([newImage, ...rest]);
         }
     };
 
@@ -191,7 +187,7 @@ const PersonalContractorInformation = observer(() => {
     }, [errors, isSomeFieldChange]);
 
     useEffect(() => {
-        const isChangedUserAvatar = userNameWatch !== userNameFromStore
+        const isChangedUserAvatar = compareTwoArrays(userAvatar, newUserImages)
         const isChangedUserNameWatch = userNameWatch !== userNameFromStore
         const isChangedUserSurNameWatch = userSurNameWatch !== userSurNameFromStore
         const isChangedUserDescriptionWatch = userDescriptionWatch !== userDescriptionFromStore
@@ -199,12 +195,14 @@ const PersonalContractorInformation = observer(() => {
         const isChangedUserPhoneNumberWatch = userPhoneNumberWatch !== userPhoneNumberFromStore
         const isChangedUserLocationWatch = userLocationWatch !== userLocationFromStore
 
-        if (isChangedUserNameWatch || isChangedUserSurNameWatch || isChangedUserDescriptionWatch || isChangedUserEmailWatch || isChangedUserPhoneNumberWatch || isChangedUserLocationWatch) {
+        if (!isChangedUserAvatar || isChangedUserNameWatch || isChangedUserSurNameWatch || isChangedUserDescriptionWatch || isChangedUserEmailWatch || isChangedUserPhoneNumberWatch || isChangedUserLocationWatch) {
             setSomeFieldChange(true)
         } else {
             setSomeFieldChange(false)
         }
     }, [
+        userAvatar,
+        newUserImages,
         userNameFromStore,
         userSurNameFromStore,
         userDescriptionFromStore,
@@ -216,9 +214,8 @@ const PersonalContractorInformation = observer(() => {
         userDescriptionWatch,
         userEmailWatch,
         userPhoneNumberWatch,
-        userLocationWatch
+        userLocationWatch,
     ]);
-
 
     // Set shifting input label
     useEffect(() => {
@@ -281,10 +278,11 @@ const PersonalContractorInformation = observer(() => {
 
     // Submit
     const onSubmit = (data) => {
-        const userLocalAvatar = newAvatar !== null ? newAvatar : userAvatar
+        setShowSubmitButton(false)
+        setSomeFieldChange(false)
 
         runInAction(() => {
-            set(contractorAccountDataApi[0], "userAvatar", userLocalAvatar)
+            set(contractorAccountDataApi[0], "userAvatar", newUserImages)
             set(contractorAccountDataApi[0], "userName", data.userName)
             set(contractorAccountDataApi[0], "userSurName", data.userSurName)
             set(contractorAccountDataApi[0], "userDescription", data.userDescription)
@@ -292,7 +290,7 @@ const PersonalContractorInformation = observer(() => {
             set(contractorAccountDataApi[0], "userPhoneNumber", data.userPhoneNumber)
             set(contractorAccountDataApi[0], "userLocation", data.userLocation)
         })
-        console.log("🚀 ~ file: PersonalContractorInformation.jsx ~ line 287 ~ runInAction ~ contractorAccountDataApi[0]", contractorAccountDataApi[0])
+        // console.log("🚀 ~ file: PersonalContractorInformation.jsx ~ line 287 ~ runInAction ~ contractorAccountDataApi[0]", contractorAccountDataApi[0])
         return
     };
     // Confirm delete account
@@ -319,7 +317,7 @@ const PersonalContractorInformation = observer(() => {
             >
 
                 {/* Header */}
-                <AccountsTabHeader tabName={'Personal Information'} setOpenTabs={setOpenTabs} onPress={onPress} />
+                <AccountsTabHeader tabName={'Personal Info'} setOpenTabs={setOpenTabs} onPress={onPress} />
                 {/* Form */}
                 <KeyboardAvoidingView
                     keyboardVerticalOffset={20}
@@ -337,7 +335,7 @@ const PersonalContractorInformation = observer(() => {
 
                                         <Image source={{ uri: newAvatar }} style={{ width: 120, height: 120 }} resizeMode='stretch' />
                                         :
-                                        <Image source={userAvatar} style={{ width: 120, height: 120 }} resizeMode='stretch' />
+                                        <Image source={newUserImages[0]} style={{ width: 120, height: 120 }} resizeMode='stretch' />
                                     }
                                 </UserAvatar>
 

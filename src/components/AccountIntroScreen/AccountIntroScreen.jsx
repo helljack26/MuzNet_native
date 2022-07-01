@@ -5,6 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
 import PersonalContractorInformation from './PersonalContractorInformation';
 import PersonalMusicianInformation from './PersonalMusicianInformation';
+import ChangePassword from './ChangePassword';
 
 import InviteFriendsPopup from './InviteFriendsPopup'
 
@@ -41,7 +42,12 @@ const {
     LogOutButton,
     LogOutButtonText,
 } = style;
-
+// Mixins
+import { M } from '@/res/mixin'
+const {
+    BlackBtn,
+    BlackBtnText,
+} = M;
 // Store
 import { observer } from 'mobx-react-lite';
 import { useAccountApiStore } from '@/stores/AccountApi';
@@ -108,8 +114,20 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
 
                 </AccountLinkList>
 
+                {/* Promote my ads */}
+                {!isContractor && <BlackBtn
+                // TODO тут с навигейтить на проут май ад экран
+                // onPress={() => { }} 
+                >
+                    <BlackBtnText>Promote My Ad</BlackBtnText>
+                </BlackBtn>
+                }
                 {/* Invite friends popup */}
-                <InviteFriendsButton onPress={() => { setOpenInviteFriendsBlock(true) }}  >
+                <InviteFriendsButton
+                    style={{
+                        marginTop: isContractor === true ? 0 : 8,
+                    }}
+                    onPress={() => { setOpenInviteFriendsBlock(true) }}  >
                     <InviteFriendsButtonText>Invite Friends</InviteFriendsButtonText>
                 </InviteFriendsButton>
 
@@ -127,12 +145,11 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                 setOpenBottomPopup={setOpenInviteFriendsBlock}
             />
 
-            {/* Accounts tabs */}
-            {isContractor === true ?
-                <PersonalContractorInformation />
-                :
-                <PersonalMusicianInformation />
-            }
+            {/* Personal info tab */}
+            {isContractor === true ? <PersonalContractorInformation /> : <PersonalMusicianInformation />}
+
+            {/* Change password tab */}
+            <ChangePassword />
         </Container>
     )
 })

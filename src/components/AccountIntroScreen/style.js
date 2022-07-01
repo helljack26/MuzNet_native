@@ -44,6 +44,7 @@ height: 100%;
 
 // Link list
 const AccountLinkList = styled.View`
+margin-bottom: 26px;
 
 width: 100%;
 `;
@@ -67,7 +68,6 @@ height: 24px;
 margin-right: 5px;
 `;
 const InviteFriendsButton = styled(M.BorderBtn)`
-margin-top: 26px;
 `;
 const InviteFriendsButtonText = styled(M.BorderBtnText)`
 

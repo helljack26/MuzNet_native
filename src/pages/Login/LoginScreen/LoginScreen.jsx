@@ -70,13 +70,21 @@ const LoginScreen = () => {
         if (dirtyFields.userPhoneNumber === true) {
             setInputPhoneLabel(true)
         }
+        if (dirtyFields.userPhoneNumber === undefined) {
+            setInputPhoneLabel(false)
+        }
+        if (dirtyFields.userPhoneNumber === true) {
+            setInputPhoneLabel(true)
+        }
         if (dirtyFields.password === undefined) {
             setInputPasswordLabel(false)
         }
         if (dirtyFields.password === true) {
             setInputPasswordLabel(true)
         }
-    }, [dirtyFields.userPhoneNumber, dirtyFields.password]);
+    }, [dirtyFields.userPhoneNumber,
+    dirtyFields.password
+    ]);
 
     const onSubmit = (data) => {
         console.log("🚀 ~ file: LoginPage.jsx ~ line 49 ~ onSubmit ~ data", data)
