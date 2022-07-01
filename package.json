@@ -75,6 +75,7 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "12.1.1",
     "react-native-svg-transformer": "^1.0.0",
+    "react-native-switch-toggle": "^2.2.1",
     "react-native-tab-view": "^3.0.0",
     "react-native-web": "0.17.1",
     "react-router-native": "^6.2.2",

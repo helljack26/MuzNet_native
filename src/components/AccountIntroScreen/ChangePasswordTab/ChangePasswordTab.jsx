@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { Animated, View, KeyboardAvoidingView, Image, Platform } from 'react-native';
+import { Animated, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 // Components
 import AccountsTabHeader from '../AccountsTabHeader'
@@ -11,15 +11,12 @@ import AfterSubmitWindow from '@/components/AfterSubmitWindow'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-import { compareTwoArrays } from '@/components/helpers/compareTwoArrays'
 
 // Images
 import IMAGES from '@/res/images'
 const {
     ShowPassIcon,
     ShowPassActiveIcon,
-    EditIcon,
-    ErrorIcon,
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
@@ -29,15 +26,12 @@ import { S } from '@/res/strings'
 import { style } from './style'
 const {
     FilterContainer,
-    FormScrollView,
     ContentTitle,
-
     // Form
     FormInputBlock,
     FormInputContainer,
     FormInputLabel,
     FormInput,
-
     ContentBlock,
     ContentBlockRow,
     ButtonSubmit,
@@ -55,7 +49,7 @@ import { runInAction, set } from 'mobx';
 
 import { useAccountApiStore } from '@/stores/AccountApi';
 
-const ChangePassword = observer(() => {
+const ChangePasswordTab = observer(() => {
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
@@ -71,7 +65,7 @@ const ChangePassword = observer(() => {
         });
 
     // Store
-    const { contractorAccountDataApi, isOpenChangePasswordTab, setOpenTabs } = useAccountApiStore();
+    const { isOpenChangePasswordTab, setOpenTabs } = useAccountApiStore();
 
     // Animation
     const { onPress, width } = useAnimateOfferPreview()
@@ -95,9 +89,9 @@ const ChangePassword = observer(() => {
 
     const [isOpenAfterSubmitMessage, setOpenAfterSubmitMessage] = useState(false);
 
-    const userCurrentPassWatch = watch(' currentPassword')
-    const userNewPassWatch = watch(' newPassword')
-    const userNewPassRepeatWatch = watch(' newPasswordRepeat')
+    // const userCurrentPassWatch = watch(' currentPassword')
+    // const userNewPassWatch = watch(' newPassword')
+    // const userNewPassRepeatWatch = watch(' newPasswordRepeat')
 
     // // Set shifting input label
     useEffect(() => {
@@ -377,5 +371,5 @@ const ChangePassword = observer(() => {
     )
 })
 
-export default ChangePassword;
+export default ChangePasswordTab;
 

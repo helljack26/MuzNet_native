@@ -35,7 +35,7 @@ export const S = {
     // Account tabs
     AccountTabs: {
         contractorTabs: [
-            "Personal Information",
+            "Personal Info",
             "Payments and Payouts",
             "Change Password",
             "Notification",
@@ -43,7 +43,7 @@ export const S = {
             "Terms of Service",
         ],
         musicianTabs: [
-            "Personal Information",
+            "Personal Info",
             "Payments and Payouts",
             "Change Password",
             "Notification",

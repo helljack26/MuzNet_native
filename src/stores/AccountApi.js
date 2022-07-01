@@ -49,12 +49,21 @@ class AccountApi {
         },
     }]
 
+    userNotification = {
+        userNewReview: false,
+        userNewOffer: true,
+        userNewMessage: false,
+        userNewProfileView: true,
+        userLoginAtteptOnAccount: false,
+        userTransaction: false,
+    }
+
     isOpenPersonalInfoTab = false
     isOpenPaymentTab = false
     isOpenChangePasswordTab = false
     isOpenNotificationTab = false
     isOpenMyAdsTab = false
-    isOpenTermsAndServicesTab = false
+    isOpenTermOfServiceTab = false
 
     paymentDetails = {}
     constructor() {
@@ -66,7 +75,7 @@ class AccountApi {
             isOpenChangePasswordTab: observable,
             isOpenNotificationTab: observable,
             isOpenMyAdsTab: observable,
-            isOpenTermsAndServicesTab: observable,
+            isOpenTermOfServiceTab: observable,
 
             setOpenTabs: action.bound,
             changeContactorAccountData: action.bound,
@@ -84,7 +93,7 @@ class AccountApi {
         const action = isOpen
         switch (tabName) {
 
-            case "Personal Information":
+            case "Personal Info":
                 this.isOpenPersonalInfoTab = action;
                 break;
 
@@ -105,7 +114,7 @@ class AccountApi {
                 break;
 
             case "Terms of Service":
-                this.isOpenTermsAndServicesTab = action;
+                this.isOpenTermOfServiceTab = action;
                 break;
 
             default:

@@ -70,7 +70,7 @@ import { runInAction, set } from 'mobx';
 
 import { useAccountApiStore } from '@/stores/AccountApi';
 
-const PersonalMusicianInformation = observer(() => {
+const PersonalMusicianInfoTab = observer(() => {
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
@@ -393,7 +393,7 @@ const PersonalMusicianInformation = observer(() => {
             set(musicianAccountDataApi[0].userSkills, "playByEar", isPlayByEar)
             set(musicianAccountDataApi[0].userSkills, "readSheetMusic", isReadSheetMusic)
         })
-        console.log("🚀 ~ file: PersonalMusicianInformation.jsx ~ line 393 ~ runInAction ~ musicianAccountDataApi[0]", musicianAccountDataApi[0])
+        console.log("🚀 ~ file: PersonalMusicianInfoTab.jsx ~ line 393 ~ runInAction ~ musicianAccountDataApi[0]", musicianAccountDataApi[0])
 
         return
     };
@@ -920,5 +920,5 @@ const PersonalMusicianInformation = observer(() => {
     )
 })
 
-export default PersonalMusicianInformation;
+export default PersonalMusicianInfoTab;
 

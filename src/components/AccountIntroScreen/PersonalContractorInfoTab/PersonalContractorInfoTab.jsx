@@ -61,7 +61,7 @@ import { runInAction, set } from 'mobx';
 
 import { useAccountApiStore } from '@/stores/AccountApi';
 
-const PersonalContractorInformation = observer(() => {
+const PersonalContractorInfoTab = observer(() => {
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
@@ -290,7 +290,7 @@ const PersonalContractorInformation = observer(() => {
             set(contractorAccountDataApi[0], "userPhoneNumber", data.userPhoneNumber)
             set(contractorAccountDataApi[0], "userLocation", data.userLocation)
         })
-        // console.log("🚀 ~ file: PersonalContractorInformation.jsx ~ line 287 ~ runInAction ~ contractorAccountDataApi[0]", contractorAccountDataApi[0])
+        // console.log("🚀 ~ file: PersonalContractorInfoTab.jsx ~ line 287 ~ runInAction ~ contractorAccountDataApi[0]", contractorAccountDataApi[0])
         return
     };
     // Confirm delete account
@@ -684,5 +684,5 @@ const PersonalContractorInformation = observer(() => {
     )
 })
 
-export default PersonalContractorInformation;
+export default PersonalContractorInfoTab;
 

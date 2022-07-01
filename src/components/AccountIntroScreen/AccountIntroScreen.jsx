@@ -3,9 +3,13 @@ import { useState, useEffect } from 'react';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 // Components
-import PersonalContractorInformation from './PersonalContractorInformation';
-import PersonalMusicianInformation from './PersonalMusicianInformation';
-import ChangePassword from './ChangePassword';
+import PersonalContractorInfoTab from './PersonalContractorInfoTab';
+import PersonalMusicianInfoTab from './PersonalMusicianInfoTab';
+import ChangePasswordTab from './ChangePasswordTab';
+import PaymentAndPayoutTab from './PaymentAndPayoutTab';
+import NotificationTab from './NotificationTab';
+import TermsOfServiceTab from './TermsOfServiceTab';
+import MyAdsTab from './MyAdsTab';
 
 import InviteFriendsPopup from './InviteFriendsPopup'
 
@@ -53,9 +57,18 @@ import { observer } from 'mobx-react-lite';
 import { useAccountApiStore } from '@/stores/AccountApi';
 
 const AccountIntroScreen = observer(({ stackName, isContractor }) => {
-    console.log("🚀 ~ file: AccountIntroScreen.jsx ~ line 50 ~ AccountIntroScreen ~ isContractor", isContractor)
+
     const navigation = useNavigation();
-    const { setOpenTabs } = useAccountApiStore();
+    const {
+        setOpenTabs,
+        isOpenNotificationTab,
+        isOpenPersonalInfoTab,
+        isOpenPaymentTab,
+        isOpenChangePasswordTab,
+        isOpenMyAdsTab,
+        isOpenTermOfServiceTab
+    } = useAccountApiStore();
+    console.log("🚀 ~ file: AccountIntroScreen.jsx ~ line 63 ~ AccountIntroScreen ~ isOpenNotificationTab", isOpenNotificationTab)
 
     const userImage = require('../../../assets/Mock/Georgia.png')
     const userName = 'Annie'
@@ -146,10 +159,24 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
             />
 
             {/* Personal info tab */}
-            {isContractor === true ? <PersonalContractorInformation /> : <PersonalMusicianInformation />}
+            {isContractor === true ?
+                <PersonalContractorInfoTab />
+                :
+                <PersonalMusicianInfoTab />
+            }
 
             {/* Change password tab */}
-            <ChangePassword />
+            {isOpenChangePasswordTab === true && <ChangePasswordTab isOpenTab={isOpenChangePasswordTab} />}
+
+            {/* Payment and payouts tab */}
+            {isOpenPaymentTab === true && <PaymentAndPayoutTab isOpenTab={isOpenPaymentTab} />}
+
+            {/* Notification tab */}
+            {isOpenNotificationTab === true && <NotificationTab isOpenTab={isOpenNotificationTab} />}
+            {/* Terms of service tab */}
+            {isOpenTermOfServiceTab === true && <TermsOfServiceTab isOpenTab={isOpenTermOfServiceTab} />}
+            {/* My ads for contractor */}
+            {(isContractor === true && isOpenMyAdsTab === true) && <MyAdsTab isOpenTab={isOpenMyAdsTab} />}
         </Container>
     )
 })
