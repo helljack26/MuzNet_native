@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, BackHandler } from 'react-native';
+import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 // Components
 import AddPaymentDetails from '@/components/AddPaymentDetails'
@@ -36,7 +36,7 @@ const OfferAddPaymentDetails = observer(() => {
 
     const route = useRoute();
 
-    const { isOpenPaymentDetails, isOpenOfferPreview, setOpenPaymentDetails, setPaymentDetails } = useOfferToMusicianApiStore();
+    const { isOpenPaymentDetails, setOpenPaymentDetails, setPaymentDetails } = useOfferToMusicianApiStore();
 
     const isKeyboardOpen = isKeyboardShown()
 
@@ -47,21 +47,6 @@ const OfferAddPaymentDetails = observer(() => {
             onPress(true)
         }
     }, [isOpenPaymentDetails]);
-
-    const [isShowingPaymentDetails, setShowingPaymentDetails] = useState(false);
-
-    useEffect(() => {
-        if (isOpenPaymentDetails === true && isOpenOfferPreview === true) {
-            setShowingPaymentDetails(true)
-        }
-    }, [isOpenPaymentDetails, isOpenOfferPreview]);
-
-    useEffect(() => {
-        if (isShowingPaymentDetails === true && isOpenPaymentDetails === false) {
-            onPress(false)
-        }
-    }, [isShowingPaymentDetails, isOpenPaymentDetails]);
-
 
     const onSubmitPaymentDetails = (data) => {
         console.log("🚀 ~ file: OfferAddPaymentDetails.jsx ~ line 206 ~ onSubmitPaymentDetails ~ data", data)

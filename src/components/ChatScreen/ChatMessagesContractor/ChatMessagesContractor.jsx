@@ -239,10 +239,17 @@ const ChatMessagesContractor = observer(({ newMessage, isContractor }) => {
     }, [isKeyboardOpen]);
 
     useEffect(() => {
+        let isMounted = true;
         const unsubscribe = navigation.addListener('focus', () => {
-            setLocalMessageState(chatMock)
+            if (isMounted) {
+                setLocalMessageState(chatMock)
+            }
         });
-        return unsubscribe;
+        return () => {
+            unsubscribe
+            isMounted = false;
+        };
+
     }, [navigation]);
 
     const [isExistOffer, setExistOffer] = useState(false);

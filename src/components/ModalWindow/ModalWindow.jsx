@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from 'react';
-import { Image } from 'react-native';
+import { Image, BackHandler } from 'react-native';
 
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
@@ -29,8 +29,17 @@ const ModalWindow = ({ isOpen, setOpen, modalPic, title, advice, btnText }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
     useEffect(() => {
-
-    }, [isOpen]);
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (isOpen === true) {
+                console.log('ну шо привет');
+                // closePopup()
+            }
+            return true
+        })
+        return () => {
+            backHandler.remove()
+        }
+    }, [isOpen])
 
     return (
         <ModalWindowContainer

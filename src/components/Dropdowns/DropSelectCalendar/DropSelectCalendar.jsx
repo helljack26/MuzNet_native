@@ -88,7 +88,7 @@ const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, set
         });
 
         return unsubscribe;
-    }, [navigation]);
+    }, [navigation, isExistedDate]);
 
     // If resetAll
     useEffect(() => {
@@ -97,8 +97,16 @@ const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, set
             setIsOpen(false)
             setCalendarOpen(false)
             calendarRef.current.resetSelections()
+
         }
-    }, [isResetAll]);
+        if (isResetAll === true !== undefined) {
+            setPlaceholder(isExistedDate.string)
+            setFilterDate({
+                milliseconds: isExistedDate.milliseconds,
+                string: isExistedDate.string,
+            })
+        }
+    }, [isResetAll, isExistedDate]);
     useEffect(() => {
         if (isCloseAllDropdown === true) {
             setIsOpen(false)

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     PermissionsAndroid,
-    Platformn
+    Platform
 } from "react-native";
 import { makeAutoObservable, action, runInAction, observable, set, get } from 'mobx';
 import { apiMocks } from '@/api/mock/apiMocks'

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
+import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, BackHandler } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 // Components
 import DropSelectCalendar from '@/components/Dropdowns/DropSelectCalendar'
@@ -50,6 +50,7 @@ const {
     ButtonSubmitText,
     FormInputPricePerHourBlock,
     FormInputPricePerHourText,
+    OpacityBg,
 } = style;
 // Mixins
 import { M } from '@/res/mixin'
@@ -84,7 +85,7 @@ const OfferDetailsHeaderSheat = observer(() => {
 
     const isKeyboardOpen = isKeyboardShown()
 
-    const { offerDetails, setOpenOfferPreview, setOfferDetails, isPaySuccesful } = useOfferToMusicianApiStore();
+    const { offerDetails, isOpenOfferPreview, setOpenOfferPreview, setOfferDetails, isPaySuccesful, setPaySucessful, isOpenPaymentDetails, setOpenPaymentDetails } = useOfferToMusicianApiStore();
     const {
         offerAdditionalInfo,
         offerDate,
@@ -95,6 +96,7 @@ const OfferDetailsHeaderSheat = observer(() => {
         offerPricePerHour,
         offerPhoneNumber,
     } = offerDetails;
+
 
     const isDateString = offerDate.string !== undefined && offerDate.string
 
@@ -109,12 +111,24 @@ const OfferDetailsHeaderSheat = observer(() => {
     const [isShowAllDetails, setShowAllDetails] = useState(false);
 
     const { windowHeight, windowWidth } = getWindowDimension()
+    // Reset state
+    const [isResetAll, setResetAll] = useState(false);
+
+    // Animation 
     const { onPress, height } = useAnimateOfferHeader()
     useEffect(() => {
         if (isShowAllDetails === true) {
             onPress(true)
         }
     }, [isShowAllDetails]);
+
+    const [isHideAnimationTab, setHideAnimationTab] = useState(false);
+
+    useEffect(() => {
+        if (isHideAnimationTab === true) {
+            onPress(false)
+        }
+    }, [isHideAnimationTab])
 
     // Calendar
     const [isCalendarOpen, setCalendarOpen] = useState(false);
@@ -141,7 +155,6 @@ const OfferDetailsHeaderSheat = observer(() => {
     const [inputFocus7, setInputFocus7] = useState(C.lightGray);
     const [pricePerHourLabel, setPricePerHourLabel] = useState(false);
     const [pricePerHourInput, setPricePerHourInput] = useState('');
-
     // Phone number
     const [phone, setPhone] = useState('');
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
@@ -152,9 +165,56 @@ const OfferDetailsHeaderSheat = observer(() => {
     //     if (flagType) {
     //         setPhone('')
     //     }
-    // }, [flagType]);
-    // Set phone number is exist offer
+    // }, [flagType])
 
+    // Before open offer preview I set previous for if goBack I can set previous state for header 
+    const [previousOfferDetails, setPreviousOfferDetails] = useState({});
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (isShowAllDetails === true && isOpenOfferPreview === false) {
+                setHideAnimationTab(true)
+                setShowAllDetails(false)
+                setTimeout(() => {
+                    setHideAnimationTab(false)
+                }, 600);
+            }
+            if (isShowAllDetails === false && isOpenOfferPreview === false && isPaySuccesful === false && isOpenPaymentDetails === false) {
+                navigation.goBack()
+            }
+
+            if (isShowAllDetails === true && isOpenOfferPreview === true && isOpenPaymentDetails === false) {
+                setPhone(previousOfferDetails.offerPhoneNumber)
+                setInputPhoneLabel(true)
+                setValue('offerPhoneNumber', previousOfferDetails.offerPhoneNumber);
+                setPricePerHourInput(`${previousOfferDetails.offerPricePerHour}`)
+                setValue('offerPricePerHour', previousOfferDetails.offerPricePerHour);
+                setPricePerHourLabel(true)
+
+                setOpenOfferPreview(false)
+                setHideAnimationTab(true)
+                setShowAllDetails(false)
+                setResetAll(true)
+                setOfferDetails(previousOfferDetails)
+                setTimeout(() => {
+                    setHideAnimationTab(false)
+                    setResetAll(false)
+                }, 600);
+            }
+            if (isShowAllDetails === true && isOpenOfferPreview === true && isOpenPaymentDetails === true) {
+                setOpenPaymentDetails(false)
+            }
+
+            if (isPaySuccesful === true) {
+                setPaySucessful(false)
+            }
+            return true
+        })
+        return () => {
+            backHandler.remove()
+        }
+    }, [isShowAllDetails, isOpenOfferPreview, previousOfferDetails, isPhoneNumberString, offerPricePerHour, isPaySuccesful, isOpenPaymentDetails])
+
+    // Set phone number is exist offer
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             if (isPhoneNumberString !== undefined) {
@@ -165,6 +225,7 @@ const OfferDetailsHeaderSheat = observer(() => {
             if (offerPricePerHour !== undefined) {
                 setPricePerHourInput(`${offerPricePerHour}`)
                 setPricePerHourLabel(true)
+                setValue('offerPricePerHour', offerPricePerHour);
             }
         });
 
@@ -179,13 +240,14 @@ const OfferDetailsHeaderSheat = observer(() => {
         if (dirtyFields.offerPhoneNumber !== undefined) {
             setInputPhoneLabel(true)
         }
-        if (dirtyFields.offerPricePerHour === undefined) {
+        if (pricePerHourInput.length === 0) {
+
             setPricePerHourLabel(false)
         }
-        if (dirtyFields.offerPricePerHour !== undefined) {
+        if (pricePerHourInput.length > 0) {
             setPricePerHourLabel(true)
         }
-    }, [dirtyFields.offerPricePerHour, dirtyFields.offerPhoneNumber]);
+    }, [pricePerHourInput.length, dirtyFields.offerPhoneNumber]);
 
     const [isCloseAllDropdown, setCloseAllDropdown] = useState(false);
     useEffect(() => {
@@ -241,8 +303,7 @@ const OfferDetailsHeaderSheat = observer(() => {
         offerPhoneNumber,
         isSomeFieldChange
     ]);
-    // Reset state
-    const [isResetAll, setResetAll] = useState(false);
+
     const clearAllFilters = () => {
         // For components set reset
         setResetAll(true)
@@ -282,8 +343,9 @@ const OfferDetailsHeaderSheat = observer(() => {
     // Clear all if payment successful
     useEffect(() => {
         if (isPaySuccesful === true) {
-            clearAllFilters()
+            // clearAllFilters()
             onPress(false)
+            setShowAllDetails(false)
         }
     }, [isPaySuccesful]);
 
@@ -317,14 +379,18 @@ const OfferDetailsHeaderSheat = observer(() => {
             offerAdditionalInfo: offerAdditionalInfo,
         }
         Keyboard.dismiss()
+        setPreviousOfferDetails(offerDetails)
         setOfferDetails(newOffer)
+        console.log("🚀 ~ file: OfferDetailsHeaderSheat.jsx ~ line 350 ~ onSubmit ~ newOffer", newOffer)
         setOpenOfferPreview(true)
         // Clear input value
         // navigation.navigate('ContractorStack', { screen: 'OfferPreviewScreen' })
     };
     useEffect(() => {
         if (isConfirm === true) {
+            console.log("🚀 ~ file: OfferDetailsHeaderSheat.jsx ~ line 382 ~ useEffect ~ isConfirm", isConfirm)
             onSubmit()
+            setConfirm(false)
         }
     }, [isConfirm]);
 
@@ -361,11 +427,21 @@ const OfferDetailsHeaderSheat = observer(() => {
                 </HeaderMinimalRow>
             </HeaderMinimal>
 
+            {isShowAllDetails && <OpacityBg
+                style={{
+                    height: windowHeight,
+                    width: windowWidth,
+                    zIndex: 999,
+                }}
+
+            >
+            </OpacityBg>}
+
             <Animated.View
                 style={{
                     zIndex: 1000,
                     height,
-                    backgroundColor: C.opacity50white,
+                    // backgroundColor: C.opacity50white,
                     width: windowWidth,
                     justifyContent: 'flex-start',
                     position: "absolute",
@@ -625,9 +701,6 @@ const OfferDetailsHeaderSheat = observer(() => {
                         >
                             <OfferHeaderRoundedShapeBg width={55} height={16} />
                         </HeaderRoundShape>
-
-
-
                     </FooterMinimalRow>
                 </FilterContainer>
 

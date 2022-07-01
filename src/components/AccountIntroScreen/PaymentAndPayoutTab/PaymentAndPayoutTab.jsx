@@ -5,6 +5,7 @@ import { Animated, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 // Components
 import AccountsTabHeader from '../AccountsTabHeader'
+import PaymentMethods from './PaymentMethods'
 import CurrencyPopup from './CurrencyPopup'
 
 // Helpers
@@ -54,22 +55,21 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
         if (isOpenTab === true) { onPress(true) }
     }, [isOpenTab]);
 
-    // Currency popup
-    const [isOpenCurrency, setOpenCurrency] = useState(false);
-    const [selectedCurrencyType, setCurrencyValue] = useState('USD - $');
-
     // Store
     const { contractorAccountDataApi, musicianAccountDataApi, setOpenTabs } = useAccountApiStore();
 
     // Handler for native back button
     const tabNameToClose = 'Payments and Payouts'
     backHandler(onPress, setOpenTabs, tabNameToClose);
+    // Paymeets state
+    const [isOpenPayments, setOpenPayments] = useState(false);
+
+    // Currency state
+    const [isOpenCurrency, setOpenCurrency] = useState(false);
+    const [selectedCurrencyType, setCurrencyValue] = useState('USD - $');
 
     // User currency types
-    const userCurrencyType = isContractor === true ?
-        contractorAccountDataApi[0].userCurrencyType
-        :
-        musicianAccountDataApi[0].userCurrencyType
+    const userCurrencyType = isContractor === true ? contractorAccountDataApi[0].userCurrencyType : musicianAccountDataApi[0].userCurrencyType
 
     // Set user currency type
     useEffect(() => {
@@ -85,6 +85,7 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
     //         })
     //     }
     // }, [selectedCurrencyType, userCurrencyType]);
+
     return (
         <Animated.View style={{
             zIndex: 1000,
@@ -113,7 +114,7 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
                     {/* Payment Methods */}
                     <AccountLink
                         onPress={() => {
-
+                            setOpenPayments(true)
                         }}>
                         <AccountLinkText>Payment Methods</AccountLinkText>
 
@@ -151,9 +152,15 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
 
                 </AccountLinkList>
 
-
             </FilterContainer>
 
+            {/* Payment Methods */}
+            {isOpenPayments && <PaymentMethods
+                isPayments={true}
+                isOpen={isOpenPayments}
+                setOpen={setOpenPayments}
+            />
+            }
             {/* Currency popup */}
             {isOpenCurrency && <CurrencyPopup
                 currencyTypes={S.currencyTypes}

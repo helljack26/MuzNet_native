@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
+import { Animated, Keyboard, View, BackHandler, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 // Components
 import ChoosePaymentMethod from '@/components/ChoosePaymentMethod'
@@ -55,11 +55,11 @@ const {
 import { observer } from 'mobx-react-lite';
 import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 
-const OfferPreview = observer(() => {
+const OfferPreview = observer(({ isOpen }) => {
 
     const route = useRoute();
 
-    const { offerDetails, isOpenOfferPreview, setOpenOfferPreview, setOpenCreateOffer, setPaySucessful, setSendOffer } = useOfferToMusicianApiStore();
+    const { offerDetails, setOpenOfferPreview, setOpenCreateOffer, setPaySucessful, setSendOffer, isOpenPaymentDetails } = useOfferToMusicianApiStore();
 
     const {
         offerAdditionalInfo,
@@ -79,21 +79,49 @@ const OfferPreview = observer(() => {
     const { onPress, width } = useAnimateOfferPreview()
 
     useEffect(() => {
-        if (isOpenOfferPreview === true) {
+        if (isOpen === true) {
+            console.log("🚀 ~ file: OfferPreview.jsx ~ line 83 ~ useEffect ~ isOpen", isOpen)
             onPress(true)
         }
-    }, [isOpenOfferPreview]);
+    }, [isOpen]);
 
-    // Is show submit button
-    const [isShowSubmitButton, setShowSubmitButton] = useState(false);
+    const [isHideAnimationTab, setHideAnimationTab] = useState(false);
+
+    useEffect(() => {
+        if (isHideAnimationTab === true) {
+            onPress(false)
+        }
+    }, [isHideAnimationTab])
+
+    const closePopup = () => {
+        setHideAnimationTab(true)
+        setTimeout(() => {
+            setHideAnimationTab(false)
+            setOpenOfferPreview(false)
+        }, 600);
+    }
+
+    // useEffect(() => {
+    //     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+    //         if (isOpen === true) {
+    //             console.log('ну шо привет');
+    //             // closePopup()
+    //         }
+    //         return true
+    //     })
+    //     return () => {
+    //         backHandler.remove()
+    //     }
+    // }, [isOpen])
 
     const onSubmit = () => {
         // setOpenCreateOffer(false)
-        setOpenOfferPreview(false)
         setPaySucessful(true)
         setSendOffer(true)
-        onPress(false)
+        closePopup()
     };
+    // Is show submit button
+    const [isShowSubmitButton, setShowSubmitButton] = useState(false);
 
     const isDateString = offerDate.string !== undefined && offerDate.string
 
@@ -131,8 +159,7 @@ const OfferPreview = observer(() => {
                 <Header >
                     <HeaderClose
                         onPress={() => {
-                            setOpenOfferPreview(false)
-                            onPress(false)
+                            closePopup()
                         }}
                     >
                         <GoBackIcon width={9} height={16} />
@@ -261,7 +288,6 @@ const OfferPreview = observer(() => {
 
             {/* Payment details  */}
             <OfferAddPaymentDetails />
-
         </Animated.View >
     )
 })

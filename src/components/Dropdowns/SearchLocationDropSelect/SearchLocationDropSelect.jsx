@@ -56,6 +56,7 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
                 setSelectedLocation(existedLocation)
                 onChangeSearchText(existedLocation)
                 setFilterLocation(existedLocation)
+                setShiftInputLocationLabel(true)
             }
         });
         return unsubscribe;
@@ -98,7 +99,6 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
                 inputValue: [],
                 type: ''
             })
-            setInputFocus1(C.lightGray)
         }
     }, [searchText.length, selectedLocation]);
 
@@ -115,7 +115,14 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
             setShiftInputLocationLabel(false)
             setOpenDropList(false)
         }
-    }, [isResetAll]);
+        if (isResetAll === true && existedLocation !== undefined) {
+            setSelectedLocation(existedLocation)
+            onChangeSearchText(existedLocation)
+            setFilterLocation(existedLocation)
+            setShiftInputLocationLabel(true)
+
+        }
+    }, [isResetAll, existedLocation]);
 
 
     const onPressEnter = () => {
@@ -151,7 +158,7 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
                         marginRight: 16,
                         backgroundColor: C.white,
                         borderRadius: 6,
-                        elevation: isOpenDropList === true ? 5 : 0,
+                        elevation: isOpenDropList === true ? 5 : inputFocus1 === C.black ? 5 : 0,
                     }}
                 >
                     <FormInput

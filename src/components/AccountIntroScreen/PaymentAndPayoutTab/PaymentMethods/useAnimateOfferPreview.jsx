@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Animated, Easing } from 'react-native';
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
-export const useAnimateOfferHeader = () => {
+export const useAnimateOfferPreview = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     const animate_state = {
@@ -25,7 +25,7 @@ export const useAnimateOfferHeader = () => {
     }
 
     const inputRange = Object.values(animate_state)
-    const height = value.interpolate({ inputRange, outputRange: ['0%', '55%'] })
+    const width = value.interpolate({ inputRange, outputRange: ['0%', '100%'] })
 
-    return { height, onPress }
+    return { width, onPress }
 }

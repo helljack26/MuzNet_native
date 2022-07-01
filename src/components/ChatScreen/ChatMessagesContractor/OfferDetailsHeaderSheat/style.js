@@ -94,7 +94,7 @@ z-index: 1000;
 `;
 const FilterContainer = styled.View`
 width: 100%;
-height: 55%;
+height: 100%;
 margin-bottom: 20px;
 /* max-height: 440px; */
 border-top-color: ${C.lightGray};
@@ -245,6 +245,14 @@ text-decoration: underline;
 font-size: 13px;
 margin-left: 5px;
 `;
+const OpacityBg = styled.Pressable`
+ position: absolute;
+ left: 0px;
+ bottom: 0px;
+ right: 0px;
+background-color: ${C.black};
+opacity: 0.5;
+`;
 
 export const style = {
     HeaderMinimal: HeaderMinimal,
@@ -279,4 +287,6 @@ export const style = {
     SecurePaymentMessage: SecurePaymentMessage,
     SecurePaymentMessageText: SecurePaymentMessageText,
     SecurePaymentMessageReadMoreText: SecurePaymentMessageReadMoreText,
+
+    OpacityBg: OpacityBg,
 }

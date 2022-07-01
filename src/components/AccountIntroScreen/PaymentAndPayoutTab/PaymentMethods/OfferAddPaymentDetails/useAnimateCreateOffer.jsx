@@ -5,7 +5,7 @@ import { Animated, Easing } from 'react-native';
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 
-export const useAnimateOfferHeader = () => {
+export const useAnimateCreateOffer = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     const animate_state = {
@@ -25,7 +25,7 @@ export const useAnimateOfferHeader = () => {
     }
 
     const inputRange = Object.values(animate_state)
-    const height = value.interpolate({ inputRange, outputRange: ['0%', '55%'] })
+    const height = value.interpolate({ inputRange, outputRange: ['0%', '90%'] })
 
     return { height, onPress }
 }

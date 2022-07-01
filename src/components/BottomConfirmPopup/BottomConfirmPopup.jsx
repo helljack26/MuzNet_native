@@ -31,20 +31,14 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
 
     // Animate attachment
     const { onPress, height } = useAnimateAttachment()
-    const [isShowOpacityBgMargin, setShowOpacityBgMargin] = useState(false);
 
     useEffect(() => {
         if (isOpenBottomPopup === true) {
             Keyboard.dismiss()
-
             onPress(true)
-            setTimeout(() => {
-                setShowOpacityBgMargin(true)
-            }, 400);
         }
 
     }, [isOpenBottomPopup]);
-
 
     const [isHideAnimationTab, setHideAnimationTab] = useState(false);
 
@@ -54,9 +48,9 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
         }
     }, [isHideAnimationTab])
 
-    const closePopup = () => {
+    const closePopup = (bool) => {
+        setConfirm(bool)
         setHideAnimationTab(true)
-        setShowOpacityBgMargin(false)
         setTimeout(() => {
             setOpenBottomPopup(false)
         }, 600);
@@ -109,8 +103,8 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
                 {/* Attach container */}
                 <CloseButton
                     onPress={() => {
-                        closePopup()
-                        setConfirm(false)
+
+                        closePopup(false)
                     }}  >
                     <CrossBlackIcon width={14} height={14} />
                 </CloseButton>
@@ -123,16 +117,16 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
                 <ButtonsBlock>
                     <ButtonCancel
                         onPress={() => {
-                            closePopup()
-                            setConfirm(false)
+
+                            closePopup(false)
                         }}
                     >
                         <ButtonCancelText>Cancel</ButtonCancelText>
                     </ButtonCancel>
                     <Button
                         onPress={() => {
-                            closePopup()
-                            setConfirm(true)
+
+                            closePopup(true)
                         }}
                     >
                         <ButtonText>{confirmBtnText}</ButtonText>

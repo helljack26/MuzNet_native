@@ -33,16 +33,11 @@ const CurrencyPopup = ({ isOpenBottomPopup, setOpenBottomPopup, currencyTypes, s
 
     // Animate attachment
     const { onPress, height } = useAnimateAttachment()
-    const [isShowOpacityBgMargin, setShowOpacityBgMargin] = useState(false);
 
     useEffect(() => {
         if (isOpenBottomPopup === true) {
             Keyboard.dismiss()
-
             onPress(true)
-            setTimeout(() => {
-                setShowOpacityBgMargin(true)
-            }, 400);
         }
 
     }, [isOpenBottomPopup]);
@@ -57,7 +52,6 @@ const CurrencyPopup = ({ isOpenBottomPopup, setOpenBottomPopup, currencyTypes, s
 
     const closePopup = () => {
         setHideAnimationTab(true)
-        setShowOpacityBgMargin(false)
         setTimeout(() => {
             setOpenBottomPopup(false)
         }, 600);

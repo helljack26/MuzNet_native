@@ -105,6 +105,7 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholde
 
         return unsubscribe;
     }, [navigation]);
+
     const setToOfferTimeState = () => {
         return setTimeRange({
             startTime: {
@@ -141,7 +142,7 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholde
     }, [startTimeMs, endTimeMs, offerDuration]);
 
     useEffect(() => {
-        if (isResetAll === true) {
+        if (isResetAll === true && existedStartTimePlaceholder === undefined && existedEndTimePlaceholder === undefined && existedDuration === undefined) {
             setOfferDuration(0)
             setOpenStartTimePicker(false)
             setOpenEndTimePicker(false)
@@ -154,7 +155,18 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholde
             setStartTimeMs('')
             setEndTimeMs('')
         }
-    }, [isResetAll]);
+
+        if (isResetAll === true && existedStartTimePlaceholder !== undefined && existedEndTimePlaceholder !== undefined && existedDuration !== undefined) {
+            setExisted(true)
+            setStartTimePlaceholder(existedStartTimePlaceholder.string)
+            setEndTimePlaceholder(existedEndTimePlaceholder.string)
+            setStartTimeMs(existedStartTimePlaceholder.milliseconds)
+            setEndTimeMs(existedEndTimePlaceholder.milliseconds)
+            setCanSetStartTimePlaceholder(true)
+            setCanSetEndTimePlaceholder(true)
+            setOfferDuration(existedDuration)
+        }
+    }, [isResetAll, existedStartTimePlaceholder, existedEndTimePlaceholder, existedDuration]);
 
     const isShiftStartTime = startTimePlaceholder !== undefined
     const isShiftEndTime = endTimePlaceholder !== undefined

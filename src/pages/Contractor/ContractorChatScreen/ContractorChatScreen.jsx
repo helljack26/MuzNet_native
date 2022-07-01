@@ -34,7 +34,7 @@ import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 const ContractorChatScreen = observer(() => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
-    const { isPaySuccesful, isOpenOfferPreview, setPaySucessful } = useOfferToMusicianApiStore();
+    const { isPaySuccesful, isOpenOfferPreview, isOpenCreateOffer, setPaySucessful } = useOfferToMusicianApiStore();
     const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
 
     const [isWrongModalOpen, setWrongModalOpen] = useState(false);
@@ -46,8 +46,6 @@ const ContractorChatScreen = observer(() => {
             setSuccessModalOpen(false)
         }
     }, [isPaySuccesful]);
-
-
 
     return (
         <>
@@ -65,8 +63,10 @@ const ContractorChatScreen = observer(() => {
                 }}  >
                 <ChatScreen isContractor={true} />
 
-                <CreateOffer />
-                <OfferPreview />
+                {isOpenCreateOffer === true && <CreateOffer />}
+
+                {/* Offer preview */}
+                {isOpenOfferPreview === true && <OfferPreview isOpen={isOpenOfferPreview} />}
 
                 {isSuccessModalOpen === true && <ModalWindow
                     modalPic={<Image source={IMAGES.GifSuccessCheck}
