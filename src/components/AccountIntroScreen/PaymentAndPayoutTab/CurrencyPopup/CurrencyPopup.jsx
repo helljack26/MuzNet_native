@@ -10,23 +10,25 @@ import { useAnimateAttachment } from './useAnimateAttachment';
 import IMAGES from '@/res/images'
 const {
     CrossBlackIcon,
+    CheckRoundBlackIcon,
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
+import { S } from '@/res/strings'
 // Styles
 import { style } from './style'
 const {
+    PopupHeader,
     CloseButton,
     OpacityBg,
-    ButtonsBlock,
-    Button,
-    ButtonText,
-    ButtonCancel,
-    ButtonCancelText,
+    AccountLinkList,
+    AccountLink,
+    AccountLinkText,
+    AccountLinkIcon,
     AttachContainerText,
 } = style;
 
-const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm, confirmBtnText, popupMainText }) => {
+const CurrencyPopup = ({ isOpenBottomPopup, setOpenBottomPopup, currencyTypes, setCurrencyType, selectedCurrencyType }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
     // Animate attachment
@@ -44,7 +46,6 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
         }
 
     }, [isOpenBottomPopup]);
-
 
     const [isHideAnimationTab, setHideAnimationTab] = useState(false);
 
@@ -87,11 +88,12 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
             </OpacityBg>}
             <Animated.View style={{
                 height,
+                // height: 370,
                 width: windowWidth,
                 zIndex: 2000,
                 justifyContent: 'center',
                 alignItems: 'flex-end',
-                justifyContent: 'flex-end',
+                justifyContent: 'flex-start',
                 position: "absolute",
                 flex: 1,
                 flexDirection: 'column',
@@ -100,46 +102,54 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
                 borderTopLeftRadius: 12,
                 borderTopRightRadius: 12,
                 overflow: 'hidden',
-                paddingHorizontal: 16,
                 left: 0,
                 bottom: 0,
                 right: 0,
             }} >
 
-                {/* Attach container */}
-                <CloseButton
-                    onPress={() => {
-                        closePopup()
-                        setConfirm(false)
-                    }}  >
-                    <CrossBlackIcon width={14} height={14} />
-                </CloseButton>
+                <PopupHeader>
+                    <AttachContainerText>
+                        Choose your currency
+                    </AttachContainerText>
 
-                <AttachContainerText>
-                    {popupMainText}
-                </AttachContainerText>
-
-                {/* Buttons */}
-                <ButtonsBlock>
-                    <ButtonCancel
+                    {/* Attach container */}
+                    <CloseButton
                         onPress={() => {
                             closePopup()
-                            setConfirm(false)
-                        }}
-                    >
-                        <ButtonCancelText>Cancel</ButtonCancelText>
-                    </ButtonCancel>
-                    <Button
-                        onPress={() => {
-                            closePopup()
-                            setConfirm(true)
-                        }}
-                    >
-                        <ButtonText>{confirmBtnText}</ButtonText>
-                    </Button>
+                        }}  >
+                        <CrossBlackIcon width={14} height={14} />
+                    </CloseButton>
 
-                </ButtonsBlock>
+                </PopupHeader>
 
+                {/* Currency list */}
+                <AccountLinkList showsVerticalScrollIndicator={false}>
+
+                    {currencyTypes.map((currency, id) => {
+                        const isLastWithoutBorderBottom = id === S.currencyTypes.length - 1
+
+                        const isActive = currency.shortCurrencyValue === selectedCurrencyType
+
+                        return <AccountLink
+                            style={{
+                                borderBottomWidth: isLastWithoutBorderBottom === true ? 0 : 1,
+                                marginBottom: isLastWithoutBorderBottom === true ? 70 : 0
+                            }}
+                            onPress={() => {
+                                closePopup()
+                                setCurrencyType(currency.shortCurrencyValue)
+                            }}
+                            key={id}>
+                            <AccountLinkText>{currency.fullCurrencyValue}</AccountLinkText>
+
+                            {isActive === true && <AccountLinkIcon >
+                                <CheckRoundBlackIcon width={20} height={20} />
+                            </AccountLinkIcon>
+                            }
+                        </AccountLink>
+                    })}
+
+                </AccountLinkList>
 
 
             </Animated.View >
@@ -147,4 +157,4 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
     )
 }
 
-export default BottomConfirmPopup;
+export default CurrencyPopup;

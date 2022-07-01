@@ -51,7 +51,6 @@ const InviteFriendsPopup = ({ isOpenBottomPopup, setOpenBottomPopup }) => {
                 setShowOpacityBgMargin(true)
             }, 400);
         }
-
     }, [isOpenBottomPopup]);
 
     const [isHideAnimationTab, setHideAnimationTab] = useState(false);
@@ -69,7 +68,6 @@ const InviteFriendsPopup = ({ isOpenBottomPopup, setOpenBottomPopup }) => {
             setOpenBottomPopup(false)
         }, 600);
     }
-
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {

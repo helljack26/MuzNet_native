@@ -168,14 +168,17 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
             {isOpenChangePasswordTab === true && <ChangePasswordTab isOpenTab={isOpenChangePasswordTab} />}
 
             {/* Payment and payouts tab */}
-            {isOpenPaymentTab === true && <PaymentAndPayoutTab isOpenTab={isOpenPaymentTab} />}
+            {isOpenPaymentTab === true && <PaymentAndPayoutTab isContractor={isContractor} isOpenTab={isOpenPaymentTab} />}
 
             {/* Notification tab */}
-            {isOpenNotificationTab === true && <NotificationTab isOpenTab={isOpenNotificationTab} />}
+            {isOpenNotificationTab === true && <NotificationTab isContractor={isContractor} isOpenTab={isOpenNotificationTab} />}
+
             {/* Terms of service tab */}
             {isOpenTermOfServiceTab === true && <TermsOfServiceTab isOpenTab={isOpenTermOfServiceTab} />}
+
             {/* My ads for contractor */}
             {(isContractor === true && isOpenMyAdsTab === true) && <MyAdsTab isOpenTab={isOpenMyAdsTab} />}
+
         </Container>
     )
 })

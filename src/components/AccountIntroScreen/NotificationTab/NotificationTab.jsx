@@ -35,9 +35,9 @@ import { runInAction, set } from 'mobx';
 
 import { useAccountApiStore } from '@/stores/AccountApi';
 
-const NotificationTab = observer(({ isOpenTab }) => {
+const NotificationTab = observer(({ isOpenTab, isContractor }) => {
     // Store
-    const { userNotification, setOpenTabs } = useAccountApiStore();
+    const { contractorAccountDataApi, musicianAccountDataApi, setOpenTabs } = useAccountApiStore();
     // Animation
     const { onPress, width } = useAnimateOfferPreview()
     useEffect(() => {
@@ -51,12 +51,7 @@ const NotificationTab = observer(({ isOpenTab }) => {
     const tabNameToClose = 'Notification'
     backHandler(onPress, setOpenTabs, tabNameToClose);
 
-    const isKeyboardOpen = isKeyboardShown()
-
     const { windowHeight, windowWidth } = getWindowDimension()
-
-
-
 
     const [isNewReview, setNewReview] = useState(false);
     const [isNewOffer, setNewOffer] = useState(false);
@@ -64,6 +59,11 @@ const NotificationTab = observer(({ isOpenTab }) => {
     const [isNewProfileView, setNewProfileView] = useState(false);
     const [isLoginAtteptOnAccount, setLoginAtteptOnAccount] = useState(false);
     const [isTransaction, setTransaction] = useState(false);
+
+    const userNotification = isContractor === true ?
+        contractorAccountDataApi[0].userNotification
+        :
+        musicianAccountDataApi[0].userNotification
 
     const userNewReviewFromStore = userNotification.userNewReview
     const userNewOfferFromStore = userNotification.userNewOffer
@@ -93,7 +93,6 @@ const NotificationTab = observer(({ isOpenTab }) => {
             set(userNotification, "userTransaction", isTransaction)
         })
     }, [isNewReview, isNewOffer, isNewMessage, isNewProfileView, isLoginAtteptOnAccount, isTransaction]);
-
 
     return (
         <Animated.View style={{

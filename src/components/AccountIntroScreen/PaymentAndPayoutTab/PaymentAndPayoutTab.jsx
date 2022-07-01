@@ -5,6 +5,7 @@ import { Animated, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 // Components
 import AccountsTabHeader from '../AccountsTabHeader'
+import CurrencyPopup from './CurrencyPopup'
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
@@ -24,7 +25,11 @@ import { S } from '@/res/strings'
 import { style } from './style'
 const {
     FilterContainer,
-
+    AccountLinkList,
+    AccountLink,
+    AccountLinkText,
+    AccountLinkCurrencyValue,
+    AccountLinkIcon,
 } = style;
 // Mixins
 import { M } from '@/res/mixin'
@@ -38,34 +43,54 @@ import { runInAction, set } from 'mobx';
 
 import { useAccountApiStore } from '@/stores/AccountApi';
 
-const PaymentAndPayoutTab = observer(({ isOpenTab }) => {
+const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
+    const { windowHeight, windowWidth } = getWindowDimension()
+
     // Animation
     const { onPress, width } = useAnimateOfferPreview()
 
     // Initial show tab 
     useEffect(() => {
-        if (isOpenTab === true) {
-            onPress(true)
-        }
+        if (isOpenTab === true) { onPress(true) }
     }, [isOpenTab]);
 
+    // Currency popup
+    const [isOpenCurrency, setOpenCurrency] = useState(false);
+    const [selectedCurrencyType, setCurrencyValue] = useState('USD - $');
+
     // Store
-    const { setOpenTabs } = useAccountApiStore();
+    const { contractorAccountDataApi, musicianAccountDataApi, setOpenTabs } = useAccountApiStore();
 
     // Handler for native back button
     const tabNameToClose = 'Payments and Payouts'
     backHandler(onPress, setOpenTabs, tabNameToClose);
 
-    const isKeyboardOpen = isKeyboardShown()
+    // User currency types
+    const userCurrencyType = isContractor === true ?
+        contractorAccountDataApi[0].userCurrencyType
+        :
+        musicianAccountDataApi[0].userCurrencyType
 
-    const { windowHeight, windowWidth } = getWindowDimension()
+    // Set user currency type
+    useEffect(() => {
+        if (userCurrencyType !== undefined || userCurrencyType !== null) {
+            setCurrencyValue(userCurrencyType)
+        }
+    }, [userCurrencyType]);
 
+    // useEffect(() => {
+    //     if (userCurrencyType !== selectedCurrencyType) {
+    //         runInAction(() => {
+    //             set(contractorAccountDataApi[0], "userCurrencyType", selectedCurrencyType)
+    //         })
+    //     }
+    // }, [selectedCurrencyType, userCurrencyType]);
     return (
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
-            // width: windowWidth,
-            width,
+            width: windowWidth,
+            // width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,
@@ -84,12 +109,12 @@ const PaymentAndPayoutTab = observer(({ isOpenTab }) => {
                 <AccountsTabHeader tabName={'Payments and Payouts'} setOpenTabs={setOpenTabs} onPress={onPress} />
 
                 {/* Link list */}
-                {/* <AccountLinkList>
+                <AccountLinkList>
+                    {/* Payment Methods */}
                     <AccountLink
                         onPress={() => {
 
-                        }}
-                        key={id}>
+                        }}>
                         <AccountLinkText>Payment Methods</AccountLinkText>
 
                         <AccountLinkIcon>
@@ -97,10 +122,46 @@ const PaymentAndPayoutTab = observer(({ isOpenTab }) => {
                         </AccountLinkIcon>
                     </AccountLink>
 
-                </AccountLinkList> */}
+                    {/* Payout Methods */}
+                    <AccountLink
+                        onPress={() => {
+
+                        }}>
+                        <AccountLinkText>Payout Methods</AccountLinkText>
+
+                        <AccountLinkIcon>
+                            <GoBackIcon width={9} height={16} />
+                        </AccountLinkIcon>
+                    </AccountLink>
+
+                    {/* Currency */}
+                    <AccountLink
+                        style={{
+                            borderBottomWidth: 0,
+                        }}
+                        onPress={() => {
+                            setOpenCurrency(true)
+                        }}>
+                        <AccountLinkText>Currency</AccountLinkText>
+
+                        <AccountLinkCurrencyValue>
+                            {selectedCurrencyType}
+                        </AccountLinkCurrencyValue>
+                    </AccountLink>
+
+                </AccountLinkList>
 
 
             </FilterContainer>
+
+            {/* Currency popup */}
+            {isOpenCurrency && <CurrencyPopup
+                currencyTypes={S.currencyTypes}
+                isOpenBottomPopup={isOpenCurrency}
+                setOpenBottomPopup={setOpenCurrency}
+                setCurrencyType={setCurrencyValue}
+                selectedCurrencyType={selectedCurrencyType}
+            />}
 
         </Animated.View >
     )

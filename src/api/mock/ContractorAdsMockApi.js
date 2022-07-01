@@ -8,7 +8,7 @@ export const ContractorAdsMockApi =
                 require('../../../assets/Mock/vendors/vendor3.png'),
             ],
             userPricePerHour: 100,
-            userPricePerHourCurrency: '$',
+            userCurrencyType: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
             adEventTime: {
                 eventStart: 1661486400000,
@@ -82,7 +82,7 @@ export const ContractorAdsMockApi =
                 require('../../../assets/Mock/vendors/vendor2.png'),
             ],
             userPricePerHour: 150,
-            userPricePerHourCurrency: '$',
+            userCurrencyType: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
             adEventTime: {
                 eventStart: 1661533200000,
@@ -155,7 +155,7 @@ export const ContractorAdsMockApi =
                 require('../../../assets/Mock/vendors/vendor2.png'),
             ],
             userPricePerHour: 350,
-            userPricePerHourCurrency: '$',
+            userCurrencyType: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
             adEventTime: {
                 eventStart: 1661533200000,
@@ -228,7 +228,7 @@ export const ContractorAdsMockApi =
                 require('../../../assets/Mock/vendors/vendor3.png'),
             ],
             userPricePerHour: 150,
-            userPricePerHourCurrency: '$',
+            userCurrencyType: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
             adEventTime: {
                 eventStart: 1661533200000,
@@ -301,7 +301,7 @@ export const ContractorAdsMockApi =
                 require('../../../assets/Mock/vendors/vendor3.png'),
             ],
             userPricePerHour: 100,
-            userPricePerHourCurrency: '$',
+            userCurrencyType: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
             adEventTime: {
                 eventStart: 1661533200000,
@@ -374,7 +374,7 @@ export const ContractorAdsMockApi =
                 require('../../../assets/Mock/vendors/vendor3.png'),
             ],
             userPricePerHour: 150,
-            userPricePerHourCurrency: '$',
+            userCurrencyType: '$',
             adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
             adEventTime: {
                 eventStart: 1661533200000,

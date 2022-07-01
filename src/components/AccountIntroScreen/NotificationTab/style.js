@@ -8,7 +8,7 @@ background-color: ${C.white};
 padding-top: 68px;
 overflow: hidden;
 `;
-const NotificationRow = styled.TouchableOpacity`
+const NotificationRow = styled.View`
 display: flex;
 justify-content: space-between;
 align-items: center;

@@ -21,7 +21,7 @@ export const backHandler = (onPress, setOpenTabs, tabNameToClose) => {
                     tabName: tabNameToClose,
                     isOpen: false
                 })
-            }, 600);
+            }, 400);
             return true
         })
         return () => {

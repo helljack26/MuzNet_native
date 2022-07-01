@@ -37,7 +37,7 @@ const ItemMusician = ({ data, isDisableBottomMargin, setScrollToTop }) => {
         id,
         userAvatar,
         userPricePerHour,
-        userPricePerHourCurrency,
+        userCurrencyType,
         userFirstName,
         userLastName,
         userLocation,
@@ -123,7 +123,7 @@ const ItemMusician = ({ data, isDisableBottomMargin, setScrollToTop }) => {
                 {/* Cost */}
                 <ItemInfoCost>
                     <ItemInfoCostValue>
-                        {userPricePerHourCurrency}{userPricePerHour}
+                        {userCurrencyType}{userPricePerHour}
                     </ItemInfoCostValue>
                     <ItemInfoCostValuePostfix>
                         / hour

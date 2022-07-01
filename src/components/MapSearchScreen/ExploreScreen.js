@@ -215,7 +215,7 @@ const ExploreScreen = observer(() => {
                                 <Animated.Text
                                     style={isActiveText}
                                 >
-                                    {marker.userPricePerHourCurrency} {marker.userPricePerHour}
+                                    {marker.userCurrencyType} {marker.userPricePerHour}
                                 </Animated.Text>
                             </Animated.View>
                         </MapView.Marker>

@@ -13,12 +13,22 @@ class AccountApi {
         contractorPosition: 'Manager',
         userNickName: 'Annie96',
         userName: 'Annie',
+        userCurrencyType: 'JMD-$',
         userSurName: 'Smith',
         userAvatar: [require('../../assets/Mock/Georgia.png')],
         userDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
         userEmail: 'user1@gmail.com',
         userPhoneNumber: '+1 000 753 6735',
         userLocation: 'Victoria, Ballarat',
+
+        userNotification: {
+            userNewReview: false,
+            userNewOffer: true,
+            userNewMessage: false,
+            userNewProfileView: true,
+            userLoginAtteptOnAccount: false,
+            userTransaction: false,
+        }
     }]
     musicianAccountDataApi = [{
         userType: 'Musician',
@@ -40,26 +50,25 @@ class AccountApi {
         userGenres: ["Classical", "Jazz", "Pop",],
         userMusicalInstrument: ["Harp", "Piano"],
         userPricePerHour: 100,
-        userPricePerHourCurrency: '$',
+        userCurrencyType: 'JMD-$',
         willingToTravel: true,
         userSkills: {
             singByEar: true,
             playByEar: false,
             readSheetMusic: true,
         },
+        userNotification: {
+            userNewReview: false,
+            userNewOffer: true,
+            userNewMessage: false,
+            userNewProfileView: true,
+            userLoginAtteptOnAccount: false,
+            userTransaction: false,
+        }
     }]
 
-    userNotification = {
-        userNewReview: false,
-        userNewOffer: true,
-        userNewMessage: false,
-        userNewProfileView: true,
-        userLoginAtteptOnAccount: false,
-        userTransaction: false,
-    }
-
     isOpenPersonalInfoTab = false
-    isOpenPaymentTab = false
+    isOpenPaymentTab = true
     isOpenChangePasswordTab = false
     isOpenNotificationTab = false
     isOpenMyAdsTab = false

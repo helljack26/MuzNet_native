@@ -32,6 +32,29 @@ export const S = {
             'Most Popular'
         ]
     },
+    // Currency type 
+    currencyTypes: [
+        {
+            shortCurrencyValue: 'USD-$',
+            fullCurrencyValue: 'United States dollar - $',
+        },
+        {
+            shortCurrencyValue: 'CAD-$',
+            fullCurrencyValue: 'Canadian dollar - $',
+        },
+        {
+            shortCurrencyValue: 'EUR-€',
+            fullCurrencyValue: 'Euro - €',
+        },
+        {
+            shortCurrencyValue: 'GBP-£',
+            fullCurrencyValue: 'British pound - £',
+        },
+        {
+            shortCurrencyValue: 'JMD-$',
+            fullCurrencyValue: 'Jamaican dollar - $',
+        },
+    ],
     // Account tabs
     AccountTabs: {
         contractorTabs: [

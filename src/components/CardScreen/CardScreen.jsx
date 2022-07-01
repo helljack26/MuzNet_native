@@ -95,7 +95,7 @@ const CardScreen = ({ isMusician, data, routeId }) => {
     const willingToTravel = data.willingToTravel
     const adEventTime = data.adEventTime
     const userPricePerHour = data.userPricePerHour
-    const userPricePerHourCurrency = data.userPricePerHourCurrency
+    const userCurrencyType = data.userCurrencyType
 
     // Fullscreen image
     const [fullscreenImgState, setFullscreenImgState] = useState({ isOpen: false, initialSlide: 0, });
@@ -443,7 +443,7 @@ const CardScreen = ({ isMusician, data, routeId }) => {
             <ContentBlock>
                 <ContentBlockRow>
                     <ContainerPerHour>
-                        <PricePerHourValue>{userPricePerHourCurrency}{userPricePerHour}</PricePerHourValue>
+                        <PricePerHourValue>{userCurrencyType}{userPricePerHour}</PricePerHourValue>
                         <PricePerHourText> / hour</PricePerHourText>
                     </ContainerPerHour>
                     <ButtonSubmit
