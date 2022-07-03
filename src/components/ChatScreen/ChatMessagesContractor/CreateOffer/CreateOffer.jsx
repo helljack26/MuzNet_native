@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
+import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, Platform, BackHandler } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 // Components
 import DropSelectCalendar from '@/components/Dropdowns/DropSelectCalendar'
@@ -64,7 +64,7 @@ const {
 import { observer } from 'mobx-react-lite';
 import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 
-const CreateOffer = observer(() => {
+const CreateOffer = observer(({ isOpenCreateOffer }) => {
     const navigation = useNavigation();
 
     // Form 
@@ -83,7 +83,19 @@ const CreateOffer = observer(() => {
 
     const route = useRoute();
 
-    const { isOpenCreateOffer, setOpenCreateOffer, setOpenOfferPreview, setOfferDetails, isPaySuccesful } = useOfferToMusicianApiStore();
+    const {
+        offerDetails,
+        isOpenOfferPreview,
+        isOpenPaymentDetails,
+        setOpenCreateOffer,
+        setOpenOfferPreview,
+        setOpenPaymentDetails,
+        setOfferDetails,
+        isPaySuccesful,
+        isOpenPaySuccesfulModal,
+        setOpenPaySuccesfulModal,
+        setFirstCreatedOffer
+    } = useOfferToMusicianApiStore();
 
     const isKeyboardOpen = isKeyboardShown()
 
@@ -159,11 +171,54 @@ const CreateOffer = observer(() => {
     useEffect(() => {
         if (isCloseAllDropdown === true) {
             // Set reset to default
-            setTimeout(() => {
-                setCloseAllDropdown(false)
-            }, 0);
+
+            setCloseAllDropdown(false)
+
         }
     }, [isCloseAllDropdown]);
+
+    const [isHideAnimationTab, setHideAnimationTab] = useState(false);
+
+    useEffect(() => {
+        if (isHideAnimationTab === true) {
+            onPress(false)
+        }
+    }, [isHideAnimationTab])
+
+    const closePopup = () => {
+        setHideAnimationTab(true)
+        setCloseAllDropdown(true)
+        setOpenCreateOffer(false)
+    }
+    const [previousOfferDetails, setPreviousOfferDetails] = useState({});
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (isOpenCreateOffer === true && isOpenOfferPreview === false) {
+                closePopup()
+            }
+            if (isOpenCreateOffer === false && isOpenOfferPreview === false && isOpenPaySuccesfulModal === false && isOpenPaymentDetails === false) {
+                navigation.goBack()
+            }
+
+            if (isOpenCreateOffer === true && isOpenOfferPreview === true && isOpenPaymentDetails === false) {
+                setOfferDetails(previousOfferDetails)
+
+                setOpenOfferPreview(false)
+
+            }
+            if (isOpenCreateOffer === true && isOpenOfferPreview === true && isOpenPaymentDetails === true) {
+                setOpenPaymentDetails(false)
+            }
+            if (isOpenPaySuccesfulModal === true) {
+                setOpenPaySuccesfulModal(false)
+            }
+            return true
+        })
+        return () => {
+            backHandler.remove()
+        }
+    }, [isOpenCreateOffer, isOpenOfferPreview, isOpenPaySuccesfulModal, isOpenPaymentDetails, previousOfferDetails])
 
     // Is show price in footer
     const [isPriceInFooter, setPriceInFooter] = useState(false);
@@ -226,17 +281,16 @@ const CreateOffer = observer(() => {
             duration: 0,
         })
         // Set reset to default
-        setTimeout(() => {
-            setResetAll(false)
-        }, 0);
+        setResetAll(false)
     }
     // Clear all if payment successful
     useEffect(() => {
         if (isPaySuccesful === true && isOpenCreateOffer === true) {
             clearAllFilters()
-            onPress(false)
+            closePopup()
+            setFirstCreatedOffer(true)
         }
-    }, [isPaySuccesful]);
+    }, [isPaySuccesful, isOpenCreateOffer]);
 
     const onSubmit = (data) => {
         const newOffer = {
@@ -250,6 +304,8 @@ const CreateOffer = observer(() => {
             offerPhoneNumber: phone,
             offerAdditionalInfo: additionalMessageWatch,
         }
+        setPreviousOfferDetails(offerDetails)
+
         setOfferDetails(newOffer)
 
         setOpenOfferPreview(true)
@@ -280,9 +336,7 @@ const CreateOffer = observer(() => {
                 <Header Header >
                     <HeaderClose
                         onPress={() => {
-                            setOpenCreateOffer(false)
-                            onPress(false)
-                            setCloseAllDropdown(true)
+                            closePopup()
                         }}
                     >
                         <CrossBlackIcon width={16} height={16} />

@@ -67,6 +67,8 @@ const OfferAddPaymentDetails = observer(() => {
         console.log("🚀 ~ file: OfferAddPaymentDetails.jsx ~ line 206 ~ onSubmitPaymentDetails ~ data", data)
         setPaymentDetails(data)
         setOpenPaymentDetails(false)
+        setShowingPaymentDetails(false)
+
         onPress(false)
         // Clear input value
         Keyboard.dismiss()
@@ -94,6 +96,7 @@ const OfferAddPaymentDetails = observer(() => {
                     <HeaderClose
                         onPress={() => {
                             setOpenPaymentDetails(false)
+                            setShowingPaymentDetails(false)
                             onPress(false)
                         }}
                     >

@@ -59,7 +59,7 @@ const OfferPreview = observer(({ isOpen }) => {
 
     const route = useRoute();
 
-    const { offerDetails, setOpenOfferPreview, setOpenCreateOffer, setPaySucessful, setSendOffer, isOpenPaymentDetails } = useOfferToMusicianApiStore();
+    const { offerDetails, setOpenOfferPreview, setOpenCreateOffer, setPaySucessful, setSendOffer, setOpenPaySuccesfulModal } = useOfferToMusicianApiStore();
 
     const {
         offerAdditionalInfo,
@@ -80,7 +80,6 @@ const OfferPreview = observer(({ isOpen }) => {
 
     useEffect(() => {
         if (isOpen === true) {
-            console.log("🚀 ~ file: OfferPreview.jsx ~ line 83 ~ useEffect ~ isOpen", isOpen)
             onPress(true)
         }
     }, [isOpen]);
@@ -95,28 +94,13 @@ const OfferPreview = observer(({ isOpen }) => {
 
     const closePopup = () => {
         setHideAnimationTab(true)
-        setTimeout(() => {
-            setHideAnimationTab(false)
-            setOpenOfferPreview(false)
-        }, 600);
+        setOpenOfferPreview(false)
     }
-
-    // useEffect(() => {
-    //     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-    //         if (isOpen === true) {
-    //             console.log('ну шо привет');
-    //             // closePopup()
-    //         }
-    //         return true
-    //     })
-    //     return () => {
-    //         backHandler.remove()
-    //     }
-    // }, [isOpen])
 
     const onSubmit = () => {
         // setOpenCreateOffer(false)
         setPaySucessful(true)
+        setOpenPaySuccesfulModal(true)
         setSendOffer(true)
         closePopup()
     };

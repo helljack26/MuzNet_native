@@ -85,7 +85,7 @@ const OfferDetailsHeaderSheat = observer(() => {
 
     const isKeyboardOpen = isKeyboardShown()
 
-    const { offerDetails, isOpenOfferPreview, setOpenOfferPreview, setOfferDetails, isPaySuccesful, setPaySucessful, isOpenPaymentDetails, setOpenPaymentDetails } = useOfferToMusicianApiStore();
+    const { offerDetails, isOpenPaySuccesfulModal, setOpenPaySuccesfulModal, isFirstCreatedOffer, isOpenOfferPreview, setOpenOfferPreview, setOfferDetails, isPaySuccesful, setPaySucessful, isOpenPaymentDetails, setOpenPaymentDetails } = useOfferToMusicianApiStore();
     const {
         offerAdditionalInfo,
         offerDate,
@@ -96,7 +96,6 @@ const OfferDetailsHeaderSheat = observer(() => {
         offerPricePerHour,
         offerPhoneNumber,
     } = offerDetails;
-
 
     const isDateString = offerDate.string !== undefined && offerDate.string
 
@@ -112,7 +111,6 @@ const OfferDetailsHeaderSheat = observer(() => {
 
     const { windowHeight, windowWidth } = getWindowDimension()
     // Reset state
-    const [isResetAll, setResetAll] = useState(false);
 
     // Animation 
     const { onPress, height } = useAnimateOfferHeader()
@@ -167,18 +165,22 @@ const OfferDetailsHeaderSheat = observer(() => {
     //     }
     // }, [flagType])
 
+    const closePopup = () => {
+        setHideAnimationTab(true)
+        setShowAllDetails(false)
+        setTimeout(() => {
+            setHideAnimationTab(false)
+        }, 600);
+    }
+
     // Before open offer preview I set previous for if goBack I can set previous state for header 
     const [previousOfferDetails, setPreviousOfferDetails] = useState({});
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
             if (isShowAllDetails === true && isOpenOfferPreview === false) {
-                setHideAnimationTab(true)
-                setShowAllDetails(false)
-                setTimeout(() => {
-                    setHideAnimationTab(false)
-                }, 600);
+                closePopup()
             }
-            if (isShowAllDetails === false && isOpenOfferPreview === false && isPaySuccesful === false && isOpenPaymentDetails === false) {
+            if (isShowAllDetails === false && isOpenOfferPreview === false && isOpenPaySuccesfulModal === false && isOpenPaymentDetails === false) {
                 navigation.goBack()
             }
 
@@ -190,47 +192,39 @@ const OfferDetailsHeaderSheat = observer(() => {
                 setValue('offerPricePerHour', previousOfferDetails.offerPricePerHour);
                 setPricePerHourLabel(true)
 
-                setOpenOfferPreview(false)
-                setHideAnimationTab(true)
-                setShowAllDetails(false)
-                setResetAll(true)
                 setOfferDetails(previousOfferDetails)
-                setTimeout(() => {
-                    setHideAnimationTab(false)
-                    setResetAll(false)
-                }, 600);
+                setOpenOfferPreview(false)
+                closePopup()
             }
             if (isShowAllDetails === true && isOpenOfferPreview === true && isOpenPaymentDetails === true) {
                 setOpenPaymentDetails(false)
             }
 
-            if (isPaySuccesful === true) {
-                setPaySucessful(false)
+            if (isOpenPaySuccesfulModal === true) {
+                setOpenPaySuccesfulModal(false)
             }
             return true
         })
         return () => {
             backHandler.remove()
         }
-    }, [isShowAllDetails, isOpenOfferPreview, previousOfferDetails, isPhoneNumberString, offerPricePerHour, isPaySuccesful, isOpenPaymentDetails])
+    }, [isShowAllDetails, isOpenOfferPreview, previousOfferDetails, isPhoneNumberString, offerPricePerHour, isPaySuccesful, isOpenPaymentDetails, isOpenPaySuccesfulModal])
 
     // Set phone number is exist offer
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            if (isPhoneNumberString !== undefined) {
-                setPhone(isPhoneNumberString)
-                setInputPhoneLabel(true)
-                setValue('offerPhoneNumber', isPhoneNumberString);
-            }
-            if (offerPricePerHour !== undefined) {
-                setPricePerHourInput(`${offerPricePerHour}`)
-                setPricePerHourLabel(true)
-                setValue('offerPricePerHour', offerPricePerHour);
-            }
-        });
 
-        return unsubscribe;
-    }, [navigation]);
+        if (isPhoneNumberString !== undefined) {
+            setPhone(isPhoneNumberString)
+            setInputPhoneLabel(true)
+            setValue('offerPhoneNumber', isPhoneNumberString);
+        }
+        if (offerPricePerHour !== undefined) {
+            setPricePerHourInput(`${offerPricePerHour}`)
+            setPricePerHourLabel(true)
+            setValue('offerPricePerHour', offerPricePerHour);
+        }
+
+    }, [isPhoneNumberString, offerPricePerHour]);
 
     // Set shifting input label
     useEffect(() => {
@@ -241,7 +235,6 @@ const OfferDetailsHeaderSheat = observer(() => {
             setInputPhoneLabel(true)
         }
         if (pricePerHourInput.length === 0) {
-
             setPricePerHourLabel(false)
         }
         if (pricePerHourInput.length > 0) {
@@ -304,50 +297,14 @@ const OfferDetailsHeaderSheat = observer(() => {
         isSomeFieldChange
     ]);
 
-    const clearAllFilters = () => {
-        // For components set reset
-        setResetAll(true)
-        Keyboard.dismiss()
-        // Components reset
-        resetField('offerDate')
-        resetField('offerStartTime')
-        resetField('offerEndTime')
-        resetField('offerLocation')
-        resetField('offerPricePerHour')
-        resetField('offerPhoneNumber')
-        resetField('offerAdditionalInfo')
-        getChosenLocation('')
-        setPricePerHourInput('')
-        setPhone('')
-        getChosenDate({
-            milliseconds: '',
-            string: ''
-        })
-        setTimeRange({
-            startTime: {
-                milliseconds: '',
-                string: '',
-            },
-            endTime: {
-                milliseconds: '',
-                string: '',
-            },
-            duration: 0,
-        })
-        // Set reset to default
-        setTimeout(() => {
-            setResetAll(false)
-        }, 0);
-    }
-
     // Clear all if payment successful
-    useEffect(() => {
-        if (isPaySuccesful === true) {
-            // clearAllFilters()
-            onPress(false)
-            setShowAllDetails(false)
-        }
-    }, [isPaySuccesful]);
+    // useEffect(() => {
+    //     if (isPaySuccesful === true && isFirstCreatedOffer === false) {
+    //         console.log('зулиииии');
+    //         onPress(false)
+    //         setShowAllDetails(false)
+    //     }
+    // }, [isPaySuccesful, isFirstCreatedOffer]);
 
     const [showHeaderArrow, setShowHeaderArrow] = useState(true);
     useEffect(() => {
@@ -358,7 +315,6 @@ const OfferDetailsHeaderSheat = observer(() => {
             setTimeout(() => {
                 setShowHeaderArrow(true)
             }, 300);
-
         }
     }, [isShowAllDetails]);
 
@@ -383,12 +339,12 @@ const OfferDetailsHeaderSheat = observer(() => {
         setOfferDetails(newOffer)
         console.log("🚀 ~ file: OfferDetailsHeaderSheat.jsx ~ line 350 ~ onSubmit ~ newOffer", newOffer)
         setOpenOfferPreview(true)
+        closePopup()
         // Clear input value
         // navigation.navigate('ContractorStack', { screen: 'OfferPreviewScreen' })
     };
     useEffect(() => {
         if (isConfirm === true) {
-            console.log("🚀 ~ file: OfferDetailsHeaderSheat.jsx ~ line 382 ~ useEffect ~ isConfirm", isConfirm)
             onSubmit()
             setConfirm(false)
         }
@@ -464,7 +420,6 @@ const OfferDetailsHeaderSheat = observer(() => {
                             <DropSelectCalendar
                                 setFilterDate={getChosenDate}
                                 setCalendarOpen={setCalendarOpen}
-                                isResetAll={isResetAll}
                                 isCloseAllDropdown={isCloseAllDropdown}
                                 placeholderText={'Date'}
                                 isExistedDate={offerDate}
@@ -473,7 +428,6 @@ const OfferDetailsHeaderSheat = observer(() => {
 
                         {/* Set time */}
                         <TimePeriodPicker
-                            isResetAll={isResetAll}
                             setTimeRange={setTimeRange}
                             existedStartTimePlaceholder={offerStartTime}
                             existedEndTimePlaceholder={offerEndTime}
@@ -490,7 +444,6 @@ const OfferDetailsHeaderSheat = observer(() => {
                         <SearchLocationDropSelect
                             setParentShowOpenDrop={setOpenLocationDropList}
                             setFilterLocation={getChosenLocation}
-                            isResetAll={isResetAll}
                             isCloseAllDropdown={isCloseAllDropdown}
                             placeholderText={'Location'}
                             existedLocation={isLocationString}

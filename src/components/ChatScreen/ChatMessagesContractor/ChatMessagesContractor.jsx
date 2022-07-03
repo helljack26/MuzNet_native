@@ -139,7 +139,7 @@ const ChatMessagesContractor = observer(({ newMessage, isContractor }) => {
         }
     }
     // Create offer store
-    const { offerDetails, isSendOffer, setSendOffer, setOpenCreateOffer } = useOfferToMusicianApiStore();
+    const { offerDetails, isSendOffer, setSendOffer, setOpenCreateOffer, isPaySuccesful } = useOfferToMusicianApiStore();
     // Attachment store
     const { cameraPhoto, file, isSendAttached, setSendAttached } = useChatAttachmentStore();
 
@@ -254,10 +254,12 @@ const ChatMessagesContractor = observer(({ newMessage, isContractor }) => {
 
     const [isExistOffer, setExistOffer] = useState(false);
     useEffect(() => {
-        if (offerDetails.offerDate.string !== undefined) {
+        if (offerDetails.offerDate.string.length > 0) {
             setExistOffer(true)
+        } else {
+            setExistOffer(false)
         }
-    }, [offerDetails.offerDate.string]);
+    }, [offerDetails, offerDetails.offerDate.string]);
     return (
         <MessagesContainer
             style={{
@@ -265,7 +267,7 @@ const ChatMessagesContractor = observer(({ newMessage, isContractor }) => {
             }}
         >
             {/* Offer button */}
-            {(!isExistOffer && isContractor === true) && <CreateOfferButton
+            {(!isExistOffer && isPaySuccesful === false && isContractor === true) && <CreateOfferButton
                 onPress={() => {
                     const timeOutDuration = isKeyboardOpen ? 450 : 0
                     isKeyboardOpen && Keyboard.dismiss()

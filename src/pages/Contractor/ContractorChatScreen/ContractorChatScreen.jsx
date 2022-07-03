@@ -34,19 +34,9 @@ import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 const ContractorChatScreen = observer(() => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
-    const { isPaySuccesful, isOpenOfferPreview, isOpenCreateOffer, setPaySucessful } = useOfferToMusicianApiStore();
-    const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+    const { isPaySuccesful, isOpenOfferPreview, isOpenCreateOffer, setOpenPaySuccesfulModal, isOpenPaySuccesfulModal } = useOfferToMusicianApiStore();
 
     const [isWrongModalOpen, setWrongModalOpen] = useState(false);
-
-    useEffect(() => {
-        if (isPaySuccesful === true) {
-            setSuccessModalOpen(true)
-        } else {
-            setSuccessModalOpen(false)
-        }
-    }, [isPaySuccesful]);
-
     return (
         <>
             <StatusBar
@@ -63,12 +53,12 @@ const ContractorChatScreen = observer(() => {
                 }}  >
                 <ChatScreen isContractor={true} />
 
-                {isOpenCreateOffer === true && <CreateOffer />}
+                {isOpenCreateOffer === true && <CreateOffer isOpenCreateOffer={isOpenCreateOffer} />}
 
                 {/* Offer preview */}
                 {isOpenOfferPreview === true && <OfferPreview isOpen={isOpenOfferPreview} />}
 
-                {isSuccessModalOpen === true && <ModalWindow
+                {isOpenPaySuccesfulModal === true && <ModalWindow
                     modalPic={<Image source={IMAGES.GifSuccessCheck}
                         style={{
                             width: '120%',
@@ -78,7 +68,7 @@ const ContractorChatScreen = observer(() => {
                     }
                     title={'Your payment was successful'}
                     advice={'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
-                    setOpen={setPaySucessful}
+                    setOpen={setOpenPaySuccesfulModal}
                     btnText={'Great!'}
                 />}
 

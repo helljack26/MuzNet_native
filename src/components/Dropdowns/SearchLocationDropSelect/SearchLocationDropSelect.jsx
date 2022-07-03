@@ -51,16 +51,15 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
     const [isShiftInputLocationLabel, setShiftInputLocationLabel] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            if (existedLocation !== undefined) {
-                setSelectedLocation(existedLocation)
-                onChangeSearchText(existedLocation)
-                setFilterLocation(existedLocation)
-                setShiftInputLocationLabel(true)
-            }
-        });
-        return unsubscribe;
-    }, [navigation]);
+
+        if (existedLocation !== undefined) {
+            setSelectedLocation(existedLocation)
+            onChangeSearchText(existedLocation)
+            setFilterLocation(existedLocation)
+            setShiftInputLocationLabel(true)
+        }
+
+    }, [existedLocation]);
 
     const [isOpenDropList, setOpenDropList] = useState(false)
 

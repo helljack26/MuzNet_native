@@ -77,18 +77,14 @@ const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, set
     };
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            if (isExistedDate !== undefined) {
-                setPlaceholder(isExistedDate.string)
-                setFilterDate({
-                    milliseconds: isExistedDate.milliseconds,
-                    string: isExistedDate.string,
-                })
-            }
-        });
-
-        return unsubscribe;
-    }, [navigation, isExistedDate]);
+        if (isExistedDate !== undefined) {
+            setPlaceholder(isExistedDate.string)
+            setFilterDate({
+                milliseconds: isExistedDate.milliseconds,
+                string: isExistedDate.string,
+            })
+        }
+    }, [isExistedDate]);
 
     // If resetAll
     useEffect(() => {
@@ -99,7 +95,7 @@ const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, set
             calendarRef.current.resetSelections()
 
         }
-        if (isResetAll === true !== undefined) {
+        if (isResetAll === true && isExistedDate !== undefined) {
             setPlaceholder(isExistedDate.string)
             setFilterDate({
                 milliseconds: isExistedDate.milliseconds,

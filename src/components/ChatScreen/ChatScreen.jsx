@@ -35,14 +35,18 @@ import { observer } from 'mobx-react-lite';
 import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 
 const ChatScreen = observer(({ isContractor }) => {
-    const { offerDetails } = useOfferToMusicianApiStore();
+    const { offerDetails, isPaySuccesful } = useOfferToMusicianApiStore();
 
-    const [isExistOffer, setExistOffer] = useState(false);
+
+    const [isShowConractorDetailsHeader, setExistOffer] = useState(false);
     useEffect(() => {
-        if (offerDetails.offerDate.string !== undefined && isContractor === true) {
+        if (offerDetails.offerDate.string.length > 0 && isContractor === true && isPaySuccesful) {
             setExistOffer(true)
+        } else {
+            setExistOffer(false)
         }
-    }, [offerDetails.offerDate.string, isContractor]);
+
+    }, [offerDetails, isContractor, isPaySuccesful]);
 
     // const navigation = useNavigation();
     // const route = useRoute();
@@ -101,7 +105,7 @@ const ChatScreen = observer(({ isContractor }) => {
             {/* Chat attachment popup */}
             <ChatAttachment />
 
-            {isContractor && <OfferDetailsHeaderSheat />}
+            {isShowConractorDetailsHeader && <OfferDetailsHeaderSheat />}
 
             <ChatHeader
                 setOpenSharedScreen={setOpenSharedScreen}

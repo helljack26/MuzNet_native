@@ -90,21 +90,19 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholde
     const [offerDuration, setOfferDuration] = useState(0);
     // Set placeholder for offer edit
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            if (existedStartTimePlaceholder !== undefined && existedEndTimePlaceholder !== undefined && existedDuration !== undefined) {
-                setExisted(true)
-                setStartTimePlaceholder(existedStartTimePlaceholder.string)
-                setEndTimePlaceholder(existedEndTimePlaceholder.string)
-                setStartTimeMs(existedStartTimePlaceholder.milliseconds)
-                setEndTimeMs(existedEndTimePlaceholder.milliseconds)
-                setCanSetStartTimePlaceholder(true)
-                setCanSetEndTimePlaceholder(true)
-                setOfferDuration(existedDuration)
-            }
-        });
 
-        return unsubscribe;
-    }, [navigation]);
+        if (existedStartTimePlaceholder !== undefined && existedEndTimePlaceholder !== undefined && existedDuration !== undefined) {
+            setExisted(true)
+            setStartTimePlaceholder(existedStartTimePlaceholder.string)
+            setEndTimePlaceholder(existedEndTimePlaceholder.string)
+            setStartTimeMs(existedStartTimePlaceholder.milliseconds)
+            setEndTimeMs(existedEndTimePlaceholder.milliseconds)
+            setCanSetStartTimePlaceholder(true)
+            setCanSetEndTimePlaceholder(true)
+            setOfferDuration(existedDuration)
+        }
+
+    }, [existedStartTimePlaceholder, existedEndTimePlaceholder, existedDuration]);
 
     const setToOfferTimeState = () => {
         return setTimeRange({
