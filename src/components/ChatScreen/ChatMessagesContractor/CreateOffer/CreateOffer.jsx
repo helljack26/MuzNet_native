@@ -15,7 +15,6 @@ import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateCreateOffer } from './useAnimateCreateOffer';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { addDotForNumber } from '@/components/helpers/addDotForNumber'
-import { dateConverter } from '@/components/helpers/dateConverter'
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -63,6 +62,7 @@ const {
 // Store
 import { observer } from 'mobx-react-lite';
 import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
+import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
 const CreateOffer = observer(({ isOpenCreateOffer }) => {
     const navigation = useNavigation();
@@ -86,16 +86,18 @@ const CreateOffer = observer(({ isOpenCreateOffer }) => {
     const {
         offerDetails,
         isOpenOfferPreview,
-        isOpenPaymentDetails,
         setOpenCreateOffer,
         setOpenOfferPreview,
-        setOpenPaymentDetails,
         setOfferDetails,
         isPaySuccesful,
         isOpenPaySuccesfulModal,
         setOpenPaySuccesfulModal,
         setFirstCreatedOffer
     } = useOfferToMusicianApiStore();
+    const {
+        isOpenPaymentDetails,
+        setOpenPaymentDetails,
+    } = usePaymentAndPayoutApiStore();
 
     const isKeyboardOpen = isKeyboardShown()
 

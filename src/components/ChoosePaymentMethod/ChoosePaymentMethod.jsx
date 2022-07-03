@@ -29,17 +29,22 @@ const {
     AddPaymentRow,
     AddPaymentRowText,
 } = style;
+import { M } from '@/res/mixin'
+const {
+    BlackBtn,
+    BlackBtnText,
+} = M;
 // Store
 import { observer } from 'mobx-react-lite';
-import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
+import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
-const ChoosePaymentMethod = observer(({ setShowSubmitButton }) => {
+const ChoosePaymentMethod = observer(({ setShowSubmitButton, isAccountScreen }) => {
+    // if account we disable choose option
     const { windowHeight, windowWidth } = getWindowDimension()
-    const { isOpenPaymentDetails, setOpenPaymentDetails, paymentDetails } = useOfferToMusicianApiStore();
+    const { isOpenPaymentDetails, setOpenPaymentDetails, paymentDetails } = usePaymentAndPayoutApiStore();
 
     // Local state
     const [localPaymentMethods, setLocalPaymentMethods] = useState([{
-
         cardCvvCode: 696,
         cardExpiryDate: "04/29",
         cardNumber: "5555 6666 7777 8888",
@@ -57,18 +62,19 @@ const ChoosePaymentMethod = observer(({ setShowSubmitButton }) => {
     }, [paymentDetails]);
 
     return (
-
         <Container>
             {localPaymentMethods.length > 0 && localPaymentMethods.map((payment, id) => {
-                const isActive = id === localPaymentMethodActiveId
+                const isActive = id === localPaymentMethodActiveId && !isAccountScreen
                 const lastFourDigitOfNumber = payment.cardNumber.slice(-4, payment.cardNumber.length)
-
                 return (
                     <SelectItem
+                        activeOpacity={isAccountScreen ? 1 : 0.2}
                         key={id}
                         onPress={() => {
-                            setLocalPaymentMethodActiveId(id)
-                            setShowSubmitButton(true)
+                            if (!isAccountScreen) {
+                                setLocalPaymentMethodActiveId(id)
+                                setShowSubmitButton(true)
+                            }
                         }}
                         isActive={isActive}
                     >
@@ -76,16 +82,17 @@ const ChoosePaymentMethod = observer(({ setShowSubmitButton }) => {
                             <MasterCardBankIcon width={24} height={17} />
                         </BankCardIcon>
 
-                        <SelectText>Card ending is {lastFourDigitOfNumber}</SelectText>
+                        <SelectText>Card ending in {lastFourDigitOfNumber}</SelectText>
 
-                        <CheckBox isActive={isActive}>
+
+                        {!isAccountScreen && <CheckBox isActive={isActive}>
                             {isActive === true && <RoundBlackCheckIcon width={20} height={20} />}
-                        </CheckBox>
+                        </CheckBox>}
                     </SelectItem>)
             })}
 
             {/* Add payment method */}
-            <AddPayment
+            {!isAccountScreen ? <AddPayment
                 onPress={() => { setOpenPaymentDetails(true) }}
             >
                 <AddPaymentBg>
@@ -103,7 +110,20 @@ const ChoosePaymentMethod = observer(({ setShowSubmitButton }) => {
                     </AddPaymentRowText>
                 </AddPaymentRow>
             </AddPayment>
+                :
+                <BlackBtn
+                    style={{
+                        marginTop: 16
+                    }}
+                    onPress={() => { setOpenPaymentDetails(true) }}
+                >
 
+                    <BlackBtnText>
+                        Add payment method
+                    </BlackBtnText>
+
+                </BlackBtn>
+            }
         </Container>
 
     )

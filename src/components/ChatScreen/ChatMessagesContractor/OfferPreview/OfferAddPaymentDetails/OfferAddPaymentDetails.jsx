@@ -1,24 +1,17 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, BackHandler } from 'react-native';
-import { useForm, Controller } from "react-hook-form";
+import { Animated, Keyboard } from 'react-native';
 // Components
 import AddPaymentDetails from '@/components/AddPaymentDetails'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateCreateOffer } from './useAnimateCreateOffer';
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 // Images
 import IMAGES from '@/res/images'
 const {
     CrossBlackIcon,
-    WarningBlackIcon,
 } = IMAGES;
-// Variables
-import C from '@/res/colors'
-import F from '@/res/fonts'
-import { S } from '@/res/strings'
+
 // Styles
 import { style } from './style'
 const {
@@ -30,15 +23,12 @@ const {
 // Store
 import { observer } from 'mobx-react-lite';
 import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
+import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
 const OfferAddPaymentDetails = observer(() => {
-    const navigation = useNavigation();
 
-    const route = useRoute();
-
-    const { isOpenPaymentDetails, isOpenOfferPreview, setOpenPaymentDetails, setPaymentDetails } = useOfferToMusicianApiStore();
-
-    const isKeyboardOpen = isKeyboardShown()
+    const { isOpenOfferPreview } = useOfferToMusicianApiStore();
+    const { isOpenPaymentDetails, setOpenPaymentDetails, setPaymentDetails } = usePaymentAndPayoutApiStore();
 
     const { windowHeight, windowWidth } = getWindowDimension()
     const { onPress, height } = useAnimateCreateOffer()
@@ -61,7 +51,6 @@ const OfferAddPaymentDetails = observer(() => {
             onPress(false)
         }
     }, [isShowingPaymentDetails, isOpenPaymentDetails]);
-
 
     const onSubmitPaymentDetails = (data) => {
         console.log("🚀 ~ file: OfferAddPaymentDetails.jsx ~ line 206 ~ onSubmitPaymentDetails ~ data", data)

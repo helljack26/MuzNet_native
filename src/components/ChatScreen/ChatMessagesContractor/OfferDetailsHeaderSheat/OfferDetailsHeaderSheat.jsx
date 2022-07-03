@@ -64,6 +64,7 @@ const {
 // Store
 import { observer } from 'mobx-react-lite';
 import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
+import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
 const OfferDetailsHeaderSheat = observer(() => {
 
@@ -84,8 +85,23 @@ const OfferDetailsHeaderSheat = observer(() => {
     const navigation = useNavigation();
 
     const isKeyboardOpen = isKeyboardShown()
+    const {
+        isOpenPaymentDetails,
+        setOpenPaymentDetails,
+    } = usePaymentAndPayoutApiStore();
 
-    const { offerDetails, isOpenPaySuccesfulModal, setOpenPaySuccesfulModal, isFirstCreatedOffer, isOpenOfferPreview, setOpenOfferPreview, setOfferDetails, isPaySuccesful, setPaySucessful, isOpenPaymentDetails, setOpenPaymentDetails } = useOfferToMusicianApiStore();
+    const {
+        offerDetails,
+        isOpenPaySuccesfulModal,
+        setOpenPaySuccesfulModal,
+        isFirstCreatedOffer,
+        isOpenOfferPreview,
+        setOpenOfferPreview,
+        setOfferDetails,
+        isPaySuccesful,
+        setPaySucessful,
+    } = useOfferToMusicianApiStore();
+
     const {
         offerAdditionalInfo,
         offerDate,
@@ -196,7 +212,7 @@ const OfferDetailsHeaderSheat = observer(() => {
                 setOpenOfferPreview(false)
                 closePopup()
             }
-            if (isShowAllDetails === true && isOpenOfferPreview === true && isOpenPaymentDetails === true) {
+            if (isOpenOfferPreview === true && isOpenPaymentDetails === true) {
                 setOpenPaymentDetails(false)
             }
 

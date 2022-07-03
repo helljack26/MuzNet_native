@@ -1,8 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, Keyboard, View, BackHandler, KeyboardAvoidingView, Platform } from 'react-native';
-import { useForm, Controller } from "react-hook-form";
+import { useRoute } from '@react-navigation/native';
+import { Animated, View } from 'react-native';
 // Components
 import ChoosePaymentMethod from '@/components/ChoosePaymentMethod'
 import OfferAddPaymentDetails from './OfferAddPaymentDetails'
@@ -11,7 +10,6 @@ import OfferAddPaymentDetails from './OfferAddPaymentDetails'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-import { addDotForNumber } from '@/components/helpers/addDotForNumber'
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -20,8 +18,7 @@ const {
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
-import F from '@/res/fonts'
-import { S } from '@/res/strings'
+
 // Styles
 import { style } from './style'
 const {

@@ -25,7 +25,7 @@ export const useAnimateCreateOffer = () => {
     }
 
     const inputRange = Object.values(animate_state)
-    const height = value.interpolate({ inputRange, outputRange: ['0%', '90%'] })
+    const width = value.interpolate({ inputRange, outputRange: ['0%', '100%'] })
 
-    return { height, onPress }
+    return { width, onPress }
 }

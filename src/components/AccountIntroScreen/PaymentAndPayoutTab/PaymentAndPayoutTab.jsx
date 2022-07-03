@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { Animated, KeyboardAvoidingView, Platform } from 'react-native';
+import { Animated, KeyboardAvoidingView, BackHandler } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 // Components
 import AccountsTabHeader from '../AccountsTabHeader'
@@ -41,8 +41,8 @@ const {
 // Store
 import { observer } from 'mobx-react-lite';
 import { runInAction, set } from 'mobx';
-
 import { useAccountApiStore } from '@/stores/AccountApi';
+import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
 const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
@@ -57,12 +57,49 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
 
     // Store
     const { contractorAccountDataApi, musicianAccountDataApi, setOpenTabs } = useAccountApiStore();
+    const { isOpenPaymentDetails, setOpenPaymentDetails, paymentDetails, setClosePaymentDetails } = usePaymentAndPayoutApiStore();
+
+    // Payments state
+    const [isOpenPayments, setOpenPayments] = useState(false);
+    const [isClosePayments, setClosePayments] = useState(false);
 
     // Handler for native back button
     const tabNameToClose = 'Payments and Payouts'
-    backHandler(onPress, setOpenTabs, tabNameToClose);
-    // Paymeets state
-    const [isOpenPayments, setOpenPayments] = useState(false);
+    const [isHideAnimationTab, setHideAnimationTab] = useState(false);
+
+    useEffect(() => {
+        if (isHideAnimationTab === true) {
+            onPress(false)
+        }
+    }, [isHideAnimationTab])
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (isOpenTab && !isOpenPayments) {
+                setHideAnimationTab(true)
+                setTimeout(() => {
+                    setOpenTabs({
+                        tabName: tabNameToClose,
+                        isOpen: false
+                    })
+                }, 400);
+            }
+            if (isOpenTab && isOpenPayments && !isOpenPaymentDetails) {
+                setClosePayments(true)
+                setTimeout(() => {
+                    setOpenPayments(false)
+                    setClosePayments(false)
+                }, 400);
+            }
+            if (isOpenTab && isOpenPayments && isOpenPaymentDetails) {
+                setClosePaymentDetails(true)
+            }
+            return true
+        })
+        return () => {
+            backHandler.remove()
+        }
+    }, [isOpenPayments, isOpenTab, isOpenPaymentDetails])
+
 
     // Currency state
     const [isOpenCurrency, setOpenCurrency] = useState(false);
@@ -90,8 +127,8 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
-            width: windowWidth,
-            // width,
+            // width: windowWidth,
+            width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,
@@ -156,8 +193,8 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
 
             {/* Payment Methods */}
             {isOpenPayments && <PaymentMethods
-                isPayments={true}
                 isOpen={isOpenPayments}
+                isClose={isClosePayments}
                 setOpen={setOpenPayments}
             />
             }

@@ -3,11 +3,6 @@ import { useState, useEffect } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
-// Components
-import DropSelectCalendar from '@/components/Dropdowns/DropSelectCalendar'
-import TimePeriodPicker from '@/components/TimePeriodPicker'
-import SearchLocationDropSelect from '@/components/Dropdowns/SearchLocationDropSelect'
-import DropFlagSelect from '@/pages/SignUp/SignUpScreen/DropFlagSelect'
 
 // Helpers
 import MaskInput from 'react-native-mask-input';

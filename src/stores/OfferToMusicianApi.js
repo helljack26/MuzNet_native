@@ -70,12 +70,10 @@ class OfferToMusicianApi {
     isOpenCreateOffer = false
     isFirstCreatedOffer = false
     isOpenOfferPreview = false
-    isOpenPaymentDetails = false
     isPaySuccesful = false
     isOpenPaySuccesfulModal = false
     isPayError = false
 
-    paymentDetails = {}
     constructor() {
         makeAutoObservable(this, {
             offerDetails: observable,
@@ -84,7 +82,6 @@ class OfferToMusicianApi {
             isOpenCreateOffer: observable,
             isFirstCreatedOffer: observable,
             isOpenOfferPreview: observable,
-            isOpenPaymentDetails: observable,
 
             isPaySuccesful: observable,
             isOpenPaySuccesfulModal: observable,
@@ -95,8 +92,6 @@ class OfferToMusicianApi {
             setSendOffer: action.bound,
             setOpenOfferPreview: action.bound,
             setFirstCreatedOffer: action.bound,
-            setOpenPaymentDetails: action.bound,
-            setPaymentDetails: action.bound,
             setPaySucessful: action.bound,
             setOpenPaySuccesfulModal: action.bound,
             setPayError: action.bound,
@@ -117,13 +112,6 @@ class OfferToMusicianApi {
         this.isOpenOfferPreview = boolean
     }
 
-    setOpenPaymentDetails(boolean) {
-        this.isOpenPaymentDetails = boolean
-    }
-
-    setPaymentDetails(details) {
-        this.paymentDetails = details
-    }
     setPaySucessful(boolean) {
         this.isPaySuccesful = boolean
     }

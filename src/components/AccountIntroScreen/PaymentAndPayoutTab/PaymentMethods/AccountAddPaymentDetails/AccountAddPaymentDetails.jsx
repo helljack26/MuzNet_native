@@ -13,7 +13,7 @@ import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import IMAGES from '@/res/images'
 const {
     CrossBlackIcon,
-    WarningBlackIcon,
+    GoBackIcon,
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
@@ -29,24 +29,35 @@ const {
 } = style;
 // Store
 import { observer } from 'mobx-react-lite';
-import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
+import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
 const OfferAddPaymentDetails = observer(() => {
     const navigation = useNavigation();
 
     const route = useRoute();
 
-    const { isOpenPaymentDetails, setOpenPaymentDetails, setPaymentDetails } = useOfferToMusicianApiStore();
+    const { isOpenPaymentDetails, setOpenPaymentDetails, setPaymentDetails, isClosePaymentDetails, setClosePaymentDetails } = usePaymentAndPayoutApiStore();
 
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
-    const { onPress, height } = useAnimateCreateOffer()
+    const { onPress, width } = useAnimateCreateOffer()
     useEffect(() => {
         if (isOpenPaymentDetails === true) {
             onPress(true)
         }
     }, [isOpenPaymentDetails]);
+    // Close tab
+    const closeTab = () => {
+        onPress(false)
+        setTimeout(() => {
+            setClosePaymentDetails(false)
+        }, 600);
+    }
+
+    useEffect(() => {
+        if (isClosePaymentDetails === true) { closeTab() }
+    }, [isClosePaymentDetails]);
 
     const onSubmitPaymentDetails = (data) => {
         console.log("🚀 ~ file: OfferAddPaymentDetails.jsx ~ line 206 ~ onSubmitPaymentDetails ~ data", data)
@@ -61,18 +72,21 @@ const OfferAddPaymentDetails = observer(() => {
     return (
         <Animated.View style={{
             zIndex: 1000,
-            height,
-            // height: '90%',
-            width: windowWidth,
+            height: windowHeight + 50,
+            // width: windowWidth,
+            width,
             justifyContent: 'center',
             position: "absolute",
-            left: 0,
+            top: 0,
             bottom: 0,
             right: 0,
         }}
         >
             <FilterContainer
-                style={{ elevation: 100 }}>
+                style={{
+                    height: windowHeight,
+                    width: windowWidth,
+                }}>
 
                 {/* Header */}
                 <Header >
@@ -82,11 +96,12 @@ const OfferAddPaymentDetails = observer(() => {
                             onPress(false)
                         }}
                     >
-                        <CrossBlackIcon width={16} height={16} />
+
+                        <GoBackIcon width={12} height={21} />
                     </HeaderClose>
 
                     <HeaderTitle>
-                        Add Payment Details
+                        Add Card Details
                     </HeaderTitle>
                 </Header>
 

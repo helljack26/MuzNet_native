@@ -5,7 +5,7 @@ import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, Platform } f
 import { useForm, Controller } from "react-hook-form";
 // Components
 import ChoosePaymentMethod from '@/components/ChoosePaymentMethod'
-import OfferAddPaymentDetails from './OfferAddPaymentDetails'
+import AccountAddPaymentDetails from './AccountAddPaymentDetails'
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
@@ -55,30 +55,34 @@ const {
 import { observer } from 'mobx-react-lite';
 import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 
-const PaymentMethods = observer(({ isPayments, isOpen, setOpen }) => {
-
-    const route = useRoute();
+const PaymentMethods = observer(({ isPayments, isOpen, isClose, setOpen }) => {
 
     const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
+
     const { onPress, width } = useAnimateOfferPreview()
 
     useEffect(() => {
-        if (isOpen === true) {
-            onPress(true)
-        }
+        if (isOpen === true) { onPress(true) }
     }, [isOpen]);
+    // Close tab
+    const closeTab = () => {
+        onPress(false)
+        setTimeout(() => {
+            setOpen(false)
+        }, 600);
+    }
 
-    // Is show submit button
-    const [isShowSubmitButton, setShowSubmitButton] = useState(false);
-
-
+    useEffect(() => {
+        if (isClose === true) { closeTab() }
+    }, [isClose]);
 
     return (
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
+            // width: windowWidth,
             width,
             justifyContent: 'center',
             position: "absolute",
@@ -98,17 +102,14 @@ const PaymentMethods = observer(({ isPayments, isOpen, setOpen }) => {
                 <Header >
                     <HeaderClose
                         onPress={() => {
-                            onPress(false)
-                            setTimeout(() => {
-                                setOpen(false)
-                            }, 600);
+                            closeTab()
                         }}
                     >
-                        <GoBackIcon width={9} height={16} />
+                        <GoBackIcon width={12} height={21} />
                     </HeaderClose>
 
                     <HeaderTitle>
-                        Offer Preview
+                        Add a Payment Method
                     </HeaderTitle>
                 </Header>
                 {/* Secure message */}
@@ -118,10 +119,10 @@ const PaymentMethods = observer(({ isPayments, isOpen, setOpen }) => {
                     {/* Сhoose payment method */}
                     <OfferPayment>
                         <OfferDetailsTitle>
-                            Choose payment method:
+                            Use a payment method to make purchases on MuzNet
                         </OfferDetailsTitle>
 
-                        <ChoosePaymentMethod setShowSubmitButton={setShowSubmitButton} />
+                        <ChoosePaymentMethod isAccountScreen={true} />
                     </OfferPayment>
 
                     {/* Empty block if open keyboard */}
@@ -137,7 +138,7 @@ const PaymentMethods = observer(({ isPayments, isOpen, setOpen }) => {
 
 
             {/* Payment details  */}
-            <OfferAddPaymentDetails />
+            <AccountAddPaymentDetails />
 
         </Animated.View >
     )
