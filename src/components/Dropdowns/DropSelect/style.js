@@ -9,7 +9,6 @@ margin-top: 22px;
 `;
 const Drop = styled.Pressable`
 width: 100%;
-
 `;
 const DropHeader = styled.Pressable`
 border-radius: 6px;
@@ -22,9 +21,7 @@ flex-direction: row;
 justify-content: space-between;
 align-items: center;
 padding: 0px 16px;
-
 z-index: 1000;
-
 `;
 const ArrowBlock = styled.View`
 transform: ${props => props.isOpen ? 'rotate(90deg)' : 'rotate(-90deg)'};
@@ -40,7 +37,6 @@ border-top-width: 0px ;
 left: 0px;
 z-index: 999;
 border-radius: 6px;
-
 `;
 const OptionsList = styled.View`
 border-radius: 6px;

@@ -9,6 +9,7 @@ const {
 } = IMAGES;
 // Styles
 import { style } from './style'
+import C from '@/res/colors'
 
 const {
     DropBlock,
@@ -48,7 +49,11 @@ const DropSelect = ({ isResetAll, selectedValue, toggling, isOpen, onSelect, dro
                         elevation: isOpen === true ? 5 : 0,
                     }}
                     onPress={() => toggling(!isOpen)} >
-                    <OptionText isHeader={true}>
+                    <OptionText
+                        style={{
+                            color: dropHeader === selectedValue ? C.sBlack : C.black,
+                        }}
+                        isHeader={true}>
                         {mainHeader}
                     </OptionText>
                     <ArrowBlock isOpen={isOpen}>

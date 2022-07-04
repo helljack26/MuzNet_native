@@ -163,7 +163,6 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
 
             {isOpenPersonalInfoTab === true ? isContractor === false && <PersonalMusicianInfoTab isOpenTab={isOpenPersonalInfoTab} /> : null}
 
-
             {/* Change password tab */}
             {isOpenChangePasswordTab === true && <ChangePasswordTab isOpenTab={isOpenChangePasswordTab} />}
 

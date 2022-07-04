@@ -446,7 +446,7 @@ const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView 
                         <PricePerHourValue>{userCurrencyType}{userPricePerHour}</PricePerHourValue>
                         <PricePerHourText> / hour</PricePerHourText>
                     </ContainerPerHour>
-                    <ButtonSubmit
+                    {!isForContractorFromAccountView && <ButtonSubmit
                         onPress={() => {
                             setOpenSendMessage(true)
                         }}
@@ -457,7 +457,7 @@ const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView 
                                 'Send Offer'
                             }
                         </ButtonSubmitText>
-                    </ButtonSubmit>
+                    </ButtonSubmit>}
                 </ContentBlockRow>
             </ContentBlock>
         </CardContainer>

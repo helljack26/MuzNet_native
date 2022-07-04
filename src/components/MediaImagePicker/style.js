@@ -7,8 +7,13 @@ const MediaContainer = styled.View`
 width: 100%;
 padding: 0px 10px;
 `;
-const MediaContainerTitle = styled(M.TitleBold20)`
+const MediaContainerTitle = styled(M.TitleBold18)`
+margin-bottom: 8px;
+margin-left: 6px;
+`;
+const MediaContainerSubTitle = styled(M.PlainText17)`
 margin-bottom: 16px;
+color: ${C.cyanGray};
 margin-left: 6px;
 `;
 const MediaBlock = styled.View`
@@ -63,6 +68,7 @@ export const style = {
     MediaImg: MediaImg,
     MediaImgBlock: MediaImgBlock,
     MediaContainerTitle: MediaContainerTitle,
+    MediaContainerSubTitle: MediaContainerSubTitle,
     MediaDeleteButton: MediaDeleteButton,
     MediaImgAddButton: MediaImgAddButton,
     MediaImgAddButtonText: MediaImgAddButtonText,

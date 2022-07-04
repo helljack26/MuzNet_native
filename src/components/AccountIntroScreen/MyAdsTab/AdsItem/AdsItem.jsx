@@ -36,8 +36,15 @@ const {
     BlackBtnText,
 } = M;
 
-const AdsItem = ({ data, isDisableBottomMargin, setScrollToTop }) => {
+import { observer } from 'mobx-react-lite';
+import { runInAction, set } from 'mobx';
+import { useAccountApiStore } from '@/stores/AccountApi';
+
+const AdsItem = observer(({ data, isDisableBottomMargin, setScrollToTop }) => {
     if (data === undefined) return null
+
+    const { contractorAccountDataApi, setOpenTabs, setAdIdForEdit } = useAccountApiStore();
+
     const navigation = useNavigation();
 
     const {
@@ -134,20 +141,26 @@ const AdsItem = ({ data, isDisableBottomMargin, setScrollToTop }) => {
                 </ItemInfo>
             </ItemRow>
 
+
             <BlackBtn
                 style={{
                     height: 48,
                     borderRadius: 8,
                 }}
             // TODO тут с навигейтить на проут май ад экран
-            // onPress={() => { }} 
+            // onPress={() => { }} r
             >
                 <BlackBtnText>Promote My Ad</BlackBtnText>
             </BlackBtn>
 
             <AddPayment
                 onPress={() => {
-                    // setOpenPaymentDetails(true) 
+                    setAdIdForEdit(id)
+                    setOpenTabs({
+                        tabName: 'Edit ad',
+                        isOpen: true
+                    })
+
                 }}
             >
                 <EditBlackIcon width={16} height={16} />
@@ -158,6 +171,6 @@ const AdsItem = ({ data, isDisableBottomMargin, setScrollToTop }) => {
         </ItemContainer>
 
     );
-}
+})
 
 export default AdsItem;

@@ -71,7 +71,6 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
                 setParentShowOpenDrop(false)
             }
         }
-
     }, [isOpenDropList]);
 
     useEffect(() => {
@@ -140,10 +139,12 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
 
     useEffect(() => {
         if (isCloseAllDropdown === true) {
-            onChangeSearchText('')
-
+            setLocationList([])
+            const item = jsLocationList[0]
+            onChangeSearchText(item)
+            setSelectedLocation(item)
+            setFilterLocation(item)
             Keyboard.dismiss()
-
         }
     }, [isCloseAllDropdown]);
     return (

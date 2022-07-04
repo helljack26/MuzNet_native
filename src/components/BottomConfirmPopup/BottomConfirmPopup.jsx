@@ -53,7 +53,7 @@ const BottomConfirmPopup = ({ isOpenBottomPopup, setOpenBottomPopup, setConfirm,
         setHideAnimationTab(true)
         setTimeout(() => {
             setOpenBottomPopup(false)
-        }, 600);
+        }, 500);
     }
 
     useEffect(() => {

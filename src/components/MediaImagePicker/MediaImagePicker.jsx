@@ -20,6 +20,7 @@ import { style } from './style'
 const {
     MediaContainer,
     MediaContainerTitle,
+    MediaContainerSubTitle,
     MediaBlock,
     MediaImg,
     MediaImgBlock,
@@ -28,10 +29,12 @@ const {
     MediaImgAddButtonText,
 } = style;
 
-const MediaImagePicker = ({ userImages, setNewUserImages }) => {
+const MediaImagePicker = ({ userImages, setNewUserImages, isAdCreateOrEdit }) => {
 
     const { windowHeight, windowWidth } = getWindowDimension()
     const imageBlockSize = (windowWidth - 56) / 3
+    // Hide button for ad if already added 4 image
+    const [isHideAddButton, setHideAddButton] = useState(false);
 
     //New user image handler 
     const pickImage = async () => {
@@ -55,17 +58,28 @@ const MediaImagePicker = ({ userImages, setNewUserImages }) => {
         setNewUserImages(filteredImages)
     }
 
+    useEffect(() => {
+        if (userImages.length === 4 && isAdCreateOrEdit === true) {
+            setHideAddButton(true)
+        } else {
+            setHideAddButton(false)
+        }
+    }, [userImages, isAdCreateOrEdit]);
     return (
         <MediaContainer>
             <MediaContainerTitle>
                 Media
             </MediaContainerTitle>
 
+            {isAdCreateOrEdit === true && <MediaContainerSubTitle>
+                You can upload up to 4 photos
+            </MediaContainerSubTitle>}
+
             <MediaBlock>
 
                 {userImages.map((image, id) => {
                     const imageSource = image.uri !== undefined ? { uri: image.uri } : image
-                    const isFirstImage = id === 0
+                    const isFirstImage = id === 0 && !isAdCreateOrEdit
                     return (
                         <MediaImgBlock
                             key={id}
@@ -87,7 +101,8 @@ const MediaImagePicker = ({ userImages, setNewUserImages }) => {
                     )
                 })}
 
-                <MediaImgAddButton
+                {/* // Hide button for ad if already added 4 image */}
+                {!isHideAddButton && <MediaImgAddButton
                     style={{
                         width: imageBlockSize,
                         height: imageBlockSize,
@@ -100,7 +115,7 @@ const MediaImagePicker = ({ userImages, setNewUserImages }) => {
                         Add new
                     </MediaImgAddButtonText>
                 </MediaImgAddButton>
-
+                }
             </MediaBlock>
 
         </MediaContainer>

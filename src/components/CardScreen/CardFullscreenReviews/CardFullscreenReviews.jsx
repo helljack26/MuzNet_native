@@ -52,10 +52,10 @@ const CardFullscreenReviews = ({ cardReviews, fullscreenReviewState, setFullscre
             setTimeout(() => {
                 setScrollToIndex(fullscreenReviewState.initialReview)
                 scrollHandler()
-                setActiveReview(true)
-                setTimeout(() => {
-                    setActiveReview(false)
-                }, 2000);
+                // setActiveReview(true)
+                // setTimeout(() => {
+                //     setActiveReview(false)
+                // }, 2000);
             }, 50);
         }
     }, [fullscreenReviewState.isOpen, scrollToIndex]);

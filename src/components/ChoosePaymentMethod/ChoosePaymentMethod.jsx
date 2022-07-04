@@ -71,15 +71,14 @@ const ChoosePaymentMethod = observer(({ setShowSubmitButton, isAccountScreen }) 
             }
             {localPaymentMethods.length > 0 && localPaymentMethods.map((payment, id) => {
                 const isFirst = id === 0
-                const isActive = id === localPaymentMethodActiveId && !isAccountScreen
+                const isActive = id === localPaymentMethodActiveId
                 const lastFourDigitOfNumber = payment.cardNumber.slice(-4, payment.cardNumber.length)
                 return (
                     <SelectItem
-                        activeOpacity={isAccountScreen ? 1 : 0.2}
                         key={id}
                         onPress={() => {
+                            setLocalPaymentMethodActiveId(id)
                             if (!isAccountScreen) {
-                                setLocalPaymentMethodActiveId(id)
                                 setShowSubmitButton(true)
                             }
                         }}
@@ -93,7 +92,7 @@ const ChoosePaymentMethod = observer(({ setShowSubmitButton, isAccountScreen }) 
 
                         <CheckBox isActive={isActive}>
                             {(isFirst && localPaymentMethodActiveId === undefined) && <RoundBlackCheckIcon width={24} height={24} />}
-                            {(isActive) && <RoundBlackCheckIcon width={24} height={24} />}
+                            {isActive && <RoundBlackCheckIcon width={24} height={24} />}
                         </CheckBox>
                     </SelectItem>)
             })}

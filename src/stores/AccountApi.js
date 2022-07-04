@@ -31,12 +31,20 @@ class AccountApi {
                 userPricePerHour: 100,
                 userCurrencyType: '$',
                 adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
-                adEventTime: {
-                    eventStart: 1661486400000,
-                    eventEnd: 1661544000000,
+                adDate: {
+                    milliseconds: 55800000,
+                    string: 'Wednesday, Jun 29',
+                },
+                eventStart: {
+                    milliseconds: 55800000,
+                    string: "03:30pm",
+                },
+                eventEnd: {
+                    milliseconds: 73800000,
+                    string: "06:30pm",
 
                 },
-                adTitle: "Aloft Asheville ",
+                adTitle: "Aloft Asheville",
                 adLocation: "Victoria, Ballarat",
                 adAddress: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
                 coordinate: {
@@ -46,11 +54,11 @@ class AccountApi {
                     longitudeDelta: 0.040142817690068,
                 },
                 willingToTravel: true,
-                adTypeOfMusician: ['Band', 'Musician'],
+                adTypeOfMusician: 'Musician',
                 adSkills: {
                     singByEar: true,
                     playByEar: true,
-                    readSheetMusic: true,
+                    readSheetMusic: false,
                 },
                 adGenres: ["Classical", "Jazz", "Pop",],
                 adMusicalInstrument: ["Harp", "Piano"],
@@ -105,11 +113,19 @@ class AccountApi {
                 userPricePerHour: 150,
                 userCurrencyType: '$',
                 adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
-                adEventTime: {
-                    eventStart: 1661533200000,
-                    eventEnd: 1661544000000,
-
+                adDate: {
+                    milliseconds: 55800000,
+                    string: 'Wednesday, Jun 29',
                 },
+                eventStart: {
+                    milliseconds: 55800000,
+                    string: "03:30pm",
+                },
+                eventEnd: {
+                    string: "06:30pm",
+                    milliseconds: 73800000,
+                },
+
                 adTitle: "Le Bernandin",
                 adLocation: "Victoria, Ballarat",
                 adAddress: "1632 Spruce Street, Berkeley, CA 94709 Berkeley California United States",
@@ -120,7 +136,7 @@ class AccountApi {
                     longitudeDelta: 0.040142817690068,
                 },
                 willingToTravel: true,
-                adTypeOfMusician: ['Band', 'Musician'],
+                adTypeOfMusician: 'Band',
                 adSkills: {
                     singByEar: true,
                     playByEar: true,
@@ -220,6 +236,8 @@ class AccountApi {
     isOpenChangePasswordTab = false
     isOpenNotificationTab = false
     isOpenMyAdsTab = false
+    isOpenEditAd = false
+    adIdForEdit = 0
     isOpenTermOfServiceTab = false
 
     constructor() {
@@ -233,9 +251,12 @@ class AccountApi {
             isOpenChangePasswordTab: observable,
             isOpenNotificationTab: observable,
             isOpenMyAdsTab: observable,
+            isOpenEditAd: observable,
+            adIdForEdit: observable,
             isOpenTermOfServiceTab: observable,
 
             setOpenTabs: action.bound,
+            setAdIdForEdit: action.bound,
             changeContactorAccountData: action.bound,
         })
     }
@@ -268,6 +289,10 @@ class AccountApi {
                 this.isOpenMyAdsTab = action;
                 break;
 
+            case "Edit ad":
+                this.isOpenEditAd = action;
+                break;
+
             case "Terms of Service":
                 this.isOpenTermOfServiceTab = action;
                 break;
@@ -277,7 +302,10 @@ class AccountApi {
         }
     }
 
+    setAdIdForEdit(id) {
+        this.adIdForEdit = id;
 
+    }
 }
 
 const AccountApiStore = new AccountApi();

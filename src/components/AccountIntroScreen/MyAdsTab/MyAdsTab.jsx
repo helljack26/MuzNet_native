@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 // Components
 import AccountsTabHeader from '../AccountsTabHeader'
 import AdsItem from './AdsItem'
+import EditAd from './EditAd'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
@@ -21,7 +22,11 @@ import C from '@/res/colors'
 import F from '@/res/fonts'
 import { S } from '@/res/strings'
 import { M } from '@/res/mixin'
-
+const {
+    PlainText17,
+    BlackBtn,
+    BlackBtnText,
+} = M
 // Styles
 import styled from 'styled-components/native';
 const FilterContainer = styled.View`
@@ -43,22 +48,10 @@ margin-bottom: 16px;
 height: 1px;
 border-radius: 1px;
 `;
-const AddPayment = styled.TouchableOpacity`
-width: 100%;
-height: 56px;
-margin-bottom: 16px;
-border-radius: 12px;
-padding: 0px 20px;
-display: flex;
-align-items: center;
-flex-direction: row;
-border-color: ${C.lightGray};
-border-width: 1px;
-border-style: solid;
+const NoAdsText = styled(M.PlainText17)`
+margin-bottom: 24px;
 `;
-const AddPaymentRowText = styled(M.MediumText15)`
-margin-left: 12px;
-`;
+
 // Store
 import { observer } from 'mobx-react-lite';
 import { runInAction, set } from 'mobx';
@@ -71,7 +64,7 @@ const MyAdsTab = observer(({ isOpenTab }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
     // Store
-    const { setOpenTabs, contractorAccountDataApi } = useAccountApiStore();
+    const { setOpenTabs, contractorAccountDataApi, isOpenEditAd } = useAccountApiStore();
 
     const adsList = contractorAccountDataApi[0].contractorAds !== undefined ? contractorAccountDataApi[0].contractorAds : []
     // Animation
@@ -89,8 +82,8 @@ const MyAdsTab = observer(({ isOpenTab }) => {
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
-            // width: windowWidth,
-            width,
+            width: windowWidth,
+            // width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,
@@ -109,26 +102,33 @@ const MyAdsTab = observer(({ isOpenTab }) => {
                 <AccountsTabHeader tabName={'My Ads'} setOpenTabs={setOpenTabs} onPress={onPress} />
                 {/* Form */}
                 <AdsListContainer>
+                    {/* If empty list */}
+                    {adsList.length === 0 &&
+                        <NoAdsText>
+                            No ads
+                        </NoAdsText>}
+
+                    {/* Ads list */}
                     {adsList.map((item, id) => {
                         return <AdsItem data={item} key={id} />;
                     })}
 
                     {/* Create new ads */}
-                    <Border></Border>
-                    <AddPayment
+                    {adsList.length > 0 && <Border></Border>}
+                    <BlackBtn
                         onPress={() => {
                             // setOpenPaymentDetails(true) 
                         }}
                     >
-                        <AddCrossIcon width={16} height={16} />
-                        <AddPaymentRowText>
+                        <BlackBtnText>
                             Create New Ad
-                        </AddPaymentRowText>
-                    </AddPayment>
+                        </BlackBtnText>
+                    </BlackBtn>
                 </AdsListContainer>
 
             </FilterContainer>
 
+            {isOpenEditAd === true && <EditAd isOpenTab={isOpenEditAd} />}
         </Animated.View >
     )
 })

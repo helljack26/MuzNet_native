@@ -48,7 +48,6 @@ const SearchInputDropSelect = ({ isResetAll, isCloseAllDropdown, dataForChoose, 
     const [init, setInit] = useState(0);
 
     useEffect(() => {
-
         if (init === 0) {
             setLocalChooseData(dataForChoose)
             setInit(1)
@@ -102,7 +101,6 @@ const SearchInputDropSelect = ({ isResetAll, isCloseAllDropdown, dataForChoose, 
     }, [isCloseAllDropdown]);
 
     const handler = ({ value, action }) => {
-
         switch (action) {
             // Add to chosen
             case 'add':
@@ -124,30 +122,24 @@ const SearchInputDropSelect = ({ isResetAll, isCloseAllDropdown, dataForChoose, 
                 setChoosenBlock(newChosenData)
                 // Push to form
                 getChosenData(newChosenData)
-
                 // Return to not chosen
                 setLocalChooseData([value, ...localChooseData])
                 setFilteredChooseData([value, ...filteredChooseData])
                 break;
         }
     }
+
+
     useEffect(() => {
         if (init === 1 && alreadyChosenInstrument.length > 0) {
-            for (let i = 0; i < alreadyChosenInstrument.length; i++) {
-                const element = alreadyChosenInstrument[i];
-                handler(
-                    {
-                        value: element,
-                        action: 'remove'
-                    }
-                )
-            }
-            setInit(2)
+            const common = alreadyChosenInstrument.filter(x => dataForChoose.includes(x));
+            const notChosen = dataForChoose.filter(x => !common.includes(x));
             setChoosenBlock(alreadyChosenInstrument)
-            getChosenData(alreadyChosenInstrument)
+            setLocalChooseData(notChosen)
+            setInit(2)
         }
 
-    }, [init, alreadyChosenInstrument]);
+    }, [init, alreadyChosenInstrument, dataForChoose]);
 
     const isShowDropdownList = (filteredChooseData.length > 0 && searchText.length > 0)
 
