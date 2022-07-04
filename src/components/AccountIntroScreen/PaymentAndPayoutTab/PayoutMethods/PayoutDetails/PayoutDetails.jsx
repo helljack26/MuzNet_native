@@ -1,8 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Animated, Keyboard, View, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
-import { useForm, Controller } from "react-hook-form";
+import { Animated, Keyboard, BackHandler } from 'react-native';
 // Components
 import ChooseYourCountry from './ChooseYourCountry'
 import ChooseHowToGetPaid from './ChooseHowToGetPaid'
@@ -11,31 +9,24 @@ import AddAccountInfo from './AddAccountInfo'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateCreateOffer } from './useAnimateCreateOffer';
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-// Images
-import IMAGES from '@/res/images'
-const {
-    CrossBlackIcon,
-    GoBackIcon,
-} = IMAGES;
 
 // Store
 import { observer } from 'mobx-react-lite';
-import { runInAction, set } from 'mobx';
 
 import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
 const PayoutDetails = observer(() => {
 
-    const { isOpenPayoutDetails, setOpenPayoutDetails, setPayoutDetails, isClosePayoutDetails, setClosePayoutDetails } = usePaymentAndPayoutApiStore();
-
-    const isKeyboardOpen = isKeyboardShown()
+    const { isOpenPayoutDetails, setOpenPayoutDetails, setPayoutDetails, isClosePayoutDetails } = usePaymentAndPayoutApiStore();
 
     const { windowHeight, windowWidth } = getWindowDimension()
     // Steps shown state 
     const [isOpenChooseHowToGetPaid, setOpenChooseHowToGetPaid] = useState(false);
+    const [isCloseChooseHowToGetPaid, setCloseChooseHowToGetPaid] = useState(false);
     const [isOpenChooseAccountType, setOpenChooseAccountType] = useState(false);
+    const [isCloseChooseAccountType, setCloseChooseAccountType] = useState(false);
     const [isOpenAddAccountInfo, setOpenAddAccountInfo] = useState(false);
+    const [isCloseAddAccountInfo, setCloseAddAccountInfo] = useState(false);
 
     const [selectedCountry, setSelectedCountry] = useState();
     const [selectedHowToGetPaid, setSelectedHowToGetPaid] = useState();
@@ -54,9 +45,50 @@ const PayoutDetails = observer(() => {
             if (isOpenAddAccountInfo === true) {
                 setOpenAddAccountInfo(false)
             }
-            setClosePayoutDetails(false)
+            setOpenPayoutDetails(false)
         }, 600);
     }
+    const [isHideAnimationTab, setHideAnimationTab] = useState(false);
+
+    useEffect(() => {
+        if (isHideAnimationTab === true) {
+            onPress(false)
+        }
+    }, [isHideAnimationTab])
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (isOpenPayoutDetails === true && !isOpenChooseHowToGetPaid && !isOpenChooseAccountType && !isOpenAddAccountInfo) {
+                setHideAnimationTab(true)
+                setTimeout(() => {
+                    setOpenPayoutDetails(false)
+                }, 600);
+            }
+            if (isOpenPayoutDetails === true && isOpenChooseHowToGetPaid === true && !isOpenChooseAccountType && !isOpenAddAccountInfo) {
+                setCloseChooseHowToGetPaid(true)
+                setTimeout(() => {
+                    setCloseChooseHowToGetPaid(false)
+                }, 590);
+            }
+            if (isOpenPayoutDetails === true && isOpenChooseHowToGetPaid === true && isOpenChooseAccountType === true && !isOpenAddAccountInfo) {
+                setCloseChooseAccountType(true)
+                setTimeout(() => {
+                    setCloseChooseAccountType(false)
+                }, 590);
+            }
+            if (isOpenPayoutDetails === true && isOpenChooseHowToGetPaid === true && isOpenChooseAccountType === true && isOpenAddAccountInfo === true) {
+                setCloseAddAccountInfo(true)
+                setTimeout(() => {
+                    setCloseAddAccountInfo(false)
+                }, 590);
+            }
+
+            return true
+        })
+        return () => {
+            backHandler.remove()
+        }
+    }, [isOpenPayoutDetails, isOpenChooseHowToGetPaid, isOpenChooseAccountType, isOpenAddAccountInfo])
 
     useEffect(() => {
         if (isClosePayoutDetails === true) { closeTab() }
@@ -108,14 +140,16 @@ const PayoutDetails = observer(() => {
                 selectedCountry={selectedCountry}
                 setSelectedOption={setSelectedCountry}
                 setOpenNextTab={setOpenChooseHowToGetPaid}
-            />}
-
+                closeTab={closeTab}
+            />
+            }
             {isOpenChooseHowToGetPaid === true && <ChooseHowToGetPaid
                 selectedHowToGetPaid={selectedHowToGetPaid}
                 setSelectedOption={setSelectedHowToGetPaid}
                 isOpenTab={isOpenChooseHowToGetPaid}
                 setOpenTab={setOpenChooseHowToGetPaid}
                 setOpenNextTab={setOpenChooseAccountType}
+                isCloseTab={isCloseChooseHowToGetPaid}
             />
             }
 
@@ -125,6 +159,7 @@ const PayoutDetails = observer(() => {
                 isOpenTab={isOpenChooseAccountType}
                 setOpenTab={setOpenChooseAccountType}
                 setOpenNextTab={setOpenAddAccountInfo}
+                isCloseTab={isCloseChooseAccountType}
             />
             }
 
@@ -132,6 +167,7 @@ const PayoutDetails = observer(() => {
                 isOpenTab={isOpenAddAccountInfo}
                 setOpenTab={setOpenAddAccountInfo}
                 onSubmitPayoutDetails={onSubmitPayoutDetails}
+                isCloseTab={isCloseAddAccountInfo}
             />
             }
         </Animated.View >

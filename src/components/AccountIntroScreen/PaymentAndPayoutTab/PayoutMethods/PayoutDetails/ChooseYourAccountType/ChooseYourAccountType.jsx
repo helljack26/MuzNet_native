@@ -32,7 +32,7 @@ const {
     BlackBtnText,
 } = M;
 
-const ChooseYourAccountType = ({ setSelectedOption, isOpenTab, setOpenTab, setOpenNextTab }) => {
+const ChooseYourAccountType = ({ setSelectedOption, isOpenTab, setOpenTab, setOpenNextTab, isCloseTab }) => {
 
     const { windowHeight, windowWidth } = getWindowDimension()
 
@@ -55,7 +55,11 @@ const ChooseYourAccountType = ({ setSelectedOption, isOpenTab, setOpenTab, setOp
             setOpenTab(false)
         }, 600);
     }
-
+    useEffect(() => {
+        if (isCloseTab === true) {
+            closeTab()
+        }
+    }, [isCloseTab]);
     const isActiveChecking = localPaymentMethodActiveId === 'Checking'
     const isActiveSaving = localPaymentMethodActiveId === 'Saving'
 

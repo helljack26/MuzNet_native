@@ -36,8 +36,7 @@ const {
 import { observer } from 'mobx-react-lite';
 import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
-const ChooseYourCountry = observer(({ selectedCountry, setSelectedOption, setOpenNextTab }) => {
-
+const ChooseYourCountry = observer(({ closeTab, setSelectedOption, setOpenNextTab }) => {
     const route = useRoute();
 
     const { isClosePayoutDetails, setClosePayoutDetails } = usePaymentAndPayoutApiStore();
@@ -66,7 +65,7 @@ const ChooseYourCountry = observer(({ selectedCountry, setSelectedOption, setOpe
             <Header >
                 <HeaderClose
                     onPress={() => {
-                        setClosePayoutDetails(true)
+                        closeTab()
                     }}
                 >
                     <GoBackIcon width={12} height={21} />

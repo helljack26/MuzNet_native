@@ -18,7 +18,7 @@ export const useAnimateCreateOffer = () => {
         Animated.timing(value, {
             toValue: isOpen ? animate_state.start : animate_state.end,
             useNativeDriver: false,
-            duration: 500,
+            duration: 700,
             easing: Easing.exp
         }).start()
         setIsOpen(boolean)

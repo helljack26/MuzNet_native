@@ -40,7 +40,7 @@ const {
     BlackBtnText,
 } = M;
 
-const AddAccountInfo = ({ isOpenTab, setOpenTab, onSubmitPayoutDetails }) => {
+const AddAccountInfo = ({ isOpenTab, setOpenTab, onSubmitPayoutDetails, isCloseTab }) => {
     const isKeyboardOpen = isKeyboardShown()
 
     // Form 
@@ -68,7 +68,11 @@ const AddAccountInfo = ({ isOpenTab, setOpenTab, onSubmitPayoutDetails }) => {
             setOpenTab(false)
         }, 600);
     }
-
+    useEffect(() => {
+        if (isCloseTab === true) {
+            closeTab()
+        }
+    }, [isCloseTab]);
     // Name on card
     const watchNameOnCard = watch('nameOnCard');
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);

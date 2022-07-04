@@ -68,7 +68,7 @@ class AccountApi {
     }]
 
     isOpenPersonalInfoTab = false
-    isOpenPaymentTab = true
+    isOpenPaymentTab = false
     isOpenChangePasswordTab = false
     isOpenNotificationTab = false
     isOpenMyAdsTab = false

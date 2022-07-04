@@ -26,7 +26,11 @@ const {
     OfferPayment,
 } = style;
 
-const PayoutMethods = ({ isOpen, setOpen }) => {
+import { observer } from 'mobx-react-lite';
+import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
+
+const PayoutMethods = observer(({ isOpen, setOpen }) => {
+    const { isOpenPayoutDetails } = usePaymentAndPayoutApiStore();
 
     const isKeyboardOpen = isKeyboardShown()
 
@@ -43,6 +47,7 @@ const PayoutMethods = ({ isOpen, setOpen }) => {
         setTimeout(() => {
             setOpen(false)
         }, 600);
+        return
     }
 
     const [isHideAnimationTab, setHideAnimationTab] = useState(false);
@@ -55,18 +60,23 @@ const PayoutMethods = ({ isOpen, setOpen }) => {
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-            if (isOpen === true) {
+            if (isOpen === true && !isOpenPayoutDetails) {
                 setHideAnimationTab(true)
+
                 setTimeout(() => {
                     setOpen(false)
                 }, 600);
+            }
+            if (isOpen === true && isOpenPayoutDetails === true) {
+                console.log("🚀 ~ file: PayoutMethods.jsx ~ line 71 ~ backHandler ~ isOpenPayoutDetails", isOpenPayoutDetails)
+                return false
             }
             return true
         })
         return () => {
             backHandler.remove()
         }
-    }, [isOpen])
+    }, [isOpen, isOpenPayoutDetails])
     return (
         <Animated.View style={{
             zIndex: 1000,
@@ -119,7 +129,7 @@ const PayoutMethods = ({ isOpen, setOpen }) => {
 
         </Animated.View >
     )
-}
+})
 
 export default PayoutMethods;
 

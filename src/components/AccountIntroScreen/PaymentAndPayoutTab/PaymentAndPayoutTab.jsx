@@ -138,8 +138,8 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
-            width: windowWidth,
-            // width,
+            // width: windowWidth,
+            width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,

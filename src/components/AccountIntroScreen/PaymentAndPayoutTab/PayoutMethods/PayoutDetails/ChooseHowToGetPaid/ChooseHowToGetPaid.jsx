@@ -47,7 +47,7 @@ const PayoutMethods = [
     },
 ]
 
-const ChooseHowToGetPaid = ({ setSelectedOption, isOpenTab, setOpenTab, setOpenNextTab }) => {
+const ChooseHowToGetPaid = ({ setSelectedOption, isOpenTab, setOpenTab, setOpenNextTab, isCloseTab }) => {
 
     const { windowHeight, windowWidth } = getWindowDimension()
     const { onPress, width } = useAnimateCreateOffer()
@@ -65,6 +65,11 @@ const ChooseHowToGetPaid = ({ setSelectedOption, isOpenTab, setOpenTab, setOpenN
             setOpenTab(false)
         }, 600);
     }
+    useEffect(() => {
+        if (isCloseTab === true) {
+            closeTab()
+        }
+    }, [isCloseTab]);
 
     return (
         <Animated.View style={{
