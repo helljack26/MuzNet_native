@@ -27,7 +27,7 @@ width: 32px;
 height: 32px;
 position: absolute;
 top: 0px;
-left: 7px;
+left: 8px;
 bottom: 0px;
 `;
 const HeaderTitle = styled(M.Title24)`
@@ -42,6 +42,7 @@ margin: 0px 16px;
 `;
 const OfferDetailsTitle = styled(M.PlainText17)`
 color: ${C.cyanGray};
+margin-bottom: 10px;
 `;
 const OfferDetailsBlock = styled.View`
 margin-top: 12px;

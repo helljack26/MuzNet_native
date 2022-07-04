@@ -31,7 +31,7 @@ const {
 import { observer } from 'mobx-react-lite';
 import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
-const OfferAddPaymentDetails = observer(() => {
+const AccountAddPaymentDetails = observer(() => {
     const navigation = useNavigation();
 
     const route = useRoute();
@@ -60,7 +60,7 @@ const OfferAddPaymentDetails = observer(() => {
     }, [isClosePaymentDetails]);
 
     const onSubmitPaymentDetails = (data) => {
-        console.log("🚀 ~ file: OfferAddPaymentDetails.jsx ~ line 206 ~ onSubmitPaymentDetails ~ data", data)
+        console.log("🚀 ~ file: AccountAddPaymentDetails.jsx ~ line 206 ~ onSubmitPaymentDetails ~ data", data)
         setPaymentDetails(data)
         setOpenPaymentDetails(false)
         onPress(false)
@@ -113,5 +113,5 @@ const OfferAddPaymentDetails = observer(() => {
     )
 })
 
-export default OfferAddPaymentDetails;
+export default AccountAddPaymentDetails;
 

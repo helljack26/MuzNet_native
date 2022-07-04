@@ -68,7 +68,7 @@ class AccountApi {
     }]
 
     isOpenPersonalInfoTab = false
-    isOpenPaymentTab = false
+    isOpenPaymentTab = true
     isOpenChangePasswordTab = false
     isOpenNotificationTab = false
     isOpenMyAdsTab = false
@@ -93,14 +93,10 @@ class AccountApi {
     }
 
     changeContactorAccountData({ updatedData, id }) {
-
         set(contractorAccountDataApi, "userName", updatedData.userName);
-        console.log("🚀 ~ file: AccountApi.js ~ line 71 ~ AccountApi ~ changeContactorAccountData ~ contractorAccountDataApi", contractorAccountDataApi)
-
     }
 
     setOpenTabs({ tabName, isOpen }) {
-        console.log("🚀 ~ file: AccountApi.js ~ line 95 ~ AccountApi ~ setOpenTabs ~ tabName", tabName, isOpen)
         const action = isOpen
         switch (tabName) {
 

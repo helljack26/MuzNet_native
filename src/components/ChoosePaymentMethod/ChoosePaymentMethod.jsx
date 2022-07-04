@@ -19,6 +19,7 @@ const {
 import { style } from './style'
 const {
     Container,
+    SavedPaymentText,
     SelectItem,
     CheckBox,
     BankCardIcon,
@@ -63,7 +64,13 @@ const ChoosePaymentMethod = observer(({ setShowSubmitButton, isAccountScreen }) 
 
     return (
         <Container>
+            {(localPaymentMethods.length > 0 && isAccountScreen) &&
+                <SavedPaymentText>
+                    Saved payment methods
+                </SavedPaymentText>
+            }
             {localPaymentMethods.length > 0 && localPaymentMethods.map((payment, id) => {
+                const isFirst = id === 0
                 const isActive = id === localPaymentMethodActiveId && !isAccountScreen
                 const lastFourDigitOfNumber = payment.cardNumber.slice(-4, payment.cardNumber.length)
                 return (
@@ -84,10 +91,10 @@ const ChoosePaymentMethod = observer(({ setShowSubmitButton, isAccountScreen }) 
 
                         <SelectText>Card ending in {lastFourDigitOfNumber}</SelectText>
 
-
-                        {!isAccountScreen && <CheckBox isActive={isActive}>
-                            {isActive === true && <RoundBlackCheckIcon width={20} height={20} />}
-                        </CheckBox>}
+                        <CheckBox isActive={isActive}>
+                            {(isFirst && localPaymentMethodActiveId === undefined) && <RoundBlackCheckIcon width={24} height={24} />}
+                            {(isActive) && <RoundBlackCheckIcon width={24} height={24} />}
+                        </CheckBox>
                     </SelectItem>)
             })}
 
@@ -119,7 +126,7 @@ const ChoosePaymentMethod = observer(({ setShowSubmitButton, isAccountScreen }) 
                 >
 
                     <BlackBtnText>
-                        Add payment method
+                        Add{localPaymentMethods.length > 0 && ' New '}Payment Method
                     </BlackBtnText>
 
                 </BlackBtn>

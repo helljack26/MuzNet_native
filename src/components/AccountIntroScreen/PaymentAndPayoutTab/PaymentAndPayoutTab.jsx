@@ -6,21 +6,18 @@ import { useForm, Controller } from "react-hook-form";
 // Components
 import AccountsTabHeader from '../AccountsTabHeader'
 import PaymentMethods from './PaymentMethods'
+import PayoutMethods from './PayoutMethods'
 import CurrencyPopup from './CurrencyPopup'
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-import { backHandler } from '../backHandler'
 // Images
 import IMAGES from '@/res/images'
 const {
     GoBackIcon
 } = IMAGES;
 // Variables
-import C from '@/res/colors'
-import F from '@/res/fonts'
 import { S } from '@/res/strings'
 // Styles
 import { style } from './style'
@@ -29,8 +26,8 @@ const {
     AccountLinkList,
     AccountLink,
     AccountLinkText,
-    AccountLinkCurrencyValue,
     AccountLinkIcon,
+    AccountLinkCurrencyValue,
 } = style;
 // Mixins
 import { M } from '@/res/mixin'
@@ -57,11 +54,18 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
 
     // Store
     const { contractorAccountDataApi, musicianAccountDataApi, setOpenTabs } = useAccountApiStore();
-    const { isOpenPaymentDetails, setOpenPaymentDetails, paymentDetails, setClosePaymentDetails } = usePaymentAndPayoutApiStore();
+    const {
+        isOpenPaymentDetails,
+        setClosePaymentDetails
+
+    } = usePaymentAndPayoutApiStore();
 
     // Payments state
     const [isOpenPayments, setOpenPayments] = useState(false);
     const [isClosePayments, setClosePayments] = useState(false);
+
+    // Payouts state
+    const [isOpenPayouts, setOpenPayouts] = useState(false);
 
     // Handler for native back button
     const tabNameToClose = 'Payments and Payouts'
@@ -72,9 +76,10 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
             onPress(false)
         }
     }, [isHideAnimationTab])
+
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-            if (isOpenTab && !isOpenPayments) {
+            if (isOpenTab && !isOpenPayments && !isOpenPayouts) {
                 setHideAnimationTab(true)
                 setTimeout(() => {
                     setOpenTabs({
@@ -83,6 +88,7 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
                     })
                 }, 400);
             }
+            // If back on payment tab
             if (isOpenTab && isOpenPayments && !isOpenPaymentDetails) {
                 setClosePayments(true)
                 setTimeout(() => {
@@ -90,15 +96,20 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
                     setClosePayments(false)
                 }, 400);
             }
+            // If back on payment tab
+            if (isOpenTab && isOpenPayouts) {
+                return false
+            }
             if (isOpenTab && isOpenPayments && isOpenPaymentDetails) {
                 setClosePaymentDetails(true)
             }
+
             return true
         })
         return () => {
             backHandler.remove()
         }
-    }, [isOpenPayments, isOpenTab, isOpenPaymentDetails])
+    }, [isOpenPayments, isOpenTab, isOpenPaymentDetails, isOpenPayouts])
 
 
     // Currency state
@@ -127,8 +138,8 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
-            // width: windowWidth,
-            width,
+            width: windowWidth,
+            // width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,
@@ -163,7 +174,7 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
                     {/* Payout Methods */}
                     <AccountLink
                         onPress={() => {
-
+                            setOpenPayouts(true)
                         }}>
                         <AccountLinkText>Payout Methods</AccountLinkText>
 
@@ -196,8 +207,14 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
                 isOpen={isOpenPayments}
                 isClose={isClosePayments}
                 setOpen={setOpenPayments}
-            />
-            }
+            />}
+
+            {/* Payout Methods */}
+            {isOpenPayouts && <PayoutMethods
+                isOpen={isOpenPayouts}
+                setOpen={setOpenPayouts}
+            />}
+
             {/* Currency popup */}
             {isOpenCurrency && <CurrencyPopup
                 currencyTypes={S.currencyTypes}

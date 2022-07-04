@@ -3,49 +3,74 @@ import F from '@/res/fonts'
 import C from '@/res/colors'
 import { M } from '@/res/mixin'
 
-
 const FilterContainer = styled.View`
 width: 100%;
 background-color: ${C.white};
+padding-top: 68px;
+overflow: hidden;
+/* z-index: 1000; */
 `;
-
-const FilterBlock = styled.ScrollView`
+const Header = styled.View`
 width: 100%;
-height: 94%;
-padding: 0px 16px;
-`;
-const FilterBlockRow = styled.View`
-width: 100%;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-`;
-const BankIconsRow = styled.View`
-display: flex;
-flex-direction: row;
-position: absolute;
-top: 0px;
-right:16px;
-height: 48px;
 display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: row;
+padding-bottom: 24px;
 `;
-const BankIconsRowItem = styled.View`
-margin-left: 4px;
-`;
-const CheckboxBlock = styled.View`
-width: 100%;
+const HeaderClose = styled.TouchableOpacity`
 display: flex;
-flex-direction: column;
-margin-top:${props => props.isWilling === true ? 7 + 'px' : 14 + 'px'};
-margin-bottom:${props => props.isWilling === true ? -8 + 'px' : 146 + 'px'};
-margin-left: 16px;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+width: 32px;
+height: 32px;
+position: absolute;
+top: 0px;
+left: 7px;
+bottom: 0px;
 `;
-const CheckboxBlockTitle = styled(M.TitleBold15)`
+const HeaderTitle = styled(M.Title24)`
+line-height: 30px;
+`;
+const FilterBlock = styled.ScrollView`
+width: 100%;
+height: 100%;
+`;
+const OfferDetails = styled.View`
+margin: 0px 16px;
+`;
+const OfferDetailsTitle = styled(M.PlainText17)`
+color: ${C.cyanGray};
+`;
+const OfferDetailsBlock = styled.View`
+margin-top: 12px;
 margin-bottom: 24px;
+padding: 16px;
+border-radius: 6px;
+border-color: ${C.lightGray};
+border-width: 1px;
+border-style: solid;
 `;
+const OfferLi = styled.View`
+display: flex;
+flex-direction: row;
+margin-bottom: 12px;
+`;
+const OfferLiKeys = styled(M.TitleBold17)`
+margin-right: 4px;
+color: #333333;
+`;
+const OfferLiValue = styled(M.PlainText17)`
+color: #333333;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+`;
+const OfferPayment = styled.View`
+margin: 0px 16px;
+`;
+
 const ContentBlock = styled.View`
 display: flex;
 align-items: flex-start;
@@ -53,9 +78,7 @@ justify-content: center;
 flex-direction: row;
 margin-top: 16px;
 padding-top: 7px;
-/* width: 100%; */
-/* height : ${props => props.isKeyboardOpen === true ? 116 + 'px' : 146 + 'px'}; */
-height : 166px;
+height : 126px;
 position: absolute;
 left:0;
 bottom:0;
@@ -90,53 +113,11 @@ const ContainerPrice = styled(M.Title24)`
 const ContainerHour = styled(M.PlainText17)`
 
 `;
-const FormInputPricePerHourBlock = styled.View`
-width: 100%;
-z-index: 0;
-border-style: solid;
-border-radius: 6px;
-height:48px;
-padding-left: 16px;
-padding-top: ${props => props.inputLabel === true ? 17 + 'px' : 0 + 'px'};
-padding-right: ${props => props.isPassword === true ? 50 + 'px' : 16 + 'px'};
-z-index: -1;
-position: absolute;
-left: 0px;
-bottom: 0px;
-right: 0px;
-display: flex;
-align-items: center;
-flex-direction: row;
-`;
-const FormInputPricePerHourText = styled.Text`
-margin-top: 12px;
-font-size: 13px;
-font-family: ${F.regular};
-font-size: 17px;
-`;
-const AddInfoBlock = styled.View`
-width: 100%;
-`;
-const AddInfoContainer = styled.View`
-border-radius: 6px;
-overflow: hidden;
-display: flex;
-justify-content: space-between;
-align-items: flex-end;
-flex-direction: row;
-`;
-const AddInfoInput = styled.TextInput`
-width: 100%;
-font-size: 17px;
-padding: 16px 16px;
-font-family: ${F.regular};
-color: ${C.black};
-border-radius: 6px;
-`;
 const SecurePaymentMessage = styled.Pressable`
 background-color: ${C.backGray};
 border-radius: 6px;
-margin-bottom: 200px;
+margin: 0px 16px;
+margin-bottom: 150px;
 padding: 16px 16px;
 padding-right: 30px;
 display: flex;
@@ -156,12 +137,20 @@ margin-left: 5px;
 
 export const style = {
     FilterContainer: FilterContainer,
+    Header: Header,
+    HeaderClose: HeaderClose,
+    HeaderTitle: HeaderTitle,
     FilterBlock: FilterBlock,
-    FilterBlockRow: FilterBlockRow,
-    BankIconsRow: BankIconsRow,
-    BankIconsRowItem: BankIconsRowItem,
-    CheckboxBlock: CheckboxBlock,
-    CheckboxBlockTitle: CheckboxBlockTitle,
+
+    OfferDetails: OfferDetails,
+    OfferDetailsTitle: OfferDetailsTitle,
+    OfferDetailsBlock: OfferDetailsBlock,
+    OfferLi: OfferLi,
+    OfferLiKeys: OfferLiKeys,
+    OfferLiValue: OfferLiValue,
+
+    OfferPayment: OfferPayment,
+
     ContentBlock: ContentBlock,
     ContentBlockRow: ContentBlockRow,
     ContainerLink: ContainerLink,
@@ -169,13 +158,6 @@ export const style = {
     ContainerHour: ContainerHour,
     ButtonSubmit: ButtonSubmit,
     ButtonSubmitText: ButtonSubmitText,
-    FormInputPricePerHourBlock: FormInputPricePerHourBlock,
-    FormInputPricePerHourText: FormInputPricePerHourText,
-
-    AddInfoBlock: AddInfoBlock,
-    AddInfoContainer: AddInfoContainer,
-    AddInfoInput: AddInfoInput,
-
     SecurePaymentMessage: SecurePaymentMessage,
     SecurePaymentMessageText: SecurePaymentMessageText,
     SecurePaymentMessageReadMoreText: SecurePaymentMessageReadMoreText,

@@ -1,9 +1,9 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { Animated, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Animated, View, BackHandler } from 'react-native';
 // Components
-import ChoosePaymentMethod from '@/components/ChoosePaymentMethod'
-import AccountAddPaymentDetails from './AccountAddPaymentDetails'
+import PayoutList from './PayoutList'
+import PayoutDetails from './PayoutDetails'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
@@ -26,7 +26,7 @@ const {
     OfferPayment,
 } = style;
 
-const PaymentMethods = ({ isOpen, isClose, setOpen }) => {
+const PayoutMethods = ({ isOpen, setOpen }) => {
 
     const isKeyboardOpen = isKeyboardShown()
 
@@ -45,10 +45,28 @@ const PaymentMethods = ({ isOpen, isClose, setOpen }) => {
         }, 600);
     }
 
-    useEffect(() => {
-        if (isClose === true) { closeTab() }
-    }, [isClose]);
+    const [isHideAnimationTab, setHideAnimationTab] = useState(false);
 
+    useEffect(() => {
+        if (isHideAnimationTab === true) {
+            onPress(false)
+        }
+    }, [isHideAnimationTab])
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (isOpen === true) {
+                setHideAnimationTab(true)
+                setTimeout(() => {
+                    setOpen(false)
+                }, 600);
+            }
+            return true
+        })
+        return () => {
+            backHandler.remove()
+        }
+    }, [isOpen])
     return (
         <Animated.View style={{
             zIndex: 1000,
@@ -80,40 +98,28 @@ const PaymentMethods = ({ isOpen, isClose, setOpen }) => {
                     </HeaderClose>
 
                     <HeaderTitle>
-                        Add a Payment Method
+                        Add a Payout Method
                     </HeaderTitle>
                 </Header>
                 {/* Secure message */}
                 <FilterBlock keyboardShouldPersistTaps={'handled'}>
 
 
-                    {/* Сhoose payment method */}
+                    {/* Сhoose payout method */}
                     <OfferPayment>
-                        <OfferDetailsTitle>
-                            Use a payment method to make purchases on MuzNet
-                        </OfferDetailsTitle>
-
-                        <ChoosePaymentMethod isAccountScreen={true} />
+                        <PayoutList />
                     </OfferPayment>
 
-                    {/* Empty block if open keyboard */}
-                    <View
-                        style={{
-                            marginBottom: isKeyboardOpen === true ? 200 : 0,
-                        }}
-                    >
-                    </View>
                 </FilterBlock>
 
             </FilterContainer>
 
-
-            {/* Payment details  */}
-            <AccountAddPaymentDetails />
+            {/* Payout details */}
+            <PayoutDetails />
 
         </Animated.View >
     )
 }
 
-export default PaymentMethods;
+export default PayoutMethods;
 

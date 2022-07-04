@@ -58,7 +58,6 @@ top: 19px;
 right: 16px;
 `;
 const SelectText = styled(M.MediumText17)`
-margin-left: 12px;
 `;
 const AddPayment = styled.TouchableOpacity`
 width: 100%;
