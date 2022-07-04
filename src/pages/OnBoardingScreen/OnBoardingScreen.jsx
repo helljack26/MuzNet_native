@@ -63,27 +63,27 @@ const OnBoardingScreen = () => {
     const text = OnboardingContent[screenNumber].text
     const offsetLeft = OnboardingContent[screenNumber].thumbOffsetLeft
 
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            // navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
-            // navigation.navigate('MusicianStack', {
-            //     screen: 'MusicianAccountScreen',
-            // });
-            // navigation.navigate('ContractorStack', {
-            //     screen: 'ContractorMessagesScreen',
-            // });
-            navigation.navigate('ContractorStack', {
-                screen: 'ContractorAccountScreen',
-            });
-            // navigation.navigate(
-            //     'MusicianStack', {
-            //     screen: 'MusicianMessagesScreen',
+    // useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //         // navigation.navigate('SignUpStack', { screen: 'AddProfileInfo' });
+    //         // navigation.navigate('MusicianStack', {
+    //         //     screen: 'MusicianAccountScreen',
+    //         // });
+    //         // navigation.navigate('ContractorStack', {
+    //         //     screen: 'ContractorMessagesScreen',
+    //         // });
+    //         navigation.navigate('ContractorStack', {
+    //             screen: 'ContractorAccountScreen',
+    //         });
+    //         // navigation.navigate(
+    //         //     'MusicianStack', {
+    //         //     screen: 'MusicianMessagesScreen',
 
-            // });
-        });
+    //         // });
+    //     });
 
-        return unsubscribe;
-    }, [navigation]);
+    //     return unsubscribe;
+    // }, [navigation]);
 
     return (
         <>

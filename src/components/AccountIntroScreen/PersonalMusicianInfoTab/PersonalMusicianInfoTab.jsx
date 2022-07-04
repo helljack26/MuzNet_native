@@ -96,13 +96,13 @@ const PersonalMusicianInfoTab = observer(({ isOpenTab }) => {
 
     useEffect(() => {
         if (isOpenTab === true) {
-            // Handler for native back button
-            const tabNameToClose = 'Personal Info'
-            backHandler(onPress, setOpenTabs, tabNameToClose);
             onPress(true)
         }
     }, [isOpenTab]);
 
+    // Handler for native back button
+    const tabNameToClose = 'Personal Info'
+    backHandler(onPress, setOpenTabs, tabNameToClose);
 
 
     const contractorAccountData = musicianAccountDataApi[0]

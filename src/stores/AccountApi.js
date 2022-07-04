@@ -219,7 +219,7 @@ class AccountApi {
     isOpenPaymentTab = false
     isOpenChangePasswordTab = false
     isOpenNotificationTab = false
-    isOpenMyAdsTab = true
+    isOpenMyAdsTab = false
     isOpenTermOfServiceTab = false
 
     constructor() {
