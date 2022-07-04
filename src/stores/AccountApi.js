@@ -20,7 +20,155 @@ class AccountApi {
         userEmail: 'user1@gmail.com',
         userPhoneNumber: '+1 000 753 6735',
         userLocation: 'Victoria, Ballarat',
+        contractorAds: [
+            {
+                id: 8518582,
+                adImage: [
+                    require('../../assets/Mock/vendors/vendor1.png'),
+                    require('../../assets/Mock/vendors/vendor2.png'),
+                    require('../../assets/Mock/vendors/vendor3.png'),
+                ],
+                userPricePerHour: 100,
+                userCurrencyType: '$',
+                adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
+                adEventTime: {
+                    eventStart: 1661486400000,
+                    eventEnd: 1661544000000,
 
+                },
+                adTitle: "Aloft Asheville ",
+                adLocation: "Victoria, Ballarat",
+                adAddress: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
+                coordinate: {
+                    latitude: 37.88068574665098,
+                    longitude: -122.2798887321131,
+                    latitudeDelta: 0.04864195044303443,
+                    longitudeDelta: 0.040142817690068,
+                },
+                willingToTravel: true,
+                adTypeOfMusician: ['Band', 'Musician'],
+                adSkills: {
+                    singByEar: true,
+                    playByEar: true,
+                    readSheetMusic: true,
+                },
+                adGenres: ["Classical", "Jazz", "Pop",],
+                adMusicalInstrument: ["Harp", "Piano"],
+                adReview: [
+                    {
+                        reviewDate: 1652541822755,
+                        reviewRate: 2,
+                        reviewWritter: 'Kelvin Pearson',
+                        reviewerAvatar: require('../../assets/Mock/reviewer/reviewer1.png'),
+                        reviewMessage: 'What a fabulous night for my Dad’s birthday – everyone was so impressed, he was outstanding. Neil was professional, adaptable and sociable. I would recommend him 100%. Brilliant!',
+                    },
+                    {
+                        reviewDate: 1652533322758,
+                        reviewRate: 5,
+                        reviewWritter: 'Kelvin Pearson',
+                        reviewerAvatar: require('../../assets/Mock/reviewer/reviewer2.png'),
+                        reviewMessage: 'What a fabulous night for my Dad’s birthday – everyone was so impressed, he was outstanding. Neil was professional, adaptable and sociable. I would recommend him 100%. Brilliant!',
+                    }
+                    ,
+                    {
+                        reviewDate: 1652573322758,
+                        reviewRate: 1,
+                        reviewWritter: 'Kelvin Pearson',
+                        reviewerAvatar: require('../../assets/Mock/reviewer/reviewer3.png'),
+                        reviewMessage: 'He was outstanding. Neil was professional, adaptable and sociable. I would recommend him 100%. Brilliant!',
+                    },
+                    {
+                        reviewDate: 1652533322758,
+                        reviewRate: 5,
+                        reviewWritter: 'Kelvin Pearson',
+                        reviewerAvatar: require('../../assets/Mock/reviewer/reviewer1.png'),
+                        reviewMessage: 'What a fabulous night for my Dad’s birthday – everyone was so impressed, he was outstanding. Neil was professional, adaptable and sociable. I would recommend him 100%. Brilliant!',
+                    }
+                    ,
+                    {
+                        reviewDate: 1652541822755,
+                        reviewRate: 4,
+                        reviewWritter: 'Kelvin Pearson',
+                        reviewerAvatar: require('../../assets/Mock/reviewer/reviewer2.png'),
+                        reviewMessage: 'What a fabulous night for my Dad’s birthday – everyone was so impressed, he was outstanding. Neil was professional, adaptable and sociable. I would recommend him 100%. Brilliant!',
+                    },
+                ]
+            },
+
+            {
+                id: 1855674,
+                adImage: [
+                    require('../../assets/Mock/vendors/vendor3.png'),
+                    require('../../assets/Mock/vendors/vendor1.png'),
+                    require('../../assets/Mock/vendors/vendor2.png'),
+                ],
+                userPricePerHour: 150,
+                userCurrencyType: '$',
+                adDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ea commodo...",
+                adEventTime: {
+                    eventStart: 1661533200000,
+                    eventEnd: 1661544000000,
+
+                },
+                adTitle: "Le Bernandin",
+                adLocation: "Victoria, Ballarat",
+                adAddress: "1632 Spruce Street, Berkeley, CA 94709 Berkeley California United States",
+                coordinate: {
+                    latitude: 37.87756939233716,
+                    longitude: -122.26555500713751,
+                    latitudeDelta: 0.04864195044303443,
+                    longitudeDelta: 0.040142817690068,
+                },
+                willingToTravel: true,
+                adTypeOfMusician: ['Band', 'Musician'],
+                adSkills: {
+                    singByEar: true,
+                    playByEar: true,
+                    readSheetMusic: true,
+                },
+                adGenres: ["Classical", "Jazz", "Pop",],
+                adMusicalInstrument: ["Harp", "Piano"],
+                adReview: [
+                    {
+                        reviewDate: 1652541822755,
+                        reviewRate: 5,
+                        reviewWritter: 'Kelvin Pearson',
+                        reviewerAvatar: require('../../assets/Mock/reviewer/reviewer1.png'),
+                        reviewMessage: 'What a fabulous night for my Dad’s birthday – everyone was so impressed, he was outstanding. Neil was professional, adaptable and sociable. I would recommend him 100%. Brilliant!',
+                    },
+                    {
+                        reviewDate: 1652533322758,
+                        reviewRate: 5,
+                        reviewWritter: 'Kelvin Pearson',
+                        reviewerAvatar: require('../../assets/Mock/reviewer/reviewer2.png'),
+                        reviewMessage: 'What a fabulous night for my Dad’s birthday – everyone was so impressed, he was outstanding. Neil was professional, adaptable and sociable. I would recommend him 100%. Brilliant!',
+                    }
+                    ,
+                    {
+                        reviewDate: 1652573322758,
+                        reviewRate: 3,
+                        reviewWritter: 'Kelvin Pearson',
+                        reviewerAvatar: require('../../assets/Mock/reviewer/reviewer3.png'),
+                        reviewMessage: 'He was outstanding. Neil was professional, adaptable and sociable. I would recommend him 100%. Brilliant!',
+                    },
+                    {
+                        reviewDate: 1652533322758,
+                        reviewRate: 2,
+                        reviewWritter: 'Kelvin Pearson',
+                        reviewerAvatar: require('../../assets/Mock/reviewer/reviewer1.png'),
+                        reviewMessage: 'What a fabulous night for my Dad’s birthday – everyone was so impressed, he was outstanding. Neil was professional, adaptable and sociable. I would recommend him 100%. Brilliant!',
+                    }
+                    ,
+                    {
+                        reviewDate: 1652541822755,
+                        reviewRate: 4,
+                        reviewWritter: 'Kelvin Pearson',
+                        reviewerAvatar: require('../../assets/Mock/reviewer/reviewer2.png'),
+                        reviewMessage: 'What a fabulous night for my Dad’s birthday – everyone was so impressed, he was outstanding. Neil was professional, adaptable and sociable. I would recommend him 100%. Brilliant!',
+                    },
+                ]
+            },
+        ],
         userNotification: {
             userNewReview: false,
             userNewOffer: true,
@@ -71,7 +219,7 @@ class AccountApi {
     isOpenPaymentTab = false
     isOpenChangePasswordTab = false
     isOpenNotificationTab = false
-    isOpenMyAdsTab = false
+    isOpenMyAdsTab = true
     isOpenTermOfServiceTab = false
 
     constructor() {

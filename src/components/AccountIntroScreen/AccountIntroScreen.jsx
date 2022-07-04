@@ -106,7 +106,10 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                 <AccountLinkList>
                     {tabsLink.map((tabName, id) => {
                         if (tabName === 'My Ads' && !isContractor) return null
-                        return <AccountLink
+                        const isLast = id === tabsLink.length - 1
+                        return <AccountLink style={{
+                            borderBottomWidth: isLast ? 0 : 1
+                        }}
                             onPress={() => {
                                 setOpenTabs({
                                     tabName: tabName,

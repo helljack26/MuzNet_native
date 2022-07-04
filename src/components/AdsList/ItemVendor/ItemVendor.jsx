@@ -27,7 +27,7 @@ const {
 } = style;
 
 
-const ItemMusician = ({ data, isDisableBottomMargin, setScrollToTop }) => {
+const ItemVendor = ({ data, isDisableBottomMargin, setScrollToTop }) => {
     if (data === undefined) return null
     const navigation = useNavigation();
 
@@ -127,4 +127,4 @@ const ItemMusician = ({ data, isDisableBottomMargin, setScrollToTop }) => {
     );
 }
 
-export default ItemMusician;
+export default ItemVendor;

@@ -29,6 +29,7 @@ import RoundGreenCheckIcon from '../../assets/icon/round_green_check_icon.svg'
 import RoundBlackCheckIcon from '../../assets/icon/round_black_check_icon.svg'
 import UploadPhotoIcon from '../../assets/icon/uploadPhoto_icon.svg'
 import EditIcon from '../../assets/icon/edit_icon.svg'
+import EditBlackIcon from '../../assets/icon/edit_black_icon.svg'
 import SearchIcon from '../../assets/icon/search_icon.svg'
 import SearchBigIcon from '../../assets/icon/search_big_icon.svg'
 import CrossBlackIcon from '../../assets/icon/cross_black_icon.svg'
@@ -125,6 +126,7 @@ const IMAGES = {
     RoundBlackCheckIcon: RoundBlackCheckIcon,
     UploadPhotoIcon: UploadPhotoIcon,
     EditIcon: EditIcon,
+    EditBlackIcon: EditBlackIcon,
     PhoneIcon: PhoneIcon,
     SearchIcon: SearchIcon,
     SearchBigIcon: SearchBigIcon,

@@ -73,7 +73,7 @@ const {
     ButtonSubmitText,
 } = style;
 
-const CardScreen = ({ isMusician, data, routeId }) => {
+const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView }) => {
     const navigation = useNavigation();
 
     const { windowHeight, windowWidth } = getWindowDimension()
@@ -424,8 +424,8 @@ const CardScreen = ({ isMusician, data, routeId }) => {
                     <CardReviewsList cardReviews={cardReviews} fullscreenReviewState={fullscreenReviewState} setFullscreenReviewState={setFullscreenReviewState} />
 
                     {/* Border */}
-                    <CardBorder></CardBorder>
-
+                    {!isForContractorFromAccountView && <CardBorder></CardBorder>
+                    }
                     {/* Warning */}
                     {isMusician && <WarningBlock>
                         <WarningGrayIcon width={27} height={27} />
@@ -435,7 +435,7 @@ const CardScreen = ({ isMusician, data, routeId }) => {
                     </WarningBlock>
                     }
                     {/* Similar */}
-                    <CardSimilarList setScrollToTop={setScrollToTop} isMusician={isMusicianTrue} />
+                    {!isForContractorFromAccountView && <CardSimilarList setScrollToTop={setScrollToTop} isMusician={isMusicianTrue} />}
                 </CardInfo>
             </CardContainerScrollView>
 
