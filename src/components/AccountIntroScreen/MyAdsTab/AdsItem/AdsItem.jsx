@@ -26,6 +26,7 @@ const {
     ItemInfoCost,
     ItemInfoCostValue,
     ItemInfoCostValuePostfix,
+    ButtonsRow,
     AddPayment,
     AddPaymentRowText,
 } = style;
@@ -143,33 +144,36 @@ const AdsItem = observer(({ data, isDisableBottomMargin, setScrollToTop }) => {
                 </ItemInfo>
             </ItemRow>
 
+            <ButtonsRow>
 
-            <BlackBtn
-                style={{
-                    height: 48,
-                    borderRadius: 8,
-                }}
-            // TODO тут с навигейтить на проут май ад экран
-            // onPress={() => { }} r
-            >
-                <BlackBtnText>Promote My Ad</BlackBtnText>
-            </BlackBtn>
+                <BlackBtn
+                    style={{
+                        height: 48,
+                        borderRadius: 8,
+                        width: '48.5%',
+                    }}
+                // TODO тут с навигейтить на проут май ад экран
+                // onPress={() => { }} r
+                >
+                    <BlackBtnText>Promote</BlackBtnText>
+                </BlackBtn>
 
-            <AddPayment
-                onPress={() => {
-                    setAdIdForEdit(id)
-                    setOpenTabs({
-                        tabName: 'Edit ad',
-                        isOpen: true
-                    })
+                <AddPayment
+                    onPress={() => {
+                        setAdIdForEdit(id)
+                        setOpenTabs({
+                            tabName: 'Edit ad',
+                            isOpen: true
+                        })
 
-                }}
-            >
-                <EditBlackIcon width={16} height={16} />
-                <AddPaymentRowText>
-                    Edit ad
-                </AddPaymentRowText>
-            </AddPayment>
+                    }}
+                >
+                    <EditBlackIcon width={16} height={16} />
+                    <AddPaymentRowText>
+                        Edit
+                    </AddPaymentRowText>
+                </AddPayment>
+            </ButtonsRow>
         </ItemContainer>
 
     );

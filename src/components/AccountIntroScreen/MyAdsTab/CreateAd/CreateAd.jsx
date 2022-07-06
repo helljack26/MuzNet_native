@@ -102,12 +102,11 @@ const CreateAd = observer(({ isOpenTab }) => {
     const [chosenLocation, getChosenLocation] = useState('');
     const [isOpenLocationDropList, setOpenLocationDropList] = useState(false);
 
-    // Set shifting input label
+    // Get coords from string location
     useEffect(() => {
         if (chosenLocation.length > 0) {
             setCoordsFromSearch(chosenLocation)
         }
-
     }, [chosenLocation]);
 
     // Calendar
@@ -267,45 +266,15 @@ const CreateAd = observer(({ isOpenTab }) => {
     const scrollTop = () => { if (scrollViewRef.current) { setTimeout(() => { scrollViewRef.current.scrollTo({ y: 0, animated: true }) }, 20); } }
 
     const [isResetAll, setResetAll] = useState(false);
-    const clearAllFields = () => {
-        // For components set reset
-        setResetAll(true)
-        Keyboard.dismiss()
-        // Components reset
-        resetField('adTitle')
-        resetField('adDescription')
-        resetField('adLocation')
-        resetField('userPricePerHour')
-        getChosenLocation('')
-        setPricePerHourInput('')
-        getChosenDate({
-            milliseconds: '',
-            string: ''
-        })
-        setTimeRange({
-            startTime: {
-                milliseconds: '',
-                string: '',
-            },
-            endTime: {
-                milliseconds: '',
-                string: '',
-            },
-            duration: 0,
-        })
-        setNewUserImages([])
-        // Set reset to default
-        setResetAll(false)
-    }
+
     // Submit
     const onSubmit = (data) => {
-        console.log(userCoordsFromSearch.region);
         if (isCanSubmit === true) {
             scrollTop()
             const min = 10000;
             const max = 99999;
             const randomId = Math.floor(Math.random() * (max - min + 1)) + min;
-            console.log("🚀 ~ file: CreateAd.jsx ~ line 314 ~ onSubmit ~ randomId", randomId)
+
             const newAd = {
                 id: randomId,
                 adTitle: data.adTitle,
@@ -326,7 +295,12 @@ const CreateAd = observer(({ isOpenTab }) => {
                 adGenres: chosenGenres,
                 adMusicalInstrument: chosenInstrument,
                 adReview: [],
-                coordinate: userCoordsFromSearch.region,
+                coordinate: {
+                    latitude: userCoordsFromSearch.region.latitude,
+                    longitude: userCoordsFromSearch.region.longitude,
+                    latitudeDelta: 0.04864195044303443,
+                    longitudeDelta: 0.040142817690068,
+                },
             }
             setNewAd(newAd)
             onPress(false)
@@ -676,9 +650,9 @@ const CreateAd = observer(({ isOpenTab }) => {
                         </View>
 
                     </FormScrollView>
-
-                    {/* Footer block */}
                 </KeyboardAvoidingView>
+
+                {/* Footer block */}
                 <ContentBlock
                     style={{
                         width: windowWidth,
@@ -698,8 +672,6 @@ const CreateAd = observer(({ isOpenTab }) => {
                         </ButtonSubmit>
                     </ContentBlockRow>
                 </ContentBlock>
-
-
 
             </FilterContainer>
 

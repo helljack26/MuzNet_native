@@ -131,7 +131,7 @@ const SearchInputDropSelect = ({ isResetAll, isCloseAllDropdown, dataForChoose, 
 
 
     useEffect(() => {
-        if (init === 1 && alreadyChosenInstrument.length > 0) {
+        if (init === 1 && alreadyChosenInstrument !== undefined && alreadyChosenInstrument.length > 0) {
             const common = alreadyChosenInstrument.filter(x => dataForChoose.includes(x));
             const notChosen = dataForChoose.filter(x => !common.includes(x));
             setChoosenBlock(alreadyChosenInstrument)

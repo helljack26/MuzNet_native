@@ -63,7 +63,7 @@ class MapSearchApi {
                                 longitudeDelta: 0.3,
                             }
                         }
-                        console.log("🚀 ~ file: MapSearchApi.js ~ line 66 ~ MapSearchApi ~ userProfileRegion", userProfileRegion)
+                        // console.log("🚀 ~ file: MapSearchApi.js ~ line 66 ~ MapSearchApi ~ userProfileRegion", userProfileRegion)
                         runInAction(() => {
                             this.userCoordsFromSearch = {}
                             return this.userCoordsFromSearch = userProfileRegion

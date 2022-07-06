@@ -80,7 +80,6 @@ export const ContractorAdsMockApi =
                 },
             ]
         },
-
         {
             id: 1855674,
             adImage: [

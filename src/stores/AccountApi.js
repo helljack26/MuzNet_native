@@ -257,6 +257,7 @@ class AccountApi {
 
             setOpenTabs: action.bound,
             setAdIdForEdit: action.bound,
+            setEditedAd: action.bound,
             setNewAd: action.bound,
             changeContactorAccountData: action.bound,
         })
@@ -309,15 +310,29 @@ class AccountApi {
 
     setAdIdForEdit(id) {
         this.adIdForEdit = id;
-
     }
+    setEditedAd(editedAd) {
+        let editedIndex
+        apiMocks.ContractorAdsMockApi.find((item, id) => {
+            if (item.id === editedAd.id) {
+                editedIndex = id
+            }
+        })
+        apiMocks.ContractorAdsMockApi[editedIndex] = editedAd
+
+        let editedStoreIndex
+        this.contractorAccountDataApi[0].contractorAds.find((item, id) => {
+            if (item.id === editedAd.id) {
+                return editedStoreIndex = id
+            }
+            return
+        })
+        this.contractorAccountDataApi[0].contractorAds[editedStoreIndex] = editedAd
+    }
+
     setNewAd(newAd) {
         apiMocks.ContractorAdsMockApi.unshift(newAd)
         set(this.contractorAccountDataApi[0], "contractorAds", [newAd, ...this.contractorAccountDataApi[0].contractorAds])
-
-        // this.contractorAccountDataApi[0].contractorAds.unshift()
-        // = [, ...this.contractorAccountDataApi[0].contractorAds];
-
     }
 }
 

@@ -65,6 +65,7 @@ import { observer } from 'mobx-react-lite';
 import { runInAction, set } from 'mobx';
 
 import { useAccountApiStore } from '@/stores/AccountApi';
+import { useMapSearchApiStore } from '@/stores/MapSearchApi';
 
 const EditAd = observer(({ isOpenTab }) => {
     const isKeyboardOpen = isKeyboardShown()
@@ -73,7 +74,7 @@ const EditAd = observer(({ isOpenTab }) => {
 
     // Form 
     const { control, handleSubmit, watch, setValue,
-        formState: { dirtyFields, errors } } = useForm({
+        formState: { dirtyFields, errors, isSubmitting } } = useForm({
             defaultValues: {
                 adTitle: '',
                 adDescription: '',
@@ -83,10 +84,10 @@ const EditAd = observer(({ isOpenTab }) => {
         });
 
     // Store
-    const { contractorAccountDataApi, setOpenTabs, adIdForEdit, setAdIdForEdit } = useAccountApiStore();
+    const { contractorAccountDataApi, setOpenTabs, adIdForEdit, setAdIdForEdit, setEditedAd } = useAccountApiStore();
+    const { userCoordsFromSearch, setCoordsFromSearch } = useMapSearchApiStore();
 
     const { onPress, width } = useAnimateOfferPreview()
-
 
     useEffect(() => {
         if (isOpenTab === true) {
@@ -120,8 +121,14 @@ const EditAd = observer(({ isOpenTab }) => {
     const userPlayByEarFromStore = contractorAccountData.adSkills.playByEar
     const userReadSheetMusicFromStore = contractorAccountData.adSkills.readSheetMusic
     // Ad location
-    const [chosenLocation, getChosenLocation] = useState();
+    const [chosenLocation, getChosenLocation] = useState('');
     const [isOpenLocationDropList, setOpenLocationDropList] = useState(false);
+    // Get coords from string location
+    useEffect(() => {
+        if (chosenLocation.length > 0) {
+            setCoordsFromSearch(chosenLocation)
+        }
+    }, [chosenLocation]);
 
     // Calendar
     const [isCalendarOpen, setCalendarOpen] = useState(false);
@@ -195,6 +202,10 @@ const EditAd = observer(({ isOpenTab }) => {
     // Is show submit button
     const [isShowSubmitButton, setShowSubmitButton] = useState(false);
     const [isSomeFieldChange, setSomeFieldChange] = useState(false);
+
+    const [isCheckError, setCheckError] = useState(false);
+    const [isCanSubmit, setCanSubmit] = useState(false);
+
     useEffect(() => {
         function isEmpty(obj) {
             return Object.keys(obj).length === 0;
@@ -251,11 +262,9 @@ const EditAd = observer(({ isOpenTab }) => {
         userDescriptionFromStore,
         adLocationFromStore,
         adPricePerHourFromStore,
-
         adTitleWatch,
         userDescriptionWatch,
         chosenLocation,
-
         userPricePerHourWatch,
         // 
         chosenGenres,
@@ -279,6 +288,68 @@ const EditAd = observer(({ isOpenTab }) => {
         eventEndFromStore.milliseconds,
         adMusicianTypeFromStore,
         musicianType,
+    ]);
+
+    // Is show error in unhandled hook form field
+    const [isShowLocationError, setShowLocationError] = useState(false);
+    const [isShowDateError, setShowDateError] = useState(false);
+    const [isShowStartTimeError, setShowStartTimeError] = useState(false);
+    const [isShowEndTimeError, setShowEndTimeError] = useState(false);
+    const [isShowMusicianTypeError, setShowMusicianTypeError] = useState(false);
+    const [isShowImagesError, setShowImagesError] = useState(false);
+
+    useEffect(() => {
+
+        if (isSubmitting === true && !isCanSubmit) {
+            setCheckError(true)
+        }
+
+        const isEmptyLocation = chosenLocation.length < 5
+        const isEmptyDate = typeof chosenDate.milliseconds === 'string'
+        const isEmptyStartTime = typeof timeRange.startTime.milliseconds === 'string'
+        const isEmptyEndTime = typeof timeRange.endTime.milliseconds === 'string'
+        const isEmptyMusicianType = musicianType === null
+        const isEmptyImages = newUserImages.length === 0
+
+        // Location check
+        if (isEmptyLocation && isCheckError === true) { setShowLocationError(true); }
+        if (!isEmptyLocation && isCheckError === true) { setShowLocationError(false); }
+
+        // Date check
+        if (isEmptyDate && isCheckError === true) { setShowDateError(true); }
+        if (!isEmptyDate && isCheckError === true) { setShowDateError(false); }
+
+        // Start time check
+        if (isEmptyStartTime && isCheckError === true) { setShowStartTimeError(true); }
+        if (!isEmptyStartTime && isCheckError === true) { setShowStartTimeError(false); }
+
+        // End time check
+        if (isEmptyEndTime && isCheckError === true) { setShowEndTimeError(true); }
+        if (!isEmptyEndTime && isCheckError === true) { setShowEndTimeError(false); }
+
+        // Musician type check
+        if (isEmptyMusicianType && isCheckError === true) { setShowMusicianTypeError(true); }
+        if (!isEmptyMusicianType && isCheckError === true) { setShowMusicianTypeError(false); }
+
+        // Images check
+        if (isEmptyImages && isCheckError === true) { setShowImagesError(true); }
+        if (!isEmptyImages && isCheckError === true) { setShowImagesError(false); }
+
+        if (!isEmptyLocation && !isEmptyDate && !isEmptyStartTime && !isEmptyEndTime && !isEmptyMusicianType && !isEmptyImages) {
+            setCanSubmit(true)
+        } else {
+            setCanSubmit(false)
+        }
+
+    }, [isSubmitting,
+        chosenLocation.length,
+        chosenDate.milliseconds,
+        isCheckError,
+        timeRange.startTime,
+        timeRange.endTime,
+        musicianType,
+        isCanSubmit,
+        newUserImages.length,
     ]);
 
     // Set shifting input label
@@ -318,34 +389,51 @@ const EditAd = observer(({ isOpenTab }) => {
 
     // Submit
     const onSubmit = (data) => {
-        scrollTop()
-        setShowSubmitButton(false)
-        setSomeFieldChange(false)
-        runInAction(() => {
-            set(contractorAccountData, "adTitle", data.adTitle)
-            set(contractorAccountData, "adDescription", data.adDescription)
-            set(contractorAccountData, "adLocation", chosenLocation)
-            set(contractorAccountData, "adDate", chosenDate)
-            set(contractorAccountData, "eventStart", timeRange.startTime)
-            set(contractorAccountData, "eventEnd", timeRange.endTime)
-            set(contractorAccountData, "userPricePerHour", data.userPricePerHour)
-            set(contractorAccountData, "adTypeOfMusician", musicianType)
-            set(contractorAccountData, "adGenres", chosenGenres)
-            set(contractorAccountData, "adMusicalInstrument", chosenInstrument)
-            set(contractorAccountData.adSkills, "singByEar", isSingByEar)
-            set(contractorAccountData.adSkills, "playByEar", isPlayByEar)
-            set(contractorAccountData.adSkills, "readSheetMusic", isReadSheetMusic)
-            set(contractorAccountData, "adImage", newUserImages)
-            console.log("🚀 ~ file: EditAd.jsx ~ line 313 ~ runInAction ~ contractorAccountData", contractorAccountData)
-        })
-        onPress(false)
-        setTimeout(() => {
-            setOpenTabs({
-                tabName: 'Edit ad',
-                isOpen: false
-            })
-        }, 600);
-        return
+        if (isCanSubmit === true) {
+            scrollTop()
+            setShowSubmitButton(false)
+            setSomeFieldChange(false)
+            const editedAd = {
+                id: contractorAccountData.id,
+                adTitle: data.adTitle,
+                adLocation: chosenLocation,
+                adImage: newUserImages,
+                userPricePerHour: data.userPricePerHour,
+                userCurrencyType: '$',
+                adDescription: data.adDescription,
+                adDate: chosenDate,
+                eventStart: timeRange.startTime,
+                eventEnd: timeRange.endTime,
+                adTypeOfMusician: musicianType,
+                adSkills: {
+                    singByEar: isSingByEar,
+                    playByEar: isPlayByEar,
+                    readSheetMusic: isReadSheetMusic,
+                },
+                adGenres: chosenGenres,
+                adMusicalInstrument: chosenInstrument,
+                adReview: contractorAccountData.adReview,
+                coordinate: {
+                    latitude: userCoordsFromSearch.region.latitude,
+                    longitude: userCoordsFromSearch.region.longitude,
+                    latitudeDelta: 0.04864195044303443,
+                    longitudeDelta: 0.040142817690068,
+                },
+            }
+
+            setEditedAd(editedAd)
+            onPress(false)
+            setTimeout(() => {
+                setOpenTabs({
+                    tabName: 'Edit ad',
+                    isOpen: false
+                })
+            }, 600);
+            return
+        } else {
+            return setCheckError(true)
+        }
+
     };
     // Confirm delete account
     const [isOpenConfirmWindow, setOpenConfirmWindow] = useState(false);
@@ -504,6 +592,7 @@ const EditAd = observer(({ isOpenTab }) => {
                             isCloseAllDropdown={isCloseAllDropdown}
                             placeholderText={'Location'}
                             existedLocation={adLocationFromStore}
+                            isRequiredShowError={isShowLocationError}
                         />
 
                         {/* Set date */}
@@ -517,6 +606,7 @@ const EditAd = observer(({ isOpenTab }) => {
                                 isCloseAllDropdown={isCloseAllDropdown}
                                 placeholderText={'Date'}
                                 isExistedDate={adDateFromStore}
+                                isRequiredShowError={isShowDateError}
                             />
                         </View>
 
@@ -526,6 +616,8 @@ const EditAd = observer(({ isOpenTab }) => {
                             existedStartTimePlaceholder={eventStartFromStore}
                             existedEndTimePlaceholder={eventEndFromStore}
                             existedDuration={1}
+                            isRequiredShowStartError={isShowStartTimeError}
+                            isRequiredShowEndError={isShowEndTimeError}
                         />
 
                         {/* Opacity bg that show if calendar or location open and close it on press */}
@@ -541,8 +633,16 @@ const EditAd = observer(({ isOpenTab }) => {
                         <View style={{ paddingHorizontal: 16, }}  >
                             <Controller
                                 control={control}
+                                rules={{
+                                    required: S.inputRequired,
+                                    minLength: 2,
+                                }}
                                 render={({ field: { onChange, onBlur } }) => (
-                                    <FormInputBlock>
+                                    <FormInputBlock
+                                        style={{
+                                            marginBottom: (errors.userPricePerHour?.type === 'required' || errors.userPricePerHour?.type === 'minLength') ? 35 : 13,
+                                        }}
+                                    >
                                         <FormInputContainerPhone>
                                             <MaskInput
                                                 maxLength={5}
@@ -558,12 +658,12 @@ const EditAd = observer(({ isOpenTab }) => {
                                                     flex: 1,
                                                     height: 48,
                                                     paddingLeft: pricePerHourInput.length > 0 ? 30 : 16,
-                                                    // opacity: 0,
                                                     borderRadius: 6,
                                                     borderColor: inputFocus7,
                                                     fontSize: 17,
                                                     fontFamily: F.regular,
                                                     paddingTop: pricePerHourLabel === true ? 13 : 0,
+                                                    borderColor: errors.userPricePerHour ? C.red : inputFocus2,
                                                     borderWidth: errors.userPricePerHour ? 2 : 1,
                                                     color: 'transparent',
                                                 }}
@@ -585,9 +685,15 @@ const EditAd = observer(({ isOpenTab }) => {
                                                     }}>
                                                     {pricePerHourInput.length > 0 ? `$ ${addDotForNumber(pricePerHourInput)}/hour` : 'Enter your price per hour'}</FormInputPricePerHourText>
                                             </FormInputPricePerHourBlock>
+                                            {errors.userPricePerHour && <ShowPasswordIconButton>
+                                                <ErrorIcon width={20} height={20} />
+                                            </ShowPasswordIconButton>
+                                            }
                                         </FormInputContainerPhone>
                                         <FormInputLabel inputLabel={pricePerHourLabel}>Price</FormInputLabel>
 
+                                        {errors.userPricePerHour?.type === 'required' && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+                                        {errors.userPricePerHour?.type === 'minLength' && <ErrorMessage>Minimum 2 digit</ErrorMessage>}
                                     </FormInputBlock>
                                 )}
                                 name="userPricePerHour"
@@ -610,6 +716,8 @@ const EditAd = observer(({ isOpenTab }) => {
                                     'Singer',
                                     'Musician',
                                     'Band']}
+                                isRequiredShowError={isShowMusicianTypeError}
+
                             />
                         </View>
                         {/* Search music genre */}
@@ -668,6 +776,7 @@ const EditAd = observer(({ isOpenTab }) => {
                             isAdCreateOrEdit={true}
                             setNewUserImages={setNewUserImages}
                             userImages={newUserImages}
+                            isRequiredShowError={isShowImagesError}
                         />
 
                         {/* Delete Add */}

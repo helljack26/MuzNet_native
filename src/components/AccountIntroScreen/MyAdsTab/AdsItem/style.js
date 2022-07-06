@@ -48,7 +48,7 @@ const ItemInfoLocationText = styled(M.PlainText14)`
 margin-left: 5px;
 color: ${C.sBlack};
 `;
-const ItemInfoName = styled(M.TitleBold16)`
+const ItemInfoName = styled(M.TitleBold17)`
 padding-top: 4px;
 padding-bottom: 7px;
 `;
@@ -94,9 +94,15 @@ margin-top: -4px;
 margin-bottom: 4px;
 color: ${C.cyanGray};
 `;
-const AddPayment = styled.TouchableOpacity`
-margin-top: 9px;
+const ButtonsRow = styled.View`
 width: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-direction: row;
+`;
+const AddPayment = styled.TouchableOpacity`
+width: 48.5%;
 height: 48px;
 border-radius: 8px;
 padding: 0px 20px;
@@ -128,6 +134,7 @@ export const style = {
     ItemInfoCostValue: ItemInfoCostValue,
     ItemInfoCostValuePostfix: ItemInfoCostValuePostfix,
     ItemInfoDescription: ItemInfoDescription,
+    ButtonsRow: ButtonsRow,
     AddPayment: AddPayment,
     AddPaymentRowText: AddPaymentRowText,
 

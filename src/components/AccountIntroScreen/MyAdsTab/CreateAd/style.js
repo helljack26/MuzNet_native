@@ -11,8 +11,6 @@ overflow: hidden;
 const FormScrollView = styled.ScrollView`
 padding: 62px 0px;
 padding-bottom: 0px;
-/* padding-bottom: 120px; */
-/* margin-bottom: 126px; */
 `;
 
 const UserAvatarBlock = styled.View`
