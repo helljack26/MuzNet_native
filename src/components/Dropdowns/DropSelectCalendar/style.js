@@ -5,7 +5,6 @@ import { M } from '@/res/mixin'
 
 const DropBlock = styled.View`
 margin: 0px 16px;
-margin-bottom: 24px;
 margin-top: 11px;
 z-index: 1010;
 `;

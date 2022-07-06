@@ -10,6 +10,7 @@ const {
 // Styles
 import { style } from './style'
 import C from '@/res/colors'
+import { S } from '@/res/strings'
 
 const {
     DropBlock,
@@ -22,8 +23,13 @@ const {
     OptionText,
     OptionActiveIcon
 } = style;
-
-const DropSelect = ({ isResetAll, selectedValue, toggling, isOpen, onSelect, dropHeader, dropOptions }) => {
+import { M } from '@/res/mixin'
+const {
+    FormInputLabel,
+    ErrorMessage,
+    ShowPasswordIconButton
+} = M;
+const DropSelect = ({ isResetAll, selectedValue, toggling, isOpen, onSelect, dropHeader, dropOptions, isRequiredShowError }) => {
 
     const [mainHeader, setMainHeader] = useState()
 
@@ -37,13 +43,21 @@ const DropSelect = ({ isResetAll, selectedValue, toggling, isOpen, onSelect, dro
             setMainHeader(dropHeader)
         }
     }, [isResetAll]);
+
+    const isShowError = isRequiredShowError === true
+
     return (
         <DropBlock
+            style={{
+                marginBottom: isShowError ? 45 : 24,
+            }}
             onPress={() => toggling(false)} >
             <Drop>
                 <DropHeader
                     style={{
-                        borderBottomWidth: isOpen === true ? 0 : 1,
+                        borderColor: isShowError ? C.red : C.lightGray,
+                        borderWidth: isShowError ? 2 : 1,
+                        borderBottomWidth: isOpen === true ? 0 : isShowError ? 2 : 1,
                         borderBottomLeftRadius: isOpen === true ? 0 : 6,
                         borderBottomRightRadius: isOpen === true ? 0 : 6,
                         elevation: isOpen === true ? 5 : 0,
@@ -60,15 +74,18 @@ const DropSelect = ({ isResetAll, selectedValue, toggling, isOpen, onSelect, dro
                         <GoBackIcon width={10} height={15} />
                     </ArrowBlock>
                 </DropHeader>
+
+                {isShowError && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+
             </Drop>
             {isOpen && (
                 <DropContainer
                     nestedScrollEnabled={true}
                     style={{
-                        zIndex: 999,
+                        zIndex: 1111,
                         borderTopLeftRadius: isOpen === true ? 0 : 6,
                         borderTopRightRadius: isOpen === true ? 0 : 6,
-                        elevation: 4,
+                        elevation: 6,
                     }}
                 >
                     <OptionsList>

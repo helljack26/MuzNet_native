@@ -16,7 +16,7 @@ top: 48px;
 border: 1px solid ${C.black};
 border-top-width: 0px ;
 left: 0px;
-z-index: 999;
+z-index: 1111;
 border-radius: 6px;
 `;
 const ChosenBlock = styled.View`

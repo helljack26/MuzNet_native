@@ -57,7 +57,6 @@ flex-direction: row;
 `;
 const CardLocation = styled.View`
 display: flex;
-align-items: center;
 flex-direction: row;
 margin-bottom: 8px;
 `;

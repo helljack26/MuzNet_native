@@ -45,8 +45,7 @@ class AccountApi {
 
                 },
                 adTitle: "Aloft Asheville",
-                adLocation: "Victoria, Ballarat",
-                adAddress: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
+                adLocation: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
                 coordinate: {
                     latitude: 37.88068574665098,
                     longitude: -122.2798887321131,
@@ -127,8 +126,7 @@ class AccountApi {
                 },
 
                 adTitle: "Le Bernandin",
-                adLocation: "Victoria, Ballarat",
-                adAddress: "1632 Spruce Street, Berkeley, CA 94709 Berkeley California United States",
+                adLocation: "1632 Spruce Street, Berkeley, CA 94709 Berkeley California United States",
                 coordinate: {
                     latitude: 37.87756939233716,
                     longitude: -122.26555500713751,
@@ -238,6 +236,7 @@ class AccountApi {
     isOpenMyAdsTab = false
     isOpenEditAd = false
     adIdForEdit = 0
+    isOpenCreateAd = false
     isOpenTermOfServiceTab = false
 
     constructor() {
@@ -253,10 +252,12 @@ class AccountApi {
             isOpenMyAdsTab: observable,
             isOpenEditAd: observable,
             adIdForEdit: observable,
+            isOpenCreateAd: observable,
             isOpenTermOfServiceTab: observable,
 
             setOpenTabs: action.bound,
             setAdIdForEdit: action.bound,
+            setNewAd: action.bound,
             changeContactorAccountData: action.bound,
         })
     }
@@ -293,6 +294,10 @@ class AccountApi {
                 this.isOpenEditAd = action;
                 break;
 
+            case "Create ad":
+                this.isOpenCreateAd = action;
+                break;
+
             case "Terms of Service":
                 this.isOpenTermOfServiceTab = action;
                 break;
@@ -304,6 +309,14 @@ class AccountApi {
 
     setAdIdForEdit(id) {
         this.adIdForEdit = id;
+
+    }
+    setNewAd(newAd) {
+        apiMocks.ContractorAdsMockApi.unshift(newAd)
+        set(this.contractorAccountDataApi[0], "contractorAds", [newAd, ...this.contractorAccountDataApi[0].contractorAds])
+
+        // this.contractorAccountDataApi[0].contractorAds.unshift()
+        // = [, ...this.contractorAccountDataApi[0].contractorAds];
 
     }
 }

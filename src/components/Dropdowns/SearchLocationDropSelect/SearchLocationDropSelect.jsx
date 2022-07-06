@@ -1,15 +1,14 @@
 import React from 'react';
 import { Keyboard } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useEffect, useState } from 'react';
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown';
-import C from '@/res/colors'
 
+import C from '@/res/colors'
+import { S } from '@/res/strings'
 // Images
 import IMAGES from '@/res/images'
-
+const {
+    ErrorIcon,
+} = IMAGES;
 // Styles
 import { style } from './style'
 const {
@@ -28,7 +27,9 @@ const {
     FormInputBlock,
     FormInputContainer,
     FormInput,
-    FormInputLabel
+    ShowPasswordIconButton,
+    ErrorMessage,
+    FormInputLabel,
 } = M;
 
 // Store
@@ -36,8 +37,7 @@ import { observer } from 'mobx-react-lite';
 import { toJS } from "mobx";
 import { useLocationAutocompleteApiStore } from '@/stores/LocationAutocompleteApi';
 
-const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, isCloseAllDropdown, setFilterLocation, placeholderText, existedLocation }) => {
-    const navigation = useNavigation();
+const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, isCloseAllDropdown, setFilterLocation, placeholderText, existedLocation, isRequiredShowError }) => {
     // Store
     const { locationList, setLocationList } = useLocationAutocompleteApiStore();
     const jsLocationList = toJS(locationList)
@@ -51,7 +51,6 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
     const [isShiftInputLocationLabel, setShiftInputLocationLabel] = useState(false);
 
     useEffect(() => {
-
         if (existedLocation !== undefined) {
             setSelectedLocation(existedLocation)
             onChangeSearchText(existedLocation)
@@ -138,7 +137,7 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
     }
 
     useEffect(() => {
-        if (isCloseAllDropdown === true) {
+        if (isCloseAllDropdown === true && jsLocationList.length > 0) {
             setLocationList([])
             const item = jsLocationList[0]
             onChangeSearchText(item)
@@ -146,19 +145,31 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
             setFilterLocation(item)
             Keyboard.dismiss()
         }
-    }, [isCloseAllDropdown]);
+        if (isCloseAllDropdown === true && jsLocationList.length === 0) {
+            setLocationList([])
+            Keyboard.dismiss()
+        }
+    }, [isCloseAllDropdown, jsLocationList]);
+
+
+    const isShowError = isRequiredShowError === true
+
     return (
 
         <Container>
             {/* Search Input */}
-            <FormInputBlock       >
+            <FormInputBlock
+                style={{
+                    marginBottom: isShowError ? 35 : 13,
+                }}
+            >
                 <FormInputContainer
                     style={{
                         marginLeft: 16,
                         marginRight: 16,
                         backgroundColor: C.white,
                         borderRadius: 6,
-                        elevation: isOpenDropList === true ? 5 : inputFocus1 === C.black ? 5 : 0,
+                        elevation: isOpenDropList === true ? 7 : inputFocus1 === C.black ? 7 : 0,
                     }}
                 >
                     <FormInput
@@ -173,58 +184,65 @@ const SearchLocationDropSelect = observer(({ isResetAll, setParentShowOpenDrop, 
                         onChangeText={onChangeSearchText}
                         value={searchText}
                         style={{
-                            borderColor: inputFocus1,
-                            borderWidth: 1,
+                            borderColor: isShowError ? C.red : inputFocus1,
+                            borderWidth: isShowError ? 2 : 1,
                             color: C.black,
                             overflow: 'hidden',
                             backgroundColor: C.white,
-                            borderBottomWidth: isOpenDropList === true ? 0 : 1,
+                            borderBottomWidth: isOpenDropList === true ? 0 : isShowError ? 2 : 1,
                             borderBottomLeftRadius: isOpenDropList === true ? 0 : 6,
                             borderBottomRightRadius: isOpenDropList === true ? 0 : 6,
                         }}
                     />
                     <FormInputLabel inputLabel={isShiftInputLocationLabel}>Location</FormInputLabel>
+                    {isShowError && <ShowPasswordIconButton>
+                        <ErrorIcon width={20} height={20} />
+                    </ShowPasswordIconButton>
+                    }
+                    {isShowError && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
                 </FormInputContainer>
 
 
             </FormInputBlock>
 
             {/* Choose block */}
-            {isOpenDropList && <DropContainer
-                nestedScrollEnabled={true}
-                showsVerticalScrollIndicator={false}
-                style={{
-                    borderTopLeftRadius: isOpenDropList === true ? 0 : 6,
-                    borderTopRightRadius: isOpenDropList === true ? 0 : 6,
-                    elevation: 5
-                }}
-            >
-                <ChosenBlock>
-                    {jsLocationList.map((item, key) => {
-                        const isFirst = key === 0
-                        return (item !== undefined && <Item
-                            style={{
-                                backgroundColor: isFirst === true ? C.lightGray : C.white,
-                            }}
-                            key={key}
-                            onPress={() => {
-                                onChangeSearchText(item)
-                                setSelectedLocation(item)
-                                setFilterLocation(item)
-                                setLocationList([])
-                                Keyboard.dismiss()
-                            }}
-                        >
-                            <ItemText>
-                                {item}
-                            </ItemText>
+            {
+                isOpenDropList && <DropContainer
+                    nestedScrollEnabled={true}
+                    showsVerticalScrollIndicator={false}
+                    style={{
+                        borderTopLeftRadius: isOpenDropList === true ? 0 : 6,
+                        borderTopRightRadius: isOpenDropList === true ? 0 : 6,
+                        elevation: 7
+                    }}
+                >
+                    <ChosenBlock>
+                        {jsLocationList.map((item, key) => {
+                            const isFirst = key === 0
+                            return (item !== undefined && <Item
+                                style={{
+                                    backgroundColor: isFirst === true ? C.lightGray : C.white,
+                                }}
+                                key={key}
+                                onPress={() => {
+                                    onChangeSearchText(item)
+                                    setSelectedLocation(item)
+                                    setFilterLocation(item)
+                                    setLocationList([])
+                                    Keyboard.dismiss()
+                                }}
+                            >
+                                <ItemText>
+                                    {item}
+                                </ItemText>
 
-                        </Item>)
-                    })}
-                </ChosenBlock>
+                            </Item>)
+                        })}
+                    </ChosenBlock>
 
-            </DropContainer>}
-        </Container>
+                </DropContainer>
+            }
+        </Container >
 
     );
 });

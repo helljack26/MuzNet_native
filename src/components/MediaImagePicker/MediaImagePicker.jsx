@@ -29,7 +29,7 @@ const {
     MediaImgAddButtonText,
 } = style;
 
-const MediaImagePicker = ({ userImages, setNewUserImages, isAdCreateOrEdit }) => {
+const MediaImagePicker = ({ userImages, setNewUserImages, isAdCreateOrEdit, isRequiredShowError }) => {
 
     const { windowHeight, windowWidth } = getWindowDimension()
     const imageBlockSize = (windowWidth - 56) / 3
@@ -65,15 +65,27 @@ const MediaImagePicker = ({ userImages, setNewUserImages, isAdCreateOrEdit }) =>
             setHideAddButton(false)
         }
     }, [userImages, isAdCreateOrEdit]);
+
+    const isShowError = isRequiredShowError === true
+
     return (
         <MediaContainer>
             <MediaContainerTitle>
                 Media
             </MediaContainerTitle>
 
-            {isAdCreateOrEdit === true && <MediaContainerSubTitle>
+            {(isAdCreateOrEdit === true && !isShowError) ? <MediaContainerSubTitle>
                 You can upload up to 4 photos
-            </MediaContainerSubTitle>}
+            </MediaContainerSubTitle>
+                :
+                <MediaContainerSubTitle
+                    style={{
+                        color: C.red,
+                    }}
+                >
+                    One photo is required
+                </MediaContainerSubTitle>
+            }
 
             <MediaBlock>
 
@@ -101,15 +113,16 @@ const MediaImagePicker = ({ userImages, setNewUserImages, isAdCreateOrEdit }) =>
                     )
                 })}
 
-                {/* // Hide button for ad if already added 4 image */}
+                {/* Hide button for ad if already added 4 image */}
                 {!isHideAddButton && <MediaImgAddButton
                     style={{
+                        borderWidth: isShowError ? 2 : 0,
+                        borderColor: isShowError ? C.red : 'transparent',
                         width: imageBlockSize,
                         height: imageBlockSize,
                     }}
                     onPress={pickImage}
                 >
-
                     <AddCrossIcon width={17} height={17} />
                     <MediaImgAddButtonText>
                         Add new

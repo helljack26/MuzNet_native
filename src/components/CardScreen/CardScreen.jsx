@@ -88,12 +88,14 @@ const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView 
     const cardDescription = isMusicianTrue ? data.userDescription : data.adDescription
     const cardBandMembers = (isMusicianTrue && data.userMusicianType === 'Band') && data.userBandMembers
     const cardSkills = isMusicianTrue ? data.userSkills : data.adSkills
+    const converterSkills = skillGenerator(cardSkills)
     const cardMusicalInstrument = isMusicianTrue ? data.userMusicalInstrument : data.adMusicalInstrument
     const cardMusicianType = data.adTypeOfMusician
-    const cardAddress = !isMusicianTrue && data.adAddress
     const cardCoords = !isMusicianTrue && data.coordinate
     const willingToTravel = data.willingToTravel
-    const adEventTime = data.adEventTime
+    const adEventDate = !isMusicianTrue && data.adDate.string
+    const adEventStartTime = !isMusicianTrue && data.eventStart.string
+    const adEventEndTime = !isMusicianTrue && data.eventEnd.string
     const userPricePerHour = data.userPricePerHour
     const userCurrencyType = data.userCurrencyType
 
@@ -148,9 +150,9 @@ const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView 
         <CardLocation></CardLocation>
 
     const rateComponent = <RateBlock reviewData={cardReviews} screenType={'card'} />
-    const titleComponent = <CardTitle>{cardTitle}</CardTitle>
+    const titleComponent = cardTitle !== undefined && <CardTitle>{cardTitle}</CardTitle>
 
-    const eventDateText = eventDateString(adEventTime)
+    const eventDateText = `${adEventDate}, ${adEventStartTime} to ${adEventEndTime}`
 
     return (
         <CardContainer
@@ -270,39 +272,44 @@ const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView 
                     }
 
                     {/* Description */}
-                    {cardDescription !== undefined && isDescriptionWithHiddenText === true ?
-                        <DescriptionContainer>
-                            {!isMusicianTrue && <DescriptionContainerTitle>We are looking for:</DescriptionContainerTitle>}
-                            <DescriptionContainerText>
-                                {descriptionFirstPart}
-                                {showMoreDescription === true && ' ...'}
-                            </DescriptionContainerText>
-                            {/* Collapsible */}
-                            <Collapsible collapsed={showMoreDescription} align="center">
+                    {(cardDescription.length > 0) ?
+                        isDescriptionWithHiddenText === true ?
+                            <DescriptionContainer>
+                                {!isMusicianTrue && <DescriptionContainerTitle>We are looking for:</DescriptionContainerTitle>}
                                 <DescriptionContainerText>
-                                    {descriptionSecondPart}
+                                    {descriptionFirstPart}
+                                    {showMoreDescription === true && ' ...'}
                                 </DescriptionContainerText>
-                            </Collapsible>
-                            <ShowDescriptionButton
-                                onPress={() => {
-                                    setShowMoreDescription(!showMoreDescription)
-                                }}
-                            >
-                                <ShowDescriptionButtonText>
-                                    {showMoreDescription === true ? 'Show more' : 'Show less'}
-                                </ShowDescriptionButtonText>
-                            </ShowDescriptionButton>
-                        </DescriptionContainer>
+                                {/* Collapsible */}
+                                <Collapsible collapsed={showMoreDescription} align="center">
+                                    <DescriptionContainerText>
+                                        {descriptionSecondPart}
+                                    </DescriptionContainerText>
+                                </Collapsible>
+                                <ShowDescriptionButton
+                                    onPress={() => {
+                                        setShowMoreDescription(!showMoreDescription)
+                                    }}
+                                >
+                                    <ShowDescriptionButtonText>
+                                        {showMoreDescription === true ? 'Show more' : 'Show less'}
+                                    </ShowDescriptionButtonText>
+                                </ShowDescriptionButton>
+                                {/* Border */}
+                                <CardBorder></CardBorder>
+                            </DescriptionContainer>
+                            :
+                            <DescriptionContainer>
+                                <DescriptionContainerText>
+                                    {cardDescription}
+                                </DescriptionContainerText>
+                                {/* Border */}
+                                <CardBorder></CardBorder>
+                            </DescriptionContainer>
                         :
-                        <DescriptionContainer>
-                            <DescriptionContainerText>
-                                {cardDescription}
-                            </DescriptionContainerText>
-                        </DescriptionContainer>
+                        null
                     }
 
-                    {/* Border */}
-                    <CardBorder></CardBorder>
 
                     {/* Band members list */}
                     {(isMusicianTrue && cardBandMembers) && <CardList>
@@ -327,23 +334,22 @@ const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView 
                     {(!isMusicianTrue && cardMusicianType !== undefined) && <CardList>
                         <CardListHeader>Type of musician:</CardListHeader>
                         <CardListBlock>
-                            {cardMusicianType.map((musician, key) => {
-                                return (
-                                    <CardListItem key={key}>
-                                        <CardListDot></CardListDot>
-                                        <CardListText>
-                                            {musician}
-                                        </CardListText>
-                                    </CardListItem>
-                                )
-                            })}
+
+                            <CardListItem>
+                                <CardListDot></CardListDot>
+
+                                <CardListText>
+                                    {cardMusicianType}
+                                </CardListText>
+                            </CardListItem>
+
                         </CardListBlock>
                         {/* Border */}
                         <CardBorder></CardBorder>
                     </CardList>}
 
                     {/* Instruments */}
-                    {cardMusicalInstrument !== undefined && <CardList>
+                    {cardMusicalInstrument.length > 0 && <CardList>
                         <CardListHeader>Instruments:</CardListHeader>
                         <CardListBlock>
                             {cardMusicalInstrument.map((skill, key) => {
@@ -362,7 +368,7 @@ const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView 
                     </CardList>}
 
                     {/* Ad genres */}
-                    {(!isMusicianTrue && cardGenres !== undefined) && <CardList>
+                    {(!isMusicianTrue && cardGenres.length > 0) && <CardList>
                         <CardListHeader>Music genres:</CardListHeader>
                         <CardListBlock>
                             {cardGenres.map((genre, key) => {
@@ -381,10 +387,10 @@ const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView 
                     </CardList>}
 
                     {/* Skills list */}
-                    {cardSkills !== undefined && <CardList>
+                    {converterSkills.length > 0 && <CardList>
                         <CardListHeader>Musician skills:</CardListHeader>
                         <CardListBlock>
-                            {skillGenerator(cardSkills).map((skill, key) => {
+                            {converterSkills.map((skill, key) => {
                                 return (
                                     <CardListItem key={key}>
                                         <CardListDot></CardListDot>
@@ -418,11 +424,16 @@ const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView 
                     {isMusicianTrue && <CardMediaImage cardImages={cardImages} fullscreenImgState={fullscreenImgState} setFullscreenImgState={setFullscreenImgState} />}
 
                     {/* Ad location block */}
-                    {!isMusicianTrue && <CardLocationBlock cardAddress={cardAddress} cardCoords={cardCoords} />}
+                    {!isMusicianTrue && <CardLocationBlock cardAddress={cardLocation} cardCoords={cardCoords} />}
 
                     {/* Review block */}
-                    <CardReviewsList cardReviews={cardReviews} fullscreenReviewState={fullscreenReviewState} setFullscreenReviewState={setFullscreenReviewState} />
-
+                    {cardReviews.length > 0 &&
+                        <>
+                            {/* Border */}
+                            <CardBorder></CardBorder>
+                            <CardReviewsList cardReviews={cardReviews} fullscreenReviewState={fullscreenReviewState} setFullscreenReviewState={setFullscreenReviewState} />
+                        </>
+                    }
                     {/* Border */}
                     {!isForContractorFromAccountView && <CardBorder></CardBorder>
                     }

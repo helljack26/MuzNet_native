@@ -36,6 +36,7 @@ const ContractorCardScreen = () => {
                 routeId={adsId}
                 data={contractorAdData}
                 isForContractorFromAccountView={true}
+                isMusician={false}
             />
         </SafeAreaView>
     )

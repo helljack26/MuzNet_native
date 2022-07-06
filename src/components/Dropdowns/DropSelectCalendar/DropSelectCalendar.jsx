@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/native';
 import F from '@/res/fonts'
 import C from '@/res/colors'
+import { S } from '@/res/strings'
 
 // Helpers
 import { dateConverter } from '@/components/helpers/dateConverter'
@@ -18,6 +19,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import IMAGES from '@/res/images'
 const {
     CalendarIcon,
+    ErrorIcon,
 } = IMAGES;
 
 // Styles
@@ -33,7 +35,9 @@ const {
 
 import { M } from '@/res/mixin'
 const {
-    FormInputLabel
+    FormInputLabel,
+    ErrorMessage,
+    ShowPasswordIconButton
 } = M;
 const customDayHeaderStylesCallback = ({ dayOfWeek, month, year }) => {
     if (dayOfWeek) {
@@ -46,7 +50,7 @@ const customDayHeaderStylesCallback = ({ dayOfWeek, month, year }) => {
         };
     }
 }
-const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, setCalendarOpen, placeholderText, isExistedDate }) => {
+const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, setCalendarOpen, placeholderText, isExistedDate, isRequiredShowError }) => {
     const navigation = useNavigation();
 
     const [placeholder, setPlaceholder] = useState('');
@@ -109,14 +113,24 @@ const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, set
             setCalendarOpen(false)
         }
     }, [isCloseAllDropdown]);
+
+    const isShowError = isRequiredShowError === true
+
     return (
         <DropBlock
+            style={{
+                marginBottom: isShowError ? 45 : 24,
+            }}
             onPress={() => toggling(false)} >
-            <Drop>
+            <Drop
+
+            >
                 <DropHeader
                     style={{
                         paddingTop: placeholder.length > 0 ? 15 : 0,
-                        borderBottomWidth: isOpen === true ? 0 : 1,
+                        borderColor: isShowError ? C.red : C.lightGray,
+                        borderWidth: isShowError ? 2 : 1,
+                        borderBottomWidth: isOpen === true ? 0 : isShowError ? 2 : 1,
                         borderBottomLeftRadius: isOpen === true ? 0 : 6,
                         borderBottomRightRadius: isOpen === true ? 0 : 6,
                         elevation: isOpen === true ? 5 : 0,
@@ -135,9 +149,15 @@ const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, set
                         style={{
                             top: placeholder.length > 0 ? -8 : 0,
                         }}>
-                        <CalendarIcon width={18} height={20} />
+                        {!isShowError && <CalendarIcon width={18} height={20} />}
                     </ArrowBlock>
                 </DropHeader>
+                {isShowError && <ShowPasswordIconButton>
+                    <ErrorIcon width={20} height={20} />
+                </ShowPasswordIconButton>
+                }
+                {isShowError && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+
             </Drop>
             <DropContainer
                 nestedScrollEnabled={true}

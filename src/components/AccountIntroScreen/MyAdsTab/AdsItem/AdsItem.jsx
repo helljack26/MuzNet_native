@@ -69,6 +69,7 @@ const AdsItem = observer(({ data, isDisableBottomMargin, setScrollToTop }) => {
         }
         return
     }
+    const isAdReview = adReview === undefined ? [] : adReview
     return (
         <ItemContainer
             style={{
@@ -86,13 +87,14 @@ const AdsItem = observer(({ data, isDisableBottomMargin, setScrollToTop }) => {
             }}
         >
             {/* Rate */}
-            <RateBlock reviewData={adReview} screenType={'list'} />
+            <RateBlock reviewData={isAdReview} screenType={'list'} />
+
             <ItemRow>
 
 
                 {/* Image */}
                 <ItemImageBlock>
-                    <ItemImage source={adImage[0]} resizeMode={'cover'} />
+                    {adImage !== undefined && <ItemImage source={adImage[0]} resizeMode={'cover'} />}
                 </ItemImageBlock>
 
                 {/* Main data */}

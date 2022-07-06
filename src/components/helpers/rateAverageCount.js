@@ -1,4 +1,5 @@
 export const rateAverageCount = (reviewData) => {
+    if (reviewData === undefined) return []
     const allReviewRate = []
     reviewData.forEach(element => {
         allReviewRate.push(element.reviewRate)
@@ -11,6 +12,5 @@ export const rateAverageCount = (reviewData) => {
         return s
     }
     const rateMidDefine = sum(allReviewRate) / allReviewRate.length
-
     return rateMidDefine.toFixed(1)
 }

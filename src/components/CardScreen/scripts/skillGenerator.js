@@ -23,5 +23,6 @@ export const skillGenerator = (skills) => {
             return
         }
     })
-    return skillsRender
+    const removeAllUndefined = skillsRender.filter((el) => el !== undefined);
+    return removeAllUndefined
 }

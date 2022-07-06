@@ -21,7 +21,7 @@ flex-direction: row;
 justify-content: space-between;
 align-items: center;
 padding: 0px 16px;
-z-index: 1000;
+z-index: 1111;
 `;
 const ArrowBlock = styled.View`
 transform: ${props => props.isOpen ? 'rotate(90deg)' : 'rotate(-90deg)'};
@@ -35,7 +35,7 @@ top: 48px;
 border: 1px solid ${C.lightGray};
 border-top-width: 0px ;
 left: 0px;
-z-index: 999;
+z-index: 1111;
 border-radius: 6px;
 `;
 const OptionsList = styled.View`

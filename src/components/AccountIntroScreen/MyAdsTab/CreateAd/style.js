@@ -6,19 +6,52 @@ import { M } from '@/res/mixin'
 const FilterContainer = styled.View`
 width: 100%;
 background-color: ${C.white};
-padding-top: 68px;
 overflow: hidden;
 `;
 const FormScrollView = styled.ScrollView`
-padding: 0px 16px;
-padding-bottom: 80px;
+padding: 62px 0px;
+padding-bottom: 0px;
+/* padding-bottom: 120px; */
+/* margin-bottom: 126px; */
 `;
 
-const ContentTitle = styled(M.TitleBold18)`
-margin-top: 24px;
-margin-bottom: 16px;
+const UserAvatarBlock = styled.View`
+width: 100%;
+display: flex;
+justify-content: center;
+flex-direction: row;
+margin-bottom: 24px;
 `;
+const UserAvatarContainer = styled.View`
 
+width: 120px;
+height: 120px;
+margin-bottom: 24px;
+
+`;
+const UserAvatar = styled.View`
+width: 100%;
+height: 100%;
+border-radius: 6px;
+overflow: hidden;
+background-color: ${C.white};
+border: 1px solid rgba(185, 185, 186, 0.142);
+`;
+const UserAvatarReplaceButton = styled.TouchableOpacity`
+position: absolute;
+bottom: -18px;
+right: -18px;
+width: 48px;
+height: 48px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+border-radius:23px;
+border-color: ${C.white};
+border-width: 4px;
+background-color: ${C.black};
+`;
 // Form
 const FormInputBlock = styled(M.FormInputBlock)`
 
@@ -47,8 +80,9 @@ width: 100%;
 display: flex;
 flex-direction: column;
 `;
-const CheckboxBlockTitle = styled(M.TitleBold15)`
-margin-bottom: 24px;
+const CheckboxBlockTitle = styled(M.TitleBold18)`
+margin-top: 16px;
+margin-bottom: 16px;
 `;
 const FormInputPricePerHourBlock = styled.View`
 width: 100%;
@@ -75,17 +109,30 @@ font-family: ${F.regular};
 font-size: 17px;
 `;
 
+const LogOutButton = styled.TouchableOpacity`
+margin-top: 12px;
+margin-bottom: 160px;
+`;
+const LogOutButtonText = styled(M.PlainText17)`
+color: ${C.cyanGray};
+text-decoration: underline;
+`;
+
 // Footer
 const ContentBlock = styled.View`
 display: flex;
 align-items: flex-start;
 justify-content: center;
 flex-direction: row;
+margin-top: 16px;
 padding-top: 7px;
-bottom : ${props => props.isKeyboardOpen === true ? 10 + 'px' : 60 + 'px'};
+height : 126px;
 position: absolute;
 left:0;
+bottom:0;
 background-color: ${C.white};
+border-top-color: ${C.lightGray};
+border-top-width: 1px;
 `;
 const ContentBlockRow = styled.View`
 display: flex;
@@ -104,8 +151,11 @@ const ButtonSubmitText = styled(M.BlackBtnText)`
 export const style = {
     FilterContainer: FilterContainer,
     FormScrollView: FormScrollView,
-    ContentTitle: ContentTitle,
 
+    UserAvatarBlock: UserAvatarBlock,
+    UserAvatarContainer: UserAvatarContainer,
+    UserAvatar: UserAvatar,
+    UserAvatarReplaceButton: UserAvatarReplaceButton,
     // Form
     FormInputBlock: FormInputBlock,
     FormInputContainer: FormInputContainer,
@@ -117,10 +167,12 @@ export const style = {
     FormInputPricePerHourBlock: FormInputPricePerHourBlock,
     FormInputPricePerHourText: FormInputPricePerHourText,
 
+    LogOutButton: LogOutButton,
+    LogOutButtonText: LogOutButtonText,
+
     ContentBlock: ContentBlock,
     ContentBlockRow: ContentBlockRow,
     ButtonSubmit: ButtonSubmit,
     ButtonSubmitText: ButtonSubmitText,
-
 
 }

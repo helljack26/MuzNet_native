@@ -62,12 +62,14 @@ margin-left: 6px;
 const RateBlock = ({ reviewData, screenType }) => {
     const rateAverage = rateAverageCount(reviewData)
 
+    const isRateAverageNan = isNaN(rateAverage) ? 0 : rateAverage
+
     switch (screenType) {
         case 'list':
             return <ListRate>
                 <RateStarIcon width={10} height={9} />
                 <ListRateAverage>
-                    {rateAverage}
+                    {isRateAverageNan}
                 </ListRateAverage>
                 <ListRateFullCountOfReview>
                     ({reviewData.length})
@@ -78,7 +80,7 @@ const RateBlock = ({ reviewData, screenType }) => {
             return <CardRate>
                 <RateStarIcon width={20} height={19} />
                 <CardRateAverage>
-                    {rateAverage}
+                    {isRateAverageNan}
                 </CardRateAverage>
                 <CardRateFullCountOfReview>
                     ({reviewData.length})
@@ -89,7 +91,7 @@ const RateBlock = ({ reviewData, screenType }) => {
             return <CardRate>
                 <RateStarIcon width={20} height={19} />
                 <CardListRateAverage>
-                    {rateAverage}
+                    {isRateAverageNan}
                 </CardListRateAverage>
                 <CardListRateFullCountOfReview>
                     ({reviewData.length} reviews)
@@ -100,7 +102,7 @@ const RateBlock = ({ reviewData, screenType }) => {
             return <CardRate>
                 <RateStarIcon width={20} height={19} />
                 <CardFullscreenRateAverage>
-                    {rateAverage}
+                    {isRateAverageNan}
                 </CardFullscreenRateAverage>
                 <CardFullscreenRateFullCountOfReview>
                     ({reviewData.length} reviews)

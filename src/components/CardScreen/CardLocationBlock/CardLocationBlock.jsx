@@ -33,6 +33,14 @@ const CardLocationBlock = ({ cardAddress, cardCoords }) => {
             ...cardCoords
         },
     };
+    const markerState = {
+        region: {
+            latitude: cardCoords.latitude ? cardCoords.latitude : 0,
+            longitude: cardCoords.longitude ? cardCoords.longitude : 0,
+            latitudeDelta: cardCoords.latitudeDelta,
+            longitudeDelta: cardCoords.longitudeDelta,
+        },
+    };
 
     const [state, setState] = useState(defaultMapState);
     // Set list
@@ -81,7 +89,7 @@ const CardLocationBlock = ({ cardAddress, cardCoords }) => {
                     scrollEnabled={false}
                 >
                     <MapView.Marker
-                        coordinate={cardCoords}>
+                        coordinate={markerState.region}>
                         <View style={{
                             alignItems: "center",
                             justifyContent: "center",
@@ -100,9 +108,6 @@ const CardLocationBlock = ({ cardAddress, cardCoords }) => {
                 </MediaAddressText>
             </MediaAddress>
         </MediaContainerBlock>
-
-        {/* Border */}
-        <CardBorder></CardBorder>
     </MediaContainer>
 
     );

@@ -7,6 +7,7 @@ import { useForm, Controller } from "react-hook-form";
 import AccountsTabHeader from '../AccountsTabHeader'
 import AdsItem from './AdsItem'
 import EditAd from './EditAd'
+import CreateAd from './CreateAd'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
@@ -32,12 +33,13 @@ import styled from 'styled-components/native';
 const FilterContainer = styled.View`
 width: 100%;
 background-color: ${C.white};
-padding-top: 68px;
 overflow: hidden;
 `;
 const AdsListContainer = styled.ScrollView`
 width: 100%;
-/* margin-top: 16px; */
+padding-top: 68px;
+`;
+const AdsListBlock = styled.View`
 padding: 0px 16px;
 `;
 const Border = styled.View`
@@ -54,7 +56,7 @@ margin-bottom: 24px;
 
 // Store
 import { observer } from 'mobx-react-lite';
-import { runInAction, set } from 'mobx';
+import { runInAction, set, toJS } from 'mobx';
 
 import { useAccountApiStore } from '@/stores/AccountApi';
 
@@ -64,9 +66,9 @@ const MyAdsTab = observer(({ isOpenTab }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
     // Store
-    const { setOpenTabs, contractorAccountDataApi, isOpenEditAd } = useAccountApiStore();
+    const { setOpenTabs, contractorAccountDataApi, isOpenEditAd, isOpenCreateAd } = useAccountApiStore();
 
-    const adsList = contractorAccountDataApi[0].contractorAds !== undefined ? contractorAccountDataApi[0].contractorAds : []
+    const adsList = contractorAccountDataApi[0].contractorAds !== undefined ? toJS(contractorAccountDataApi[0].contractorAds) : []
     // Animation
     const { onPress, width } = useAnimateOfferPreview()
     useEffect(() => {
@@ -82,8 +84,8 @@ const MyAdsTab = observer(({ isOpenTab }) => {
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
-            width: windowWidth,
-            // width,
+            // width: windowWidth,
+            width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,
@@ -98,37 +100,51 @@ const MyAdsTab = observer(({ isOpenTab }) => {
                 }}
             >
 
-                {/* Header */}
-                <AccountsTabHeader tabName={'My Ads'} setOpenTabs={setOpenTabs} onPress={onPress} />
                 {/* Form */}
                 <AdsListContainer>
-                    {/* If empty list */}
-                    {adsList.length === 0 &&
-                        <NoAdsText>
-                            No ads
-                        </NoAdsText>}
+                    {/* Header */}
+                    <AccountsTabHeader tabName={'My Ads'} setOpenTabs={setOpenTabs} onPress={onPress} />
+                    <AdsListBlock>
 
-                    {/* Ads list */}
-                    {adsList.map((item, id) => {
-                        return <AdsItem data={item} key={id} />;
-                    })}
+                        {/* If empty list */}
+                        {adsList.length === 0 &&
+                            <NoAdsText>
+                                No ads
+                            </NoAdsText>}
 
-                    {/* Create new ads */}
-                    {adsList.length > 0 && <Border></Border>}
-                    <BlackBtn
-                        onPress={() => {
-                            // setOpenPaymentDetails(true) 
-                        }}
-                    >
-                        <BlackBtnText>
-                            Create New Ad
-                        </BlackBtnText>
-                    </BlackBtn>
+                        {/* Ads list */}
+                        {adsList.map((item, id) => {
+                            return <AdsItem data={item} key={id} />;
+                        })}
+
+                        {/* Create new ads */}
+                        {adsList.length > 0 && <Border></Border>}
+                        <BlackBtn
+                            style={{
+                                marginBottom: 150
+                            }}
+                            onPress={() => {
+                                setOpenTabs({
+                                    tabName: 'Create ad',
+                                    isOpen: true
+                                })
+                            }}
+                        >
+                            <BlackBtnText>
+                                Create New Ad
+                            </BlackBtnText>
+                        </BlackBtn>
+
+                    </AdsListBlock>
+
                 </AdsListContainer>
 
             </FilterContainer>
 
             {isOpenEditAd === true && <EditAd isOpenTab={isOpenEditAd} />}
+
+            {isOpenCreateAd === true && <CreateAd isOpenTab={isOpenCreateAd} />}
+
         </Animated.View >
     )
 })

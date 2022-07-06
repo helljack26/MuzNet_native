@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect, useRef } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import C from '@/res/colors'
+import { S } from '@/res/strings'
 
 import { formatAMPM } from '@/components/helpers/formatAMPM';
 // Styles
@@ -24,7 +25,7 @@ const {
 } = style;
 
 
-const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholder, existedEndTimePlaceholder, existedDuration }) => {
+const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholder, existedEndTimePlaceholder, existedDuration, isRequiredShowStartError, isRequiredShowEndError }) => {
     const navigation = useNavigation();
 
     const [isOpenStartTimePicker, setOpenStartTimePicker] = useState(false);
@@ -168,10 +169,14 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholde
 
     const isShiftStartTime = startTimePlaceholder !== undefined
     const isShiftEndTime = endTimePlaceholder !== undefined
+
+    const isShowStartError = isRequiredShowStartError === true && startTimePlaceholder === undefined
+    const isShowEndError = !isShowStartError && isRequiredShowEndError === true
+
     return (
         <NumberInputsBlock
             style={{
-                paddingBottom: isShowError === true ? 20 : 0,
+                paddingBottom: isShowError === true || isShowStartError || isShowEndError ? 24 : 0,
             }}
         >
             {/* Start time */}
@@ -186,7 +191,12 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholde
                     minuteInterval={30}
                 />
             )}
-            <TimePickerButton onPress={() => { setOpenStartTimePicker(true) }}>
+            <TimePickerButton
+                style={{
+                    borderColor: isShowStartError ? C.red : C.lightGray,
+                    borderWidth: isShowStartError ? 2 : 1,
+                }}
+                onPress={() => { setOpenStartTimePicker(true) }}>
                 {isShiftStartTime &&
                     <TimePickerButtonLabel inputLabel={isShiftStartTime}>
                         Start time
@@ -198,6 +208,9 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholde
                     isShiftPlaceholder={isShiftStartTime}>
                     {isShiftStartTime ? startTimePlaceholder : 'Start time'}
                 </TimePickerButtonText>
+
+                {isShowStartError && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+
             </TimePickerButton>
 
             <SeparatorBlock>
@@ -223,6 +236,8 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholde
                     isShiftStartTime && setOpenEndTimePicker(true)
                 }}
                 style={{
+                    borderColor: isShowEndError ? C.red : C.lightGray,
+                    borderWidth: isShowEndError ? 2 : 1,
                     backgroundColor: isShiftStartTime ? C.white : C.backGray,
                 }}
             >
@@ -239,6 +254,8 @@ const TimePeriodPicker = ({ setTimeRange, isResetAll, existedStartTimePlaceholde
                 >
                     {isShiftEndTime ? endTimePlaceholder : 'End time'}
                 </TimePickerButtonText>
+                {isShowEndError && <ErrorMessage>{S.inputRequired}</ErrorMessage>}
+
             </TimePickerButton>
 
             {isShowError === true && <ErrorMessage>Minimum time one hour</ErrorMessage>}
