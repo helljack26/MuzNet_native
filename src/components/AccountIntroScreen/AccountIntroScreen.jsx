@@ -10,6 +10,7 @@ import PaymentAndPayoutTab from './PaymentAndPayoutTab';
 import NotificationTab from './NotificationTab';
 import TermsOfServiceTab from './TermsOfServiceTab';
 import MyAdsTab from './MyAdsTab';
+import LeaveFeedbackNotification from '@/components/LeaveFeedbackNotification/LeaveFeedbackNotification';
 
 import InviteFriendsPopup from './InviteFriendsPopup'
 
@@ -124,7 +125,7 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                             </AccountLinkIcon>
                         </AccountLink>
                     })}
-
+                    <LeaveFeedbackNotification />
                 </AccountLinkList>
 
                 {/* Promote my ads */}

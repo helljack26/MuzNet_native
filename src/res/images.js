@@ -68,6 +68,7 @@ import AmericanExpressBankIcon from '../../assets/icon/americanExpress_icon.svg'
 // Main screen
 import FilterIcon from '../../assets/icon/filter_icon.svg'
 import RateStarIcon from '../../assets/icon/rate_star_icon.svg'
+import RateEmptyStarIcon from '../../assets/icon/rate_empty_star_icon.svg'
 import MapShape from '../../assets/screens/MainScreen/map_shape.svg'
 import MapPointIcon from '../../assets/icon/map_point_icon.svg'
 import HeartActiveIcon from '../../assets/icon/heart_active_icon.svg'
@@ -172,6 +173,7 @@ const IMAGES = {
     MapMain: require('../../assets/screens/MainScreen/map.png'),
     MapShape: MapShape,
     RateStarIcon: RateStarIcon,
+    RateEmptyStarIcon: RateEmptyStarIcon,
     MapPointIcon: MapPointIcon,
     HeartActiveIcon: HeartActiveIcon,
     HeartDefaultIcon: HeartDefaultIcon,

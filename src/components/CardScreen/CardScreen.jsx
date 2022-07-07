@@ -465,7 +465,7 @@ const CardScreen = ({ isMusician, data, routeId, isForContractorFromAccountView 
                         <ButtonSubmitText>
                             {isMusician ?
                                 `Contact ${data.userFirstName}` :
-                                'Send Offer'
+                                'Send Message'
                             }
                         </ButtonSubmitText>
                     </ButtonSubmit>}

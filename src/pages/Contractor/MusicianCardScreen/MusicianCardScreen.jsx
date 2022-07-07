@@ -1,9 +1,9 @@
 import React from 'react';
 import { StatusBar, SafeAreaView } from 'react-native';
+import { useRef } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { apiMocks } from '@/api/mock/apiMocks'
-// Helpers
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
+
 // Components
 import CardScreen from '@/components/CardScreen'
 
@@ -24,14 +24,11 @@ const MusicianCardScreen = () => {
 
     const musicianData = apiMocks.MusicianMockApi.find((musician) => musician.id === Number(musicianId) && musician);
 
+
     return (
-        <SafeAreaView
-            style={{
-                flex: 1,
-            }}
-        >
+        <SafeAreaView>
             <StatusBar
-                barStyle={'light-content'}
+                barStyle={'dark-content'}
                 hidden={false}
                 backgroundColor="transparent"
                 translucent={true}

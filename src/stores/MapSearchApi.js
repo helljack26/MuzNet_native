@@ -53,7 +53,6 @@ class MapSearchApi {
             Geocoder.from(addressFropDropdown)
                 .then(json => {
                     const result = json.results[0].geometry.location;
-                    // console.log(json.results[0].geometry);
                     if (result !== undefined) {
                         const userProfileRegion = {
                             region: {
@@ -63,7 +62,6 @@ class MapSearchApi {
                                 longitudeDelta: 0.3,
                             }
                         }
-                        // console.log("🚀 ~ file: MapSearchApi.js ~ line 66 ~ MapSearchApi ~ userProfileRegion", userProfileRegion)
                         runInAction(() => {
                             this.userCoordsFromSearch = {}
                             return this.userCoordsFromSearch = userProfileRegion

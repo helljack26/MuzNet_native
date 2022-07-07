@@ -32,8 +32,8 @@ align-items: center;
 flex-direction: row;
 `
 const BlackBtnText = styled.Text`
-font-size: 15px;
-font-family: ${F.bold};
+font-size: 16px;
+font-family: ${F.medium};
 color: ${C.white};
 line-height: 22px;
 `

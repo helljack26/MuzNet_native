@@ -54,11 +54,15 @@ const ModalWindow = ({ isOpen, setOpen, modalPic, title, advice, btnText }) => {
                     <CrossBlackIcon width={14} height={14} />
                 </CloseButton>
 
-                <ModalIcon>
+                {modalPic !== undefined && <ModalIcon>
                     {modalPic}
-                </ModalIcon>
+                </ModalIcon>}
 
-                <ModalTitle>
+                <ModalTitle
+                    style={{
+                        marginTop: modalPic === undefined ? 20 : 0,
+                    }}
+                >
                     {title}
                 </ModalTitle>
                 <ModalAdvice>
@@ -68,7 +72,7 @@ const ModalWindow = ({ isOpen, setOpen, modalPic, title, advice, btnText }) => {
                 <BlackBtn
                     style={{
                         width: '90%',
-                        marginTop: 20,
+                        marginTop: modalPic === undefined ? 33 : 20,
                     }}
                     onPress={() => setOpen(false)}
                 >
