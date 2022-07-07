@@ -47,7 +47,8 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 flex-direction: row;
-margin-top: 16px;
+margin-top: 8px;
+padding: 8px 0px;
 `;
 const SecurePaymentMessageText = styled(M.MediumText15)`
 color: ${C.sBlack};

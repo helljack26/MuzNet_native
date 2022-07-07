@@ -1,12 +1,13 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-
+import { useNavigation } from '@react-navigation/native';
 import { View, KeyboardAvoidingView, BackHandler } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 // Components
 // import AccountsTabHeader from '../AccountsTabHeader'
 import YesReviewTab from './YesReviewTab'
-import PayoutMethods from './PayoutMethods'
+import ContactUsTab from './ContactUsTab'
+
 
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
@@ -37,57 +38,46 @@ const {
     BlackBtn,
     BlackBtnText,
 } = M;
-// Store
-import { observer } from 'mobx-react-lite';
 
-
-const LeaveFeedbackScreen = observer(() => {
+const LeaveFeedbackScreen = () => {
+    const navigation = useNavigation();
     const { windowHeight, windowWidth } = getWindowDimension()
 
-    // Payments state
+    // Yes tab state
     const [isOpenYesReview, setOpenYes] = useState(false);
-    const [isCloseYesReview, setClosePayments] = useState(false);
+    const [isCloseYesReview, setCloseYes] = useState(false);
 
-    // Payouts state
-    const [isOpenPayouts, setOpenPayouts] = useState(false);
+    // Contact us tab state
+    const [isOpenContactUs, setOpenContactUs] = useState(false);
+    const [isCloseContactUs, setCloseContactUs] = useState(false);
 
-    // Handler for native back button
-    const tabNameToClose = 'Payments and Payouts'
-    const [isHideAnimationTab, setHideAnimationTab] = useState(false);
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (!isOpenYesReview && !isOpenContactUs) {
+                return true
+            }
+            // If back on payment tab
+            if (isOpenYesReview && !isOpenContactUs) {
+                setCloseYes(true)
+                setTimeout(() => {
+                    setOpenYes(false)
+                    setCloseYes(false)
+                }, 400);
+            }
+            if (!isOpenYesReview && isOpenContactUs) {
+                setCloseContactUs(true)
+                setTimeout(() => {
+                    setOpenContactUs(false)
+                    setCloseContactUs(false)
+                }, 400);
+            }
 
-    // useEffect(() => {
-    //     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-    //         if (!isOpenYesReview && !isOpenPayouts) {
-    //             setHideAnimationTab(true)
-    //             setTimeout(() => {
-    //                 setOpenTabs({
-    //                     tabName: tabNameToClose,
-    //                     isOpen: false
-    //                 })
-    //             }, 400);
-    //         }
-    //         // If back on payment tab
-    //         if (isOpenYesReview && !isOpenPaymentDetails) {
-    //             setClosePayments(true)
-    //             setTimeout(() => {
-    //                 setOpenYes(false)
-    //                 setClosePayments(false)
-    //             }, 400);
-    //         }
-    //         // If back on payment tab
-    //         if (isOpenPayouts) {
-    //             return false
-    //         }
-    //         if (isOpenYesReview && isOpenPaymentDetails) {
-    //             setClosePaymentDetails(true)
-    //         }
-
-    //         return true
-    //     })
-    //     return () => {
-    //         backHandler.remove()
-    //     }
-    // }, [isOpenYesReview, isOpenPaymentDetails, isOpenPayouts])
+            return true
+        })
+        return () => {
+            backHandler.remove()
+        }
+    }, [isOpenYesReview, isOpenContactUs])
 
 
     return (
@@ -119,24 +109,21 @@ const LeaveFeedbackScreen = observer(() => {
                         <BlackBtnText>Yes</BlackBtnText>
                     </BlackBtn>
 
-                    <AddPayment
-                        onPress={() => {
-
-                        }}
-                    >
-                        <AddPaymentRowText>
-                            No
-                        </AddPaymentRowText>
+                    <AddPayment onPress={() => { navigation.navigate('ContractorStack', { screen: 'ContractorWelcomeScreen' }) }}    >
+                        <AddPaymentRowText>No</AddPaymentRowText>
                     </AddPayment>
                 </ButtonsRow>
 
-                <SecurePaymentMessage>
+                <SecurePaymentMessage
+                    onPress={() => { setOpenContactUs(true) }}
+                >
                     <SecurePaymentMessageText>
                         Have a problem with perfomance? <SecurePaymentMessageReadMoreText>Contact us</SecurePaymentMessageReadMoreText>
                     </SecurePaymentMessageText>
                 </SecurePaymentMessage>
 
             </FilterContainer >
+
             {/* If press yes */}
             {isOpenYesReview && <YesReviewTab
                 isOpen={isOpenYesReview}
@@ -145,14 +132,15 @@ const LeaveFeedbackScreen = observer(() => {
             />}
 
             {/* Contact us link */}
-            {/* {isOpenPayouts && <PayoutMethods
-                isOpen={isOpenPayouts}
-                setOpen={setOpenPayouts}
-            />} */}
+            {isOpenContactUs && <ContactUsTab
+                isOpen={isOpenContactUs}
+                isClose={isCloseContactUs}
+                setOpen={setOpenContactUs}
+            />}
         </View>
 
     )
-})
+}
 
 export default LeaveFeedbackScreen;
 

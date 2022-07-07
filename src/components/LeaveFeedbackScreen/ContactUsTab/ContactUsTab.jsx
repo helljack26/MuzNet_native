@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Animated, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
-import StarRateButtons from './StarRateButtons'
+
 import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from '@react-navigation/native';
 
@@ -16,6 +16,7 @@ import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import IMAGES from '@/res/images'
 const {
     GoBackIcon,
+    ErrorIcon,
 } = IMAGES;
 
 // Styles
@@ -39,10 +40,16 @@ const {
     ButtonSubmit,
     ButtonSubmitText,
     FooterButton,
-    ErrorMessage,
-} = style;
 
-const YesReviewTab = ({ isOpen, setOpen, isClose }) => {
+} = style;
+// Mixins
+import { M } from '@/res/mixin'
+const {
+    FormInputLabel,
+    ShowPasswordIconButton,
+    ErrorMessage,
+} = M;
+const ContactUsTab = ({ isOpen, setOpen, isClose }) => {
     const navigation = useNavigation();
     const isKeyboardOpen = isKeyboardShown()
     const { windowHeight, windowWidth } = getWindowDimension()
@@ -59,7 +66,6 @@ const YesReviewTab = ({ isOpen, setOpen, isClose }) => {
             setOpen(false)
         }, 600);
     }
-
     useEffect(() => {
         if (isClose === true) {
             closeTab()
@@ -68,8 +74,17 @@ const YesReviewTab = ({ isOpen, setOpen, isClose }) => {
     // Form
     const { control, handleSubmit, resetField, watch,
         formState: { errors } } = useForm({
-            defaultValues: { userFeedback: '' }
+            defaultValues: {
+                userEmail: '',
+                userFeedback: '',
+            }
         });
+
+    // Email
+    const [inputEmailLabel, setInputEmailLabel] = useState(false);
+    const userEmailWatch = watch('userEmail')
+    const [inputFocus4, setInputFocus4] = useState(C.lightGray);
+
     // Input focus
     const [inputFocus1, setInputFocus1] = useState(C.lightGray);
     const messageWatch = watch('userFeedback')
@@ -78,13 +93,14 @@ const YesReviewTab = ({ isOpen, setOpen, isClose }) => {
 
     // Is show active submit button
     const [isShowSubmitButton, setShowSubmitButton] = useState(false);
+    console.log("🚀 ~ file: ContactUsTab.jsx ~ line 91 ~ ContactUsTab ~ isShowSubmitButton", isShowSubmitButton)
     useEffect(() => {
-        if (messageWatch.length > 0 && rateCount !== 0) {
+        if (messageWatch.length > 0 && !errors.userEmail) {
             setShowSubmitButton(true)
         } else {
             setShowSubmitButton(false)
         }
-    }, [errors, rateCount]);
+    }, [errors, messageWatch.length]);
 
     // Open modal window
     const [isModalOpen, setModalOpen] = useState(false);
@@ -126,7 +142,7 @@ const YesReviewTab = ({ isOpen, setOpen, isClose }) => {
         >
             {isModalOpen === true && <ModalWindow
                 title={'Thank you!'}
-                advice={'Your feedback is very important'}
+                advice={'Our manager will contact you shortly'}
                 setOpen={AfterSubmitButtonAction}
                 btnText={'Home screen'}
             />}
@@ -139,40 +155,78 @@ const YesReviewTab = ({ isOpen, setOpen, isClose }) => {
             >
                 <KeyboardAvoidingView
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    style={{ flex: 1 }}
+                    style={{
+                        flex: 1,
+                    }}
                 >
                     <FilterBlock keyboardShouldPersistTaps={'handled'}    >
                         {/* Header */}
                         <Header >
-                            <HeaderClose
-                                onPress={() => {
-                                    closeTab()
-                                }}
-                            >
+                            <HeaderClose onPress={() => { closeTab() }}          >
                                 <GoBackIcon width={12} height={21} />
                             </HeaderClose>
 
-                            <HeaderTitle>
-                                Tell us about your impressions
-                            </HeaderTitle>
                         </Header>
 
                         <OfferPayment>
+                            <HeaderTitle>
+                                Tell us about your issue
+                            </HeaderTitle>
                             <OfferDetailsTitle>
-                                How was Robert's performance?
+                                Can you describe your problem? The more details, the better
                             </OfferDetailsTitle>
-
-                            {/* Star rate */}
-                            <StarRateButtons
-                                rateCount={rateCount}
-                                setRentCount={setRentCount}
-                            />
-                            <FormText>
-                                Share details of your experience
-                            </FormText>
 
                             {/* Form */}
                             <FormBlock >
+
+                                {/* Email */}
+                                <Controller
+                                    control={control}
+                                    rules={{
+                                        required: S.emailNotValid,
+                                        pattern: S.emailValidationPattern,
+                                    }}
+                                    render={({ field: { onChange, onBlur, value } }) => (
+                                        <FormInputBlock
+                                            style={{
+                                                marginBottom: errors.userEmail ? 40 : 13,
+                                            }}
+                                        >
+                                            <FormInputContainer>
+                                                <FormInput
+                                                    inputLabel={inputEmailLabel}
+                                                    selectionColor={C.lightGray}
+                                                    placeholder={'Write your email'}
+                                                    placeholderTextColor={C.placeholder}
+                                                    cursorColor={C.inputCursor}
+                                                    onFocus={() => { setInputFocus4(C.black) }}
+                                                    onBlur={() => {
+                                                        onBlur
+                                                        setInputFocus4(C.lightGray)
+                                                    }}
+                                                    onChangeText={onChange}
+                                                    value={value}
+                                                    style={{
+                                                        borderColor: errors.userEmail ? C.red : inputFocus4,
+                                                        borderWidth: errors.userEmail ? 2 : 1,
+                                                        color: errors.userEmail ? C.red : C.black,
+                                                    }}
+                                                />
+                                                {errors.userEmail && <ShowPasswordIconButton>
+                                                    <ErrorIcon width={20} height={20} />
+                                                </ShowPasswordIconButton>
+                                                }
+
+                                            </FormInputContainer>
+                                            <FormInputLabel isError={errors.userEmail} inputLabel={inputEmailLabel}>Your email</FormInputLabel>
+
+                                            {errors.userEmail?.type === 'pattern' && <ErrorMessage>{S.emailNotValid}</ErrorMessage>}
+                                            {errors.userEmail && <ErrorMessage>{errors.userEmail.message}</ErrorMessage>}
+                                        </FormInputBlock>
+                                    )}
+                                    name="userEmail"
+                                />
+
                                 {/* User message */}
                                 <Controller
                                     control={control}
@@ -188,10 +242,12 @@ const YesReviewTab = ({ isOpen, setOpen, isClose }) => {
                                             <FormInputContainer>
                                                 <FormInput
                                                     selectionColor={C.lightGray}
+
                                                     multiline={true}
                                                     numberOfLines={4}
                                                     placeholder={'Write your message'}
                                                     placeholderTextColor={C.placeholder}
+
                                                     cursorColor={C.inputCursor}
                                                     onFocus={() => { setInputFocus1(C.black) }}
                                                     onBlur={() => {
@@ -235,7 +291,7 @@ const YesReviewTab = ({ isOpen, setOpen, isClose }) => {
                                 onPress={handleSubmit(onSubmit)}
                             >
                                 <ButtonSubmitText style={{ color: C.white }}>
-                                    Leave Feedback
+                                    Send A Message
                                 </ButtonSubmitText>
                             </ButtonSubmit>
                             :
@@ -251,7 +307,7 @@ const YesReviewTab = ({ isOpen, setOpen, isClose }) => {
                                         color: C.sBlack,
                                     }}
                                 >
-                                    Leave Feedback
+                                    Send A Message
                                 </ButtonSubmitText>
                             </ButtonSubmit>
                         }
@@ -264,5 +320,5 @@ const YesReviewTab = ({ isOpen, setOpen, isClose }) => {
     )
 }
 
-export default YesReviewTab;
+export default ContactUsTab;
 

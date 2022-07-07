@@ -15,7 +15,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: row;
-margin-bottom: 35px;
+margin-bottom: 45px;
 `;
 const HeaderClose = styled.TouchableOpacity`
 display: flex;
@@ -29,14 +29,16 @@ top: 0px;
 left: 8px;
 bottom: 0px;
 `;
-const HeaderTitle = styled(M.TitleBold18)`
+const HeaderTitle = styled(M.Title24)`
 line-height: 30px;
+margin-bottom: 16px;
 `;
 const FilterBlock = styled.ScrollView`
 
 `;
-const OfferDetailsTitle = styled(M.MediumText20)`
+const OfferDetailsTitle = styled(M.MediumText17)`
 margin-bottom:24px;
+color: ${C.cyanGray};
 `;
 const OfferPayment = styled.View`
 margin: 0px 16px;
@@ -44,6 +46,7 @@ margin: 0px 16px;
 const FormText = styled(M.MediumText20)`
 margin-top: 44px;
 margin-bottom: 16px;
+
 `;
 const FormBlock = styled.View`
 
@@ -56,7 +59,7 @@ const FormInputContainer = styled.View`
 `;
 const FormInput = styled.TextInput`
 font-size: 17px;
-padding: 8px;
+padding: 8px 16px;
 background-color: ${C.white};
 font-family: ${F.regular};
 color: ${C.black};
@@ -67,13 +70,15 @@ border-radius: 6px;
 const FooterButton = styled.View`
 position: absolute;
 left: 16px;
-/* right: 0px; */
-/* width: 100%; */
-/* padding: 0px 16px; */
-
+right: 0px;
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
 `;
 const ButtonSubmit = styled(M.BlackBtn)`
-
+width: 100%;
 `;
 const ButtonSubmitText = styled(M.BlackBtnText)`
 
