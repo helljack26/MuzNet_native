@@ -63,6 +63,7 @@ export const S = {
             "Change Password",
             "Notification",
             "My Ads",
+            "FAQ",
             "Terms of Service",
         ],
         musicianTabs: [
@@ -70,6 +71,7 @@ export const S = {
             "Payments and Payouts",
             "Change Password",
             "Notification",
+            "FAQ",
             "Terms of Service",
         ],
     },

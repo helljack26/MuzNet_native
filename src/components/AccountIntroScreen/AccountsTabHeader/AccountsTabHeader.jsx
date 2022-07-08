@@ -13,11 +13,7 @@ const {
 } = style;
 
 const AccountsTabHeader = ({ tabName, setOpenTabs, onPress }) => {
-
-
     const isNotification = tabName === 'Notification Settings' ? 'Notification' : tabName
-
-
     return (
         <Header >
             <HeaderClose

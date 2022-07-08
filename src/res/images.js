@@ -32,6 +32,7 @@ import EditIcon from '../../assets/icon/edit_icon.svg'
 import EditBlackIcon from '../../assets/icon/edit_black_icon.svg'
 import SearchIcon from '../../assets/icon/search_icon.svg'
 import SearchBigIcon from '../../assets/icon/search_big_icon.svg'
+import SearchBlackIcon from '../../assets/icon/search_black_icon.svg'
 import CrossBlackIcon from '../../assets/icon/cross_black_icon.svg'
 import CrossGrayIcon from '../../assets/icon/cross_gray_icon.svg'
 import CrossWhiteIcon from '../../assets/icon/cross_white_icon.svg'
@@ -59,6 +60,9 @@ import CloudBlackIcon from '../../assets/icon/cloud_black_icon.svg'
 import FileWhiteIcon from '../../assets/icon/file_white_icon.svg'
 import OfferHeaderRoundedShapeBg from '../../assets/icon/offer_header_rounded_shape.svg'
 import CopyGrayIcon from '../../assets/icon/copy_gray_icon.svg'
+import ShieldIcon from '../../assets/icon/shield_icon.svg'
+import ReservationIcon from '../../assets/icon/reservation_icon.svg'
+import PaymentIcon from '../../assets/icon/payment_icon.svg'
 // Bank logo
 import VisaBankIcon from '../../assets/icon/visa_icon.svg'
 import MasterCardBankIcon from '../../assets/icon/masterCard_icon.svg'
@@ -131,6 +135,7 @@ const IMAGES = {
     PhoneIcon: PhoneIcon,
     SearchIcon: SearchIcon,
     SearchBigIcon: SearchBigIcon,
+    SearchBlackIcon: SearchBlackIcon,
     CrossBlackIcon: CrossBlackIcon,
     CrossGrayIcon: CrossGrayIcon,
     CrossWhiteIcon: CrossWhiteIcon,
@@ -158,6 +163,9 @@ const IMAGES = {
     OfferHeaderRoundedShapeBg: OfferHeaderRoundedShapeBg,
     AddPaymentMethodBg: require('../../assets/icon/add_payment_method_bg.png'),
     CopyGrayIcon: CopyGrayIcon,
+    ShieldIcon: ShieldIcon,
+    ReservationIcon: ReservationIcon,
+    PaymentIcon: PaymentIcon,
     // Bank
     AmericanExpressBankIcon: AmericanExpressBankIcon,
     PayPalBankIcon: PayPalBankIcon,

@@ -11,6 +11,7 @@ import NotificationTab from './NotificationTab';
 import TermsOfServiceTab from './TermsOfServiceTab';
 import MyAdsTab from './MyAdsTab';
 import LeaveFeedbackNotification from '@/components/LeaveFeedbackNotification/LeaveFeedbackNotification';
+import FaqTab from './FaqTab';
 
 import InviteFriendsPopup from './InviteFriendsPopup'
 
@@ -65,7 +66,8 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
         isOpenPaymentTab,
         isOpenChangePasswordTab,
         isOpenMyAdsTab,
-        isOpenTermOfServiceTab
+        isOpenTermOfServiceTab,
+        isOpenFaqTab
     } = useAccountApiStore();
 
     const userImage = require('../../../assets/Mock/Georgia.png')
@@ -117,7 +119,8 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                                     isOpen: true
                                 })
                             }}
-                            key={id}>
+                            key={id}
+                        >
                             <AccountLinkText>{tabName}</AccountLinkText>
 
                             <AccountLinkIcon>
@@ -125,6 +128,7 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                             </AccountLinkIcon>
                         </AccountLink>
                     })}
+                    {/* Notification */}
                     <LeaveFeedbackNotification />
                 </AccountLinkList>
 
@@ -178,6 +182,9 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
 
             {/* My ads for contractor */}
             {(isContractor === true && isOpenMyAdsTab === true) && <MyAdsTab isOpenTab={isOpenMyAdsTab} />}
+
+            {/* My ads for contractor */}
+            {isOpenFaqTab === true && <FaqTab isOpenTab={isOpenFaqTab} />}
 
         </Container>
     )

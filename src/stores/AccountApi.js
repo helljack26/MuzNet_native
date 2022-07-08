@@ -6,6 +6,7 @@ import {
 import { makeAutoObservable, action, runInAction, observable, set, get } from 'mobx';
 import { apiMocks } from '@/api/mock/apiMocks'
 
+import { defineFivePopularArticle } from '@/components/helpers/defineFivePopularArticle'
 class AccountApi {
     contractorAccountDataApi = [{
         id: 1,
@@ -229,6 +230,12 @@ class AccountApi {
         }
     }]
 
+    popularFaqVendorArticle = []
+    popularFaqMusicianArticle = []
+
+    faqVendorArticle = []
+    faqMusicianArticle = []
+
     isOpenPersonalInfoTab = false
     isOpenPaymentTab = false
     isOpenChangePasswordTab = false
@@ -238,11 +245,15 @@ class AccountApi {
     adIdForEdit = 0
     isOpenCreateAd = false
     isOpenTermOfServiceTab = false
+    isOpenFaqTab = true
 
     constructor() {
         makeAutoObservable(this, {
             contractorAccountDataApi: observable,
             musicianAccountDataApi: observable,
+            popularFaqVendorArticle: observable,
+            popularFaqMusicianArticle: observable,
+
             userNotification: observable,
 
             isOpenPersonalInfoTab: observable,
@@ -254,12 +265,14 @@ class AccountApi {
             adIdForEdit: observable,
             isOpenCreateAd: observable,
             isOpenTermOfServiceTab: observable,
+            isOpenFaqTab: observable,
 
             setOpenTabs: action.bound,
             setAdIdForEdit: action.bound,
             setEditedAd: action.bound,
             setNewAd: action.bound,
             changeContactorAccountData: action.bound,
+            setFaqArticles: action.bound,
         })
     }
 
@@ -303,6 +316,10 @@ class AccountApi {
                 this.isOpenTermOfServiceTab = action;
                 break;
 
+            case "FAQ":
+                this.isOpenFaqTab = action;
+                break;
+
             default:
                 return
         }
@@ -334,6 +351,19 @@ class AccountApi {
         apiMocks.ContractorAdsMockApi.unshift(newAd)
         set(this.contractorAccountDataApi[0], "contractorAds", [newAd, ...this.contractorAccountDataApi[0].contractorAds])
     }
+
+    setFaqArticles() {
+        const vendorFaqData = defineFivePopularArticle(apiMocks.FaqMockApi.vendorFaq)
+        const musicianFaqData = defineFivePopularArticle(apiMocks.FaqMockApi.musicianFaq)
+
+        this.popularFaqVendorArticle = vendorFaqData
+        this.popularFaqMusicianArticle = musicianFaqData
+
+        this.faqVendorArticle = apiMocks.FaqMockApi.vendorFaq
+        this.faqMusicianArticle = apiMocks.FaqMockApi.musicianFaq
+    }
+
+
 }
 
 const AccountApiStore = new AccountApi();
