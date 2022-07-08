@@ -1,20 +1,11 @@
 import React from 'react';
-import { useState, useEffect, useRef } from 'react';
-import { Animated, View, Pressable, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
-import { useForm, Controller } from "react-hook-form";
+import { useEffect } from 'react';
+import { Animated } from 'react-native';
 // Components
 import ContactUsButton from '../ContactUsButton'
-
-
 // Helpers
-import MaskInput from 'react-native-mask-input';
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
-import { addDotForNumber } from '@/components/helpers/addDotForNumber'
-import { compareTwoArrays } from '@/components/helpers/compareTwoArrays'
-import { backHandler } from '../../backHandler'
-import { apiMocks } from '@/api/mock/apiMocks'
 
 // Images
 import IMAGES from '@/res/images'
@@ -37,23 +28,12 @@ const {
     AccountLinkText,
     AccountLinkIcon,
 } = style;
-// Mixins
-import { M } from '@/res/mixin'
-const {
 
-} = M;
 // Store
 import { observer } from 'mobx-react-lite';
 
-import { useAccountApiStore } from '@/stores/AccountApi';
-
-const AllTopicsTab = observer(({ isOpenTab, setOpen, isClose, articlesData, titleName }) => {
-    const isKeyboardOpen = isKeyboardShown()
-
+const AllTopicsTab = observer(({ isOpenTab, setOpen, isClose, articlesData, titleName, setArticleTab }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
-
-    // Store
-    const { contractorAccountDataApi, setOpenTabs, adIdForEdit, setAdIdForEdit, setEditedAd } = useAccountApiStore();
 
     const { onPress, width } = useAnimateOfferPreview()
 
@@ -79,8 +59,6 @@ const AllTopicsTab = observer(({ isOpenTab, setOpen, isClose, articlesData, titl
             closeTab()
         }
     }, [isClose]);
-
-    const contractorAccountData = contractorAccountDataApi[0].contractorAds.find(item => item.id === adIdForEdit);
 
     return (
         <Animated.View style={{
@@ -125,10 +103,10 @@ const AllTopicsTab = observer(({ isOpenTab, setOpen, isClose, articlesData, titl
                     {articlesData.length > 0 && articlesData.map((article, id) => {
                         return <AccountLink
                             onPress={() => {
-                                // setOpenTabs({
-                                //     article: article,
-                                //     isOpen: true
-                                // })
+                                setArticleTab({
+                                    isOpen: true,
+                                    articleTitle: article.articleTitle,
+                                })
                             }}
                             key={id}
                         >

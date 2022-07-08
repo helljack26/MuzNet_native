@@ -9,7 +9,7 @@ import AccountsTabHeader from '../AccountsTabHeader'
 import FaqSearchInput from './FaqSearchInput'
 import ContactUsButton from './ContactUsButton'
 import AllTopicsTab from './AllTopicsTab'
-// import CreateAd from './CreateAd'
+import ArticleTab from './ArticleTab'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
@@ -103,11 +103,18 @@ const FaqTab = observer(({ isOpenTab }) => {
     })
     const [isCloseAllTopicsTab, setCloseAllTopicsTab] = useState(false);
 
+    // Atricle state 
+    const [isArticleTab, setArticleTab] = useState({
+        isOpen: true,
+        articleTitle: 'How do I report a message or block someone on MuzNet?',
+    })
+    const [isCloseArticleTab, setCloseArticleTab] = useState(false);
+
     // Native back button handler
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
             // Close current tab
-            if (!isAllTopicsTab.isOpen) {
+            if (!isAllTopicsTab.isOpen && !isArticleTab.isOpen) {
                 setHideAnimationTab(true)
                 setTimeout(() => {
                     setOpenTabs({
@@ -116,34 +123,30 @@ const FaqTab = observer(({ isOpenTab }) => {
                     })
                 }, 400);
             }
-            if (isAllTopicsTab.isOpen) {
+            if (isAllTopicsTab.isOpen && !isArticleTab.isOpen) {
                 setCloseAllTopicsTab(true)
                 setTimeout(() => {
                     setCloseAllTopicsTab(false)
                 }, 600);
             }
-            // // If back on payment tab
-            // if (isOpenYesReview && !isOpenContactUs) {
-            //     setCloseYes(true)
-            //     setTimeout(() => {
-            //         setOpenYes(false)
-            //         setCloseYes(false)
-            //     }, 400);
-            // }
-            // if (!isOpenYesReview && isOpenContactUs) {
-            //     setCloseContactUs(true)
-            //     setTimeout(() => {
-            //         setOpenContactUs(false)
-            //         setCloseContactUs(false)
-            //     }, 400);
-            // }
-
+            if (isArticleTab.isOpen && !isAllTopicsTab.isOpen) {
+                setCloseArticleTab(true)
+                setTimeout(() => {
+                    setCloseArticleTab(false)
+                }, 600);
+            }
+            if (isArticleTab.isOpen && isAllTopicsTab.isOpen) {
+                setCloseArticleTab(true)
+                setTimeout(() => {
+                    setCloseArticleTab(false)
+                }, 600);
+            }
             return true
         })
         return () => {
             backHandler.remove()
         }
-    }, [isAllTopicsTab.isOpen])
+    }, [isAllTopicsTab.isOpen, isArticleTab.isOpen])
 
     const AllTopicsIcon = ({ themeName }) => {
         switch (themeName) {
@@ -218,10 +221,10 @@ const FaqTab = observer(({ isOpenTab }) => {
                         {popularFaqVendorArticle.map((article, id) => {
                             return <AccountLink
                                 onPress={() => {
-                                    // setOpenTabs({
-                                    //     article: article,
-                                    //     isOpen: true
-                                    // })
+                                    setArticleTab({
+                                        isOpen: true,
+                                        articleTitle: article.articleTitle,
+                                    })
                                 }}
                                 key={id}
                             >
@@ -238,24 +241,24 @@ const FaqTab = observer(({ isOpenTab }) => {
                             Browse all topics
                         </FaqSubTitle>
 
-                        {faqVendorArticle.map((article, id) => {
+                        {faqVendorArticle.map((topics, id) => {
                             return (
                                 <AccountLink
                                     onPress={() => {
                                         setAllTopicsTab({
                                             isOpen: true,
-                                            allTopicsList: article.topicsArticles,
+                                            allTopicsList: topics.topicsArticles,
                                             isClose: false,
-                                            allTopicsTitle: article.topicsName,
+                                            allTopicsTitle: topics.topicsName,
                                         })
                                     }}
                                     key={id}
                                 >
                                     <AccountLinkTopicsIcon>
-                                        <AllTopicsIcon themeName={article.topicsName} />
+                                        <AllTopicsIcon themeName={topics.topicsName} />
 
                                         <AccountLinkText style={{ paddingLeft: 11 }}    >
-                                            {article.topicsName}
+                                            {topics.topicsName}
                                         </AccountLinkText>
                                     </AccountLinkTopicsIcon>
 
@@ -264,9 +267,7 @@ const FaqTab = observer(({ isOpenTab }) => {
                                     </AccountLinkIcon>
                                 </AccountLink>)
                         })}
-                    </PopularArticleBlock>
-
-                    }
+                    </PopularArticleBlock>}
 
                     {!isVendorFaq && <PopularArticleBlock>
 
@@ -286,10 +287,18 @@ const FaqTab = observer(({ isOpenTab }) => {
                     articlesData={isAllTopicsTab.allTopicsList}
                     setOpen={setAllTopicsTab}
                     titleName={isAllTopicsTab.allTopicsTitle}
+
+                    setArticleTab={setArticleTab}
                 />}
 
-            {/* Articler */}
-            {/* {isOpenCreateAd === true && <CreateAd isOpenTab={isOpenCreateAd} />} */}
+            {/* Article */}
+            {isArticleTab.isOpen === true &&
+                <ArticleTab
+                    isOpenTab={isArticleTab.isOpen}
+                    isClose={isCloseArticleTab}
+                    setOpen={setArticleTab}
+                    titleName={isArticleTab.articleTitle}
+                />}
 
         </Animated.View >
     )

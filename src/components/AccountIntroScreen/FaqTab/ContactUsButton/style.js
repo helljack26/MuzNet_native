@@ -21,19 +21,19 @@ justify-content: space-between;
 padding: 0px 16px;
 `;
 const ButtonSubmit = styled(M.BlackBtn)`
-width: 60%;
+width: 50%;
 `;
 const ButtonSubmitText = styled(M.BlackBtnText)`
 
 `;
 const ContainerLink = styled.View`
-width: 40%;
+width: 50%;
 display: flex;
 justify-content: center;
 flex-direction: column;
 margin-left: -5px;
 `;
-const ContainerPrice = styled(M.TitleBold15)`
+const ContainerPrice = styled(M.TitleBold17)`
 
 `;
 const ContainerHour = styled(M.PlainText17)`
