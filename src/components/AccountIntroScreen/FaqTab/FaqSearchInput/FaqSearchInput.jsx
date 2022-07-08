@@ -25,11 +25,7 @@ const {
 import { observer } from 'mobx-react-lite';
 import { useSearchApiStore } from '@/stores/SearchApi';
 
-const FaqSearchInput = observer(({ searchText, isContractor, onChangeSearchText, isMinOne, initialFocusInput }) => {
-    const navigation = useNavigation();
-    const route = useRoute();
-
-    const screenName = route.name === 'MusicianListSearchScreen' || route.name === 'ContractorListSearchScreen'
+const FaqSearchInput = observer(({ searchText, onChangeSearchText, initialFocusInput }) => {
 
     return (
         <SearchInputBlock>
@@ -38,8 +34,6 @@ const FaqSearchInput = observer(({ searchText, isContractor, onChangeSearchText,
             </SearchIconBlock>
 
             <SearchInput
-                autoFocus={initialFocusInput === true ? true : false}
-                maxLength={isMinOne === true ? 1 : 999}
                 cursorColor={C.inputCursor}
                 selectionColor={C.lightGray}
                 placeholder={'Search help articles'}

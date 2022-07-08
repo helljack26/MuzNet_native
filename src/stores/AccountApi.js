@@ -236,6 +236,9 @@ class AccountApi {
     faqVendorArticle = []
     faqMusicianArticle = []
 
+    faqVendorAllArticles = []
+    faqMusicianAllArticles = []
+
     isOpenPersonalInfoTab = false
     isOpenPaymentTab = false
     isOpenChangePasswordTab = false
@@ -353,14 +356,20 @@ class AccountApi {
     }
 
     setFaqArticles() {
-        const vendorFaqData = defineFivePopularArticle(apiMocks.FaqMockApi.vendorFaq)
-        const musicianFaqData = defineFivePopularArticle(apiMocks.FaqMockApi.musicianFaq)
+        const vendorFaqData = defineFivePopularArticle({ faqData: apiMocks.FaqMockApi.vendorFaq })
+        const musicianFaqData = defineFivePopularArticle({ faqData: apiMocks.FaqMockApi.musicianFaq })
 
         this.popularFaqVendorArticle = vendorFaqData
         this.popularFaqMusicianArticle = musicianFaqData
 
         this.faqVendorArticle = apiMocks.FaqMockApi.vendorFaq
         this.faqMusicianArticle = apiMocks.FaqMockApi.musicianFaq
+
+        const allVendorFaqArticle = defineFivePopularArticle({ faqData: apiMocks.FaqMockApi.vendorFaq, isReturnAll: true })
+        const allMusicianFaqArticle = defineFivePopularArticle({ faqData: apiMocks.FaqMockApi.musicianFaq, isReturnAll: true })
+
+        this.faqVendorAllArticles = allVendorFaqArticle
+        this.faqMusicianAllArticles = allMusicianFaqArticle
     }
 
 

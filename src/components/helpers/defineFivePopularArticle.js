@@ -1,4 +1,4 @@
-export const defineFivePopularArticle = (faqData) => {
+export const defineFivePopularArticle = ({ faqData, isReturnAll }) => {
     const articleScope = []
     faqData.forEach((item) => {
         item.topicsArticles.forEach((article) => {
@@ -6,7 +6,7 @@ export const defineFivePopularArticle = (faqData) => {
         })
     })
     const sortPopular = articleScope.sort((a, b) => a.articleViews < b.articleViews ? 1 : -1);
-    return sortPopular.slice(0, 5)
+    return isReturnAll ? articleScope : sortPopular.slice(0, 5)
 }
 
 

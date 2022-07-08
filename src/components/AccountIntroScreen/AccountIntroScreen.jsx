@@ -89,10 +89,11 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
             }}
         >
             <Content
-                style={{
-                    width: windowWidth,
-                    height: windowHeight - 115,
-                }}
+                showsVerticalScrollIndicator={false}
+            // style={{
+            //     width: windowWidth,
+            //     height: windowHeight - 115,
+            // }}
             >
                 {/* Header */}
                 <Header>

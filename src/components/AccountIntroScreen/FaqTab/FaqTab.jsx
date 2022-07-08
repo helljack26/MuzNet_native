@@ -60,33 +60,27 @@ const FaqTab = observer(({ isOpenTab }) => {
     // Store
     const {
         setOpenTabs,
-        contractorAccountDataApi,
         setFaqArticles,
         popularFaqVendorArticle,
         faqVendorArticle,
         faqMusicianArticle,
         popularFaqMusicianArticle,
+        faqVendorAllArticles,
+        faqMusicianAllArticles,
     } = useAccountApiStore();
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            setFaqArticles()
-        });
-
+        const unsubscribe = navigation.addListener('focus', () => { setFaqArticles() });
         return unsubscribe;
     }, [navigation]);
 
-    const adsList = contractorAccountDataApi[0].contractorAds !== undefined ? toJS(contractorAccountDataApi[0].contractorAds) : []
     // Animation
     const { onPress, width } = useAnimateOfferPreview()
     useEffect(() => {
-        if (isOpenTab === true) {
-            onPress(true)
-        }
+        if (isOpenTab === true) { onPress(true) }
     }, [isOpenTab]);
 
     const [isHideAnimationTab, setHideAnimationTab] = useState(false);
-
     useEffect(() => {
         if (isHideAnimationTab === true) {
             onPress(false)
@@ -95,6 +89,29 @@ const FaqTab = observer(({ isOpenTab }) => {
 
     // Tab state 
     const [isVendorFaq, setVendorFaq] = useState(true)
+
+    // Serch input state
+    const [searchText, onChangeSearchText] = useState('');
+    const isSearch = searchText.length > 0
+    const [searchArticles, setSearchArticles] = useState([])
+
+    useEffect(() => {
+        if (searchText.length > 0) {
+            const compareLetterNumber = searchText.length
+            const isContractorAllArticles = isVendorFaq ? faqVendorAllArticles : faqMusicianAllArticles
+            const newLocalData = isContractorAllArticles.map((item, id) => {
+                const slicedItem = item.articleTitle.slice(0, compareLetterNumber).toLowerCase()
+                if (slicedItem.includes(searchText.toLowerCase())) {
+                    return item
+                } else {
+                    return
+                }
+            })
+            const removeAllUndefined = newLocalData.filter((el) => el !== undefined);
+            const isEmpty = removeAllUndefined.length !== 0 ? removeAllUndefined : []
+            setSearchArticles(isEmpty)
+        }
+    }, [searchText])
 
     // All topics list state 
     const [isAllTopicsTab, setAllTopicsTab] = useState({
@@ -126,7 +143,7 @@ const FaqTab = observer(({ isOpenTab }) => {
                         tabName: 'FAQ',
                         isOpen: false
                     })
-                }, 400);
+                }, 600);
             }
             if (isAllTopicsTab.isOpen && !isArticleTab.isOpen && !isOpenContactUs) {
                 setCloseAllTopicsTab(true)
@@ -188,8 +205,8 @@ const FaqTab = observer(({ isOpenTab }) => {
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
-            // width: windowWidth,
-            width,
+            width: windowWidth,
+            // width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,
@@ -210,7 +227,7 @@ const FaqTab = observer(({ isOpenTab }) => {
                     <AccountsTabHeader tabName={'FAQ'} setOpenTabs={setOpenTabs} onPress={onPress} />
 
                     {/* Search input */}
-                    <FaqSearchInput />
+                    <FaqSearchInput searchText={searchText} onChangeSearchText={onChangeSearchText} />
 
                     {/* Switch buttons */}
                     <SwitchBlock>
@@ -233,10 +250,9 @@ const FaqTab = observer(({ isOpenTab }) => {
                         </SwitchBlockBtn>
                     </SwitchBlock>
 
-                    {/* Popular article */}
-                    <PopularArticleBlock>
+                    {!isSearch && <PopularArticleBlock>
+                        {/* Popular article */}
                         <FaqSubTitle>Popular articles</FaqSubTitle>
-
                         {faqPopularArticle.map((article, id) => {
                             return <AccountLink
                                 onPress={() => {
@@ -255,6 +271,7 @@ const FaqTab = observer(({ isOpenTab }) => {
                                 </AccountLinkIcon>
                             </AccountLink>
                         })}
+
                         {/* Browse all topic */}
                         <FaqSubTitle style={{ marginTop: 34 }}>
                             Browse all topics
@@ -286,8 +303,31 @@ const FaqTab = observer(({ isOpenTab }) => {
                                     </AccountLinkIcon>
                                 </AccountLink>)
                         })}
-                    </PopularArticleBlock>
+                    </PopularArticleBlock>}
 
+                    {isSearch && <PopularArticleBlock>
+                        <FaqSubTitle>{searchArticles.length === 0 ? 'Nothing found' : 'Search results'}</FaqSubTitle>
+
+                        {searchArticles.length > 0 && faqPopularArticle.map((article, id) => {
+                            return <AccountLink
+                                onPress={() => {
+                                    setArticleTab({
+                                        isOpen: true,
+                                        articleTitle: article.articleTitle,
+                                    })
+                                }}
+                                key={id}
+                            >
+                                <AccountLinkText>
+                                    {article.articleTitle}
+                                </AccountLinkText>
+                                <AccountLinkIcon>
+                                    <GoBackIcon width={9} height={16} />
+                                </AccountLinkIcon>
+                            </AccountLink>
+                        })}
+                    </PopularArticleBlock>
+                    }
                     {/* Contact us button */}
                     <ContactUsButton setOpenContactUs={setOpenContactUs} />
                 </AdsListContainer>

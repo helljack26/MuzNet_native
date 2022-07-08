@@ -7,14 +7,12 @@ const Container = styled.View`
 
 `;
 
-const Content = styled.View`
+const Content = styled.ScrollView`
 width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
 padding: 0px 16px;
 padding-top: 88px;
 padding-bottom: 20px;
+margin-bottom:95px;
 
 `;
 const Header = styled.View`
@@ -76,9 +74,8 @@ const InviteFriendsButtonText = styled(M.BorderBtnText)`
 
 `;
 const LogOutButton = styled.TouchableOpacity`
-position: absolute;
-left: 16px;
-bottom: 15px;
+margin-top: 20px;
+margin-bottom:106px;
 `;
 const LogOutButtonText = styled(M.PlainText17)`
 color: ${C.cyanGray};
