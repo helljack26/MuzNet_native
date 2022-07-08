@@ -9,6 +9,7 @@ import AccountsTabHeader from '../AccountsTabHeader'
 import FaqSearchInput from './FaqSearchInput'
 import ContactUsButton from './ContactUsButton'
 import AllTopicsTab from './AllTopicsTab'
+import ContactUsTab from '../../LeaveFeedbackScreen/ContactUsTab'
 import ArticleTab from './ArticleTab'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
@@ -105,16 +106,20 @@ const FaqTab = observer(({ isOpenTab }) => {
 
     // Atricle state 
     const [isArticleTab, setArticleTab] = useState({
-        isOpen: true,
-        articleTitle: 'How do I report a message or block someone on MuzNet?',
+        isOpen: false,
+        articleTitle: '',
     })
     const [isCloseArticleTab, setCloseArticleTab] = useState(false);
+
+    // Contact us tab state
+    const [isOpenContactUs, setOpenContactUs] = useState(false);
+    const [isCloseContactUs, setCloseContactUs] = useState(false);
 
     // Native back button handler
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
             // Close current tab
-            if (!isAllTopicsTab.isOpen && !isArticleTab.isOpen) {
+            if (!isAllTopicsTab.isOpen && !isArticleTab.isOpen && !isOpenContactUs) {
                 setHideAnimationTab(true)
                 setTimeout(() => {
                     setOpenTabs({
@@ -123,22 +128,34 @@ const FaqTab = observer(({ isOpenTab }) => {
                     })
                 }, 400);
             }
-            if (isAllTopicsTab.isOpen && !isArticleTab.isOpen) {
+            if (isAllTopicsTab.isOpen && !isArticleTab.isOpen && !isOpenContactUs) {
                 setCloseAllTopicsTab(true)
                 setTimeout(() => {
                     setCloseAllTopicsTab(false)
                 }, 600);
             }
-            if (isArticleTab.isOpen && !isAllTopicsTab.isOpen) {
+            if (isArticleTab.isOpen && !isAllTopicsTab.isOpen && !isOpenContactUs) {
                 setCloseArticleTab(true)
                 setTimeout(() => {
                     setCloseArticleTab(false)
                 }, 600);
             }
-            if (isArticleTab.isOpen && isAllTopicsTab.isOpen) {
+            if (isArticleTab.isOpen && isAllTopicsTab.isOpen && !isOpenContactUs) {
                 setCloseArticleTab(true)
                 setTimeout(() => {
                     setCloseArticleTab(false)
+                }, 600);
+            }
+            const isMainOpenContact = !isAllTopicsTab.isOpen && !isArticleTab.isOpen && isOpenContactUs
+            const isArticleOpenContact = !isAllTopicsTab.isOpen && isArticleTab.isOpen && isOpenContactUs
+            const isTopicsOpenContact = isAllTopicsTab.isOpen && !isArticleTab.isOpen && isOpenContactUs
+            const isTopicsAndArticleOpenContact = isAllTopicsTab.isOpen && isArticleTab.isOpen && isOpenContactUs
+
+            if (isMainOpenContact || isArticleOpenContact || isTopicsOpenContact || isTopicsAndArticleOpenContact) {
+                setCloseContactUs(true)
+                setTimeout(() => {
+                    setOpenContactUs(false)
+                    setCloseContactUs(false)
                 }, 600);
             }
             return true
@@ -146,7 +163,7 @@ const FaqTab = observer(({ isOpenTab }) => {
         return () => {
             backHandler.remove()
         }
-    }, [isAllTopicsTab.isOpen, isArticleTab.isOpen])
+    }, [isAllTopicsTab.isOpen, isArticleTab.isOpen, isOpenContactUs])
 
     const AllTopicsIcon = ({ themeName }) => {
         switch (themeName) {
@@ -165,12 +182,14 @@ const FaqTab = observer(({ isOpenTab }) => {
         }
     }
 
+    const faqPopularArticle = isVendorFaq ? popularFaqVendorArticle : popularFaqMusicianArticle
+    const faqArticleTopics = isVendorFaq ? faqVendorArticle : faqMusicianArticle
     return (
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
-            width: windowWidth,
-            // width,
+            // width: windowWidth,
+            width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,
@@ -215,10 +234,10 @@ const FaqTab = observer(({ isOpenTab }) => {
                     </SwitchBlock>
 
                     {/* Popular article */}
-                    {isVendorFaq && <PopularArticleBlock>
+                    <PopularArticleBlock>
                         <FaqSubTitle>Popular articles</FaqSubTitle>
 
-                        {popularFaqVendorArticle.map((article, id) => {
+                        {faqPopularArticle.map((article, id) => {
                             return <AccountLink
                                 onPress={() => {
                                     setArticleTab({
@@ -241,7 +260,7 @@ const FaqTab = observer(({ isOpenTab }) => {
                             Browse all topics
                         </FaqSubTitle>
 
-                        {faqVendorArticle.map((topics, id) => {
+                        {faqArticleTopics.map((topics, id) => {
                             return (
                                 <AccountLink
                                     onPress={() => {
@@ -267,14 +286,10 @@ const FaqTab = observer(({ isOpenTab }) => {
                                     </AccountLinkIcon>
                                 </AccountLink>)
                         })}
-                    </PopularArticleBlock>}
-
-                    {!isVendorFaq && <PopularArticleBlock>
-
-                    </PopularArticleBlock>}
+                    </PopularArticleBlock>
 
                     {/* Contact us button */}
-                    <ContactUsButton />
+                    <ContactUsButton setOpenContactUs={setOpenContactUs} />
                 </AdsListContainer>
 
             </FilterContainer>
@@ -289,6 +304,7 @@ const FaqTab = observer(({ isOpenTab }) => {
                     titleName={isAllTopicsTab.allTopicsTitle}
 
                     setArticleTab={setArticleTab}
+                    setOpenContactUs={setOpenContactUs}
                 />}
 
             {/* Article */}
@@ -298,7 +314,15 @@ const FaqTab = observer(({ isOpenTab }) => {
                     isClose={isCloseArticleTab}
                     setOpen={setArticleTab}
                     titleName={isArticleTab.articleTitle}
+                    setOpenContactUs={setOpenContactUs}
                 />}
+
+            {/* Contact us link */}
+            {isOpenContactUs && <ContactUsTab
+                isOpen={isOpenContactUs}
+                isClose={isCloseContactUs}
+                setOpen={setOpenContactUs}
+            />}
 
         </Animated.View >
     )

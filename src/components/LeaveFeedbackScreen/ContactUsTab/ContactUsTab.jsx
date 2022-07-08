@@ -93,7 +93,6 @@ const ContactUsTab = ({ isOpen, setOpen, isClose }) => {
 
     // Is show active submit button
     const [isShowSubmitButton, setShowSubmitButton] = useState(false);
-    console.log("🚀 ~ file: ContactUsTab.jsx ~ line 91 ~ ContactUsTab ~ isShowSubmitButton", isShowSubmitButton)
     useEffect(() => {
         if (messageWatch.length > 0 && !errors.userEmail) {
             setShowSubmitButton(true)
@@ -159,10 +158,10 @@ const ContactUsTab = ({ isOpen, setOpen, isClose }) => {
                         flex: 1,
                     }}
                 >
-                    <FilterBlock keyboardShouldPersistTaps={'handled'}    >
+                    <FilterBlock keyboardShouldPersistTaps={'handled'}>
                         {/* Header */}
                         <Header >
-                            <HeaderClose onPress={() => { closeTab() }}          >
+                            <HeaderClose onPress={() => { closeTab() }} >
                                 <GoBackIcon width={12} height={21} />
                             </HeaderClose>
 

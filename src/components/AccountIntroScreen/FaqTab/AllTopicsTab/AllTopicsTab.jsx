@@ -32,7 +32,7 @@ const {
 // Store
 import { observer } from 'mobx-react-lite';
 
-const AllTopicsTab = observer(({ isOpenTab, setOpen, isClose, articlesData, titleName, setArticleTab }) => {
+const AllTopicsTab = observer(({ isOpenTab, setOpen, isClose, articlesData, titleName, setArticleTab, setOpenContactUs }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
     const { onPress, width } = useAnimateOfferPreview()
@@ -121,7 +121,7 @@ const AllTopicsTab = observer(({ isOpenTab, setOpen, isClose, articlesData, titl
 
                 </PopularArticleBlock>
                 {/* Contact us button */}
-                <ContactUsButton />
+                <ContactUsButton setOpenContactUs={setOpenContactUs} />
             </FilterContainer>
         </Animated.View >
     )

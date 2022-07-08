@@ -35,7 +35,7 @@ import { observer } from 'mobx-react-lite';
 import { runInAction, set } from 'mobx';
 import { useAccountApiStore } from '@/stores/AccountApi';
 
-const ContactUsButton = observer(() => {
+const ContactUsButton = observer(({ setOpenContactUs }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
     const isKeyboardOpen = isKeyboardShown()
 
@@ -53,6 +53,7 @@ const ContactUsButton = observer(() => {
 
                 <ButtonSubmit
                     onPress={() => {
+                        setOpenContactUs(true)
                     }}
                 >
                     <ButtonSubmitText>

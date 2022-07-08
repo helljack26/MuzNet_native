@@ -46,7 +46,7 @@ const {
 import { observer } from 'mobx-react-lite';
 import { apiMocks } from '@/api/mock/apiMocks'
 
-const ArticleTab = observer(({ isOpenTab, setOpen, isClose, titleName }) => {
+const ArticleTab = observer(({ isOpenTab, setOpen, isClose, titleName, setOpenContactUs }) => {
     const { windowHeight, windowWidth } = getWindowDimension()
 
     const { onPress, width } = useAnimateOfferPreview()
@@ -81,8 +81,8 @@ const ArticleTab = observer(({ isOpenTab, setOpen, isClose, titleName }) => {
             zIndex: 1000,
             height: windowHeight,
             backgroundColor: 'white',
-            width: windowWidth,
-            // width,
+            // width: windowWidth,
+            width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,
@@ -199,7 +199,7 @@ const ArticleTab = observer(({ isOpenTab, setOpen, isClose, titleName }) => {
 
                 </ArticleContainer>
                 {/* Contact us button */}
-                <ContactUsButton />
+                <ContactUsButton setOpenContactUs={setOpenContactUs} />
             </FilterContainer>
         </Animated.View >
     )
