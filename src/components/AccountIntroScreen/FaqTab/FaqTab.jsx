@@ -1,9 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-
-import { Animated, KeyboardAvoidingView, BackHandler } from 'react-native';
-import { useForm, Controller } from "react-hook-form";
+import { Animated, BackHandler } from 'react-native';
 // Components
 import AccountsTabHeader from '../AccountsTabHeader'
 import FaqSearchInput from './FaqSearchInput'
@@ -19,7 +17,6 @@ import { backHandler } from '../backHandler'
 // Images
 import IMAGES from '@/res/images'
 const {
-    AddCrossIcon,
     GoBackIcon,
     SearchBlackIcon,
     ReservationIcon,
@@ -27,7 +24,6 @@ const {
     ProfileTapbarIcon,
     ShieldIcon,
 } = IMAGES;
-// Variables
 // Styles
 import { style } from './style'
 const {
@@ -53,7 +49,6 @@ import { useAccountApiStore } from '@/stores/AccountApi';
 
 const FaqTab = observer(({ isOpenTab }) => {
     const navigation = useNavigation();
-    const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
 
@@ -205,8 +200,8 @@ const FaqTab = observer(({ isOpenTab }) => {
         <Animated.View style={{
             zIndex: 1000,
             height: windowHeight,
-            width: windowWidth,
-            // width,
+            // width: windowWidth,
+            width,
             justifyContent: 'center',
             position: "absolute",
             top: 0,

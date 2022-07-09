@@ -80,7 +80,7 @@ const MainScreen = observer(({ stackName, screenMapName, screenListName, screenC
     }, [searchText]);
     const isContractor = stackName === 'ContractorStack'
     const stackForSwitch = isContractor ? 'MusicianStack' : 'ContractorStack'
-    const screenForSwitch = isContractor ? 'MusicianWelcomeScreen' : 'ContractorWelcomeScreen'
+    const screenForSwitch = isContractor ? 'MusicianPromoteAdScreen' : 'ContractorPromoteAdScreen'
 
     const isContractorData = isContractor ? musicianList : vendorList
     return (

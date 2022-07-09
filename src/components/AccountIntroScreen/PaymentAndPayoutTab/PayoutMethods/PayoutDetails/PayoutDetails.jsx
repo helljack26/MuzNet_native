@@ -23,8 +23,10 @@ const PayoutDetails = observer(() => {
     // Steps shown state 
     const [isOpenChooseHowToGetPaid, setOpenChooseHowToGetPaid] = useState(false);
     const [isCloseChooseHowToGetPaid, setCloseChooseHowToGetPaid] = useState(false);
+
     const [isOpenChooseAccountType, setOpenChooseAccountType] = useState(false);
     const [isCloseChooseAccountType, setCloseChooseAccountType] = useState(false);
+
     const [isOpenAddAccountInfo, setOpenAddAccountInfo] = useState(false);
     const [isCloseAddAccountInfo, setCloseAddAccountInfo] = useState(false);
 

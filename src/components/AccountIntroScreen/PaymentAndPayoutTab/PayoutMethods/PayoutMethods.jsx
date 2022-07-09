@@ -1,13 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Animated, View, BackHandler } from 'react-native';
+import { Animated, BackHandler } from 'react-native';
 // Components
 import PayoutList from './PayoutList'
 import PayoutDetails from './PayoutDetails'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateOfferPreview } from './useAnimateOfferPreview';
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -22,7 +21,6 @@ const {
     HeaderClose,
     HeaderTitle,
     FilterBlock,
-    OfferDetailsTitle,
     OfferPayment,
 } = style;
 
@@ -31,8 +29,6 @@ import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
 const PayoutMethods = observer(({ isOpen, setOpen }) => {
     const { isOpenPayoutDetails } = usePaymentAndPayoutApiStore();
-
-    const isKeyboardOpen = isKeyboardShown()
 
     const { windowHeight, windowWidth } = getWindowDimension()
 
@@ -68,7 +64,6 @@ const PayoutMethods = observer(({ isOpen, setOpen }) => {
                 }, 600);
             }
             if (isOpen === true && isOpenPayoutDetails === true) {
-                console.log("🚀 ~ file: PayoutMethods.jsx ~ line 71 ~ backHandler ~ isOpenPayoutDetails", isOpenPayoutDetails)
                 return false
             }
             return true

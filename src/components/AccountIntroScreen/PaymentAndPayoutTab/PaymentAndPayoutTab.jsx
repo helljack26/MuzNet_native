@@ -126,14 +126,6 @@ const PaymentAndPayoutTab = observer(({ isOpenTab, isContractor }) => {
         }
     }, [userCurrencyType]);
 
-    // useEffect(() => {
-    //     if (userCurrencyType !== selectedCurrencyType) {
-    //         runInAction(() => {
-    //             set(contractorAccountDataApi[0], "userCurrencyType", selectedCurrencyType)
-    //         })
-    //     }
-    // }, [selectedCurrencyType, userCurrencyType]);
-
     return (
         <Animated.View style={{
             zIndex: 1000,

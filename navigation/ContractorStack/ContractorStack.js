@@ -10,6 +10,7 @@ import ContractorChatScreen from '../../src/pages/Contractor/ContractorChatScree
 import ContractorAccountScreen from '../../src/pages/Contractor/ContractorAccountScreen';
 import ContractorCardScreen from '../../src/pages/Contractor/ContractorCardScreen';
 import ContractorLeaveFeedbackScreen from '../../src/pages/Contractor/ContractorLeaveFeedbackScreen';
+import ContractorPromoteAdScreen from '../../src/pages/Contractor/ContractorPromoteAdScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,5 +42,6 @@ export default function ContractorStack() {
             <Stack.Screen name="ContractorAccountScreen" component={ContractorAccountScreen} />
             <Stack.Screen name="ContractorCardScreen" component={ContractorCardScreen} />
             <Stack.Screen name="ContractorLeaveFeedbackScreen" component={ContractorLeaveFeedbackScreen} />
+            <Stack.Screen name="ContractorPromoteAdScreen" component={ContractorPromoteAdScreen} />
         </Stack.Navigator>)
 }

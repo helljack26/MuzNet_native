@@ -73,7 +73,7 @@ const OnBoardingScreen = () => {
             //     screen: 'ContractorMessagesScreen',
             // });
             navigation.navigate('ContractorStack', {
-                screen: 'ContractorAccountScreen',
+                screen: 'ContractorPromoteAdScreen',
             });
             // navigation.navigate(
             //     'MusicianStack', {

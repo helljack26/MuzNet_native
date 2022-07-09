@@ -248,7 +248,7 @@ class AccountApi {
     adIdForEdit = 0
     isOpenCreateAd = false
     isOpenTermOfServiceTab = false
-    isOpenFaqTab = true
+    isOpenFaqTab = false
 
     constructor() {
         makeAutoObservable(this, {

@@ -299,7 +299,6 @@ export const M = {
     MediumText13: MediumText13,
     MediumText12: MediumText12,
     ErrorMessage: ErrorMessage,
-
     // Input
     FormInputBlock: FormInputBlock,
     FormInputContainer: FormInputContainer,
