@@ -65,6 +65,11 @@ import ReservationIcon from '../../assets/icon/reservation_icon.svg'
 import PaymentIcon from '../../assets/icon/payment_icon.svg'
 import DashedBorder from '../../assets/icon/dashed_border.svg'
 import AppleIcon from '../../assets/icon/apple_icon.svg'
+// Deal icon
+import DealTitleIcon from '../../assets/icon/deal_title_icon.svg'
+import DealTimeIcon from '../../assets/icon/deal_time_icon.svg'
+import DealLocationIcon from '../../assets/icon/deal_location_icon.svg'
+import DealUserIcon from '../../assets/icon/deal_user_icon.svg'
 // Bank logo
 import VisaBankIcon from '../../assets/icon/visa_icon.svg'
 import MasterCardBankIcon from '../../assets/icon/masterCard_icon.svg'
@@ -173,6 +178,11 @@ const IMAGES = {
     PaymentIcon: PaymentIcon,
     DashedBorder: DashedBorder,
     AppleIcon: AppleIcon,
+    // Deal icon
+    DealTitleIcon: DealTitleIcon,
+    DealTimeIcon: DealTimeIcon,
+    DealLocationIcon: DealLocationIcon,
+    DealUserIcon: DealUserIcon,
     // Bank
     AmericanExpressBankIcon: AmericanExpressBankIcon,
     PayPalBankIcon: PayPalBankIcon,

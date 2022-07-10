@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 // Components
 import PersonalContractorInfoTab from './PersonalContractorInfoTab';
 import PersonalMusicianInfoTab from './PersonalMusicianInfoTab';
@@ -12,13 +11,9 @@ import TermsOfServiceTab from './TermsOfServiceTab';
 import MyAdsTab from './MyAdsTab';
 import LeaveFeedbackNotification from '@/components/LeaveFeedbackNotification/LeaveFeedbackNotification';
 import FaqTab from './FaqTab';
-
 import InviteFriendsPopup from './InviteFriendsPopup'
-
 // Helpers
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
-
 // Images
 import IMAGES from '@/res/images'
 const {
@@ -26,7 +21,6 @@ const {
 } = IMAGES;
 // Styles
 import { style } from './style'
-import C from '@/res/colors'
 import { S } from '@/res/strings'
 const {
     Container,
@@ -42,7 +36,6 @@ const {
     AccountLinkIcon,
     InviteFriendsButton,
     InviteFriendsButtonText,
-
     LogOutButton,
     LogOutButtonText,
 } = style;
@@ -56,11 +49,12 @@ const {
 import { observer } from 'mobx-react-lite';
 import { useAccountApiStore } from '@/stores/AccountApi';
 
-const AccountIntroScreen = observer(({ stackName, isContractor }) => {
+const AccountIntroScreen = observer(({ stackName, myDealsScreenName, isContractor }) => {
     const navigation = useNavigation();
     const {
         isOpenPersonalInfoTab,
         setOpenTabs,
+        setCloseAllTabs,
         isOpenNotificationTab,
         isOpenPaymentTab,
         isOpenChangePasswordTab,
@@ -72,11 +66,17 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
     const userImage = require('../../../assets/Mock/Georgia.png')
     const userName = 'Annie'
 
-    const isKeyboardOpen = isKeyboardShown()
     const { windowHeight, windowWidth } = getWindowDimension()
 
     // Invite friends popup state
     const [isOpenInviteFriendsBlock, setOpenInviteFriendsBlock] = useState(false);
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('blur', () => {
+            setCloseAllTabs()
+        });
+        return unsubscribe;
+    }, [navigation]);
 
     const tabsLink = isContractor === true ? S.AccountTabs.contractorTabs : S.AccountTabs.musicianTabs
 
@@ -111,9 +111,9 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                 <AccountLinkList>
                     {tabsLink.map((tabName, id) => {
                         if (tabName === 'My Ads' && !isContractor) return null
-                        const isLast = id === tabsLink.length - 1
+
                         return <AccountLink style={{
-                            borderBottomWidth: isLast ? 0 : 1
+                            borderBottomWidth: 1
                         }}
                             onPress={() => {
                                 setOpenTabs({
@@ -130,8 +130,27 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                             </AccountLinkIcon>
                         </AccountLink>
                     })}
+
+                    <AccountLink style={{
+                        borderBottomWidth: 0
+                    }}
+                        onPress={() => {
+                            navigation.navigate(stackName, {
+                                screen: myDealsScreenName,
+                            });
+                        }}
+
+                    >
+                        <AccountLinkText>My Deals</AccountLinkText>
+
+                        <AccountLinkIcon>
+                            <GoBackIcon width={9} height={16} />
+                        </AccountLinkIcon>
+                    </AccountLink>
+
                     {/* Notification */}
                     <LeaveFeedbackNotification />
+
                 </AccountLinkList>
 
                 {/* Promote my ads */}

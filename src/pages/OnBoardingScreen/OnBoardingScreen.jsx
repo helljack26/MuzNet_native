@@ -69,15 +69,15 @@ const OnBoardingScreen = () => {
             // navigation.navigate('MusicianStack', {
             //     screen: 'MusicianAccountScreen',
             // });
-            // navigation.navigate('ContractorStack', {
-            //     screen: 'ContractorMessagesScreen',
-            // });
+            navigation.navigate('ContractorStack', {
+                screen: 'ContractorMyDealsScreen',
+            });
             // navigation.navigate('ContractorStack', {
             //     screen: 'ContractorWelcomeScreen',
             // });
-            navigation.navigate('MusicianStack', {
-                screen: 'MusicianWelcomeScreen',
-            });
+            // navigation.navigate('MusicianStack', {
+            //     screen: 'MusicianWelcomeScreen',
+            // });
             // navigation.navigate(
             //     'MusicianStack', {
             //     screen: 'MusicianMessagesScreen',

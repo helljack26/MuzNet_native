@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import ContractorWelcomeScreen from '../../src/pages/Contractor/ContractorWelcomeScreen';
@@ -11,6 +12,7 @@ import ContractorAccountScreen from '../../src/pages/Contractor/ContractorAccoun
 import ContractorCardScreen from '../../src/pages/Contractor/ContractorCardScreen';
 import ContractorLeaveFeedbackScreen from '../../src/pages/Contractor/ContractorLeaveFeedbackScreen';
 import ContractorPromoteAdScreen from '../../src/pages/Contractor/ContractorPromoteAdScreen';
+import ContractorMyDealsScreen from '../../src/pages/Contractor/ContractorMyDealsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,5 +45,6 @@ export default function ContractorStack() {
             <Stack.Screen name="ContractorCardScreen" component={ContractorCardScreen} />
             <Stack.Screen name="ContractorLeaveFeedbackScreen" component={ContractorLeaveFeedbackScreen} />
             <Stack.Screen name="ContractorPromoteAdScreen" component={ContractorPromoteAdScreen} />
+            <Stack.Screen name="ContractorMyDealsScreen" component={ContractorMyDealsScreen} />
         </Stack.Navigator>)
 }

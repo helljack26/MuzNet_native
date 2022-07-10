@@ -109,7 +109,7 @@ const PromoteAdScreen = ({ stackName, welcomeScreenName }) => {
             />}
 
             <AfterSubmitWindow
-                title={'Your deal was submitted'}
+                title={'Your ad was promoted'}
                 message={'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
                 windowImage={IMAGES.SuccessPayment}
                 isPromoteBigImage={true}
