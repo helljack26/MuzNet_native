@@ -72,8 +72,11 @@ const OnBoardingScreen = () => {
             // navigation.navigate('ContractorStack', {
             //     screen: 'ContractorMessagesScreen',
             // });
-            navigation.navigate('ContractorStack', {
-                screen: 'ContractorPromoteAdScreen',
+            // navigation.navigate('ContractorStack', {
+            //     screen: 'ContractorWelcomeScreen',
+            // });
+            navigation.navigate('MusicianStack', {
+                screen: 'MusicianWelcomeScreen',
             });
             // navigation.navigate(
             //     'MusicianStack', {

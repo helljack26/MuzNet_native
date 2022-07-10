@@ -152,8 +152,11 @@ const AdsItem = observer(({ data, isDisableBottomMargin, setScrollToTop }) => {
                         borderRadius: 8,
                         width: '48.5%',
                     }}
-                // TODO тут с навигейтить на проут май ад экран
-                // onPress={() => { }} r
+                    onPress={() => {
+                        navigation.navigate('ContractorStack', {
+                            screen: 'ContractorPromoteAdScreen',
+                        });
+                    }}
                 >
                     <BlackBtnText>Promote</BlackBtnText>
                 </BlackBtn>

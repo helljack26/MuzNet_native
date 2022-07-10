@@ -1,22 +1,18 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { Animated, Keyboard } from 'react-native';
-import { useForm, Controller } from "react-hook-form";
-
+import { useEffect } from 'react';
+import { Animated, View, Platform } from 'react-native';
 // Helpers
-import MaskInput from 'react-native-mask-input';
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 import { useAnimateCreateOffer } from './useAnimateCreateOffer';
-import { isKeyboardShown } from '@/components/helpers/isKeyboardShown'
 // Images
 import IMAGES from '@/res/images'
 const {
     GoBackIcon,
+    DashedBorder,
+    AppleIcon
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
-import F from '@/res/fonts'
-import { S } from '@/res/strings'
 // Styles
 import { style } from './style'
 const {
@@ -25,17 +21,23 @@ const {
     HeaderClose,
     HeaderTitle,
     FilterBlock,
+    PreviewBlock,
+    PreviewBlockRow,
     ContentBlock,
 } = style;
 // Mixins
 import { M } from '@/res/mixin'
 const {
+    PlainText17,
+    MediumText20,
+    MediumText17,
+    TitleBold20,
+    TitleBold17,
     BlackBtn,
     BlackBtnText,
 } = M;
 
-const ConfirmAndPay = ({ isOpenTab, setOpenTab, onSubmitPromoteAd, isCloseTab }) => {
-    const isKeyboardOpen = isKeyboardShown()
+const ConfirmAndPay = ({ selectedPromoteDuration, isOpenTab, setOpenTab, onSubmitPromoteAd, isCloseTab }) => {
 
     const { windowHeight, windowWidth } = getWindowDimension()
     const { onPress, width } = useAnimateCreateOffer()
@@ -93,21 +95,49 @@ const ConfirmAndPay = ({ isOpenTab, setOpenTab, onSubmitPromoteAd, isCloseTab })
                 </Header>
 
                 <FilterBlock>
+                    <MediumText17 style={{ color: C.cyanGray, marginBottom: 16 }}>Please, check your promotion details:</MediumText17>
 
+                    <TitleBold20 style={{ marginBottom: 8 }}>Promotion details:</TitleBold20>
+
+                    <PreviewBlock>
+
+                        <MediumText20 style={{ marginBottom: 8 }}>General promotion</MediumText20>
+
+                        <PlainText17>A profile will be shown at the top of the list are all ads.</PlainText17>
+
+                        <View style={{ marginLeft: -16, paddingVertical: 16, }}    >
+                            <DashedBorder width={windowWidth - 32} height={2} />
+                        </View>
+
+                        <PreviewBlockRow>
+                            <TitleBold17>Price: </TitleBold17>
+                            <PlainText17>${selectedPromoteDuration.promotePrice} </PlainText17>
+                            <PlainText17 style={{ color: C.cyanGray, paddingBottom: 8 }}>(${selectedPromoteDuration.promotePrice / selectedPromoteDuration.promoteDuration} per day)</PlainText17>
+                        </PreviewBlockRow>
+
+                        <PreviewBlockRow>
+                            <TitleBold17>Duration: </TitleBold17>
+                            <PlainText17>{selectedPromoteDuration.promoteDuration} days </PlainText17>
+                            <PlainText17 style={{ color: C.cyanGray }}>(≈ 20 displays per day)</PlainText17>
+                        </PreviewBlockRow>
+
+                    </PreviewBlock>
                 </FilterBlock>
+
                 {/* Footer block */}
                 <ContentBlock
                     style={{
                         width: windowWidth,
                     }}>
 
-                    <BlackBtn
-                    // onPress={handleSubmit(onSubmit)}
-                    >
+                    <BlackBtn onPress={() => {
+                        onSubmitPromoteAd()
+                    }}   >
                         <BlackBtnText>
-                            Pay with
+                            Pay with {Platform.OS === 'ios' ? <AppleIcon width={16} height={16} /> : 'Google'} Pay
                         </BlackBtnText>
                     </BlackBtn>
+
 
                 </ContentBlock>
             </FilterContainer>

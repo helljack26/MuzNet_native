@@ -16,6 +16,7 @@ const {
     ModalWindowContainer,
     ModalWindowBlock,
     ModalIcon,
+    ModalImage,
     ModalTitle,
     ModalAdvice,
     ButtonBlock,
@@ -30,7 +31,7 @@ const {
     BlackBtn,
     BlackBtnText
 } = M;
-const AfterSubmitWindow = ({ isOpen, setOpen, windowImage, title, message, buttonText, afterSubmitButton }) => {
+const AfterSubmitWindow = ({ isOpen, setOpen, windowImage, isPromoteBigImage, title, message, buttonText, afterSubmitButton }) => {
     const navigation = useNavigation();
 
     const { windowHeight, windowWidth } = getWindowDimension()
@@ -77,15 +78,31 @@ const AfterSubmitWindow = ({ isOpen, setOpen, windowImage, title, message, butto
 
         <ModalWindowContainer
             style={{
+                zIndex: 2000,
                 width: windowWidth,
                 height: windowHeight,
+                justifyContent: isPromoteBigImage ? 'center' : 'flex-start',
             }}
         >
-            <ModalWindowBlock>
-                <ModalIcon>
+            <ModalWindowBlock
+                style={{
+                    marginBottom: isPromoteBigImage ? 80 : 0,
+                }}
+            >
+                {!isPromoteBigImage ? <ModalIcon>
                     <Image source={windowImage} resizeMode={'contain'} />
                 </ModalIcon>
+                    :
+                    <ModalImage>
+                        <Image source={windowImage}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                            }}
+                            resizeMode={'contain'} />
+                    </ModalImage>
 
+                }
                 <ModalTitle>
                     {title}
                 </ModalTitle>

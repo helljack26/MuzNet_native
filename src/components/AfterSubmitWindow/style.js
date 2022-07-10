@@ -43,9 +43,16 @@ align-items: center;
 flex-direction: row;
 `;
 const ModalIcon = styled.View`
-
-/* padding-top: 40px; */
 width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+`;
+const ModalImage = styled.View`
+width: 300px;
+height: 400px;
+margin-bottom: 20px;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -101,6 +108,7 @@ export const style = {
     ModalWindowBlock: ModalWindowBlock,
     CloseButton: CloseButton,
     ModalIcon: ModalIcon,
+    ModalImage: ModalImage,
     ModalTitle: ModalTitle,
     ModalAdvice: ModalAdvice,
     ButtonBlock: ButtonBlock,

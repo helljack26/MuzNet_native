@@ -34,7 +34,7 @@ const {
     BlackBtnText,
 } = M;
 
-const ChoosePromoteDuration = ({ selectedPromoteType, isOpenTab, setOpenTab, setOpenNextTab, isCloseTab }) => {
+const ChoosePromoteDuration = ({ selectedPromoteType, setSelectedOption, isOpenTab, setOpenTab, setOpenNextTab, isCloseTab }) => {
 
     const { windowHeight, windowWidth } = getWindowDimension()
     const { onPress, width } = useAnimateCreateOffer()
@@ -67,8 +67,8 @@ const ChoosePromoteDuration = ({ selectedPromoteType, isOpenTab, setOpenTab, set
         <Animated.View style={{
             zIndex: 1010,
             height: windowHeight,
-            width: windowWidth,
-            // width,
+            // width: windowWidth,
+            width,
             backgroundColor: C.white,
             justifyContent: 'center',
             position: "absolute",
@@ -114,7 +114,6 @@ const ChoosePromoteDuration = ({ selectedPromoteType, isOpenTab, setOpenTab, set
 
                     </PreviewBlock>
 
-
                     <PriceSlider getDuration={getDuration} />
                 </AccountLinkList>
 
@@ -127,6 +126,10 @@ const ChoosePromoteDuration = ({ selectedPromoteType, isOpenTab, setOpenTab, set
                             backgroundColor: C.black,
                         }}
                         onPress={() => {
+                            setSelectedOption({
+                                promotePrice: promotePrice,
+                                promoteDuration: daysDuration,
+                            })
                             setOpenNextTab(true)
                         }}
                     >

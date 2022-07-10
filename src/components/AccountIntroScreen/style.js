@@ -26,7 +26,7 @@ margin-bottom: 16px;
 const Welcome = styled(M.Title28)`
 color: #333333;
 `;
-const HeaderImageBlock = styled.View`
+const HeaderImageBlock = styled.TouchableOpacity`
 width: 48px;
 height: 48px;
 border-radius: 6px;

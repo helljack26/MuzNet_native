@@ -57,7 +57,6 @@ import { observer } from 'mobx-react-lite';
 import { useAccountApiStore } from '@/stores/AccountApi';
 
 const AccountIntroScreen = observer(({ stackName, isContractor }) => {
-
     const navigation = useNavigation();
     const {
         isOpenPersonalInfoTab,
@@ -81,6 +80,8 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
 
     const tabsLink = isContractor === true ? S.AccountTabs.contractorTabs : S.AccountTabs.musicianTabs
 
+    const stackForSwitch = isContractor ? 'MusicianStack' : 'ContractorStack'
+    const screenForSwitch = isContractor ? 'MusicianAccountScreen' : 'ContractorAccountScreen'
     return (
         <Container
             style={{
@@ -88,20 +89,20 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                 height: windowHeight,
             }}
         >
-            <Content
-                showsVerticalScrollIndicator={false}
-            // style={{
-            //     width: windowWidth,
-            //     height: windowHeight - 115,
-            // }}
-            >
+            <Content showsVerticalScrollIndicator={false}>
                 {/* Header */}
                 <Header>
                     <Welcome>
                         Hello, {userName}
                     </Welcome>
 
-                    <HeaderImageBlock>
+                    <HeaderImageBlock
+                        onPress={() => {
+                            navigation.navigate(stackForSwitch, {
+                                screen: screenForSwitch
+                            });
+                        }}
+                    >
                         <HeaderImage source={userImage} resizeMode={'cover'} />
                     </HeaderImageBlock>
                 </Header>
@@ -134,12 +135,16 @@ const AccountIntroScreen = observer(({ stackName, isContractor }) => {
                 </AccountLinkList>
 
                 {/* Promote my ads */}
-                {!isContractor && <BlackBtn
-                // TODO тут с навигейтить на проут май ад экран
-                // onPress={() => { }} 
-                >
-                    <BlackBtnText>Promote My Ad</BlackBtnText>
-                </BlackBtn>
+                {!isContractor &&
+                    <BlackBtn
+                        onPress={() => {
+                            navigation.navigate('MusicianStack', {
+                                screen: 'MusicianPromoteAdScreen',
+                            });
+                        }}
+                    >
+                        <BlackBtnText>Promote My Ad</BlackBtnText>
+                    </BlackBtn>
                 }
                 {/* Invite friends popup */}
                 <InviteFriendsButton

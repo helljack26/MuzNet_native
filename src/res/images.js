@@ -63,6 +63,8 @@ import CopyGrayIcon from '../../assets/icon/copy_gray_icon.svg'
 import ShieldIcon from '../../assets/icon/shield_icon.svg'
 import ReservationIcon from '../../assets/icon/reservation_icon.svg'
 import PaymentIcon from '../../assets/icon/payment_icon.svg'
+import DashedBorder from '../../assets/icon/dashed_border.svg'
+import AppleIcon from '../../assets/icon/apple_icon.svg'
 // Bank logo
 import VisaBankIcon from '../../assets/icon/visa_icon.svg'
 import MasterCardBankIcon from '../../assets/icon/masterCard_icon.svg'
@@ -106,6 +108,9 @@ const IMAGES = {
     // Select AddProfileInfo screen
     SelectContractor: require('../../assets/AddProfileInfo/select_contractor.png'),
     SelectMusician: require('../../assets/AddProfileInfo/select_musician.png'),
+    // Payment
+    SuccessPayment: require('../../assets/Payment/success_payment.png'),
+    ErrorPayment: require('../../assets/Payment/error_payment.png'),
     // Countries flag
     CanadaIcon: CanadaIcon,
     FranceIcon: FranceIcon,
@@ -166,6 +171,8 @@ const IMAGES = {
     ShieldIcon: ShieldIcon,
     ReservationIcon: ReservationIcon,
     PaymentIcon: PaymentIcon,
+    DashedBorder: DashedBorder,
+    AppleIcon: AppleIcon,
     // Bank
     AmericanExpressBankIcon: AmericanExpressBankIcon,
     PayPalBankIcon: PayPalBankIcon,

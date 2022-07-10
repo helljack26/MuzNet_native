@@ -1082,7 +1082,6 @@ const AddProfileInfo = () => {
                     {/* Submit buttons in last tab */}
                     {(tabNumber === 4 && userType === S.Contractor) &&
                         <ButtonSubmitBlock>
-                            {/* TODO set redirection to main page */}
                             <ButtonSubmit onPress={handleSubmit(onSubmit)}>
                                 <ButtonSubmitText>Create an Account</ButtonSubmitText>
                             </ButtonSubmit>
@@ -1090,7 +1089,6 @@ const AddProfileInfo = () => {
                     }
                     {(tabNumber === 6 && isMusicianOrSinger) &&
                         < ButtonSubmitBlock >
-                            {/* TODO set redirection to main page */}
                             <ButtonSubmit ButtonSubmit onPress={handleSubmit(onSubmit)}>
                                 <ButtonSubmitText>Create an Account</ButtonSubmitText>
                             </ButtonSubmit>
@@ -1098,7 +1096,6 @@ const AddProfileInfo = () => {
                     }
                     {(tabNumber === 7 && isBand) &&
                         < ButtonSubmitBlock >
-                            {/* TODO set redirection to main page */}
                             <ButtonSubmit ButtonSubmit onPress={handleSubmit(onSubmit)}>
                                 <ButtonSubmitText>Create an Account</ButtonSubmitText>
                             </ButtonSubmit>

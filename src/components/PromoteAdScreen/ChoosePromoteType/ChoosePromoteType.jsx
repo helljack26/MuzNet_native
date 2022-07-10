@@ -1,7 +1,6 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 // Images
@@ -12,7 +11,6 @@ const {
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
-import { S } from '@/res/strings'
 // Styles
 import { style } from './style'
 const {
@@ -40,23 +38,13 @@ const {
     BlackBtn,
     BlackBtnText,
 } = M;
-// Store
-import { observer } from 'mobx-react-lite';
-import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
 
-const ChoosePromoteType = observer(({ selectedPromoteType, setSelectedOption, setOpenNextTab }) => {
+const ChoosePromoteType = ({ selectedPromoteType, setSelectedOption, setOpenNextTab }) => {
     const navigation = useNavigation();
 
     const { windowHeight, windowWidth } = getWindowDimension()
 
     const [isShowSubmitButton, setShowSubmitButton] = useState(false);
-
-    // useEffect(() => {
-    //     if (isClosePayoutDetails === false) {
-    //         setShowSubmitButton(false)
-    //     }
-    // }, [isClosePayoutDetails]);
-
 
     const isVipPromote = selectedPromoteType !== undefined && selectedPromoteType === 'VipPromotion'
     const isBasicPromote = selectedPromoteType !== undefined && selectedPromoteType === 'BasicPromotion'
@@ -157,7 +145,7 @@ const ChoosePromoteType = observer(({ selectedPromoteType, setSelectedOption, se
 
         </FilterContainer>
     )
-})
+}
 
 export default ChoosePromoteType;
 

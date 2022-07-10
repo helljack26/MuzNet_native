@@ -1,87 +1,79 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { View, Keyboard, BackHandler } from 'react-native';
+import { View, BackHandler } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 // Components
 import ChoosePromoteType from './ChoosePromoteType'
 import ChoosePromoteDuration from './ChoosePromoteDuration'
 import ConfirmAndPay from './ConfirmAndPay'
+import AfterSubmitWindow from '@/components/AfterSubmitWindow'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
+// Images
+import IMAGES from '@/res/images'
 
-// Store
-import { observer } from 'mobx-react-lite';
-
-// import { usePaymentAndPayoutApiStore } from '@/stores/PaymentAndPayoutApi';
-
-const PromoteAdScreen = observer(() => {
-
-    // const { isOpenPayoutDetails, setOpenPayoutDetails, setPayoutDetails, isClosePayoutDetails } = usePaymentAndPayoutApiStore();
+const PromoteAdScreen = ({ stackName, welcomeScreenName }) => {
+    const navigation = useNavigation();
 
     const { windowHeight, windowWidth } = getWindowDimension()
     // Steps shown state 
-    const [isOpenChoosePromoteDuration, setOpenChoosePromoteDuration] = useState(true);
+    const [isOpenChoosePromoteDuration, setOpenChoosePromoteDuration] = useState(false);
     const [isCloseChoosePromoteDuration, setCloseChoosePromoteDuration] = useState(false);
 
     const [isOpenConfirmAndPay, setOpenConfirmAndPay] = useState(false);
     const [isCloseConfirmAndPay, setCloseConfirmAndPay] = useState(false);
 
     const [selectedPromoteType, setSelectedPromoteType] = useState();
-    const [selectedPromoteDuration, setSelectedPromoteDuration] = useState();
-    const [selectedAccountType, setSelectedAccountType] = useState();
+    const [selectedPromoteDuration, setSelectedPromoteDuration] = useState({
+        promotePrice: 21,
+        promoteDuration: 7,
+    });
 
-    // useEffect(() => {
-    //     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-    //         if (!isOpenChoosePromoteDuration && !isOpenConfirmAndPay) {
-    //             setTimeout(() => {
-    //                 setOpenPayoutDetails(false)
-    //             }, 600);
-    //         }
-    //         if (isOpenChoosePromoteDuration === true && !isOpenConfirmAndPay) {
-    //             setCloseChoosePromoteDuration(true)
-    //             setTimeout(() => {
-    //                 setCloseChoosePromoteDuration(false)
-    //             }, 590);
-    //         }
-    //         if (isOpenChoosePromoteDuration === true && isOpenConfirmAndPay === true) {
-    //             setCloseConfirmAndPay(true)
-    //             setTimeout(() => {
-    //                 setCloseConfirmAndPay(false)
-    //             }, 590);
-    //         }
+    const [isOpenAfterSubmitMessage, setOpenAfterSubmitMessage] = useState(false);
 
-    //         return true
-    //     })
-    //     return () => {
-    //         backHandler.remove()
-    //     }
-    // }, [isOpenPayoutDetails, isOpenChoosePromoteDuration, isOpenConfirmAndPay])
-
-    const onSubmitPromoteAd = (data) => {
-        const newPayout = {
-            country: selectedPromoteType,
-            howToGetPaid: selectedPromoteDuration,
-            accountType: selectedAccountType,
-            accountInfo: {
-                cardHolderName: data.nameOnCard,
-                routingNumber: data.routingNumber,
-                accountNumber: data.accountNumber,
-                confirmAccountNumber: data.confirmAccountNumber,
-            },
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            if (!isOpenChoosePromoteDuration && !isOpenConfirmAndPay && !isOpenAfterSubmitMessage) {
+                navigation.goBack()
+            }
+            if (isOpenChoosePromoteDuration === true && !isOpenConfirmAndPay) {
+                setCloseChoosePromoteDuration(true)
+                setTimeout(() => {
+                    setCloseChoosePromoteDuration(false)
+                }, 590);
+            }
+            if (isOpenChoosePromoteDuration === true && isOpenConfirmAndPay === true) {
+                setCloseConfirmAndPay(true)
+                setTimeout(() => {
+                    setCloseConfirmAndPay(false)
+                }, 590);
+            }
+            if (isOpenAfterSubmitMessage === true) {
+                navigation.navigate(stackName, { screen: welcomeScreenName })
+            }
+            return true
+        })
+        return () => {
+            backHandler.remove()
         }
-        console.log("🚀 ~ file: PayoutDetails.jsx ~ line 89 ~ onSubmitPromoteAd ~ newPayout", newPayout)
+    }, [isOpenChoosePromoteDuration, isOpenConfirmAndPay, isOpenAfterSubmitMessage])
 
-        // setPayoutDetails(newPayout)
-
+    const onSubmitPromoteAd = () => {
+        setOpenAfterSubmitMessage(true)
         setOpenChoosePromoteDuration(false)
         setOpenConfirmAndPay(false)
-        setSelectedPromoteType(undefined)
-        setSelectedPromoteDuration(undefined)
-        setSelectedAccountType(undefined)
-        // Clear input value
-        Keyboard.dismiss()
-        closeTab()
-
+        const newPromote = {
+            promoteType: selectedPromoteType,
+            promoteDuration: selectedPromoteDuration.promoteDuration,
+            promotePrice: selectedPromoteDuration.promotePrice,
+        }
+        console.log("🚀 ~ file: PayoutDetails.jsx ~ line 89 ~ onSubmitPromoteAd ~ newPayout", newPromote)
         return
+    };
+
+    const AfterSubmitButtonAction = () => {
+        setOpenAfterSubmitMessage(false)
+        navigation.navigate(stackName, { screen: welcomeScreenName })
     };
 
     return (
@@ -89,11 +81,6 @@ const PromoteAdScreen = observer(() => {
             zIndex: 1015,
             height: windowHeight + 50,
             width: windowWidth,
-            // justifyContent: 'center',
-            // position: "absolute",
-            // top: 0,
-            // bottom: 0,
-            // right: 0,
         }}
         >
             {/* Initial tab always show */}
@@ -105,7 +92,6 @@ const PromoteAdScreen = observer(() => {
 
             {isOpenChoosePromoteDuration === true && <ChoosePromoteDuration
                 selectedPromoteType={selectedPromoteType}
-                selectedPromoteDuration={selectedPromoteDuration}
                 setSelectedOption={setSelectedPromoteDuration}
                 isOpenTab={isOpenChoosePromoteDuration}
                 setOpenTab={setOpenChoosePromoteDuration}
@@ -115,15 +101,38 @@ const PromoteAdScreen = observer(() => {
             }
 
             {isOpenConfirmAndPay === true && <ConfirmAndPay
+                selectedPromoteDuration={selectedPromoteDuration}
                 isOpenTab={isOpenConfirmAndPay}
                 setOpenTab={setOpenConfirmAndPay}
                 onSubmitPromoteAd={onSubmitPromoteAd}
                 isCloseTab={isCloseConfirmAndPay}
+            />}
+
+            <AfterSubmitWindow
+                title={'Your deal was submitted'}
+                message={'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
+                windowImage={IMAGES.SuccessPayment}
+                isPromoteBigImage={true}
+                buttonText={'Home Screen'}
+                setOpen={setOpenAfterSubmitMessage}
+                isOpen={isOpenAfterSubmitMessage}
+                afterSubmitButton={AfterSubmitButtonAction}
             />
-            }
+
+            {/* If payment error */}
+            {/* <AfterSubmitWindow
+                title={'Something went wrong'}
+                message={'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
+                windowImage={IMAGES.ErrorPayment}
+                isPromoteBigImage={true}
+                buttonText={'Try again'}
+                setOpen={setOpenAfterSubmitMessage}
+                isOpen={isOpenAfterSubmitMessage}
+                afterSubmitButton={AfterSubmitButtonAction}
+            /> */}
         </View >
     )
-})
+}
 
 export default PromoteAdScreen;
 

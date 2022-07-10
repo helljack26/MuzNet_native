@@ -36,6 +36,25 @@ width: 100%;
 height: 94%;
 padding: 0px 16px;
 `;
+const PreviewBlock = styled.View`
+width: 100%;
+padding: 16px;
+display: flex;
+flex-direction: column;
+background-color: ${C.backGray};
+border-radius: 12px;
+margin-bottom: 32px;
+`;
+const PreviewBlockRow = styled.View`
+display: flex;
+flex-direction: row;
+`;
+const PreviewBlockPrice = styled(M.Title24)`
+margin-bottom: 8px;
+`;
+const PreviewBlockViewPerDay = styled(M.PlainText14)`
+color: ${C.cyanGray};
+`;
 const ContentBlock = styled.View`
 display: flex;
 align-items: flex-start;
@@ -44,15 +63,11 @@ flex-direction: row;
 margin-top: 16px;
 padding: 0px 16px;
 padding-top: 7px;
-/* width: 100%; */
-/* height : ${props => props.isKeyboardOpen === true ? 116 + 'px' : 146 + 'px'}; */
 height : 126px;
 position: absolute;
 left:0;
 bottom:0;
 background-color: ${C.white};
-border-top-color: ${C.lightGray};
-border-top-width: 1px;
 `;
 export const style = {
     FilterContainer: FilterContainer,
@@ -60,6 +75,9 @@ export const style = {
     HeaderClose: HeaderClose,
     HeaderTitle: HeaderTitle,
     FilterBlock: FilterBlock,
+    PreviewBlock: PreviewBlock,
+    PreviewBlockRow: PreviewBlockRow,
+    PreviewBlockPrice: PreviewBlockPrice,
+    PreviewBlockViewPerDay: PreviewBlockViewPerDay,
     ContentBlock: ContentBlock,
-
 }

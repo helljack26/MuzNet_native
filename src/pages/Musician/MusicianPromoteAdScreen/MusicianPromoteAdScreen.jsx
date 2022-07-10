@@ -13,7 +13,7 @@ height: 100%;
 background-color: ${C.white};
 `;
 
-const ContractorPromoteAdScreen = () => {
+const MusicianPromoteAdScreen = () => {
     const isKeyboardOpen = isKeyboardShown()
 
     return (
@@ -28,8 +28,8 @@ const ContractorPromoteAdScreen = () => {
             <Container isKeyboardOpen={isKeyboardOpen} >
 
                 <PromoteAdScreen
-                    stackName={'ContractorStack'}
-                    welcomeScreenName={'ContractorWelcomeScreen'}
+                    stackName={'MusicianStack'}
+                    welcomeScreenName={'MusicianWelcomeScreen'}
                 />
 
             </Container>
@@ -39,4 +39,4 @@ const ContractorPromoteAdScreen = () => {
     )
 }
 
-export default ContractorPromoteAdScreen;
+export default MusicianPromoteAdScreen;
