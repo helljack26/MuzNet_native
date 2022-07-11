@@ -4,7 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Animated, BackHandler, View } from 'react-native';
 // Components
 import ContactUsTab from '../LeaveFeedbackScreen/ContactUsTab'
-import ArticleTab from './ArticleTab'
+import DealTab from './DealTab'
+import AfterSubmitWindow from '@/components/AfterSubmitWindow'
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 // Images
@@ -35,12 +36,7 @@ const {
 import { M } from '@/res/mixin'
 const {
     PlainText17,
-    MediumText20,
-    MediumText17,
-    TitleBold20,
     TitleBold17,
-    BlackBtn,
-    BlackBtnText,
 } = M;
 // Store
 import { observer } from 'mobx-react-lite';
@@ -54,7 +50,7 @@ const MyDealsScreen = observer(({ isContractor }) => {
     const [isActiveDeals, setActiveDeals] = useState(true)
 
     // Store
-    const { contractorAccountDataApi, musicianAccountDataApi } = useAccountApiStore();
+    const { contractorAccountDataApi, musicianAccountDataApi, submitDeal } = useAccountApiStore();
 
     const userDeals = isContractor === true ? contractorAccountDataApi[0].userDeals : musicianAccountDataApi[0].userDeals
     // 
@@ -63,64 +59,68 @@ const MyDealsScreen = observer(({ isContractor }) => {
     // Atricle state 
     const [isDealTab, setDealTab] = useState({
         isOpen: false,
-        dealData: '',
+        dealData: {},
     })
-    const [isCloseDealTab, setCloseArticleTab] = useState(false);
+    const [isCloseDealTab, setCloseDealTab] = useState(false);
 
     // Contact us tab state
     const [isOpenContactUs, setOpenContactUs] = useState(false);
     const [isCloseContactUs, setCloseContactUs] = useState(false);
 
+    // After submit window
+    const [isOpenAfterSubmitMessage, setOpenAfterSubmitMessage] = useState(false);
+
     // Native back button handler
-    // useEffect(() => {
-    //     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-    //         // Close current tab
-    //         if (!isAllTopicsTab.isOpen && !isDealTab.isOpen && !isOpenContactUs) {
-    //             setHideAnimationTab(true)
-    //             setTimeout(() => {
-    //                 setOpenTabs({
-    //                     tabName: 'FAQ',
-    //                     isOpen: false
-    //                 })
-    //             }, 600);
-    //         }
-    //         if (isAllTopicsTab.isOpen && !isDealTab.isOpen && !isOpenContactUs) {
-    //             setCloseAllTopicsTab(true)
-    //             setTimeout(() => {
-    //                 setCloseAllTopicsTab(false)
-    //             }, 600);
-    //         }
-    //         if (isDealTab.isOpen && !isAllTopicsTab.isOpen && !isOpenContactUs) {
-    //             setCloseArticleTab(true)
-    //             setTimeout(() => {
-    //                 setCloseArticleTab(false)
-    //             }, 600);
-    //         }
-    //         if (isDealTab.isOpen && isAllTopicsTab.isOpen && !isOpenContactUs) {
-    //             setCloseArticleTab(true)
-    //             setTimeout(() => {
-    //                 setCloseArticleTab(false)
-    //             }, 600);
-    //         }
-    //         const isMainOpenContact = !isAllTopicsTab.isOpen && !isDealTab.isOpen && isOpenContactUs
-    //         const isArticleOpenContact = !isAllTopicsTab.isOpen && isDealTab.isOpen && isOpenContactUs
-    //         const isTopicsOpenContact = isAllTopicsTab.isOpen && !isDealTab.isOpen && isOpenContactUs
-    //         const isTopicsAndArticleOpenContact = isAllTopicsTab.isOpen && isDealTab.isOpen && isOpenContactUs
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            // Close current tab
+            if (!isDealTab.isOpen && !isOpenContactUs) {
+                navigation.goBack()
+            }
+            if (isDealTab.isOpen && !isOpenContactUs) {
+                setCloseDealTab(true)
+                setTimeout(() => {
+                    setCloseDealTab(false)
+                }, 600);
+            }
+            if (isDealTab.isOpen && !isOpenContactUs) {
+                setCloseDealTab(true)
+                setTimeout(() => {
+                    setCloseDealTab(false)
+                }, 600);
+            }
+            const isMainOpenContact = !isDealTab.isOpen && isOpenContactUs
+            const isArticleOpenContact = isDealTab.isOpen && isOpenContactUs
+            const isTopicsOpenContact = !isDealTab.isOpen && isOpenContactUs
+            const isTopicsAndArticleOpenContact = isDealTab.isOpen && isOpenContactUs
 
-    //         if (isMainOpenContact || isArticleOpenContact || isTopicsOpenContact || isTopicsAndArticleOpenContact) {
-    //             setCloseContactUs(true)
-    //             setTimeout(() => {
-    //                 setOpenContactUs(false)
-    //                 setCloseContactUs(false)
-    //             }, 600);
-    //         }
-    //         return true
-    //     })
-    //     return () => {
-    //         backHandler.remove()
-    //     }
-    // }, [isAllTopicsTab.isOpen, isDealTab.isOpen, isOpenContactUs])
+            if (isMainOpenContact || isArticleOpenContact || isTopicsOpenContact || isTopicsAndArticleOpenContact) {
+                setCloseContactUs(true)
+                setTimeout(() => {
+                    setOpenContactUs(false)
+                    setCloseContactUs(false)
+                }, 600);
+            }
+            return true
+        })
+        return () => {
+            backHandler.remove()
+        }
+    }, [isDealTab.isOpen, isOpenContactUs])
 
+    const submitDealAction = (dealData) => {
+        submitDeal(dealData)
+        setOpenAfterSubmitMessage(true)
+
+    }
+    const afterSubmitButtonAction = () => {
+        setOpenAfterSubmitMessage(false)
+        setDealTab({
+            isOpen: false,
+            dealData: {},
+        })
+        // navigation.navigate(stackName, { screen: welcomeScreenName })
+    };
 
     return (
         <View
@@ -164,6 +164,14 @@ const MyDealsScreen = observer(({ isContractor }) => {
                         </SwitchBlockBtn>
                     </SwitchBlock>
 
+                    {dealsData.length === 0 && <TitleBold17
+                        style={{
+                            textAlign: 'center'
+                        }}
+                    >
+                        You haven't {isActiveDeals ? 'active' : 'closed'} deals
+                    </TitleBold17>}
+
                     {/* Deals list */}
                     {dealsData.map((deal, id) => {
                         const dealDate = deal.adDate.string.split(',')
@@ -178,6 +186,7 @@ const MyDealsScreen = observer(({ isContractor }) => {
                             }}
                             key={id}
                         >
+
                             <DealStatusLabel
                                 isActive={deal.dealStatus}
                             >{statusText}</DealStatusLabel>
@@ -228,11 +237,14 @@ const MyDealsScreen = observer(({ isContractor }) => {
 
             {/* Deal */}
             {isDealTab.isOpen === true &&
-                <ArticleTab
+                <DealTab
+                    isContractor={isContractor}
                     isOpenTab={isDealTab.isOpen}
+                    dealData={isDealTab.dealData}
                     isClose={isCloseDealTab}
                     setOpen={setDealTab}
                     setOpenContactUs={setOpenContactUs}
+                    setOpenAfterSubmitMessage={submitDealAction}
                 />}
 
             {/* Contact us link */}
@@ -241,6 +253,29 @@ const MyDealsScreen = observer(({ isContractor }) => {
                 isClose={isCloseContactUs}
                 setOpen={setOpenContactUs}
             />}
+            {/* Submit perfomance */}
+            <AfterSubmitWindow
+                title={'Your deal was submitted'}
+                message={'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
+                windowImage={IMAGES.SuccessPayment}
+                isPromoteBigImage={true}
+                buttonText={'My Deals'}
+                setOpen={setOpenAfterSubmitMessage}
+                isOpen={isOpenAfterSubmitMessage}
+                afterSubmitButton={afterSubmitButtonAction}
+            />
+
+            {/* If payment error */}
+            {/* <AfterSubmitWindow
+                title={'Something went wrong'}
+                message={'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
+                windowImage={IMAGES.ErrorPayment}
+                isPromoteBigImage={true}
+                buttonText={'Try again'}
+                setOpen={setOpenAfterSubmitMessage}
+                isOpen={isOpenAfterSubmitMessage}
+                afterSubmitButton={afterSubmitButtonAction}
+            /> */}
         </View >
     )
 })
