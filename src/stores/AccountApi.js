@@ -210,7 +210,7 @@ class AccountApi {
                         milliseconds: 73800000,
                         string: "06:30pm",
                     },
-                    adTitle: "Отслеживаямая хуйня",
+                    adTitle: "Aenean nec fringilla sapien.",
                     adLocation: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
                     dealPhoneNumber: '+1 000 753 6735',
                     paymentMethod: 'Dbs Bank Ltd',
@@ -454,6 +454,236 @@ class AccountApi {
             userNewProfileView: true,
             userLoginAtteptOnAccount: false,
             userTransaction: false,
+        },
+        userDeals: {
+            activeDeals: [
+                {
+                    dealId: 6516516,
+                    dealUserName: 'Robert Osborne',
+                    dealNumber: 1246,
+                    dealStatus: true,
+                    userPricePerHour: 30,
+                    userCurrencyType: '$',
+                    adDate: {
+                        milliseconds: 55800000,
+                        string: 'Wednesday, Jun 29',
+                    },
+                    eventStart: {
+                        milliseconds: 55800000,
+                        string: "03:30pm",
+                    },
+                    eventEnd: {
+                        milliseconds: 73800000,
+                        string: "06:30pm",
+                    },
+                    adTitle: "Aenean nec fringilla sapien.",
+                    adLocation: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
+                    dealPhoneNumber: '+1 000 753 6735',
+                    paymentMethod: 'Dbs Bank Ltd',
+                    perfomanceCost: 90,
+                    muznetFee: 9,
+                    totalPrice: 99,
+                    moreDetails: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec fringilla sapien. Proin at porta massa. Pellentesque in lorem sapien. Aliquam a quam vitae quam pharetra laoreet. Lorem ipsum dolor sit amet'
+                },
+                {
+                    dealId: 6516444,
+                    dealUserName: 'Robert Osborne',
+                    dealNumber: 1247,
+                    dealStatus: true,
+                    userPricePerHour: 60,
+                    userCurrencyType: '$',
+                    adDate: {
+                        milliseconds: 55800000,
+                        string: 'Wednesday, Jun 30',
+                    },
+                    eventStart: {
+                        milliseconds: 55800000,
+                        string: "03:30pm",
+                    },
+                    eventEnd: {
+                        milliseconds: 73800000,
+                        string: "06:30pm",
+                    },
+                    adTitle: "Aloft Asheville",
+                    adLocation: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
+                    dealPhoneNumber: '+1 000 753 6735',
+                    paymentMethod: 'Dbs Bank Ltd',
+                    perfomanceCost: 90,
+                    muznetFee: 9,
+                    totalPrice: 99,
+                    moreDetails: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec fringilla sapien. Proin at porta massa. Pellentesque in lorem sapien. Aliquam a quam vitae quam pharetra laoreet. Lorem ipsum dolor sit amet'
+                },
+                {
+                    dealId: 6556516,
+                    dealUserName: 'Robert Osborne',
+                    dealNumber: 1246,
+                    dealStatus: true,
+                    userPricePerHour: 30,
+                    userCurrencyType: '$',
+                    adDate: {
+                        milliseconds: 55800000,
+                        string: 'Wednesday, Jun 29',
+                    },
+                    eventStart: {
+                        milliseconds: 55800000,
+                        string: "03:30pm",
+                    },
+                    eventEnd: {
+                        milliseconds: 73800000,
+                        string: "06:30pm",
+                    },
+                    adTitle: "Aloft Asheville",
+                    adLocation: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
+                    dealPhoneNumber: '+1 000 753 6735',
+                    paymentMethod: 'Dbs Bank Ltd',
+                    perfomanceCost: 90,
+                    muznetFee: 9,
+                    totalPrice: 99,
+                    moreDetails: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec fringilla sapien. Proin at porta massa. Pellentesque in lorem sapien. Aliquam a quam vitae quam pharetra laoreet. Lorem ipsum dolor sit amet'
+                },
+                {
+                    dealId: 6516484,
+                    dealUserName: 'Robert Osborne',
+                    dealNumber: 1247,
+                    dealStatus: true,
+                    userPricePerHour: 60,
+                    userCurrencyType: '$',
+                    adDate: {
+                        milliseconds: 55800000,
+                        string: 'Wednesday, Jun 30',
+                    },
+                    eventStart: {
+                        milliseconds: 55800000,
+                        string: "03:30pm",
+                    },
+                    eventEnd: {
+                        milliseconds: 73800000,
+                        string: "06:30pm",
+                    },
+                    adTitle: "Aloft Asheville",
+                    adLocation: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
+                    dealPhoneNumber: '+1 000 753 6735',
+                    paymentMethod: 'Dbs Bank Ltd',
+                    perfomanceCost: 90,
+                    muznetFee: 9,
+                    totalPrice: 99,
+                    moreDetails: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec fringilla sapien. Proin at porta massa. Pellentesque in lorem sapien. Aliquam a quam vitae quam pharetra laoreet. Lorem ipsum dolor sit amet'
+                },
+                {
+                    dealId: 7516516,
+                    dealUserName: 'Robert Osborne',
+                    dealNumber: 1246,
+                    dealStatus: true,
+                    userPricePerHour: 30,
+                    userCurrencyType: '$',
+                    adDate: {
+                        milliseconds: 55800000,
+                        string: 'Wednesday, Jun 29',
+                    },
+                    eventStart: {
+                        milliseconds: 55800000,
+                        string: "03:30pm",
+                    },
+                    eventEnd: {
+                        milliseconds: 73800000,
+                        string: "06:30pm",
+                    },
+                    adTitle: "Aloft Asheville",
+                    adLocation: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
+                    dealPhoneNumber: '+1 000 753 6735',
+                    paymentMethod: 'Dbs Bank Ltd',
+                    perfomanceCost: 90,
+                    muznetFee: 9,
+                    totalPrice: 99,
+                    moreDetails: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec fringilla sapien. Proin at porta massa. Pellentesque in lorem sapien. Aliquam a quam vitae quam pharetra laoreet. Lorem ipsum dolor sit amet'
+                },
+            ],
+            closedDeals: [
+                {
+                    dealId: 6716444,
+                    dealUserName: 'Robert Osborne',
+                    dealNumber: 1247,
+                    dealStatus: false,
+                    userPricePerHour: 60,
+                    userCurrencyType: '$',
+                    adDate: {
+                        milliseconds: 55800000,
+                        string: 'Wednesday, Jun 30',
+                    },
+                    eventStart: {
+                        milliseconds: 55800000,
+                        string: "03:30pm",
+                    },
+                    eventEnd: {
+                        milliseconds: 73800000,
+                        string: "06:30pm",
+                    },
+                    adTitle: "Aloft Asheville",
+                    adLocation: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
+                    dealPhoneNumber: '+1 000 753 6735',
+                    paymentMethod: 'Dbs Bank Ltd',
+                    perfomanceCost: 90,
+                    muznetFee: 9,
+                    totalPrice: 99,
+                    moreDetails: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec fringilla sapien. Proin at porta massa. Pellentesque in lorem sapien. Aliquam a quam vitae quam pharetra laoreet. Lorem ipsum dolor sit amet'
+                },
+                {
+                    dealId: 6519516,
+                    dealUserName: 'Robert Osborne',
+                    dealNumber: 1246,
+                    dealStatus: false,
+                    userPricePerHour: 30,
+                    userCurrencyType: '$',
+                    adDate: {
+                        milliseconds: 55800000,
+                        string: 'Wednesday, Jun 29',
+                    },
+                    eventStart: {
+                        milliseconds: 55800000,
+                        string: "03:30pm",
+                    },
+                    eventEnd: {
+                        milliseconds: 73800000,
+                        string: "06:30pm",
+                    },
+                    adTitle: "Aloft Avenue Asheville",
+                    adLocation: "Berkeley, CA 94703 Berkeley California United States",
+                    dealPhoneNumber: '+1 000 753 6735',
+                    paymentMethod: 'Dbs Bank Ltd',
+                    perfomanceCost: 90,
+                    muznetFee: 9,
+                    totalPrice: 99,
+                    moreDetails: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec fringilla sapien. Proin at porta massa. Pellentesque in lorem sapien. Aliquam a quam vitae quam pharetra laoreet. Lorem ipsum dolor sit amet'
+                },
+                {
+                    dealId: 6596516,
+                    dealUserName: 'Robert Osborne',
+                    dealNumber: 1246,
+                    dealStatus: false,
+                    userPricePerHour: 30,
+                    userCurrencyType: '$',
+                    adDate: {
+                        milliseconds: 55800000,
+                        string: 'Wednesday, Jun 29',
+                    },
+                    eventStart: {
+                        milliseconds: 55800000,
+                        string: "03:30pm",
+                    },
+                    eventEnd: {
+                        milliseconds: 73800000,
+                        string: "06:30pm",
+                    },
+                    adTitle: "Aloft Asheville",
+                    adLocation: "1347 McGee Avenue, Berkeley, CA 94703 Berkeley California United States",
+                    dealPhoneNumber: '+1 000 753 6735',
+                    paymentMethod: 'Dbs Bank Ltd',
+                    perfomanceCost: 90,
+                    muznetFee: 9,
+                    totalPrice: 99,
+                    moreDetails: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec fringilla sapien. Proin at porta massa. Pellentesque in lorem sapien. Aliquam a quam vitae quam pharetra laoreet. Lorem ipsum dolor sit amet'
+                },
+            ]
         }
     }]
 
@@ -613,16 +843,17 @@ class AccountApi {
         this.faqMusicianAllArticles = allMusicianFaqArticle
     }
 
-    submitDeal(submitDeal) {
+    submitDeal(submitDeal, isContractor) {
+        const currentDealData = isContractor ? this.contractorAccountDataApi[0].userDeals : this.musicianAccountDataApi[0].userDeals
         // Remove from active
-        const filtered = this.contractorAccountDataApi[0].userDeals.activeDeals.filter((item, id) => {
+        const filtered = currentDealData.activeDeals.filter((item, id) => {
             return item.dealId !== submitDeal.dealId
         })
-        set(this.contractorAccountDataApi[0].userDeals, "activeDeals", filtered)
+        set(currentDealData, "activeDeals", filtered)
 
         // Set to disable
         submitDeal.dealStatus = false
-        set(this.contractorAccountDataApi[0].userDeals, "closedDeals", [submitDeal, ...this.contractorAccountDataApi[0].userDeals.closedDeals])
+        set(currentDealData, "closedDeals", [submitDeal, ...currentDealData.closedDeals])
     }
 }
 

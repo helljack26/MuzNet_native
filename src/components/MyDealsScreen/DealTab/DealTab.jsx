@@ -11,12 +11,10 @@ import { useAnimateOfferPreview } from './useAnimateOfferPreview';
 import IMAGES from '@/res/images'
 const {
     GoBackIcon,
-    WarningGrayIcon,
 } = IMAGES;
 // Variables
 import C from '@/res/colors'
 import F from '@/res/fonts'
-import { S } from '@/res/strings'
 // Styles
 import { style } from './style'
 const {
@@ -53,13 +51,11 @@ const {
 } = M;
 // Store
 import { observer } from 'mobx-react-lite';
-import { apiMocks } from '@/api/mock/apiMocks'
 
 const DealTab = observer(({ isOpenTab, dealData, setOpen, isClose, setOpenContactUs, isContractor, setOpenAfterSubmitMessage }) => {
     const navigation = useNavigation();
 
     const {
-        dealId,
         dealUserName,
         dealNumber,
         dealStatus,
@@ -132,9 +128,7 @@ const DealTab = observer(({ isOpenTab, dealData, setOpen, isClose, setOpenContac
         >
             <FilterContainer
                 showsVerticalScrollIndicator={false}
-
                 style={{
-                    //     height: windowHeight,
                     width: windowWidth,
                 }}
             >

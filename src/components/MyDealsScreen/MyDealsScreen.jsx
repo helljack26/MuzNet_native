@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Animated, BackHandler, View } from 'react-native';
+import { BackHandler, View } from 'react-native';
 // Components
 import ContactUsTab from '../LeaveFeedbackScreen/ContactUsTab'
 import DealTab from './DealTab'
@@ -90,11 +90,9 @@ const MyDealsScreen = observer(({ isContractor }) => {
                 }, 600);
             }
             const isMainOpenContact = !isDealTab.isOpen && isOpenContactUs
-            const isArticleOpenContact = isDealTab.isOpen && isOpenContactUs
-            const isTopicsOpenContact = !isDealTab.isOpen && isOpenContactUs
-            const isTopicsAndArticleOpenContact = isDealTab.isOpen && isOpenContactUs
+            const isDealTabOpenContact = isDealTab.isOpen && isOpenContactUs
 
-            if (isMainOpenContact || isArticleOpenContact || isTopicsOpenContact || isTopicsAndArticleOpenContact) {
+            if (isMainOpenContact || isDealTabOpenContact) {
                 setCloseContactUs(true)
                 setTimeout(() => {
                     setOpenContactUs(false)
@@ -109,7 +107,7 @@ const MyDealsScreen = observer(({ isContractor }) => {
     }, [isDealTab.isOpen, isOpenContactUs])
 
     const submitDealAction = (dealData) => {
-        submitDeal(dealData)
+        submitDeal(dealData, isContractor)
         setOpenAfterSubmitMessage(true)
 
     }
@@ -119,7 +117,6 @@ const MyDealsScreen = observer(({ isContractor }) => {
             isOpen: false,
             dealData: {},
         })
-        // navigation.navigate(stackName, { screen: welcomeScreenName })
     };
 
     return (
