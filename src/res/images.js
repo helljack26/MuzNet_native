@@ -205,7 +205,9 @@ const IMAGES = {
     TrashIcon: TrashIcon,
     TrashWhiteIcon: TrashWhiteIcon,
     PriceRangeBgIcon: PriceRangeBgIcon,
-
+    // Calendar bg
+    CalendarBg1: require('../../assets/screens/Calendar/calendar_bg_1.png'),
+    CalendarBg2: require('../../assets/screens/Calendar/calendar_bg_2.png'),
     // Mock artist
     sharedImages: [
         require('../../assets/Mock/chat_shared/shared_1.png'),

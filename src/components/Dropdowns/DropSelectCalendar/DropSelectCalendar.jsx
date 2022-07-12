@@ -78,6 +78,10 @@ const DropSelectCalendar = ({ isResetAll, isCloseAllDropdown, setFilterDate, set
             milliseconds: millisecondForFilter,
             string: placeholderString,
         })
+        console.log({
+            milliseconds: millisecondForFilter,
+            string: placeholderString,
+        });
     };
 
     useEffect(() => {

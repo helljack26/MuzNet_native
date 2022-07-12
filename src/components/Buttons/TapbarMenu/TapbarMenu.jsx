@@ -86,7 +86,6 @@ const TapbarMenu = ({ isShowKeyboard }) => {
 
     const route = useRoute();
     const routeName = route.name
-    console.log("🚀 ~ file: TapbarMenu.jsx ~ line 89 ~ TapbarMenu ~ routeName", routeName)
     const isKeyboardOpen = isKeyboardShown()
 
     return (

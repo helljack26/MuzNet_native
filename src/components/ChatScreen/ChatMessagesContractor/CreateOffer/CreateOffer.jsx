@@ -189,8 +189,10 @@ const CreateOffer = observer(({ isOpenCreateOffer }) => {
 
     const closePopup = () => {
         setHideAnimationTab(true)
-        setCloseAllDropdown(true)
-        setOpenCreateOffer(false)
+        setTimeout(() => {
+            setCloseAllDropdown(true)
+            setOpenCreateOffer(false)
+        }, 600);
     }
     const [previousOfferDetails, setPreviousOfferDetails] = useState({});
 

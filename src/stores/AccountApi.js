@@ -199,8 +199,8 @@ class AccountApi {
                     userPricePerHour: 30,
                     userCurrencyType: '$',
                     adDate: {
-                        milliseconds: 55800000,
-                        string: 'Wednesday, Jun 29',
+                        milliseconds: 1657616400002,
+                        string: 'Thursday, Jul 12',
                     },
                     eventStart: {
                         milliseconds: 55800000,
@@ -227,8 +227,8 @@ class AccountApi {
                     userPricePerHour: 60,
                     userCurrencyType: '$',
                     adDate: {
-                        milliseconds: 55800000,
-                        string: 'Wednesday, Jun 30',
+                        milliseconds: 1657616400000,
+                        string: 'Thursday, Jul 12',
                     },
                     eventStart: {
                         milliseconds: 55800000,
@@ -255,8 +255,8 @@ class AccountApi {
                     userPricePerHour: 30,
                     userCurrencyType: '$',
                     adDate: {
-                        milliseconds: 55800000,
-                        string: 'Wednesday, Jun 29',
+                        milliseconds: 1657616400000,
+                        string: 'Thursday, Jul 12',
                     },
                     eventStart: {
                         milliseconds: 55800000,
@@ -283,8 +283,8 @@ class AccountApi {
                     userPricePerHour: 60,
                     userCurrencyType: '$',
                     adDate: {
-                        milliseconds: 55800000,
-                        string: 'Wednesday, Jun 30',
+                        milliseconds: 1658307600000,
+                        string: 'Wednesday, Jun 20',
                     },
                     eventStart: {
                         milliseconds: 55800000,
@@ -311,8 +311,8 @@ class AccountApi {
                     userPricePerHour: 30,
                     userCurrencyType: '$',
                     adDate: {
-                        milliseconds: 55800000,
-                        string: 'Wednesday, Jun 29',
+                        milliseconds: 1658566800000,
+                        string: 'Saturday, Jul 23',
                     },
                     eventStart: {
                         milliseconds: 55800000,
@@ -465,8 +465,8 @@ class AccountApi {
                     userPricePerHour: 30,
                     userCurrencyType: '$',
                     adDate: {
-                        milliseconds: 55800000,
-                        string: 'Wednesday, Jun 29',
+                        milliseconds: 1657616400000,
+                        string: 'Thursday, Jul 12',
                     },
                     eventStart: {
                         milliseconds: 55800000,
@@ -493,8 +493,8 @@ class AccountApi {
                     userPricePerHour: 60,
                     userCurrencyType: '$',
                     adDate: {
-                        milliseconds: 55800000,
-                        string: 'Wednesday, Jun 30',
+                        milliseconds: 1657616400000,
+                        string: 'Thursday, Jul 12',
                     },
                     eventStart: {
                         milliseconds: 55800000,
@@ -521,8 +521,8 @@ class AccountApi {
                     userPricePerHour: 30,
                     userCurrencyType: '$',
                     adDate: {
-                        milliseconds: 55800000,
-                        string: 'Wednesday, Jun 29',
+                        milliseconds: 1657616400000,
+                        string: 'Thursday, Jul 12',
                     },
                     eventStart: {
                         milliseconds: 55800000,
@@ -549,8 +549,8 @@ class AccountApi {
                     userPricePerHour: 60,
                     userCurrencyType: '$',
                     adDate: {
-                        milliseconds: 55800000,
-                        string: 'Wednesday, Jun 30',
+                        milliseconds: 1658307600000,
+                        string: 'Wednesday, Jun 20',
                     },
                     eventStart: {
                         milliseconds: 55800000,
@@ -577,8 +577,8 @@ class AccountApi {
                     userPricePerHour: 30,
                     userCurrencyType: '$',
                     adDate: {
-                        milliseconds: 55800000,
-                        string: 'Wednesday, Jun 29',
+                        milliseconds: 1658566800000,
+                        string: 'Saturday, Jul 23',
                     },
                     eventStart: {
                         milliseconds: 55800000,
