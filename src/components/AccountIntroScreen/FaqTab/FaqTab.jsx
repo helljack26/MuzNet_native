@@ -65,9 +65,10 @@ const FaqTab = observer(({ isOpenTab }) => {
     } = useAccountApiStore();
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => { setFaqArticles() });
-        return unsubscribe;
-    }, [navigation]);
+        if (isOpenTab === true && (popularFaqVendorArticle.length === 0 || faqVendorArticle.length === 0)) {
+            setFaqArticles()
+        }
+    }, [isOpenTab]);
 
     // Animation
     const { onPress, width } = useAnimateOfferPreview()
