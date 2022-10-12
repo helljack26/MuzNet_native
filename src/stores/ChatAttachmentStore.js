@@ -75,7 +75,6 @@ class ChatAttachment {
 
         runInAction(() => {
             if (!result.cancelled) {
-
                 this.cameraPhoto = ''
                 this.cameraPhoto = result.uri
                 this.setOpenChatAttachment(false)

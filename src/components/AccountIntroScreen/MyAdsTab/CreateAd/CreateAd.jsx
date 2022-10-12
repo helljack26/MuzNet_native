@@ -348,7 +348,6 @@ const CreateAd = observer(({ isOpenTab }) => {
 
                 {/* Form */}
                 <KeyboardAvoidingView
-                    // keyboardVerticalOffset={20}
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
                     style={{
                         flex: 1,

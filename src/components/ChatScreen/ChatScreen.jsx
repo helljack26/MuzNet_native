@@ -36,8 +36,6 @@ import { useOfferToMusicianApiStore } from '@/stores/OfferToMusicianApi';
 
 const ChatScreen = observer(({ isContractor }) => {
     const { offerDetails, isPaySuccesful } = useOfferToMusicianApiStore();
-
-
     const [isShowConractorDetailsHeader, setExistOffer] = useState(false);
     useEffect(() => {
         if (offerDetails.offerDate.string.length > 0 && isContractor === true && isPaySuccesful) {

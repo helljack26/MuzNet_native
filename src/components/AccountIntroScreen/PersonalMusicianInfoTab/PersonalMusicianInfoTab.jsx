@@ -828,6 +828,7 @@ const PersonalMusicianInfoTab = observer(({ isOpenTab }) => {
 
                         {/* Media */}
                         <MediaImagePicker
+                            isAdCreateOrEdit={true}
                             setNewUserImages={setNewUserImages}
                             userImages={newUserImages}
                         />

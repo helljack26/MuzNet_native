@@ -1,9 +1,7 @@
 import React from 'react';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import { useNavigation } from '@react-navigation/native';
 
-import { View, Text } from 'react-native';
 // Helpers
 import { getWindowDimension } from '@/components/helpers/getWindowDimension'
 // Variables
@@ -91,7 +89,7 @@ const MediaImagePicker = ({ userImages, setNewUserImages, isAdCreateOrEdit, isRe
 
                 {userImages.map((image, id) => {
                     const imageSource = image.uri !== undefined ? { uri: image.uri } : image
-                    const isFirstImage = id === 0 && !isAdCreateOrEdit
+                    const isFirstImage = id === 0
                     return (
                         <MediaImgBlock
                             key={id}
